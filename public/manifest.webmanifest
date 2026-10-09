@@ -1,0 +1,10 @@
+{
+  "name": "ShiftCare",
+  "short_name": "ShiftCare",
+  "description": "Dienstplan, Team und Anträge für Pflegekräfte",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F7FB",
+  "theme_color": "#0F3D91",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

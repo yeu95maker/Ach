@@ -1,0 +1,302 @@
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   ShiftCare design tokens
+   Semantic tokens only – components never use raw hex values.
+   Dark mode uses its own palette (not an inversion of light).
+   --------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-2: #f0f3f8;
+  --surface-3: #e7ecf4;
+  --overlay: rgb(10 20 40 / 0.32);
+  --border: #e3e8f0;
+  --border-strong: #cfd7e3;
+
+  /* Text */
+  --text: #0b1b33;
+  --text-2: #4a5a75;
+  --text-3: #8592a8;
+  --on-primary: #ffffff;
+
+  /* Brand */
+  --primary: #0f3d91;
+  --primary-hover: #0c3379;
+  --primary-pressed: #0a2a63;
+  --primary-soft: #e8eefa;
+  --primary-text: #0f3d91;
+  --accent: #18b7b0;
+  --accent-soft: #e0f6f5;
+  --accent-text: #0b7f7a;
+
+  /* Status */
+  --success: #1f9d55;
+  --success-soft: #e3f5ea;
+  --success-text: #157a41;
+  --warning: #e8890c;
+  --warning-soft: #fdf1df;
+  --warning-text: #a85f00;
+  --danger: #d93a3a;
+  --danger-soft: #fce8e8;
+  --danger-text: #b42727;
+
+  /* Shift colour coding */
+  --shift-early: #f2a516;
+  --shift-early-soft: #fef4dc;
+  --shift-early-text: #8a5200;
+  --shift-late: #7a5af5;
+  --shift-late-soft: #efebfe;
+  --shift-late-text: #5233c9;
+  --shift-night: #1f3f9e;
+  --shift-night-soft: #e2e8fb;
+  --shift-night-text: #1a347f;
+  --shift-day: #2b8ae6;
+  --shift-day-soft: #e3f0fc;
+  --shift-day-text: #16609f;
+  --shift-vacation: #18b7b0;
+  --shift-vacation-soft: #dff6f4;
+  --shift-vacation-text: #0b7f7a;
+  --shift-sick: #e5484d;
+  --shift-sick-soft: #fde8e9;
+  --shift-sick-text: #b4232a;
+  --shift-off: #94a3b8;
+  --shift-off-soft: #eef1f5;
+  --shift-off-text: #5b6b82;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgb(16 32 64 / 0.05);
+  --shadow-card: 0 1px 2px rgb(16 32 64 / 0.04), 0 4px 16px rgb(16 32 64 / 0.05);
+  --shadow-lg: 0 8px 24px rgb(16 32 64 / 0.1), 0 24px 64px rgb(16 32 64 / 0.12);
+  --ring: rgb(24 183 176 / 0.45);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #090e18;
+  --surface: #111a2b;
+  --surface-2: #172236;
+  --surface-3: #1e2b42;
+  --overlay: rgb(0 0 0 / 0.55);
+  --border: #1f2c43;
+  --border-strong: #2c3c58;
+
+  --text: #ebf1fb;
+  --text-2: #a7b4ca;
+  --text-3: #6c7b95;
+  --on-primary: #ffffff;
+
+  --primary: #3d74e8;
+  --primary-hover: #5084ef;
+  --primary-pressed: #2f63d0;
+  --primary-soft: #16264a;
+  --primary-text: #8fb1ff;
+  --accent: #2fd0c8;
+  --accent-soft: #0f302f;
+  --accent-text: #5fe0d9;
+
+  --success: #3dbf74;
+  --success-soft: #0f2c1d;
+  --success-text: #6ad49a;
+  --warning: #f2a33a;
+  --warning-soft: #33230c;
+  --warning-text: #f6bd6e;
+  --danger: #f06363;
+  --danger-soft: #3a1416;
+  --danger-text: #ff8f8f;
+
+  --shift-early: #f5b43a;
+  --shift-early-soft: #33270d;
+  --shift-early-text: #f8c96a;
+  --shift-late: #9a82ff;
+  --shift-late-soft: #251d47;
+  --shift-late-text: #b9a8ff;
+  --shift-night: #6f8fff;
+  --shift-night-soft: #182450;
+  --shift-night-text: #a3b8ff;
+  --shift-day: #5aa8f0;
+  --shift-day-soft: #0f2840;
+  --shift-day-text: #8cc4f5;
+  --shift-vacation: #2fd0c8;
+  --shift-vacation-soft: #0e2f2e;
+  --shift-vacation-text: #66e0d9;
+  --shift-sick: #f06a6e;
+  --shift-sick-soft: #3a1518;
+  --shift-sick-text: #ff9a9d;
+  --shift-off: #6c7b95;
+  --shift-off-soft: #1a2437;
+  --shift-off-text: #95a3ba;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px rgb(0 0 0 / 0.25);
+  --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.5);
+  --ring: rgb(47 208 200 / 0.5);
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-overlay: var(--overlay);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-on-primary: var(--on-primary);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-text: var(--primary-text);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-text: var(--success-text);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-text: var(--warning-text);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-text: var(--danger-text);
+
+  --color-early: var(--shift-early);
+  --color-early-soft: var(--shift-early-soft);
+  --color-early-text: var(--shift-early-text);
+  --color-late: var(--shift-late);
+  --color-late-soft: var(--shift-late-soft);
+  --color-late-text: var(--shift-late-text);
+  --color-night: var(--shift-night);
+  --color-night-soft: var(--shift-night-soft);
+  --color-night-text: var(--shift-night-text);
+  --color-day: var(--shift-day);
+  --color-day-soft: var(--shift-day-soft);
+  --color-day-text: var(--shift-day-text);
+  --color-vacation: var(--shift-vacation);
+  --color-vacation-soft: var(--shift-vacation-soft);
+  --color-vacation-text: var(--shift-vacation-text);
+  --color-sick: var(--shift-sick);
+  --color-sick-soft: var(--shift-sick-soft);
+  --color-sick-text: var(--shift-sick-text);
+  --color-off: var(--shift-off);
+  --color-off-soft: var(--shift-off-soft);
+  --color-off-text: var(--shift-off-text);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-card: var(--shadow-card);
+  --shadow-lg: var(--shadow-lg);
+
+  --radius-card: 1.25rem;
+  --radius-control: 0.875rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-in: fade-in 220ms var(--ease-out-soft) both;
+  --animate-rise: rise 320ms var(--ease-out-soft) both;
+  --animate-sheet-up: sheet-up 340ms var(--ease-out-soft) both;
+  --animate-scale-in: scale-in 240ms var(--ease-out-soft) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg font-sans text-text;
+    font-feature-settings: 'cv11', 'ss01';
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ring);
+    border-radius: 0.75rem;
+  }
+
+  /* Grid items never grow beyond their track because of long single-line text. */
+  .grid > * {
+    min-width: 0;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+  [data-theme='dark'] input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 37%, var(--surface-2) 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

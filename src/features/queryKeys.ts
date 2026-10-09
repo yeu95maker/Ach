@@ -1,0 +1,22 @@
+/** Central query-key factory – keeps cache invalidation consistent. */
+export const queryKeys = {
+  context: (userId: string) => ['context', userId] as const,
+  dashboard: (employeeId: string) => ['dashboard', employeeId] as const,
+  roster: (employeeId: string, from: string, to: string) => ['roster', employeeId, from, to] as const,
+  rosterAll: (employeeId: string) => ['roster', employeeId] as const,
+  absences: (employeeId: string, from: string, to: string) => ['absences', employeeId, from, to] as const,
+  absencesAll: (employeeId: string) => ['absences', employeeId] as const,
+  shiftColleagues: (entryId: string) => ['shift-colleagues', entryId] as const,
+  managedSchedules: (hospitalId: string, from: string, to: string) => ['managed-schedules', hospitalId, from, to] as const,
+  onDuty: (hospitalId: string) => ['on-duty', hospitalId] as const,
+  directory: (hospitalId: string) => ['directory', hospitalId] as const,
+  employeeOverview: (hospitalId: string) => ['employee-overview', hospitalId] as const,
+  teamLeave: (hospitalId: string) => ['team-leave', hospitalId] as const,
+  teamSick: (hospitalId: string) => ['team-sick', hospitalId] as const,
+  sickComment: (id: string) => ['sick-comment', id] as const,
+  myLeave: (employeeId: string) => ['my-leave', employeeId] as const,
+  mySick: (employeeId: string) => ['my-sick', employeeId] as const,
+  notifications: (userId: string) => ['notifications', userId] as const,
+  avatar: (path: string) => ['avatar', path] as const,
+  languages: () => ['languages'] as const,
+}
