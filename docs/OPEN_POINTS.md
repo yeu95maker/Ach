@@ -16,9 +16,13 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | A6 | Wie weit rückwirkend darf man sich **krank melden**? | Höchstens 30 Tage. |
 | A7 | **Urlaubsanspruch / Resturlaub** und Feiertage pro Bundesland? | Nicht im MVP. Arbeitstage werden als Mo–Fr ohne Feiertage gezählt. |
 | A8 | Sollen Benachrichtigungen bei Krankmeldungen an **alle** mit `sick_leave.view` gehen (inkl. HR)? | Ja, an alle mit diesem Recht im Scope. HR erhält dabei nur Name und Zeitraum. |
-| A9 | Dürfen Pflegekräfte **offene Dienste** selbst übernehmen? | Im MVP werden sie nur angezeigt. Ein Workflow „Interesse melden / übernehmen“ ist eine eigene Funktion. |
+| A9 | ~~Offene Dienste selbst übernehmen?~~ **Entschieden (11.10.2026):** Interesse melden. | Umgesetzt: „Ich kann einspringen“, die Leitung entscheidet (siehe LEITUNG-UND-VERWALTUNG.md). |
 | A10 | **SSO pro Krankenhaus** (Entra-ID-Tenant oder SAML) statt globalem Google- und Microsoft-Login? | Global konfiguriert. Für den Unternehmenseinsatz empfohlen: SAML-SSO pro Haus (Supabase Pro) und Einschränkung des Azure-Tenants. |
 | A11 | Muss ein Urlaubsantrag eine **Vorlaufzeit** einhalten? | Keine Regel. Beginn ab heute. Ein Setting `leave.min_notice_days` ist vorgesehen. |
+| A12 | **Rollenvergabe:** Ist die neue Regel richtig? Administrative Rechte gibt nur weiter, wer sie selbst hat. Niemand gibt sich selbst neue Rechte. Die alte Regel („nur Rollen, deren Rechte man komplett selbst hat“) hat HR und Administration sogar die Pflegekraft-Rolle verwehrt. | Umgesetzt. HR kann damit z. B. eine Stationsleitung ernennen, die Krankmeldungs-Kommentare lesen darf, obwohl HR selbst sie nicht lesen kann. |
+| A13 | Soll die Leitung auf dem Dashboard weiterhin die Zahl **neuer Krankmeldungen** sehen? | Ja, dezent: Sie muss eine Vertretung organisieren. Für alle anderen ist die Krankmeldung aus dem Vordergrund entfernt. |
+| A14 | „Nachrichten an das Team“: Reicht **Aktuelles mit Push**, oder braucht es zusätzlich **Direktnachrichten oder Chat**? | Aktuelles mit Kategorien und Push ist umgesetzt. Ein Chat wäre eine eigene Funktion (Datenschutz, Aufbewahrung). |
+| A15 | Wer darf in **Aktuelles** für das ganze Haus senden? | Wer `announcements.publish` hausweit hat: PDL mit Hausscope und Krankenhaus-Administration. Stationsleitungen senden an ihre Station. |
 
 ## W. Wunschplan – Rückfragen
 
@@ -30,7 +34,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | W3 | ~~Standardwerte?~~ **Entschieden (10.10.2026):** Frist 21 Tage vor Monatsbeginn, Erinnerung 3 Tage vorher, kein Limit für Wunschfrei. | Umgesetzt (Seed und Hausstandard angepasst). |
 | W4 | Planungszeitraum immer ein Kalendermonat? | Die Oberfläche legt Monate an, die Datenbank erlaubt Zeiträume bis 62 Tage (z. B. 4-Wochen-Pläne). |
 | W5 | Sollen Kolleg:innen sehen, wie viele Wünsche es für einen Tag gibt (ohne Namen)? | Nein, fremde Wünsche sind unsichtbar. |
-| W6 | Soll nach Veröffentlichung des Dienstplans jeder offene Wunsch automatisch als „berücksichtigt/nicht berücksichtigt“ markiert werden (Abgleich Plan ↔ Wunsch)? | Nein, die Bewertung bleibt manuell. Der Abgleich ist als Funktion `compareWithPlan` vorhanden und könnte das später übernehmen. |
+| W6 | ~~Automatische Bewertung nach Veröffentlichung?~~ **Entschieden (11.10.2026):** Nein. | Die Bewertung bleibt manuell. |
 
 ## B. Technische offene Punkte
 
@@ -40,14 +44,14 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B2 | Biometrischer Login (Keychain/Keystore-Adapter für `AuthStorage`) | Schnittstelle vorhanden, Adapter fehlt |
 | B3 | UI für MFA (TOTP) | In Auth aktiviert, UI fehlt |
 | B4 | Skript zur Rotation des Vault-Schlüssels | Vorgehen dokumentiert (SECURITY.md) |
-| B5 | Admin-Oberflächen: Mitarbeiter einladen (Edge Function vorhanden), Stationen, Schichttypen, Rollen | Backend und RLS fertig, UI folgt mit der Admin-Phase |
+| B5 | ~~Admin-Oberflächen~~ | **Umgesetzt** (`/admin`). Offen: eigene Rollen anlegen (`roles.manage`), Qualifikationen pflegen, Hauseinstellungen. Für die Einladung muss die Edge Function `invite-employee` deployt sein (inkl. `APP_URL`). |
 | B6 | ~~Dienstplan-Editor~~ | **Umgesetzt** (siehe DIENSTPLAN-EDITOR.md). Offen: Vorlagen/Kopieren, Oberfläche für Mindestbesetzung, weitere Planungsregeln. |
 | B7 | `supabase gen types` statt handgeschriebener Row-Typen (`src/data/rows.ts`) | Sobald die CLI im CI verfügbar ist |
 | B8 | Dokumente: Upload-UI (Krankmeldung mit AU, Zertifikate) | Tabelle, Storage und Policies fertig |
 | B9 | Offline-Fähigkeit (Service-Worker-Cache des Dienstplans) | Nicht im MVP |
 | B10 | Partitionierung von `audit_logs` und `notifications`; Aufbewahrungsfristen (Löschkonzept DSGVO) | Bei Bedarf. Die Fristen muss der Datenschutz festlegen. |
 | B11 | Rechtstexte (Impressum, Datenschutzerklärung, AV-Vertrag), Hosting-Region EU (Frankfurt) | Organisatorisch |
-| B12 | Mitteilungen erstellen (UI) | RLS und Trigger fertig, im Dashboard nur Anzeige |
+| B12 | ~~Mitteilungen erstellen (UI)~~ | **Umgesetzt** als „Aktuelles“ mit Kategorien, Terminen und Push |
 | B13 | Oberfläche für die Wunschplan-**Hauskonfiguration** (`wish_plan_settings`: Limits, Standardfrist, Erinnerung) | Tabelle und RLS fertig. Frist und „Änderungen erlaubt“ sind pro Zeitraum in der UI einstellbar. |
 | B14 | Planungsassistent (KI) | Datenbasis (`get_scheduling_context`), Besetzungsvorgaben und Vorschlagstabelle sind vorbereitet, der Assistent selbst nicht |
 

@@ -25,6 +25,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/DESIGN.md](docs/DESIGN.md): Designsystem, Navigation, UX-Regeln
 - [docs/DIENSTPLAN-EDITOR.md](docs/DIENSTPLAN-EDITOR.md): Dienstplan-Editor (Bedienung, Hinweise, Technik)
 - [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
+- [docs/LEITUNG-UND-VERWALTUNG.md](docs/LEITUNG-UND-VERWALTUNG.md): Aktuelles, Vertretung bei Krankheit, offene Dienste, Verlauf, Verwaltung
 - [docs/OPEN_POINTS.md](docs/OPEN_POINTS.md): **offene Fragen und getroffene Annahmen, bitte prüfen**
 
 ## Schnellstart (lokal mit Supabase CLI)
@@ -77,7 +78,7 @@ src/
   core/         Infrastruktur: Konfiguration, Supabase-Client, i18n, Theme, Formatierung, Fehler
   domain/       reine Geschäftslogik & Typen (framework-frei, getestet)
   data/         Repositories: einziger Ort mit Supabase-Zugriff, Mapping Row → Domäne
-  features/     Fachbereiche (dashboard, schedule, team, leave, sick-leave, notifications, profile, auth, tenant)
+  features/     Fachbereiche (dashboard, schedule, team, leave, sick-leave, news, staffing, admin, wishes, roster-editor, notifications, profile, auth, tenant)
   components/   fachliche, wiederverwendbare Bausteine (Avatar, Schicht-Farben, Status-Badges)
   ui/           Designsystem (Button, Card, Sheet, Field, SegmentedControl …)
   locales/      de, en, tr, ro, pl
