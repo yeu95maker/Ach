@@ -30,6 +30,11 @@ export type NotificationType =
   | 'sick_leave_updated'
   | 'announcement'
   | 'message'
+  | 'wish_plan_opened'
+  | 'wish_plan_deadline'
+  | 'wish_plan_submitted'
+  | 'wish_plan_locked'
+  | 'wish_plan_reviewed'
 
 export interface Hospital {
   id: string

@@ -20,4 +20,13 @@ export const queryKeys = {
   notifications: (userId: string) => ['notifications', userId] as const,
   avatar: (path: string) => ['avatar', path] as const,
   languages: () => ['languages'] as const,
+  wishPeriods: (userId: string) => ['wish-periods', userId] as const,
+  mySubmission: (periodId: string, employeeId: string) => ['wish-submission', periodId, employeeId] as const,
+  shiftTypes: (hospitalId: string) => ['shift-types', hospitalId] as const,
+  wishScope: (userId: string) => ['wish-scope', userId] as const,
+  wishUnits: (hospitalId: string) => ['wish-units', hospitalId] as const,
+  wishOverview: (periodIds: string[]) => ['wish-overview', ...periodIds] as const,
+  wishOverviewAll: () => ['wish-overview'] as const,
+  wishPlanned: (unitIds: string[], from: string, to: string) => ['wish-planned', from, to, ...unitIds] as const,
+  unitMembers: (unitIds: string[]) => ['unit-members', ...unitIds] as const,
 }

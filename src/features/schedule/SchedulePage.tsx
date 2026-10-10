@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { CalendarHeart, ChevronLeft, ChevronRight, ClipboardList } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LEGEND_KINDS } from '@/components/dayKindStyles'
@@ -8,7 +8,8 @@ import { fromISODate, isSameMonth } from '@/domain/dates'
 import { durationMinutes, type DayAgenda } from '@/domain/schedule'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
-import { Button, Card, IconButton, PageHeader, SegmentedControl, Sheet, Skeleton, Spinner } from '@/ui'
+import { can, canAny } from '@/domain/permissions'
+import { Button, ButtonLink, Card, IconButton, PageHeader, SegmentedControl, Sheet, Skeleton, Spinner } from '@/ui'
 import { DayDetail } from './DayDetail'
 import { ManageSchedulesCard } from './ManageSchedulesCard'
 import { MonthView } from './MonthView'
@@ -50,6 +51,21 @@ export function SchedulePage() {
         subtitle={t('schedule.stats', { count: stats.count, hours: fmt.hours(stats.minutes) })}
         actions={<SegmentedControl label={t('schedule.viewLabel')} options={views} value={nav.view} onChange={nav.setView} className="w-[264px]" />}
       />
+
+      {(can(employment, 'wishes.submit') || canAny(employment, ['wishes.view', 'wishes.manage'])) && (
+        <nav aria-label={t('wishes.title')} className="-mt-2 mb-6 flex flex-wrap gap-2">
+          {can(employment, 'wishes.submit') && (
+            <ButtonLink to="/schedule/wishes" variant="soft" size="sm" icon={<CalendarHeart className="size-4" />}>
+              {t('wishes.title')}
+            </ButtonLink>
+          )}
+          {canAny(employment, ['wishes.view', 'wishes.manage']) && (
+            <ButtonLink to="/schedule/wishes/manage" variant="secondary" size="sm" icon={<ClipboardList className="size-4" />}>
+              {t('wishes.manageLink')}
+            </ButtonLink>
+          )}
+        </nav>
+      )}
 
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-1">

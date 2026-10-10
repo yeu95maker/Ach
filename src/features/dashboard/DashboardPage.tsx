@@ -9,6 +9,7 @@ import { notificationMeta } from '@/domain/notifications'
 import { NotificationIcon } from '@/features/notifications/NotificationIcon'
 import { useNotificationText } from '@/features/notifications/useNotificationText'
 import { useCurrentUser, useEmployment } from '@/features/tenant/TenantProvider'
+import { WishPlanPromo } from '@/features/wishes/WishPlanPromo'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 import { Badge, Card, CardHeader, EmptyState, PageHeader, SkeletonCard, cn } from '@/ui'
 import { QuickActions } from './QuickActions'
@@ -68,6 +69,7 @@ export function DashboardPage() {
             <Stagger index={1}>
               <NextShiftCard entry={data.nextShift} />
             </Stagger>
+            <WishPlanPromo />
             <Stagger index={2}>
               <QuickActions />
             </Stagger>

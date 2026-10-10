@@ -20,6 +20,17 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | A10 | **SSO pro Krankenhaus** (Entra-ID-Tenant oder SAML) statt globalem Google- und Microsoft-Login? | Global konfiguriert. Für den Unternehmenseinsatz empfohlen: SAML-SSO pro Haus (Supabase Pro) und Einschränkung des Azure-Tenants. |
 | A11 | Muss ein Urlaubsantrag eine **Vorlaufzeit** einhalten? | Keine Regel. Beginn ab heute. Ein Setting `leave.min_notice_days` ist vorgesehen. |
 
+## W. Wunschplan – Rückfragen
+
+| # | Frage | Aktuelle Annahme |
+| --- | --- | --- |
+| W1 | Wer darf einen Wunschplan einreichen? | Alle mit Stationszugehörigkeit (Pflegekraft, Schichtleitung, Stationsleitung/PDL, HR), jeweils nur für die eigene(n) Station(en). |
+| W2 | Ist „Nicht verfügbar“ ein **harter** Ausschluss (z. B. Warnung beim Einplanen) oder nur ein starker Wunsch? | Starker Wunsch (Gewicht 3). In der Matrix wird ein Widerspruch rot markiert, eingeplant werden kann trotzdem. |
+| W3 | Standardwerte: Frist 21 Tage vor Monatsbeginn, Erinnerung 3 Tage vor der Frist, max. Anzahl „Wunschfrei“? | Frist 21 Tage, Erinnerung 3 Tage, kein Limit. Im Seed ist für das Testhaus ein Limit von 8 × Wunschfrei gesetzt. |
+| W4 | Planungszeitraum immer ein Kalendermonat? | Die Oberfläche legt Monate an, die Datenbank erlaubt Zeiträume bis 62 Tage (z. B. 4-Wochen-Pläne). |
+| W5 | Sollen Kolleg:innen sehen, wie viele Wünsche es für einen Tag gibt (ohne Namen)? | Nein, fremde Wünsche sind unsichtbar. |
+| W6 | Soll nach Veröffentlichung des Dienstplans jeder offene Wunsch automatisch als „berücksichtigt/nicht berücksichtigt“ markiert werden (Abgleich Plan ↔ Wunsch)? | Nein, die Bewertung bleibt manuell. Der Abgleich ist als Funktion `compareWithPlan` vorhanden und könnte das später übernehmen. |
+
 ## B. Technische offene Punkte
 
 | # | Punkt | Status |
@@ -36,6 +47,8 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B10 | Partitionierung von `audit_logs` und `notifications`; Aufbewahrungsfristen (Löschkonzept DSGVO) | Bei Bedarf. Die Fristen muss der Datenschutz festlegen. |
 | B11 | Rechtstexte (Impressum, Datenschutzerklärung, AV-Vertrag), Hosting-Region EU (Frankfurt) | Organisatorisch |
 | B12 | Mitteilungen erstellen (UI) | RLS und Trigger fertig, im Dashboard nur Anzeige |
+| B13 | Oberfläche für die Wunschplan-**Hauskonfiguration** (`wish_plan_settings`: Limits, Standardfrist, Erinnerung) | Tabelle und RLS fertig. Frist und „Änderungen erlaubt“ sind pro Zeitraum in der UI einstellbar. |
+| B14 | Planungsassistent (KI) | Datenbasis (`get_scheduling_context`), Besetzungsvorgaben und Vorschlagstabelle sind vorbereitet, der Assistent selbst nicht |
 
 ## C. Umgesetzte Annahmen ohne Rückfragebedarf
 - Woche beginnt am Montag (ISO 8601). Zeiten werden immer in der Zeitzone des **Krankenhauses** angezeigt.

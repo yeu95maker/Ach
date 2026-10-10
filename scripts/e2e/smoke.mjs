@@ -125,6 +125,33 @@ for (const run of runs) {
   await lead.context.close()
 }
 
+// Wunschplan: nurse paints + submits wishes → scheduler sees them in the matrix and reviews one
+{
+  const nurse = await session('wish-nurse', { email: 'leyla.yilmaz@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  await nurse.page.goto(`${BASE}/schedule/wishes`)
+  const cells = nurse.page.locator('[role=gridcell]')
+  await cells.nth(4).click()
+  await cells.nth(5).click()
+  await nurse.page.getByRole('radio', { name: 'Nacht' }).click()
+  await cells.nth(11).click()
+  await shot(nurse.page, 'wish', '30-nurse-editing', { full: false })
+  await nurse.page.getByRole('button', { name: /Wunschplan einreichen/ }).click()
+  await nurse.page.waitForSelector('text=Dein Wunschplan wurde erfolgreich eingereicht.')
+  await shot(nurse.page, 'wish', '31-nurse-success', { full: false })
+
+  const lead = await session('wish-lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1440, height: 900 }, theme: 'light' })
+  await lead.page.goto(`${BASE}/schedule/wishes/manage`)
+  await lead.page.waitForSelector('text=Leyla')
+  await shot(lead.page, 'wish', '32-lead-matrix')
+  await lead.page.locator('table button').first().click()
+  await lead.page.locator('dialog[open]').getByRole('button', { name: 'Berücksichtigt', exact: true }).click()
+  await lead.page.waitForSelector('text=1 Wunsch bewertet')
+  await lead.page.goto(`${BASE}/schedule/wishes/manage?view=list`)
+  await shot(lead.page, 'wish', '33-lead-list')
+  await nurse.context.close()
+  await lead.context.close()
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

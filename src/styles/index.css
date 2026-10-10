@@ -71,6 +71,26 @@
   --shift-off-soft: #eef1f5;
   --shift-off-text: #5b6b82;
 
+  /* Wunschplan colour coding (preferences – deliberately different from roster colours) */
+  --wish-free: #22a06b;
+  --wish-free-soft: #e2f6ec;
+  --wish-free-text: #146c46;
+  --wish-night: #8b5cf6;
+  --wish-night-soft: #f1ebfe;
+  --wish-night-text: #6230c8;
+  --wish-early: #2f7ae5;
+  --wish-early-soft: #e5effd;
+  --wish-early-text: #1b58b0;
+  --wish-late: #f08a24;
+  --wish-late-soft: #fef0e1;
+  --wish-late-text: #a65508;
+  --wish-preferred: #18b7b0;
+  --wish-preferred-soft: #dff6f4;
+  --wish-preferred-text: #0b7f7a;
+  --wish-unavailable: #e5484d;
+  --wish-unavailable-soft: #fde8e9;
+  --wish-unavailable-text: #b4232a;
+
   /* Elevation */
   --shadow-sm: 0 1px 2px rgb(16 32 64 / 0.05);
   --shadow-card: 0 1px 2px rgb(16 32 64 / 0.04), 0 4px 16px rgb(16 32 64 / 0.05);
@@ -135,6 +155,25 @@
   --shift-off-soft: #1a2437;
   --shift-off-text: #95a3ba;
 
+  --wish-free: #3dbf85;
+  --wish-free-soft: #0e2c20;
+  --wish-free-text: #6fd9a8;
+  --wish-night: #a88bff;
+  --wish-night-soft: #241b45;
+  --wish-night-text: #c4b1ff;
+  --wish-early: #5c9cf5;
+  --wish-early-soft: #10264a;
+  --wish-early-text: #95c0ff;
+  --wish-late: #f5a04d;
+  --wish-late-soft: #35220c;
+  --wish-late-text: #f8be82;
+  --wish-preferred: #2fd0c8;
+  --wish-preferred-soft: #0e2f2e;
+  --wish-preferred-text: #66e0d9;
+  --wish-unavailable: #f06a6e;
+  --wish-unavailable-soft: #3a1518;
+  --wish-unavailable-text: #ff9a9d;
+
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
   --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px rgb(0 0 0 / 0.25);
   --shadow-lg: 0 16px 48px rgb(0 0 0 / 0.5);
@@ -196,6 +235,25 @@
   --color-off: var(--shift-off);
   --color-off-soft: var(--shift-off-soft);
   --color-off-text: var(--shift-off-text);
+
+  --color-wish-free: var(--wish-free);
+  --color-wish-free-soft: var(--wish-free-soft);
+  --color-wish-free-text: var(--wish-free-text);
+  --color-wish-night: var(--wish-night);
+  --color-wish-night-soft: var(--wish-night-soft);
+  --color-wish-night-text: var(--wish-night-text);
+  --color-wish-early: var(--wish-early);
+  --color-wish-early-soft: var(--wish-early-soft);
+  --color-wish-early-text: var(--wish-early-text);
+  --color-wish-late: var(--wish-late);
+  --color-wish-late-soft: var(--wish-late-soft);
+  --color-wish-late-text: var(--wish-late-text);
+  --color-wish-preferred: var(--wish-preferred);
+  --color-wish-preferred-soft: var(--wish-preferred-soft);
+  --color-wish-preferred-text: var(--wish-preferred-text);
+  --color-wish-unavailable: var(--wish-unavailable);
+  --color-wish-unavailable-soft: var(--wish-unavailable-soft);
+  --color-wish-unavailable-text: var(--wish-unavailable-text);
 
   --shadow-sm: var(--shadow-sm);
   --shadow-card: var(--shadow-card);

@@ -1,13 +1,16 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { isoDateInTimeZone } from '@/domain/dates'
 import { payloadString } from '@/domain/notifications'
 import type { AppNotification } from '@/domain/types'
+import { useTenant } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 
 /** Renders type + payload into localised text (nothing pre-rendered is stored). */
 export function useNotificationText() {
   const { t } = useTranslation()
   const fmt = useHospitalFormatter()
+  const timeZone = useTenant().employment?.hospital.timezone ?? 'Europe/Berlin'
 
   return useCallback(
     (n: Pick<AppNotification, 'type' | 'payload'>) => {
@@ -26,13 +29,16 @@ export function useNotificationText() {
         date,
         time,
         note: p('decision_note'),
-        status: p('status') ? t(`sickStatus.${p('status')}`) : '',
+        status: p('status') && n.type === 'sick_leave_updated' ? t(`sickStatus.${p('status')}`) : '',
+        wishStatus: p('status') && n.type === 'wish_plan_reviewed' ? t(`wishStatus.${p('status')}`) : '',
+        deadline: p('deadline_at') ? `${fmt.dateShort(isoDateInTimeZone(new Date(p('deadline_at')), timeZone))}, ${fmt.time(new Date(p('deadline_at')))}` : '',
+        count: Number(p('count') || 0),
       }
       return {
         title: t(`notifications.types.${n.type}.title`, vars),
         body: t(`notifications.types.${n.type}.body`, vars),
       }
     },
-    [t, fmt],
+    [t, fmt, timeZone],
   )
 }

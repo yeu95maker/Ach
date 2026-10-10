@@ -205,7 +205,9 @@ async function handleRest(req, res, url, claims) {
     const args = (await readBody(req)) ?? {}
     const values = []
     const named = Object.entries(args).map(([k, v]) => {
-      values.push(v !== null && typeof v === 'object' && !Array.isArray(v) ? JSON.stringify(v) : v)
+      // objects and arrays of objects are JSON; arrays of scalars are PostgreSQL arrays (e.g. uuid[])
+      const isJson = v !== null && typeof v === 'object' && (!Array.isArray(v) || v.some((x) => x !== null && typeof x === 'object'))
+      values.push(isJson ? JSON.stringify(v) : v)
       return `${ident(k)} => $${values.length}`
     })
     const result = await asUser(claims, (c) => c.query(`select public.${fn}(${named.join(', ')}) as r`, values))
@@ -232,6 +234,8 @@ async function handleRest(req, res, url, claims) {
     const body = await readBody(req)
     const list = Array.isArray(body) ? body : [body]
     const upsert = (req.headers.prefer ?? '').includes('merge-duplicates')
+    const returning = url.searchParams.get('select')
+    const inserted = []
     await asUser(claims, async (c) => {
       for (const row of list) {
         const cols = Object.keys(row)
@@ -239,10 +243,12 @@ async function handleRest(req, res, url, claims) {
         const conflict = upsert
           ? `on conflict on constraint ${ident(`${path}_pkey`)} do update set ${cols.map((k) => `${ident(k)} = excluded.${ident(k)}`).join(', ')}`
           : ''
-        await c.query(`insert into public.${table} (${cols.map(ident).join(', ')}) values (${cols.map((_, i) => `$${i + 1}`).join(', ')}) ${conflict}`, vals)
+        const ret = returning ? `returning ${returning.split(',').map((c) => ident(c.trim())).join(', ')}` : ''
+        const r = await c.query(`insert into public.${table} (${cols.map(ident).join(', ')}) values (${cols.map((_, i) => `$${i + 1}`).join(', ')}) ${conflict} ${ret}`, vals)
+        inserted.push(...r.rows)
       }
     })
-    return send(res, 201, undefined)
+    return returning ? send(res, 201, inserted) : send(res, 201, undefined)
   }
 
   if (req.method === 'PATCH') {

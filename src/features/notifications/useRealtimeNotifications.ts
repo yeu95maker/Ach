@@ -36,6 +36,10 @@ export function useRealtimeNotifications() {
         void queryClient.invalidateQueries({ queryKey: queryKeys.teamLeave(employment.hospital.id) })
         void queryClient.invalidateQueries({ queryKey: queryKeys.absencesAll(employment.employeeId) })
       }
+      if (n.type.startsWith('wish_plan')) {
+        void queryClient.invalidateQueries({ queryKey: ['wish-periods'] })
+        void queryClient.invalidateQueries({ queryKey: ['wish-submission'] })
+      }
       if (n.type.startsWith('sick')) {
         void queryClient.invalidateQueries({ queryKey: queryKeys.teamSick(employment.hospital.id) })
         void queryClient.invalidateQueries({ queryKey: queryKeys.mySick(employment.employeeId) })

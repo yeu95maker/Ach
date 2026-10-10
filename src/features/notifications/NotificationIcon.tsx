@@ -2,6 +2,10 @@ import {
   Bell,
   CalendarCheck2,
   CalendarClock,
+  CalendarHeart,
+  CalendarX2,
+  Hourglass,
+  ClipboardCheck,
   CalendarPlus,
   CheckCircle2,
   HeartPulse,
@@ -26,6 +30,11 @@ const ICONS: Record<NotificationType, LucideIcon> = {
   sick_leave_updated: HeartPulse,
   announcement: Megaphone,
   message: MessageCircle,
+  wish_plan_opened: CalendarHeart,
+  wish_plan_deadline: Hourglass,
+  wish_plan_submitted: CheckCircle2,
+  wish_plan_locked: CalendarX2,
+  wish_plan_reviewed: ClipboardCheck,
 }
 
 const TONES: Record<NotificationTone, string> = {

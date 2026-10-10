@@ -14,6 +14,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/DATABASE.md](docs/DATABASE.md): Datenmodell, Mandantentrennung, Rollen & Rechte, Indizes, Designentscheidungen
 - [docs/SECURITY.md](docs/SECURITY.md): RLS, Verschlüsselung, Audit-Log, Least Privilege, Betrieb
 - [docs/DESIGN.md](docs/DESIGN.md): Designsystem, Navigation, UX-Regeln
+- [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
 - [docs/OPEN_POINTS.md](docs/OPEN_POINTS.md): **offene Fragen und getroffene Annahmen, bitte prüfen**
 
 ## Schnellstart (lokal mit Supabase CLI)

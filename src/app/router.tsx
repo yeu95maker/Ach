@@ -18,6 +18,8 @@ const ProfilePage = named(() => import('@/features/profile/ProfilePage'), 'Profi
 const MyRequestsPage = named(() => import('@/features/leave/MyRequestsPage'), 'MyRequestsPage')
 const LeaveRequestPage = named(() => import('@/features/leave/LeaveRequestPage'), 'LeaveRequestPage')
 const SickLeavePage = named(() => import('@/features/sick-leave/SickLeavePage'), 'SickLeavePage')
+const WishPlanPage = named(() => import('@/features/wishes/WishPlanPage'), 'WishPlanPage')
+const WishManagementPage = named(() => import('@/features/wishes/WishManagementPage'), 'WishManagementPage')
 const ForgotPasswordPage = named(() => import('@/features/auth/ForgotPasswordPage'), 'ForgotPasswordPage')
 const ResetPasswordPage = named(() => import('@/features/auth/ResetPasswordPage'), 'ResetPasswordPage')
 
@@ -33,6 +35,22 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: 'schedule', element: <SchedulePage /> },
+          {
+            path: 'schedule/wishes',
+            element: (
+              <RequirePermission permission="wishes.submit">
+                <WishPlanPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: 'schedule/wishes/manage',
+            element: (
+              <RequirePermission permission={['wishes.view', 'wishes.manage']}>
+                <WishManagementPage />
+              </RequirePermission>
+            ),
+          },
           { path: 'notifications', element: <NotificationsPage /> },
           { path: 'team', element: <TeamPage /> },
           { path: 'profile', element: <ProfilePage /> },

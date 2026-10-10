@@ -17,6 +17,7 @@ PostgreSQL (Supabase), normalisiert, mandantenfähig, abgesichert durch Row Leve
 | `1100_api` | Spaltenverschlüsselung, Views, Workflow-RPCs |
 | `1200_notification_triggers` | Fachereignisse → Benachrichtigungen → Push-Queue, Realtime |
 | `20261010…_colleague_sick_visibility` | View `colleague_sick_leaves`: Kollegen sehen, wer krank ist (nicht warum), aber keinen Urlaub |
+| `20261010…_wish_plan_types` / `_wish_plans` | Wunschplan: Wunscharten, Konfiguration, Zeiträume, Einreichungen, Wünsche, Workflows, Jobs, KI-Vorbereitung. Siehe [WUNSCHPLAN.md](WUNSCHPLAN.md) |
 | `20261010…_role_shift_lead` | Rollenbedeutung: Charge Nurse = Schichtleitung, Head Nurse = Stationsleitung/PDL je nach Scope |
 
 ## Entitäten

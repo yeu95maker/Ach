@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { CalendarCheck2, Send } from 'lucide-react'
+import { CalendarCheck2, CalendarHeart, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { errorMessageKey } from '@/core/errors'
 import { scheduleRepository } from '@/data/scheduleRepository'
-import { can } from '@/domain/permissions'
+import { can, canAny } from '@/domain/permissions'
 import type { ISODate, ScheduleSummary } from '@/domain/types'
 import { queryKeys } from '@/features/queryKeys'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
-import { Badge, Button, Card, CardHeader, Sheet, useToast } from '@/ui'
+import { Badge, Button, ButtonLink, Card, CardHeader, Sheet, useToast } from '@/ui'
 
 /** Ward managers: see roster status for the visible period and publish drafts. */
 export function ManageSchedulesCard({ from, to }: { from: ISODate; to: ISODate }) {
@@ -66,6 +66,11 @@ export function ManageSchedulesCard({ from, to }: { from: ISODate; to: ISODate }
               <Badge tone="warning" dot>
                 {t('schedule.statusDraft')}
               </Badge>
+            )}
+            {canAny(employment, ['wishes.view', 'wishes.manage']) && (
+              <ButtonLink to={`/schedule/wishes/manage?month=${s.periodStart.slice(0, 7)}&unit=${s.unitId}`} size="sm" variant="ghost" icon={<CalendarHeart className="size-4" />}>
+                {t('wishes.manage.showWishes')}
+              </ButtonLink>
             )}
             {canPublish && (
               <Button size="sm" variant={s.status === 'draft' ? 'primary' : 'secondary'} icon={<Send className="size-4" />} onClick={() => setConfirm(s)}>

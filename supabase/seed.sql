@@ -235,3 +235,42 @@ insert into public.announcements (hospital_id, unit_id, title, body, priority, p
   ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', 'Teambesprechung 3A',
    'Donnerstag 14:30 im Stationszimmer – Themen: Urlaubsplanung und neue Monitore.',
    'normal', now() - interval '1 day', '00000000-0000-4000-a000-000000000004');
+
+-- -----------------------------------------------------------------------------
+-- Wunschplan
+--   Station 3A · aktueller Monat: gesperrt, bereits bewertet (Historie)
+--   Station 3A · nächster Monat: offen, Frist in 7 Tagen – Anna hat eingereicht
+-- -----------------------------------------------------------------------------
+insert into public.wish_plan_settings (hospital_id, unit_id, allow_edit_after_submit, deadline_days_before_period, reminder_days_before_deadline, max_free_wishes)
+values ('10000000-0000-4000-a000-000000000001', null, true, 21, 3, 8);
+
+insert into public.wish_periods (id, hospital_id, unit_id, period_start, period_end, deadline_at) values
+  ('a0000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001',
+   date_trunc('month', current_date)::date, (date_trunc('month', current_date) + interval '1 month - 1 day')::date, now() + interval '1 day'),
+  ('a0000000-0000-4000-a000-000000000002', '10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001',
+   (date_trunc('month', current_date) + interval '1 month')::date, (date_trunc('month', current_date) + interval '2 months - 1 day')::date,
+   (date_trunc('day', now() at time zone 'Europe/Berlin') + interval '7 days 23 hours 59 minutes') at time zone 'Europe/Berlin');
+
+update public.wish_periods set status = 'open' where id in ('a0000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000002');
+
+insert into public.wish_submissions (id, hospital_id, period_id, employee_id, note) values
+  ('b0000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000001',
+   '40000000-0000-4000-a000-000000000001', null),
+  ('b0000000-0000-4000-a000-000000000002', '10000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000002',
+   '40000000-0000-4000-a000-000000000001', 'Am liebsten keine Nächte am Wochenende.');
+
+insert into public.wish_entries (hospital_id, submission_id, period_id, employee_id, wish_date, preference_type, note, status, reviewed_at)
+select '10000000-0000-4000-a000-000000000001', s.sub, s.period, '40000000-0000-4000-a000-000000000001', s.d, s.t, s.note, s.st::public.wish_status,
+       case when s.st in ('considered', 'not_considered') then now() end
+from (values
+  ('b0000000-0000-4000-a000-000000000001'::uuid, 'a0000000-0000-4000-a000-000000000001'::uuid, date_trunc('month', current_date)::date + 11, 'free',  'Geburtstag', 'considered'),
+  ('b0000000-0000-4000-a000-000000000001',       'a0000000-0000-4000-a000-000000000001',       date_trunc('month', current_date)::date + 19, 'early', null,         'not_considered'),
+  ('b0000000-0000-4000-a000-000000000002',       'a0000000-0000-4000-a000-000000000002',       (date_trunc('month', current_date) + interval '1 month')::date + 4,  'free',        null,            'submitted'),
+  ('b0000000-0000-4000-a000-000000000002',       'a0000000-0000-4000-a000-000000000002',       (date_trunc('month', current_date) + interval '1 month')::date + 5,  'free',        null,            'submitted'),
+  ('b0000000-0000-4000-a000-000000000002',       'a0000000-0000-4000-a000-000000000002',       (date_trunc('month', current_date) + interval '1 month')::date + 11, 'night',       null,            'submitted'),
+  ('b0000000-0000-4000-a000-000000000002',       'a0000000-0000-4000-a000-000000000002',       (date_trunc('month', current_date) + interval '1 month')::date + 17, 'unavailable', 'Arzttermin',    'submitted')
+) as s(sub, period, d, t, note, st);
+
+-- Current month: deadline passed → locked
+update public.wish_periods set deadline_at = now() - interval '25 days', status = 'locked'
+ where id = 'a0000000-0000-4000-a000-000000000001';
