@@ -150,7 +150,10 @@
     "nobodyOnDuty": "Şu anda kimse görevde değil",
     "nobodyOnDutyHint": "Vardiyası devam eden meslektaşlar burada görünür.",
     "searchPlaceholder": "İsim, meslek veya servis ara",
-    "noResults": "Meslektaş bulunamadı"
+    "noResults": "Meslektaş bulunamadı",
+    "sickToday": "Bugün hasta",
+    "sickUntil": "{{date}} tarihine kadar",
+    "sickPrivacyHint": "Yalnızca kimin hasta olduğu görünür – nedeni değil. Meslektaşların izinleri gösterilmez."
   },
   "leave": {
     "newTitle": "İzin talep et",

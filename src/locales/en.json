@@ -150,7 +150,10 @@
     "nobodyOnDuty": "Nobody is on duty right now",
     "nobodyOnDutyHint": "Colleagues whose shift is running appear here.",
     "searchPlaceholder": "Search name, profession or ward",
-    "noResults": "No colleagues found"
+    "noResults": "No colleagues found",
+    "sickToday": "Off sick today",
+    "sickUntil": "until {{date}}",
+    "sickPrivacyHint": "Only who is off sick is shown – never the reason. Colleagues' leave is not shown."
   },
   "leave": {
     "newTitle": "Request leave",

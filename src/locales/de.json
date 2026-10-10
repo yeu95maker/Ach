@@ -150,7 +150,10 @@
     "nobodyOnDuty": "Gerade ist niemand im Dienst",
     "nobodyOnDutyHint": "Hier erscheinen alle Kollegen, deren Dienst gerade läuft.",
     "searchPlaceholder": "Name, Beruf oder Station suchen",
-    "noResults": "Keine Kollegen gefunden"
+    "noResults": "Keine Kollegen gefunden",
+    "sickToday": "Heute krank",
+    "sickUntil": "bis {{date}}",
+    "sickPrivacyHint": "Sichtbar ist nur, wer krank ist – nicht der Grund. Urlaube von Kollegen werden nicht angezeigt."
   },
   "leave": {
     "newTitle": "Urlaub beantragen",

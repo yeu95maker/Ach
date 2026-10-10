@@ -16,6 +16,7 @@ PostgreSQL (Supabase), normalisiert, mandantenfähig, abgesichert durch Row Leve
 | `1000_rls` | Rechte-Baseline, RLS-Policies für alle Tabellen und Storage |
 | `1100_api` | Spaltenverschlüsselung, Views, Workflow-RPCs |
 | `1200_notification_triggers` | Fachereignisse → Benachrichtigungen → Push-Queue, Realtime |
+| `20261010…_colleague_sick_visibility` | View `colleague_sick_leaves`: Kollegen sehen, wer krank ist (nicht warum), aber keinen Urlaub |
 | `20261010…_role_shift_lead` | Rollenbedeutung: Charge Nurse = Schichtleitung, Head Nurse = Stationsleitung/PDL je nach Scope |
 
 ## Entitäten
@@ -143,6 +144,7 @@ Clients dürfen nur einfache Self-Service-Inserts direkt ausführen, z. B. einen
 - anonymer Zugriff wird abgewiesen
 - Pflegekraft sieht nur ihr Haus und nur ihre Personaldaten; Kollegen sieht sie nur über das sichere Verzeichnis
 - Stationsleitung genehmigt, bestätigt und veröffentlicht nur auf **ihrer** Station
+- Kollegen derselben Station sehen, **wer** krank ist (über `colleague_sick_leaves`), aber nie den Grund und nie Urlaube
 - Schichtleitung sieht Krankzeiträume und Kontakte ihrer Station, aber keine Kommentare, keine Entwürfe, keine fremden Urlaubsanträge und darf nichts genehmigen, veröffentlichen oder ändern
 - keine Selbstgenehmigung, keine Rechteausweitung durch HR
 - HR sieht Krankzeiträume, aber keine Kommentare

@@ -72,7 +72,17 @@ begin
 
   -- absences
   assert (select count(*) from public.leave_requests) = 2, 'nurse sees only own leave requests';
-  assert (select count(*) from public.sick_leaves) = 0, 'nurse does not see sick leave of colleagues';
+  assert (select count(*) from public.sick_leaves) = 0, 'nurse has no access to the sick_leaves table of colleagues';
+  -- …but may see WHO on her ward is sick (decision 2026-10-10), never the reason
+  assert (select count(*) from public.colleague_sick_leaves) = 1, 'nurse sees that a ward colleague is sick';
+  assert (select employee_id from public.colleague_sick_leaves) = '40000000-0000-4000-a000-000000000003', 'it is Leyla';
+  assert not exists (select 1 from information_schema.columns
+                     where table_schema = 'public' and table_name = 'colleague_sick_leaves'
+                       and column_name in ('comment_encrypted', 'status', 'certificate_document_id')),
+    'view exposes no reason, status or certificate';
+  -- vacation of colleagues stays invisible
+  assert not exists (select 1 from public.leave_requests where employee_id <> '40000000-0000-4000-a000-000000000001'),
+    'nurse never sees vacation of colleagues';
   assert (select count(*) from public.audit_logs) = 0, 'nurse cannot read audit logs';
 
   -- notifications only own
@@ -319,6 +329,7 @@ set local role authenticated;
 do $$
 begin
   assert (select count(*) from public.sick_leaves) = 1, 'HR sees sick leave periods';
+  assert (select count(*) from public.colleague_sick_leaves) = 0, 'colleague view is limited to shared wards';
   begin
     perform public.get_sick_leave_comment('90000000-0000-4000-a000-000000000001');
     raise exception 'HR must not read medical comments';
@@ -370,6 +381,7 @@ begin
   assert not exists (select 1 from public.qualifications where hospital_id = '10000000-0000-4000-a000-000000000001'), 'no foreign qualifications';
   assert not exists (select 1 from public.user_languages where user_id = '00000000-0000-4000-a000-000000000001'), 'no foreign languages';
   assert not exists (select 1 from public.notifications where hospital_id = '10000000-0000-4000-a000-000000000001'), 'no foreign notifications';
+  assert not exists (select 1 from public.colleague_sick_leaves where hospital_id = '10000000-0000-4000-a000-000000000001'), 'no foreign sick colleagues';
 end $$;
 rollback;
 

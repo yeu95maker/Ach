@@ -1,4 +1,4 @@
-import type { Colleague, RosterEntry, TeamLeaveRequest, TeamSickLeave } from '@/domain/types'
+import type { Colleague, ISODate, RosterEntry, TeamLeaveRequest, TeamSickLeave } from '@/domain/types'
 import { db, unwrap, unwrapList } from './client'
 import { mapColleague, mapLeaveRequest, mapRoster, mapSickLeave } from './mappers'
 import type { DirectoryRow, EmployeeRow, LeaveRequestRow, ShiftRosterRow, SickLeaveRow } from './rows'
@@ -25,7 +25,39 @@ export interface EmployeeOverviewItem extends Colleague {
   weeklyHours: number | null
 }
 
+export interface ColleagueSickLeave {
+  id: string
+  employeeId: string
+  startDate: ISODate
+  endDate: ISODate
+  person: Pick<Colleague, 'firstName' | 'lastName' | 'avatarPath' | 'jobTitle'> | null
+}
+
 export const teamRepository = {
+  /**
+   * Colleagues on my wards who are sick in [from, to]. Only who and when –
+   * never the reason. Vacation is intentionally not exposed to colleagues.
+   */
+  async fetchColleagueSickLeaves(hospitalId: string, from: ISODate, to: ISODate): Promise<ColleagueSickLeave[]> {
+    const rows = unwrapList<{ id: string; employee_id: string; start_date: string; end_date: string }>(
+      await db()
+        .from('colleague_sick_leaves')
+        .select('id, employee_id, start_date, end_date')
+        .eq('hospital_id', hospitalId)
+        .lte('start_date', to)
+        .gte('end_date', from)
+        .order('end_date'),
+    )
+    const people = await directoryByEmployee(hospitalId, [...new Set(rows.map((r) => r.employee_id))])
+    return rows.map((r) => ({
+      id: r.id,
+      employeeId: r.employee_id,
+      startDate: r.start_date,
+      endDate: r.end_date,
+      person: personOf(people.get(r.employee_id)),
+    }))
+  },
+
   /** Everyone whose (published) shift is running at `at`. */
   async fetchOnDuty(hospitalId: string, at: Date): Promise<RosterEntry[]> {
     const iso = at.toISOString()

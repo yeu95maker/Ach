@@ -9,6 +9,7 @@ export const queryKeys = {
   shiftColleagues: (entryId: string) => ['shift-colleagues', entryId] as const,
   managedSchedules: (hospitalId: string, from: string, to: string) => ['managed-schedules', hospitalId, from, to] as const,
   onDuty: (hospitalId: string) => ['on-duty', hospitalId] as const,
+  colleagueSick: (hospitalId: string, from: string, to: string) => ['colleague-sick', hospitalId, from, to] as const,
   directory: (hospitalId: string) => ['directory', hospitalId] as const,
   employeeOverview: (hospitalId: string) => ['employee-overview', hospitalId] as const,
   teamLeave: (hospitalId: string) => ['team-leave', hospitalId] as const,

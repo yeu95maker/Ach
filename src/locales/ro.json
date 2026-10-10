@@ -152,7 +152,10 @@
     "nobodyOnDuty": "Momentan nimeni nu este în tură",
     "nobodyOnDutyHint": "Aici apar colegii a căror tură este în desfășurare.",
     "searchPlaceholder": "Caută nume, profesie sau secție",
-    "noResults": "Nu au fost găsiți colegi"
+    "noResults": "Nu au fost găsiți colegi",
+    "sickToday": "Bolnavi astăzi",
+    "sickUntil": "până pe {{date}}",
+    "sickPrivacyHint": "Se vede doar cine este bolnav – nu și motivul. Concediile colegilor nu sunt afișate."
   },
   "leave": {
     "newTitle": "Cere concediu",

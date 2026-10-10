@@ -6,12 +6,14 @@ import { dayKindStyles } from '@/components/dayKindStyles'
 import type { RosterEntry } from '@/domain/types'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 import { EmptyState, Skeleton, cn } from '@/ui'
+import { useColleagueSickLeaves } from '@/features/team/useColleagueSickLeaves'
 import { useShiftColleagues } from './useSchedule'
 
 export function ShiftColleagues({ entry }: { entry: RosterEntry }) {
   const { t } = useTranslation()
   const fmt = useHospitalFormatter()
   const { data, isLoading, error, refetch } = useShiftColleagues(entry)
+  const sick = useColleagueSickLeaves(entry.date)
 
   if (isLoading) {
     return (
@@ -32,8 +34,9 @@ export function ShiftColleagues({ entry }: { entry: RosterEntry }) {
     <ul className="space-y-1">
       {data.map((c) => {
         const kind = c.shiftType?.category ?? 'other'
+        const isSick = sick.isSickOn(c.employeeId, entry.date)
         return (
-          <li key={c.id} className="flex items-center gap-3 rounded-2xl px-2 py-2">
+          <li key={c.id} className={cn('flex items-center gap-3 rounded-2xl px-2 py-2', isSick && 'opacity-70')}>
             {c.person && <PersonAvatar person={c.person} />}
             <div className="min-w-0 flex-1">
               <p className="truncate text-[15px] font-semibold">
@@ -44,7 +47,11 @@ export function ShiftColleagues({ entry }: { entry: RosterEntry }) {
                 {c.person?.qualifications.length ? ` · ${c.person.qualifications.map((q) => q.code).join(', ')}` : ''}
               </p>
             </div>
-            {c.startsAt && c.endsAt && (
+            {isSick ? (
+              <span className={cn('rounded-full px-2.5 py-1 text-xs font-semibold', dayKindStyles.sick.soft, dayKindStyles.sick.text)}>
+                {t('dayKind.sick')}
+              </span>
+            ) : c.startsAt && c.endsAt && (
               <span className={cn('rounded-full px-2.5 py-1 text-xs font-semibold tabular', dayKindStyles[kind].soft, dayKindStyles[kind].text)}>
                 {fmt.timeRange(c.startsAt, c.endsAt)}
               </span>

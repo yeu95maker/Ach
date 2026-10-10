@@ -20,6 +20,7 @@
 Siehe [DATABASE.md → Berechtigungen](DATABASE.md#3-berechtigungen-statt-rollennamen). Zusätzlich gilt:
 - **Separation of Duties:** Niemand kann eigene Anträge genehmigen oder eigene Krankmeldungen bestätigen.
 - **Keine Rechteausweitung:** Rollen werden nur vergeben, wenn der Vergebende alle enthaltenen Rechte selbst hausweit besitzt.
+- **Abwesenheiten:** Kollegen derselben Station sehen, *dass* und *wie lange* jemand krank ist (View `colleague_sick_leaves`), aber nie den Grund. Urlaube sehen nur die Person selbst und Berechtigte mit `leave.view`/`leave.approve`.
 - **Kollegen sehen nur das sichere Verzeichnis** (`employee_directory`: Name, Foto, Beruf, Station, Qualifikationen, Sprachen). Kontaktdaten und Personalfelder sind nur mit `employees.view` im passenden Scope sichtbar.
 
 ## Verschlüsselung

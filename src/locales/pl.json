@@ -154,7 +154,10 @@
     "nobodyOnDuty": "Nikt nie ma teraz dyżuru",
     "nobodyOnDutyHint": "Tutaj pojawiają się osoby, których dyżur właśnie trwa.",
     "searchPlaceholder": "Szukaj imienia, zawodu lub oddziału",
-    "noResults": "Nie znaleziono osób"
+    "noResults": "Nie znaleziono osób",
+    "sickToday": "Dziś na zwolnieniu",
+    "sickUntil": "do {{date}}",
+    "sickPrivacyHint": "Widać tylko, kto jest chory – nigdy powód. Urlopy kolegów nie są pokazywane."
   },
   "leave": {
     "newTitle": "Wniosek o urlop",
