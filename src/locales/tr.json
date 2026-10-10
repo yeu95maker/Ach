@@ -517,5 +517,51 @@
       "saved": "Kaydedildi",
       "showWishes": "İstekler"
     }
+  },
+  "editor": {
+    "title": "Nöbet planını düzenle",
+    "subtitle": "İstekleri, devamsızlıkları ve kadroyu görerek vardiya planla.",
+    "tool": "Araç",
+    "inspect": "Görüntüle",
+    "empty": "Plan yok",
+    "sickShort": "R",
+    "vacationShort": "İ",
+    "openShifts": "Açık vardiyalar",
+    "openShiftsHint": "Henüz atanmadı",
+    "addOpenShift": "{{date}} için açık vardiya ekle",
+    "staffingTooltip": "{{count}} planlandı, en az {{min}} gerekli",
+    "overlap": "Vardiya çakışıyor",
+    "overlapHint": "Kişi bu saatte zaten planlı (örn. sabahtan önce gece).",
+    "created": "Nöbet planı taslağı oluşturuldu",
+    "createConflict": "Bu dönem için zaten bir nöbet planı var.",
+    "pickShiftFirst": "Önce aşağıdan bir vardiya seç.",
+    "eraseOpenShiftHint": "Kaldırmak için aşağıdan „Sil“i seç ve açık vardiyaya dokun.",
+    "noUnits": "Şu anda hiçbir servisi planlamıyorsun.",
+    "noSchedule": "{{month}} için henüz nöbet planı yok",
+    "noScheduleHint": "Bir taslak oluştur. Çalışanlar yalnızca yayınlandıktan sonra görür.",
+    "create": "Nöbet planı oluştur",
+    "publishedHint": "Bu plan yayınlandı: her değişiklik hemen görünür ve ilgili kişi bilgilendirilir.",
+    "howTo": "Aşağıdan bir vardiya seç, sonra hücrelere dokun. Tekrar dokunmak kaldırır. „Görüntüle“ hiçbir şeyi değiştirmeden ayrıntıları gösterir. Köşedeki küçük simgeler istekleri gösterir.",
+    "issues_one": "{{count}} uyarı",
+    "issues_other": "{{count}} uyarı",
+    "showLess": "Daha az göster",
+    "showAll": "Tümünü göster ({{count}})",
+    "publishWithIssues_one": "Hâlâ {{count}} uyarı var. Yine de yayınlayabilirsin.",
+    "publishWithIssues_other": "Hâlâ {{count}} uyarı var. Yine de yayınlayabilirsin.",
+    "setTo": "Şu şekilde planla",
+    "edit": "Düzenle",
+    "planNow": "Planla",
+    "issue": {
+      "absence_vacation": "İzinde vardiya",
+      "absence_sick": "Raporluyken vardiya",
+      "rest_period": "Dinlenme < 11 sa",
+      "wish_conflict": "İsteğe aykırı"
+    },
+    "issueLong": {
+      "absence_vacation": "Kişinin bu gün onaylı izni var.",
+      "absence_sick": "Kişi bu gün raporlu.",
+      "rest_period": "Önceki vardiyadan bu yana 11 saatten az dinlenme var.",
+      "wish_conflict": "Vardiya gönderilen istekle çelişiyor."
+    }
   }
 }

@@ -20,6 +20,7 @@ const LeaveRequestPage = named(() => import('@/features/leave/LeaveRequestPage')
 const SickLeavePage = named(() => import('@/features/sick-leave/SickLeavePage'), 'SickLeavePage')
 const WishPlanPage = named(() => import('@/features/wishes/WishPlanPage'), 'WishPlanPage')
 const WishManagementPage = named(() => import('@/features/wishes/WishManagementPage'), 'WishManagementPage')
+const RosterEditorPage = named(() => import('@/features/roster-editor/RosterEditorPage'), 'RosterEditorPage')
 const ForgotPasswordPage = named(() => import('@/features/auth/ForgotPasswordPage'), 'ForgotPasswordPage')
 const ResetPasswordPage = named(() => import('@/features/auth/ResetPasswordPage'), 'ResetPasswordPage')
 
@@ -35,6 +36,14 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: 'schedule', element: <SchedulePage /> },
+          {
+            path: 'schedule/plan',
+            element: (
+              <RequirePermission permission="schedule.manage">
+                <RosterEditorPage />
+              </RequirePermission>
+            ),
+          },
           {
             path: 'schedule/wishes',
             element: (

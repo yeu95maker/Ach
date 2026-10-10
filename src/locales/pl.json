@@ -543,5 +543,55 @@
       "saved": "Zapisano",
       "showWishes": "Życzenia"
     }
+  },
+  "editor": {
+    "title": "Edytuj grafik",
+    "subtitle": "Planuj dyżury z uwzględnieniem życzeń, nieobecności i obsady.",
+    "tool": "Narzędzie",
+    "inspect": "Podgląd",
+    "empty": "Nic nie zaplanowano",
+    "sickShort": "C",
+    "vacationShort": "U",
+    "openShifts": "Wolne dyżury",
+    "openShiftsHint": "Jeszcze nieobsadzone",
+    "addOpenShift": "Dodaj wolny dyżur {{date}}",
+    "staffingTooltip": "Zaplanowano {{count}}, potrzeba co najmniej {{min}}",
+    "overlap": "Dyżur się pokrywa",
+    "overlapHint": "Osoba jest już zaplanowana w tym czasie (np. noc przed porannym dyżurem).",
+    "created": "Utworzono szkic grafiku",
+    "createConflict": "Grafik na ten okres już istnieje.",
+    "pickShiftFirst": "Najpierw wybierz dyżur poniżej.",
+    "eraseOpenShiftHint": "Aby usunąć, wybierz poniżej „Usuń” i dotknij wolnego dyżuru.",
+    "noUnits": "Obecnie nie planujesz żadnego oddziału.",
+    "noSchedule": "Brak grafiku na {{month}}",
+    "noScheduleHint": "Utwórz szkic. Pracownicy zobaczą go dopiero po opublikowaniu.",
+    "create": "Utwórz grafik",
+    "publishedHint": "Ten grafik jest opublikowany: każda zmiana jest od razu widoczna, a osoba, której dotyczy, dostaje powiadomienie.",
+    "howTo": "Wybierz dyżur poniżej, a potem dotykaj komórek. Ponowne dotknięcie usuwa dyżur. „Podgląd” pokazuje szczegóły bez zmian. Małe ikony w rogu pokazują życzenia.",
+    "issues_one": "{{count}} uwaga",
+    "issues_few": "{{count}} uwagi",
+    "issues_many": "{{count}} uwag",
+    "issues_other": "{{count}} uwagi",
+    "showLess": "Pokaż mniej",
+    "showAll": "Pokaż wszystkie ({{count}})",
+    "publishWithIssues_one": "Jest jeszcze {{count}} uwaga. Mimo to możesz opublikować.",
+    "publishWithIssues_few": "Są jeszcze {{count}} uwagi. Mimo to możesz opublikować.",
+    "publishWithIssues_many": "Jest jeszcze {{count}} uwag. Mimo to możesz opublikować.",
+    "publishWithIssues_other": "Są jeszcze {{count}} uwagi. Mimo to możesz opublikować.",
+    "setTo": "Zaplanuj jako",
+    "edit": "Edytuj",
+    "planNow": "Zaplanuj",
+    "issue": {
+      "absence_vacation": "Dyżur w urlopie",
+      "absence_sick": "Dyżur mimo zwolnienia",
+      "rest_period": "Odpoczynek < 11 h",
+      "wish_conflict": "Wbrew życzeniu"
+    },
+    "issueLong": {
+      "absence_vacation": "Ta osoba ma w tym dniu zatwierdzony urlop.",
+      "absence_sick": "Ta osoba jest w tym dniu na zwolnieniu.",
+      "rest_period": "Od poprzedniego dyżuru minęło mniej niż 11 godzin odpoczynku.",
+      "wish_conflict": "Dyżur jest sprzeczny ze złożonym życzeniem."
+    }
   }
 }

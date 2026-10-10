@@ -41,7 +41,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B3 | UI für MFA (TOTP) | In Auth aktiviert, UI fehlt |
 | B4 | Skript zur Rotation des Vault-Schlüssels | Vorgehen dokumentiert (SECURITY.md) |
 | B5 | Admin-Oberflächen: Mitarbeiter einladen (Edge Function vorhanden), Stationen, Schichttypen, Rollen | Backend und RLS fertig, UI folgt mit der Admin-Phase |
-| B6 | Dienstplan-Editor für Leitungen (Dienste anlegen/ändern) | Backend fertig (RLS, Doppelbuchungsschutz, Trigger). Die UI kann im MVP nur veröffentlichen. |
+| B6 | ~~Dienstplan-Editor~~ | **Umgesetzt** (siehe DIENSTPLAN-EDITOR.md). Offen: Vorlagen/Kopieren, Oberfläche für Mindestbesetzung, weitere Planungsregeln. |
 | B7 | `supabase gen types` statt handgeschriebener Row-Typen (`src/data/rows.ts`) | Sobald die CLI im CI verfügbar ist |
 | B8 | Dokumente: Upload-UI (Krankmeldung mit AU, Zertifikate) | Tabelle, Storage und Policies fertig |
 | B9 | Offline-Fähigkeit (Service-Worker-Cache des Dienstplans) | Nicht im MVP |

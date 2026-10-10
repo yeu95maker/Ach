@@ -29,4 +29,9 @@ export const queryKeys = {
   wishOverviewAll: () => ['wish-overview'] as const,
   wishPlanned: (unitIds: string[], from: string, to: string) => ['wish-planned', from, to, ...unitIds] as const,
   unitMembers: (unitIds: string[]) => ['unit-members', ...unitIds] as const,
+  editorSchedule: (unitId: string, month: string) => ['editor-schedule', unitId, month] as const,
+  editorEntries: (scheduleId: string) => ['editor-entries', scheduleId] as const,
+  editorShiftTypes: (unitId: string) => ['editor-shift-types', unitId] as const,
+  editorStaffing: (unitId: string) => ['editor-staffing', unitId] as const,
+  editorAbsences: (unitId: string, month: string) => ['editor-absences', unitId, month] as const,
 }

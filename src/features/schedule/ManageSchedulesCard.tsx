@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { CalendarCheck2, CalendarHeart, Send } from 'lucide-react'
+import { CalendarCheck2, CalendarCog, CalendarHeart, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { errorMessageKey } from '@/core/errors'
@@ -66,6 +66,11 @@ export function ManageSchedulesCard({ from, to }: { from: ISODate; to: ISODate }
               <Badge tone="warning" dot>
                 {t('schedule.statusDraft')}
               </Badge>
+            )}
+            {can(employment, 'schedule.manage') && (
+              <ButtonLink to={`/schedule/plan?month=${s.periodStart.slice(0, 7)}&unit=${s.unitId}`} size="sm" variant="ghost" icon={<CalendarCog className="size-4" />}>
+                {t('editor.edit')}
+              </ButtonLink>
             )}
             {canAny(employment, ['wishes.view', 'wishes.manage']) && (
               <ButtonLink to={`/schedule/wishes/manage?month=${s.periodStart.slice(0, 7)}&unit=${s.unitId}`} size="sm" variant="ghost" icon={<CalendarHeart className="size-4" />}>

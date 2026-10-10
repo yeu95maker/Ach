@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Check, Clock3, Info, Plus, Search, Settings2, X } from 'lucide-react'
+import { ArrowLeft, CalendarCog, Check, Clock3, Info, Plus, Search, Settings2, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
@@ -14,7 +14,7 @@ import { compareWithPlan, WISH_STATUSES, WISH_TYPES, type WishPeriod, type WishS
 import { queryKeys } from '@/features/queryKeys'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
-import { Badge, Button, Card, EmptyState, Input, PageHeader, SegmentedControl, Select, SkeletonCard, cn, useToast } from '@/ui'
+import { Badge, Button, ButtonLink, Card, EmptyState, Input, PageHeader, SegmentedControl, Select, SkeletonCard, cn, useToast } from '@/ui'
 import { PeriodSheet } from './PeriodSheet'
 import { useWishPeriods, useWishScope } from './useWishes'
 import { WishMatrix, type MatrixRow } from './WishMatrix'
@@ -274,6 +274,11 @@ export function WishManagementPage() {
                     <Badge tone={p.status === 'open' ? 'success' : p.status === 'draft' ? 'warning' : 'neutral'} dot>
                       {t(`wishPeriodStatus.${p.status}`)}
                     </Badge>
+                    {employment.managedUnitIds.includes(p.unitId) && (
+                      <ButtonLink to={`/schedule/plan?month=${month}&unit=${p.unitId}`} size="sm" variant="ghost" icon={<CalendarCog className="size-4" />}>
+                        {t('editor.planNow')}
+                      </ButtonLink>
+                    )}
                     {manageUnits.has(p.unitId) && (
                       <Button size="sm" variant="secondary" onClick={() => setSheetPeriod(p)}>
                         {t('wishes.manage.control')}

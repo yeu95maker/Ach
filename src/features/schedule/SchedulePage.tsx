@@ -1,4 +1,4 @@
-import { CalendarHeart, ChevronLeft, ChevronRight, ClipboardList } from 'lucide-react'
+import { CalendarCog, CalendarHeart, ChevronLeft, ChevronRight, ClipboardList } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LEGEND_KINDS } from '@/components/dayKindStyles'
@@ -52,11 +52,16 @@ export function SchedulePage() {
         actions={<SegmentedControl label={t('schedule.viewLabel')} options={views} value={nav.view} onChange={nav.setView} className="w-[264px]" />}
       />
 
-      {(can(employment, 'wishes.submit') || canAny(employment, ['wishes.view', 'wishes.manage'])) && (
+      {(can(employment, 'wishes.submit') || canAny(employment, ['wishes.view', 'wishes.manage', 'schedule.manage'])) && (
         <nav aria-label={t('wishes.title')} className="-mt-2 mb-6 flex flex-wrap gap-2">
           {can(employment, 'wishes.submit') && (
             <ButtonLink to="/schedule/wishes" variant="soft" size="sm" icon={<CalendarHeart className="size-4" />}>
               {t('wishes.title')}
+            </ButtonLink>
+          )}
+          {can(employment, 'schedule.manage') && (
+            <ButtonLink to="/schedule/plan" variant="secondary" size="sm" icon={<CalendarCog className="size-4" />}>
+              {t('editor.title')}
             </ButtonLink>
           )}
           {canAny(employment, ['wishes.view', 'wishes.manage']) && (

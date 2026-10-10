@@ -530,5 +530,53 @@
       "saved": "Salvat",
       "showWishes": "Dorințe"
     }
+  },
+  "editor": {
+    "title": "Editează programul",
+    "subtitle": "Planifică turele având în vedere dorințele, absențele și necesarul de personal.",
+    "tool": "Instrument",
+    "inspect": "Vizualizare",
+    "empty": "Nimic planificat",
+    "sickShort": "B",
+    "vacationShort": "C",
+    "openShifts": "Ture libere",
+    "openShiftsHint": "Încă neacoperite",
+    "addOpenShift": "Adaugă tură liberă pe {{date}}",
+    "staffingTooltip": "{{count}} planificați, minim {{min}} necesari",
+    "overlap": "Tura se suprapune",
+    "overlapHint": "Persoana este deja planificată în acest interval (de ex. noapte înainte de dimineață).",
+    "created": "Ciornă de program creată",
+    "createConflict": "Există deja un program pentru această perioadă.",
+    "pickShiftFirst": "Alege mai întâi o tură mai jos.",
+    "eraseOpenShiftHint": "Pentru eliminare alege „Șterge” mai jos și atinge tura liberă.",
+    "noUnits": "Momentan nu planifici nicio secție.",
+    "noSchedule": "Încă nu există program pentru {{month}}",
+    "noScheduleHint": "Creează o ciornă. Angajații o văd doar după publicare.",
+    "create": "Creează program",
+    "publishedHint": "Acest program este publicat: orice modificare este vizibilă imediat, iar persoana vizată este anunțată.",
+    "howTo": "Alege o tură mai jos, apoi atinge celulele. O nouă atingere elimină tura. „Vizualizare” arată detalii fără a schimba nimic. Simbolurile mici din colț arată dorințele.",
+    "issues_one": "{{count}} observație",
+    "issues_few": "{{count}} observații",
+    "issues_other": "{{count}} de observații",
+    "showLess": "Arată mai puțin",
+    "showAll": "Arată toate ({{count}})",
+    "publishWithIssues_one": "Mai există {{count}} observație. Poți publica totuși.",
+    "publishWithIssues_few": "Mai există {{count}} observații. Poți publica totuși.",
+    "publishWithIssues_other": "Mai există {{count}} de observații. Poți publica totuși.",
+    "setTo": "Planifică drept",
+    "edit": "Editează",
+    "planNow": "Planifică",
+    "issue": {
+      "absence_vacation": "Tură în concediu",
+      "absence_sick": "Tură deși e bolnav",
+      "rest_period": "Repaus < 11 h",
+      "wish_conflict": "Contrar dorinței"
+    },
+    "issueLong": {
+      "absence_vacation": "Persoana are concediu aprobat în această zi.",
+      "absence_sick": "Persoana este în concediu medical în această zi.",
+      "rest_period": "Între tura anterioară și aceasta sunt mai puțin de 11 ore de repaus.",
+      "wish_conflict": "Tura contrazice dorința trimisă."
+    }
   }
 }

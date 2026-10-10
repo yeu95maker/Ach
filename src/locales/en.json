@@ -517,5 +517,51 @@
       "saved": "Saved",
       "showWishes": "Wishes"
     }
+  },
+  "editor": {
+    "title": "Edit roster",
+    "subtitle": "Plan shifts with wishes, absences and staffing in view.",
+    "tool": "Tool",
+    "inspect": "Inspect",
+    "empty": "Nothing planned",
+    "sickShort": "S",
+    "vacationShort": "L",
+    "openShifts": "Open shifts",
+    "openShiftsHint": "Not yet staffed",
+    "addOpenShift": "Add open shift on {{date}}",
+    "staffingTooltip": "{{count}} planned, at least {{min}} needed",
+    "overlap": "Shift overlaps",
+    "overlapHint": "The person is already scheduled at that time (e.g. night before early shift).",
+    "created": "Roster draft created",
+    "createConflict": "A roster already exists for this period.",
+    "pickShiftFirst": "Pick a shift below first.",
+    "eraseOpenShiftHint": "To remove it, choose \"Erase\" below and tap the open shift.",
+    "noUnits": "You are not scheduling any ward right now.",
+    "noSchedule": "No roster for {{month}} yet",
+    "noScheduleHint": "Create a draft. Employees only see it once it is published.",
+    "create": "Create roster",
+    "publishedHint": "This roster is published: every change is visible immediately and the person affected is notified.",
+    "howTo": "Pick a shift below, then tap cells. Tap again to remove. \"Inspect\" shows details without changing anything. Small icons in the corner show wishes.",
+    "issues_one": "{{count}} note",
+    "issues_other": "{{count}} notes",
+    "showLess": "Show less",
+    "showAll": "Show all {{count}}",
+    "publishWithIssues_one": "There is still {{count}} note. You can publish anyway.",
+    "publishWithIssues_other": "There are still {{count}} notes. You can publish anyway.",
+    "setTo": "Schedule as",
+    "edit": "Edit",
+    "planNow": "Schedule",
+    "issue": {
+      "absence_vacation": "Shift during leave",
+      "absence_sick": "Shift despite sick note",
+      "rest_period": "Rest < 11 h",
+      "wish_conflict": "Against wish"
+    },
+    "issueLong": {
+      "absence_vacation": "The person has approved leave on this day.",
+      "absence_sick": "The person is off sick on this day.",
+      "rest_period": "There are less than 11 hours of rest since the previous shift.",
+      "wish_conflict": "The shift contradicts the submitted wish."
+    }
   }
 }

@@ -517,5 +517,51 @@
       "saved": "Gespeichert",
       "showWishes": "Wünsche"
     }
+  },
+  "editor": {
+    "title": "Dienstplan bearbeiten",
+    "subtitle": "Dienste einplanen – mit Wünschen, Abwesenheiten und Besetzung im Blick.",
+    "tool": "Werkzeug",
+    "inspect": "Ansehen",
+    "empty": "Nichts geplant",
+    "sickShort": "K",
+    "vacationShort": "U",
+    "openShifts": "Offene Dienste",
+    "openShiftsHint": "Noch nicht besetzt",
+    "addOpenShift": "Offenen Dienst am {{date}} hinzufügen",
+    "staffingTooltip": "{{count}} geplant, mindestens {{min}} benötigt",
+    "overlap": "Dienst überschneidet sich",
+    "overlapHint": "Die Person ist zu dieser Zeit schon eingeplant (z. B. Nacht vor Frühdienst).",
+    "created": "Dienstplan-Entwurf angelegt",
+    "createConflict": "Für diesen Zeitraum gibt es bereits einen Dienstplan.",
+    "pickShiftFirst": "Wähle zuerst unten einen Dienst aus.",
+    "eraseOpenShiftHint": "Zum Entfernen unten „Löschen“ wählen und den offenen Dienst antippen.",
+    "noUnits": "Du planst aktuell keine Station.",
+    "noSchedule": "Noch kein Dienstplan für {{month}}",
+    "noScheduleHint": "Lege einen Entwurf an. Mitarbeitende sehen ihn erst nach dem Veröffentlichen.",
+    "create": "Dienstplan anlegen",
+    "publishedHint": "Dieser Plan ist veröffentlicht: Jede Änderung wird sofort sichtbar und die betroffene Person benachrichtigt.",
+    "howTo": "Dienst unten wählen, dann Zellen antippen. Nochmal tippen entfernt den Dienst. Mit „Ansehen“ siehst du Details, ohne etwas zu ändern. Kleine Symbole oben rechts zeigen Wünsche.",
+    "issues_one": "{{count}} Hinweis",
+    "issues_other": "{{count}} Hinweise",
+    "showLess": "Weniger anzeigen",
+    "showAll": "Alle {{count}} anzeigen",
+    "publishWithIssues_one": "Es gibt noch {{count}} Hinweis. Du kannst trotzdem veröffentlichen.",
+    "publishWithIssues_other": "Es gibt noch {{count}} Hinweise. Du kannst trotzdem veröffentlichen.",
+    "setTo": "Einplanen als",
+    "edit": "Bearbeiten",
+    "planNow": "Einplanen",
+    "issue": {
+      "absence_vacation": "Dienst im Urlaub",
+      "absence_sick": "Dienst trotz Krankmeldung",
+      "rest_period": "Ruhezeit < 11 h",
+      "wish_conflict": "Gegen Wunsch"
+    },
+    "issueLong": {
+      "absence_vacation": "Die Person hat an diesem Tag genehmigten Urlaub.",
+      "absence_sick": "Die Person ist an diesem Tag krank gemeldet.",
+      "rest_period": "Zwischen dem vorherigen Dienst und diesem liegen weniger als 11 Stunden Ruhezeit.",
+      "wish_conflict": "Der Dienst widerspricht dem eingereichten Wunsch."
+    }
   }
 }

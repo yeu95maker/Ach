@@ -152,6 +152,29 @@ for (const run of runs) {
   await lead.context.close()
 }
 
+// Dienstplan-Editor: plan shifts next to wishes, see warnings, publish
+{
+  const lead = await session('editor', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1440, height: 900 }, theme: 'light' })
+  await lead.page.goto(`${BASE}/schedule/plan`)
+  await lead.page.waitForSelector('text=Offene Dienste')
+  const cell = (name, day) => lead.page.locator('tr', { hasText: name }).locator('td').nth(day - 1).locator('button')
+  await lead.page.getByRole('radio').filter({ hasText: 'Frühdienst' }).click()
+  await cell('Jonas', 5).click()
+  await lead.page.waitForSelector('text=8:15 h')
+  await lead.page.getByRole('radio').filter({ hasText: 'Spätdienst' }).click()
+  await lead.page.locator('tr', { hasText: 'Offene Dienste' }).locator('td').nth(9).getByRole('button').last().click()
+  await lead.page.getByRole('radio').filter({ hasText: 'Ansehen' }).click()
+  await cell('Anna', 5).click()
+  await lead.page.waitForSelector('text=Der Dienst widerspricht dem eingereichten Wunsch.')
+  await shot(lead.page, 'editor', '40-cell-details', { full: false })
+  await lead.page.keyboard.press('Escape')
+  await shot(lead.page, 'editor', '41-grid')
+  await lead.page.getByRole('button', { name: 'Veröffentlichen' }).click()
+  await lead.page.locator('dialog[open]').getByRole('button', { name: 'Jetzt veröffentlichen' }).click()
+  await lead.page.waitForSelector('text=Veröffentlicht · v1')
+  await lead.context.close()
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

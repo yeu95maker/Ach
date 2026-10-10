@@ -60,6 +60,8 @@ const dynamic = {
   wishTypeShort: ['free', 'night', 'early', 'late', 'preferred', 'unavailable'],
   wishStatus: ['submitted', 'under_review', 'considered', 'not_considered', 'locked'],
   wishPeriodStatus: ['draft', 'open', 'locked', 'archived'],
+  'editor.issue': ['absence_vacation', 'absence_sick', 'rest_period', 'wish_conflict'],
+  'editor.issueLong': ['absence_vacation', 'absence_sick', 'rest_period', 'wish_conflict'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
 for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed'])
