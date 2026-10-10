@@ -137,7 +137,8 @@
     "publishNow": "Şimdi yayınla",
     "published": "Nöbet planı yayınlandı",
     "publishedHint": "Ekip bilgilendirildi.",
-    "more": "Diğer plan işlevleri"
+    "more": "Diğer plan işlevleri",
+    "updatedAt": "Güncelleme: {{when}}"
   },
   "team": {
     "title": "Ekip",
@@ -690,7 +691,8 @@
     "tabs": {
       "people": "Çalışanlar",
       "organization": "Servisler",
-      "shifts": "Vardiya türleri"
+      "shifts": "Vardiya türleri",
+      "integrations": "Entegrasyonlar"
     },
     "saved": "Kaydedildi",
     "add": "Ekle",
@@ -789,6 +791,200 @@
       "breakShort": "{{minutes}} dk mola",
       "overnight": "ertesi gün biter",
       "overnightHint": "Bitiş başlangıçtan önce – vardiya ertesi gün biter (örn. gece vardiyası)."
+    }
+  },
+  "integration": {
+    "title": "Planı içe aktar",
+    "subtitle": "Hazır planı vardiya planlama programından aktar",
+    "tabNew": "Yeni içe aktarma",
+    "tabHistory": "Geçmiş",
+    "steps": "Adımlar",
+    "step": {
+      "upload": "Dosya",
+      "columns": "Sütunlar",
+      "review": "Kontrol",
+      "preview": "Onay"
+    },
+    "adapter": {
+      "csv": "CSV dosyası",
+      "xlsx": "Excel dosyası (XLSX)"
+    },
+    "ward": "Servis",
+    "month": "Ay",
+    "profile": "İçe aktarma profili",
+    "dropTitle": "Dosyayı buraya sürükle veya seç",
+    "dropHint": "Vardiya programından CSV veya Excel (XLSX) – liste (vardiya başına bir satır) veya tablo (kişi başına bir satır, gün başına bir sütun) olarak.",
+    "chooseFile": "Dosya seç",
+    "privacyHint": "Dosya yalnızca cihazında okunur. ShiftCare'e yalnızca tanınan vardiyalar gider; adlar ve orijinal satırlar yayından sonra silinir.",
+    "errors": {
+      "format": "Bu biçim desteklenmiyor. Lütfen CSV veya XLSX olarak dışa aktar.",
+      "size": "Dosya 15 MB'tan büyük.",
+      "noProfile": "Bu servis için etkin bir içe aktarma profili yok. Lütfen yönetimle iletişime geç.",
+      "empty": "Dosyada satır bulunamadı.",
+      "unreadable": "Dosya okunamadı."
+    },
+    "sheet": "Sayfa",
+    "layout": "Dosya yapısı",
+    "layoutList": "Liste",
+    "layoutGrid": "Tablo",
+    "layoutListHint": "Tarih ve vardiya kodu ile vardiya başına bir satır (isteğe bağlı başlangıç, bitiş, mola).",
+    "layoutGridHint": "Kişi başına bir satır; sütunlar ayın günleri, hücrelerde vardiya kodları.",
+    "dateFormat": "Tarih biçimi",
+    "role": {
+      "employeeId": "Çalışan ID / personel numarası",
+      "employeeName": "Ad",
+      "lastName": "Soyad",
+      "firstName": "Ad",
+      "date": "Tarih",
+      "code": "Vardiya kodu",
+      "start": "Başlangıç",
+      "end": "Bitiş",
+      "break": "Mola",
+      "externalShiftId": "Kaynak sistemdeki vardiya ID"
+    },
+    "notInFile": "– dosyada yok –",
+    "column": "Sütun {{n}}",
+    "dayColumns": "{{count}} gün sütunu bulundu ({{from}} – {{to}})",
+    "noDayColumns": "Gün sütunu bulunamadı. Sütun başlıkları gün olmalı (örn. „1“, „01.“, „01.11.“).",
+    "readRows_one": "{{count}} vardiya okundu",
+    "readRows_other": "{{count}} vardiya okundu",
+    "line": "Satır {{line}}",
+    "moreProblems": "… ve {{count}} tane daha",
+    "parse": {
+      "invalid_date": "tarih „{{value}}“ okunamadı",
+      "invalid_time": "saat „{{value}}“ okunamadı",
+      "invalid_break": "mola „{{value}}“ okunamadı",
+      "no_employee": "kişi yok – atlandı",
+      "too_many_rows": "çok fazla satır ({{value}}), en fazla 10000"
+    },
+    "otherFile": "Başka dosya",
+    "check": "Kontrol et",
+    "message": {
+      "empty": "boş",
+      "code_ignored": "kod yok sayılıyor",
+      "missing_date": "tarih eksik",
+      "outside_period": "{{from}} – {{to}} dışında",
+      "employee_unmatched": "çalışan ID „{{ref}}“ bilinmiyor",
+      "unknown_code": "vardiya kodu „{{code}}“ bilinmiyor",
+      "invalid_times": "başlangıç/bitiş geçersiz",
+      "not_in_unit": "bu servise ait değil",
+      "duplicate_row": "tekrarlanan satır",
+      "overlap_in_file": "{{row}}. satırla çakışıyor",
+      "off_and_shift": "aynı gün izin ve vardiya – vardiya geçerli"
+    },
+    "review": {
+      "count": {
+        "ok": "sorunsuz",
+        "warnings": "uyarılı",
+        "errors": "hata",
+        "ignored": "atlandı"
+      },
+      "duplicate": "Bu dosya bu servis ve ay için zaten içe aktarıldı. Önizleme bir değişiklik olup olmadığını gösterir.",
+      "employees_one": "{{count}} kişiyi eşleştir",
+      "employees_other": "{{count}} kişiyi eşleştir",
+      "employeesHint": "ShiftCare dosyadaki bu ID'leri henüz tanımıyor. Eşleştirme kaydedilir ve bir sonraki içe aktarmada otomatik kullanılır.",
+      "idInFile": "Dosyadaki ID: {{id}}",
+      "rows_one": "{{count}} vardiya",
+      "rows_other": "{{count}} vardiya",
+      "choosePerson": "{{name}} için kişi seç",
+      "choose": "Seç …",
+      "confirm": "Onayla",
+      "noNameMatching": "Adlar bilerek otomatik eşleştirilmez – yalnızca onaylı ID'ler veya tam personel numaraları.",
+      "codes_one": "{{count}} vardiya kodunu eşleştir",
+      "codes_other": "{{count}} vardiya kodunu eşleştir",
+      "codesHint": "Vardiya programındaki kod hangi vardiya türüne karşılık geliyor?",
+      "mapCode": "{{code}} kodunu eşleştir",
+      "ignore": "Yok say",
+      "codesRemembered": "Bu servisin sonraki tüm içe aktarmaları için geçerlidir.",
+      "otherErrors_one": "Hatalı {{count}} satır",
+      "otherErrors_other": "Hatalı {{count}} satır",
+      "otherErrorsHint": "Lütfen vardiya programında düzelt ve dosyayı yeniden dışa aktar.",
+      "warnings_one": "{{count}} uyarı",
+      "warnings_other": "{{count}} uyarı",
+      "ignored_one": "{{count}} atlanan satır",
+      "ignored_other": "{{count}} atlanan satır",
+      "recheck": "Yeniden kontrol et",
+      "fixFirst_one": "{{count}} hata kaldı",
+      "fixFirst_other": "{{count}} hata kaldı",
+      "toPreview": "Önizlemeye geç"
+    },
+    "preview": {
+      "title": "Değişikliklerin önizlemesi",
+      "newRoster": "Bu ay için henüz plan yok – taslak olarak oluşturulur.",
+      "intoDraft": "Taslak güncellenir.",
+      "intoPublished": "Yayınlanmış plan (sürüm {{version}}) güncellenir.",
+      "count": {
+        "added": "yeni",
+        "changed": "değişti",
+        "removed": "kalktı",
+        "unchanged": "aynı"
+      },
+      "change": {
+        "added": "Yeni",
+        "changed": "Değişti",
+        "removed": "Kalktı"
+      },
+      "manual_one": "ShiftCare'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manual_other": "ShiftCare'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manualBadge": "elle değiştirildi",
+      "notifyHint": "İlgili çalışanlar tek bir özet bildirim alır.",
+      "more": "… ve {{count}} değişiklik daha",
+      "apply_one": "{{count}} değişikliği uygula",
+      "apply_other": "{{count}} değişikliği uygula",
+      "applyUnchanged": "Uygula (değişiklik yok)",
+      "applied": "Plan uygulandı",
+      "applyFailed": "Uygulama başarısız",
+      "applyFailedHint": "Hiçbir şey değişmedi. Genellikle bir vardiya başka bir servisteki vardiyayla çakışır. Lütfen kontrol edip tekrar dene.",
+      "superseded": "Bu arada bu ay için daha yeni bir dosya uygulandı. Lütfen güncel dosyayı içe aktar.",
+      "diffLine": "{{added}} yeni · {{changed}} değişti · {{removed}} kalktı · {{unchanged}} aynı",
+      "notYetPublished": "Ekip henüz göremiyor. Planı editörde kontrol et veya hemen yayınla.",
+      "openEditor": "Editörde aç",
+      "publish": "Yayınla",
+      "published": "Plan yayınlandı",
+      "publishedHint": "Herkes vardiyalarını artık uygulamada görüyor ve bilgilendirildi.",
+      "newImport": "Yeni içe aktarma",
+      "mostlyRemoved": "Dikkat: mevcut {{count}} kayıt kalkacak. Dosya, servisin bu ayki tam planı sayılır – gerçekten eksiksiz mi?"
+    },
+    "status": {
+      "staged": "Kontrol edildi",
+      "applied": "Uygulandı",
+      "published": "Yayınlandı",
+      "failed": "Başarısız",
+      "cancelled": "Vazgeçildi",
+      "superseded": "Eskidi"
+    },
+    "history": {
+      "empty": "Henüz içe aktarma yok",
+      "duplicate": "aynı dosya",
+      "by": "{{name}} · {{when}}",
+      "publishedAt": "yayınlandı {{when}}",
+      "rows": "{{ok}} vardiya hazır · {{errors}} hata",
+      "failed": "Son deneme başarısız: {{message}}"
+    },
+    "kind": {
+      "file": "Dosya içe aktarma (CSV/XLSX)",
+      "api": "Doğrudan arayüz (hazırlanıyor)",
+      "sftp": "Otomatik dosya alma (hazırlanıyor)"
+    },
+    "admin": {
+      "intro": "Servislerin planlarını hangi vardiya programlarından içe aktaracağını burada belirlersin. Dosya içe aktarma (CSV/XLSX) kullanılabilir. Tek tek sağlayıcılara doğrudan arayüzler henüz yok – ancak geliştirilip test edildiklerinde sunulur.",
+      "add": "İçe aktarma profili ekle",
+      "edit": "İçe aktarma profilini düzenle",
+      "empty": "Henüz içe aktarma profili yok",
+      "namePlaceholder": "örn. Vardiya programından dışa aktarma",
+      "kind": "Bağlantı türü",
+      "kindFileHint": "Servis sorumluları hazır planı CSV veya Excel olarak yükler.",
+      "notImplemented": "Henüz kullanılamıyor: bu tür için adaptör yok, veri alınmaz.",
+      "vendor": "Kaynak sistem",
+      "vendorHint": "Dışa aktarmanın yapıldığı programın adı (bilgi amaçlı).",
+      "secret": "Erişim bilgileri",
+      "secretHint": "Vault'ta şifreli saklanır ve sonra okunamaz.",
+      "secretStored": "Erişim bilgileri kayıtlı. Yeni değer bunların yerini alır.",
+      "employeeMappings": "Onaylı çalışan ID'leri ({{count}})",
+      "codeMappings": "Eşleştirilmiş vardiya kodları ({{count}})",
+      "noMappings": "Henüz yok – personel numaraları doğrudan tanınır.",
+      "noCodeMappings": "Henüz yok – F, S, N gibi kodlar doğrudan tanınır.",
+      "removeMapping": "Eşleştirmeyi kaldır"
     }
   }
 }

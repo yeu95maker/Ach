@@ -137,7 +137,8 @@
     "publishNow": "Publish now",
     "published": "Roster published",
     "publishedHint": "The team has been notified.",
-    "more": "More roster features"
+    "more": "More roster features",
+    "updatedAt": "Updated {{when}}"
   },
   "team": {
     "title": "Team",
@@ -690,7 +691,8 @@
     "tabs": {
       "people": "Staff",
       "organization": "Wards",
-      "shifts": "Shift types"
+      "shifts": "Shift types",
+      "integrations": "Integrations"
     },
     "saved": "Saved",
     "add": "Add",
@@ -789,6 +791,200 @@
       "breakShort": "{{minutes}} min break",
       "overnight": "ends the next day",
       "overnightHint": "The end is before the start – the shift ends the next day (e.g. night shift)."
+    }
+  },
+  "integration": {
+    "title": "Import roster",
+    "subtitle": "Bring the finished roster over from your rostering software",
+    "tabNew": "New import",
+    "tabHistory": "History",
+    "steps": "Steps",
+    "step": {
+      "upload": "File",
+      "columns": "Columns",
+      "review": "Check",
+      "preview": "Release"
+    },
+    "adapter": {
+      "csv": "CSV file",
+      "xlsx": "Excel file (XLSX)"
+    },
+    "ward": "Ward",
+    "month": "Month",
+    "profile": "Import profile",
+    "dropTitle": "Drop the file here or choose it",
+    "dropHint": "CSV or Excel (XLSX) from your rostering software – as a list (one row per shift) or a grid (one row per person, one column per day).",
+    "chooseFile": "Choose file",
+    "privacyHint": "The file is read on your device only. ShiftCare receives the recognised shifts; names and original rows are deleted after publishing.",
+    "errors": {
+      "format": "This format is not supported. Please export as CSV or XLSX.",
+      "size": "The file is larger than 15 MB.",
+      "noProfile": "There is no active import profile for this ward. Please contact your administration.",
+      "empty": "No rows were found in the file.",
+      "unreadable": "The file could not be read."
+    },
+    "sheet": "Sheet",
+    "layout": "File layout",
+    "layoutList": "List",
+    "layoutGrid": "Grid",
+    "layoutListHint": "One row per shift with date and shift code (optionally start, end, break).",
+    "layoutGridHint": "One row per person; the columns are the days of the month, the cells contain the shift codes.",
+    "dateFormat": "Date format",
+    "role": {
+      "employeeId": "Employee ID / personnel number",
+      "employeeName": "Name",
+      "lastName": "Last name",
+      "firstName": "First name",
+      "date": "Date",
+      "code": "Shift code",
+      "start": "Start",
+      "end": "End",
+      "break": "Break",
+      "externalShiftId": "Shift ID in the source system"
+    },
+    "notInFile": "– not in the file –",
+    "column": "Column {{n}}",
+    "dayColumns": "{{count}} day columns found ({{from}} – {{to}})",
+    "noDayColumns": "No day columns found. The column headers must be days (e.g. “1”, “01.”, “01.11.”).",
+    "readRows_one": "{{count}} shift read",
+    "readRows_other": "{{count}} shifts read",
+    "line": "Line {{line}}",
+    "moreProblems": "… and {{count}} more",
+    "parse": {
+      "invalid_date": "date “{{value}}” not readable",
+      "invalid_time": "time “{{value}}” not readable",
+      "invalid_break": "break “{{value}}” not readable",
+      "no_employee": "no person – skipped",
+      "too_many_rows": "too many rows ({{value}}), at most 10000"
+    },
+    "otherFile": "Other file",
+    "check": "Check",
+    "message": {
+      "empty": "empty",
+      "code_ignored": "code is ignored",
+      "missing_date": "date missing",
+      "outside_period": "outside {{from}} – {{to}}",
+      "employee_unmatched": "employee ID “{{ref}}” unknown",
+      "unknown_code": "shift code “{{code}}” unknown",
+      "invalid_times": "invalid start/end",
+      "not_in_unit": "not a member of this ward",
+      "duplicate_row": "duplicate row",
+      "overlap_in_file": "overlaps with row {{row}}",
+      "off_and_shift": "day off and shift on the same day – the shift counts"
+    },
+    "review": {
+      "count": {
+        "ok": "fine",
+        "warnings": "with a note",
+        "errors": "errors",
+        "ignored": "skipped"
+      },
+      "duplicate": "This file was already imported for this ward and month. The preview shows whether anything changed.",
+      "employees_one": "Match {{count}} person",
+      "employees_other": "Match {{count}} people",
+      "employeesHint": "ShiftCare does not know these IDs from the file yet. The match is saved and used automatically next time.",
+      "idInFile": "ID in the file: {{id}}",
+      "rows_one": "{{count}} shift",
+      "rows_other": "{{count}} shifts",
+      "choosePerson": "Choose the person for {{name}}",
+      "choose": "Choose …",
+      "confirm": "Confirm",
+      "noNameMatching": "Names are deliberately never matched automatically – only confirmed IDs or exact personnel numbers.",
+      "codes_one": "Map {{count}} shift code",
+      "codes_other": "Map {{count}} shift codes",
+      "codesHint": "Which shift type does the code from your rostering software stand for?",
+      "mapCode": "Map code {{code}}",
+      "ignore": "Ignore",
+      "codesRemembered": "Applies to all future imports of this ward.",
+      "otherErrors_one": "{{count}} row with an error",
+      "otherErrors_other": "{{count}} rows with errors",
+      "otherErrorsHint": "Please correct them in the rostering software and export the file again.",
+      "warnings_one": "{{count}} note",
+      "warnings_other": "{{count}} notes",
+      "ignored_one": "{{count}} skipped row",
+      "ignored_other": "{{count}} skipped rows",
+      "recheck": "Check again",
+      "fixFirst_one": "{{count}} error left",
+      "fixFirst_other": "{{count}} errors left",
+      "toPreview": "Continue to preview"
+    },
+    "preview": {
+      "title": "Preview of the changes",
+      "newRoster": "There is no roster for this month yet – it is created as a draft.",
+      "intoDraft": "The draft is updated.",
+      "intoPublished": "The published roster (version {{version}}) is updated.",
+      "count": {
+        "added": "new",
+        "changed": "changed",
+        "removed": "removed",
+        "unchanged": "unchanged"
+      },
+      "change": {
+        "added": "New",
+        "changed": "Changed",
+        "removed": "Removed"
+      },
+      "manual_one": "{{count}} entry was created or changed by hand in ShiftCare and is replaced by the file.",
+      "manual_other": "{{count}} entries were created or changed by hand in ShiftCare and are replaced by the file.",
+      "manualBadge": "changed by hand",
+      "notifyHint": "Affected staff receive one summary notification.",
+      "more": "… and {{count}} more changes",
+      "apply_one": "Apply {{count}} change",
+      "apply_other": "Apply {{count}} changes",
+      "applyUnchanged": "Apply (no changes)",
+      "applied": "Roster applied",
+      "applyFailed": "Applying failed",
+      "applyFailedHint": "Nothing was changed. Usually a shift overlaps with a shift on another ward. Please check and try again.",
+      "superseded": "A newer file for this month has been applied in the meantime. Please import the current file.",
+      "diffLine": "{{added}} new · {{changed}} changed · {{removed}} removed · {{unchanged}} unchanged",
+      "notYetPublished": "Not visible to the team yet. Check the roster in the editor or publish it right away.",
+      "openEditor": "Open in editor",
+      "publish": "Publish",
+      "published": "Roster published",
+      "publishedHint": "Everyone now sees their shifts in the app and has been notified.",
+      "newImport": "New import",
+      "mostlyRemoved": "Caution: {{count}} existing entries would be removed. The file counts as the complete roster of the ward for this month – is it really complete?"
+    },
+    "status": {
+      "staged": "Checked",
+      "applied": "Applied",
+      "published": "Published",
+      "failed": "Failed",
+      "cancelled": "Discarded",
+      "superseded": "Outdated"
+    },
+    "history": {
+      "empty": "No imports yet",
+      "duplicate": "same file",
+      "by": "{{name}} · {{when}}",
+      "publishedAt": "published {{when}}",
+      "rows": "{{ok}} shifts ready · {{errors}} errors",
+      "failed": "Last attempt failed: {{message}}"
+    },
+    "kind": {
+      "file": "File import (CSV/XLSX)",
+      "api": "Direct interface (in preparation)",
+      "sftp": "Automatic file pickup (in preparation)"
+    },
+    "admin": {
+      "intro": "Define here from which rostering software wards import their roster. File import (CSV/XLSX) is available. Direct interfaces to individual vendors are not implemented yet – they are only offered once they have been built and tested.",
+      "add": "Add import profile",
+      "edit": "Edit import profile",
+      "empty": "No import profiles yet",
+      "namePlaceholder": "e.g. Export from the rostering software",
+      "kind": "Connection type",
+      "kindFileHint": "Ward managers upload the finished roster as CSV or Excel.",
+      "notImplemented": "Not available yet: there is no adapter for this type, no data is fetched.",
+      "vendor": "Source system",
+      "vendorHint": "Name of the program the export comes from (for information).",
+      "secret": "Credentials",
+      "secretHint": "Stored encrypted in the Vault and not readable afterwards.",
+      "secretStored": "Credentials are stored. A new value replaces them.",
+      "employeeMappings": "Confirmed employee IDs ({{count}})",
+      "codeMappings": "Mapped shift codes ({{count}})",
+      "noMappings": "None yet – personnel numbers are recognised directly.",
+      "noCodeMappings": "None yet – codes like F, S, N are recognised directly.",
+      "removeMapping": "Remove mapping"
     }
   }
 }

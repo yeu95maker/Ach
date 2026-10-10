@@ -159,6 +159,8 @@ begin
                        and employee_id = '40000000-0000-4000-a000-000000000004'), 'removed shift deleted';
   assert (select status from public.import_runs where id = run2.id) = 'superseded', 'older staged upload superseded';
   assert (select count(*) from public.wish_entries) = wishes, 'wishes untouched';
+  assert jsonb_array_length(public.list_import_runs('10000000-0000-4000-a000-000000000001')) >= 5, 'history lists the runs';
+  assert (public.list_import_runs('10000000-0000-4000-a000-000000000001') -> 0 ->> 'created_by_name') = 'Mira Schulz', 'with the responsible person';
 end $$;
 reset role;
 do $$
@@ -239,6 +241,7 @@ set local role authenticated;
 do $$
 begin
   assert not exists (select 1 from public.integration_sources), 'nurse sees no integration config';
+  assert public.list_import_runs('10000000-0000-4000-a000-000000000001') = '[]'::jsonb, 'nurse sees no import history';
   begin
     perform public.stage_import('c0000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001',
       current_date, current_date, 'x.csv', repeat('a', 64), 'list', '{}', '[{"row_no":1,"employee_ref":"P-1001","date":"2030-01-01","code":"F"}]');

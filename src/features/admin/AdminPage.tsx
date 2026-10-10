@@ -4,10 +4,11 @@ import { can, canAny } from '@/domain/permissions'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { PageHeader, cn } from '@/ui'
 import { EmployeesTab } from './EmployeesTab'
+import { IntegrationsTab } from './IntegrationsTab'
 import { OrganizationTab } from './OrganizationTab'
 import { ShiftTypesTab } from './ShiftTypesTab'
 
-type Tab = 'people' | 'organization' | 'shifts'
+type Tab = 'people' | 'organization' | 'shifts' | 'integrations'
 
 /** Verwaltung: employees, roles, wards and shift types of the hospital. */
 export function AdminPage() {
@@ -23,6 +24,7 @@ export function AdminPage() {
           { id: 'shifts' as const, label: t('admin.tabs.shifts') },
         ]
       : []),
+    ...(can(employment, 'integrations.manage') ? [{ id: 'integrations' as const, label: t('admin.tabs.integrations') }] : []),
   ]
   const requested = params.get('tab') as Tab | null
   const active: Tab = tabs.some((x) => x.id === requested) ? requested! : (tabs[0]?.id ?? 'people')
@@ -51,6 +53,7 @@ export function AdminPage() {
         {active === 'people' && <EmployeesTab />}
         {active === 'organization' && <OrganizationTab />}
         {active === 'shifts' && <ShiftTypesTab />}
+        {active === 'integrations' && <IntegrationsTab />}
       </div>
     </>
   )

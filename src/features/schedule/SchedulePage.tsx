@@ -1,4 +1,4 @@
-import { CalendarCog, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, ClipboardList, History } from 'lucide-react'
+import { CalendarCog, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, ClipboardList, FileUp, History } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LEGEND_KINDS } from '@/components/dayKindStyles'
@@ -35,7 +35,9 @@ export function SchedulePage() {
   const stats = useMemo(() => {
     const inScope = nav.view === 'month' ? agenda.filter((d) => isSameMonth(d.date, fromISODate(nav.date))) : agenda
     const shifts = inScope.flatMap((d) => (d.absence ? [] : d.entries.filter((e) => e.kind === 'shift')))
-    return { count: shifts.length, minutes: shifts.reduce((sum, e) => sum + durationMinutes(e), 0) }
+    const stamps = inScope.flatMap((d) => d.entries.map((e) => e.updatedAt?.getTime() ?? 0))
+    const updated = stamps.length ? Math.max(...stamps) : 0
+    return { count: shifts.length, minutes: shifts.reduce((sum, e) => sum + durationMinutes(e), 0), updatedAt: updated ? new Date(updated) : null }
   }, [agenda, nav.view, nav.date])
 
   const views: { value: ScheduleView; label: string }[] = [
@@ -48,7 +50,12 @@ export function SchedulePage() {
     <>
       <PageHeader
         title={t('schedule.title')}
-        subtitle={t('schedule.stats', { count: stats.count, hours: fmt.hours(stats.minutes) })}
+        subtitle={
+          <>
+            {t('schedule.stats', { count: stats.count, hours: fmt.hours(stats.minutes) })}
+            {stats.updatedAt && <span className="block text-sm text-text-3">{t('schedule.updatedAt', { when: fmt.relative(stats.updatedAt) })}</span>}
+          </>
+        }
         actions={<SegmentedControl label={t('schedule.viewLabel')} options={views} value={nav.view} onChange={nav.setView} className="w-[264px]" />}
       />
 
@@ -67,6 +74,11 @@ export function SchedulePage() {
         {can(employment, 'schedule.manage') && (
           <ButtonLink to="/schedule/plan" variant="secondary" size="sm" icon={<CalendarCog className="size-4" />}>
             {t('editor.title')}
+          </ButtonLink>
+        )}
+        {can(employment, 'schedule.import') && (
+          <ButtonLink to="/schedule/import" variant="secondary" size="sm" icon={<FileUp className="size-4" />}>
+            {t('integration.title')}
           </ButtonLink>
         )}
         {canAny(employment, ['wishes.view', 'wishes.manage']) && (

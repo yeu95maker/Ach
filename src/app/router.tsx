@@ -24,6 +24,7 @@ const RosterEditorPage = named(() => import('@/features/roster-editor/RosterEdit
 const OpenShiftsPage = named(() => import('@/features/staffing/OpenShiftsPage'), 'OpenShiftsPage')
 const HistoryPage = named(() => import('@/features/schedule/HistoryPage'), 'HistoryPage')
 const AdminPage = named(() => import('@/features/admin/AdminPage'), 'AdminPage')
+const ImportPage = named(() => import('@/features/import/ImportPage'), 'ImportPage')
 const NewsPage = named(() => import('@/features/news/NewsPage'), 'NewsPage')
 const ForgotPasswordPage = named(() => import('@/features/auth/ForgotPasswordPage'), 'ForgotPasswordPage')
 const ResetPasswordPage = named(() => import('@/features/auth/ResetPasswordPage'), 'ResetPasswordPage')
@@ -69,9 +70,17 @@ export const router = createBrowserRouter([
           { path: 'schedule/open', element: <OpenShiftsPage /> },
           { path: 'schedule/history', element: <HistoryPage /> },
           {
+            path: 'schedule/import',
+            element: (
+              <RequirePermission permission="schedule.import">
+                <ImportPage />
+              </RequirePermission>
+            ),
+          },
+          {
             path: 'admin',
             element: (
-              <RequirePermission permission={['employees.manage', 'roles.assign', 'organization.manage']}>
+              <RequirePermission permission={['employees.manage', 'roles.assign', 'organization.manage', 'integrations.manage']}>
                 <AdminPage />
               </RequirePermission>
             ),

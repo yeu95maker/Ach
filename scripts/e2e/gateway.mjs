@@ -196,6 +196,9 @@ function pgError(e) {
   return [status, { code: e.code ?? 'PGRST000', message: e.message, details: e.detail ?? null, hint: e.hint ?? null }]
 }
 
+/** `.single()` / `.maybeSingle()` ask for one object instead of an array (like PostgREST). */
+const wantsObject = (req) => (req.headers.accept ?? '').includes('application/vnd.pgrst.object+json')
+
 async function handleRest(req, res, url, claims) {
   const path = url.pathname.replace(/^\/rest\/v1\//, '')
   const params = [...url.searchParams.entries()]
@@ -240,6 +243,7 @@ async function handleRest(req, res, url, claims) {
       if (req.method === 'HEAD') return send(res, 200, undefined, { 'content-range': `*/${rows[0].n}` })
     }
     const { rows } = await asUser(claims, (c) => c.query(sql, values))
+    if (wantsObject(req)) return rows.length === 1 ? send(res, 200, rows[0]) : send(res, 406, { code: 'PGRST116', message: `${rows.length} rows` })
     return send(res, 200, rows, { 'content-range': `0-${rows.length - 1}/*` })
   }
 
@@ -266,6 +270,7 @@ async function handleRest(req, res, url, claims) {
         } else inserted.push(...r.rows)
       }
     })
+    if (returning && wantsObject(req)) return inserted.length === 1 ? send(res, 201, inserted[0]) : send(res, 406, { code: 'PGRST116', message: `${inserted.length} rows` })
     return returning ? send(res, 201, inserted) : send(res, 201, undefined)
   }
 

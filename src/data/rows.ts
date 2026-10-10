@@ -69,6 +69,8 @@ export interface ShiftRosterRow {
   avatar_path: string | null
   job_title: string | null
   qualifications: QualificationRow[] | null
+  updated_at?: string | null
+  imported_at?: string | null
 }
 
 export interface DirectoryRow {

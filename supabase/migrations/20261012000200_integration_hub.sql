@@ -1057,6 +1057,34 @@ as $$
   where s.id = p_source_id and s.hospital_id in (select private.hospitals_with_permission('integrations.manage'))
 $$;
 
+-- Import history with ward, profile and the responsible person.
+create or replace function public.list_import_runs(p_hospital_id uuid, p_limit integer default 50)
+returns jsonb
+language sql stable security definer
+set search_path = ''
+as $$
+  select coalesce(jsonb_agg(x order by x ->> 'created_at' desc), '[]'::jsonb)
+  from (
+    select jsonb_build_object(
+      'id', r.id, 'status', r.status, 'unit_id', r.unit_id, 'unit_name', u.name, 'source_name', s.name,
+      'period_start', r.period_start, 'period_end', r.period_end, 'file_name', r.file_name,
+      'summary', r.summary, 'error_message', r.error_message, 'duplicate_of', r.duplicate_of, 'schedule_id', r.schedule_id,
+      'created_at', r.created_at, 'applied_at', r.applied_at, 'published_at', r.published_at,
+      'created_by_name', btrim(coalesce(cu.first_name, '') || ' ' || coalesce(cu.last_name, '')),
+      'applied_by_name', nullif(btrim(coalesce(au.first_name, '') || ' ' || coalesce(au.last_name, '')), '')) as x
+    from public.import_runs r
+    join public.units u on u.id = r.unit_id
+    join public.integration_sources s on s.id = r.source_id
+    left join public.users cu on cu.id = r.created_by
+    left join public.users au on au.id = r.applied_by
+    where r.hospital_id = p_hospital_id
+      and (r.unit_id in (select private.units_with_permission('schedule.import'))
+           or r.hospital_id in (select private.hospitals_with_permission('integrations.manage')))
+    order by r.created_at desc
+    limit least(greatest(p_limit, 1), 200)
+  ) q
+$$;
+
 -- Raw file content is kept for at most 30 days.
 create or replace function private.purge_import_raw()
 returns void
@@ -1082,13 +1110,13 @@ revoke execute on function
   public.stage_import(uuid, uuid, date, date, text, text, text, jsonb, jsonb), public.revalidate_import(uuid),
   public.cancel_import(uuid), public.confirm_employee_mapping(uuid, text, uuid), public.remove_employee_mapping(uuid),
   public.map_shift_code(uuid, uuid, text, text, uuid), public.preview_import(uuid), public.apply_import(uuid),
-  public.set_integration_secret(uuid, text), public.integration_source_has_secret(uuid)
+  public.set_integration_secret(uuid, text), public.integration_source_has_secret(uuid), public.list_import_runs(uuid, integer)
   from public, anon;
 grant execute on function
   public.stage_import(uuid, uuid, date, date, text, text, text, jsonb, jsonb), public.revalidate_import(uuid),
   public.cancel_import(uuid), public.confirm_employee_mapping(uuid, text, uuid), public.remove_employee_mapping(uuid),
   public.map_shift_code(uuid, uuid, text, text, uuid), public.preview_import(uuid), public.apply_import(uuid),
-  public.set_integration_secret(uuid, text), public.integration_source_has_secret(uuid)
+  public.set_integration_secret(uuid, text), public.integration_source_has_secret(uuid), public.list_import_runs(uuid, integer)
   to authenticated;
 revoke execute on function
   private.resolve_import(uuid), private.import_diff(uuid), private.purge_import_raw(), private.import_schedule(public.import_runs)

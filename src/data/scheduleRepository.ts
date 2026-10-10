@@ -4,7 +4,7 @@ import { mapRoster } from './mappers'
 import type { ScheduleRow, ShiftRosterRow } from './rows'
 
 const ROSTER_COLUMNS =
-  'entry_id, hospital_id, schedule_id, schedule_status, unit_id, unit_name, employee_id, kind, entry_date, starts_at, ends_at, note, shift_type_id, shift_code, shift_name, shift_category, shift_color, first_name, last_name, avatar_path, job_title, qualifications'
+  'entry_id, hospital_id, schedule_id, schedule_status, unit_id, unit_name, employee_id, kind, entry_date, starts_at, ends_at, note, shift_type_id, shift_code, shift_name, shift_category, shift_color, first_name, last_name, avatar_path, job_title, qualifications, updated_at, imported_at'
 
 export const scheduleRepository = {
   /** Own roster entries in a date range (published rosters and the archived history). */

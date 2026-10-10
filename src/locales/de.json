@@ -137,7 +137,8 @@
     "publishNow": "Jetzt veröffentlichen",
     "published": "Dienstplan veröffentlicht",
     "publishedHint": "Das Team wurde benachrichtigt.",
-    "more": "Weitere Dienstplan-Funktionen"
+    "more": "Weitere Dienstplan-Funktionen",
+    "updatedAt": "Stand: {{when}}"
   },
   "team": {
     "title": "Team",
@@ -690,7 +691,8 @@
     "tabs": {
       "people": "Mitarbeitende",
       "organization": "Stationen",
-      "shifts": "Schichtarten"
+      "shifts": "Schichtarten",
+      "integrations": "Integrationen"
     },
     "saved": "Gespeichert",
     "add": "Hinzufügen",
@@ -789,6 +791,200 @@
       "breakShort": "{{minutes}} Min. Pause",
       "overnight": "endet am Folgetag",
       "overnightHint": "Das Ende liegt vor dem Beginn – der Dienst endet am Folgetag (z. B. Nachtdienst)."
+    }
+  },
+  "integration": {
+    "title": "Dienstplan importieren",
+    "subtitle": "Fertigen Dienstplan aus dem Dienstplanprogramm übernehmen",
+    "tabNew": "Neuer Import",
+    "tabHistory": "Verlauf",
+    "steps": "Schritte",
+    "step": {
+      "upload": "Datei",
+      "columns": "Spalten",
+      "review": "Prüfen",
+      "preview": "Freigeben"
+    },
+    "adapter": {
+      "csv": "CSV-Datei",
+      "xlsx": "Excel-Datei (XLSX)"
+    },
+    "ward": "Station",
+    "month": "Monat",
+    "profile": "Importprofil",
+    "dropTitle": "Datei hierher ziehen oder auswählen",
+    "dropHint": "CSV oder Excel (XLSX) aus deinem Dienstplanprogramm – als Liste (eine Zeile pro Dienst) oder als Raster (eine Zeile pro Person, eine Spalte pro Tag).",
+    "chooseFile": "Datei auswählen",
+    "privacyHint": "Die Datei wird nur auf deinem Gerät gelesen. An ShiftCare gehen nur die erkannten Dienste; Namen und Originalzeilen werden nach der Veröffentlichung gelöscht.",
+    "errors": {
+      "format": "Dieses Format wird nicht unterstützt. Bitte exportiere als CSV oder XLSX.",
+      "size": "Die Datei ist größer als 15 MB.",
+      "noProfile": "Für diese Station gibt es kein aktives Importprofil. Bitte wende dich an die Administration.",
+      "empty": "In der Datei wurden keine Zeilen gefunden.",
+      "unreadable": "Die Datei konnte nicht gelesen werden."
+    },
+    "sheet": "Tabellenblatt",
+    "layout": "Aufbau der Datei",
+    "layoutList": "Liste",
+    "layoutGrid": "Raster",
+    "layoutListHint": "Eine Zeile pro Dienst mit Datum und Dienstkürzel (optional Beginn, Ende, Pause).",
+    "layoutGridHint": "Eine Zeile pro Person, die Spalten sind die Tage des Monats, in den Zellen stehen die Dienstkürzel.",
+    "dateFormat": "Datumsformat",
+    "role": {
+      "employeeId": "Mitarbeiter-ID / Personalnummer",
+      "employeeName": "Name",
+      "lastName": "Nachname",
+      "firstName": "Vorname",
+      "date": "Datum",
+      "code": "Dienstkürzel",
+      "start": "Beginn",
+      "end": "Ende",
+      "break": "Pause",
+      "externalShiftId": "Dienst-ID im Quellsystem"
+    },
+    "notInFile": "– nicht in der Datei –",
+    "column": "Spalte {{n}}",
+    "dayColumns": "{{count}} Tagesspalten erkannt ({{from}} – {{to}})",
+    "noDayColumns": "Keine Tagesspalten erkannt. Die Spaltenüberschriften müssen Tage sein (z. B. „1“, „01.“, „01.11.“).",
+    "readRows_one": "{{count}} Dienst gelesen",
+    "readRows_other": "{{count}} Dienste gelesen",
+    "line": "Zeile {{line}}",
+    "moreProblems": "… und {{count}} weitere",
+    "parse": {
+      "invalid_date": "Datum „{{value}}“ nicht lesbar",
+      "invalid_time": "Uhrzeit „{{value}}“ nicht lesbar",
+      "invalid_break": "Pause „{{value}}“ nicht lesbar",
+      "no_employee": "keine Person angegeben – übersprungen",
+      "too_many_rows": "zu viele Zeilen ({{value}}), höchstens 10000"
+    },
+    "otherFile": "Andere Datei",
+    "check": "Prüfen",
+    "message": {
+      "empty": "leer",
+      "code_ignored": "Kürzel wird ignoriert",
+      "missing_date": "Datum fehlt",
+      "outside_period": "liegt außerhalb von {{from}} – {{to}}",
+      "employee_unmatched": "Mitarbeiter-ID „{{ref}}“ unbekannt",
+      "unknown_code": "Dienstkürzel „{{code}}“ unbekannt",
+      "invalid_times": "Beginn/Ende ungültig",
+      "not_in_unit": "gehört nicht zu dieser Station",
+      "duplicate_row": "doppelte Zeile",
+      "overlap_in_file": "überschneidet sich mit Zeile {{row}}",
+      "off_and_shift": "„Frei“ und Dienst am selben Tag – Dienst gilt"
+    },
+    "review": {
+      "count": {
+        "ok": "in Ordnung",
+        "warnings": "mit Hinweis",
+        "errors": "Fehler",
+        "ignored": "übersprungen"
+      },
+      "duplicate": "Diese Datei wurde für Station und Monat bereits importiert. Die Vorschau zeigt, ob sich etwas geändert hat.",
+      "employees_one": "{{count}} Person zuordnen",
+      "employees_other": "{{count}} Personen zuordnen",
+      "employeesHint": "Diese IDs aus der Datei kennt ShiftCare noch nicht. Die Zuordnung wird gespeichert und beim nächsten Import automatisch verwendet.",
+      "idInFile": "ID in der Datei: {{id}}",
+      "rows_one": "{{count}} Dienst",
+      "rows_other": "{{count}} Dienste",
+      "choosePerson": "Person für {{name}} wählen",
+      "choose": "Auswählen …",
+      "confirm": "Bestätigen",
+      "noNameMatching": "Namen werden bewusst nicht automatisch zugeordnet – nur bestätigte IDs oder exakte Personalnummern.",
+      "codes_one": "{{count}} Dienstkürzel zuordnen",
+      "codes_other": "{{count}} Dienstkürzel zuordnen",
+      "codesHint": "Welcher Schichtart entspricht das Kürzel aus deinem Dienstplanprogramm?",
+      "mapCode": "Kürzel {{code}} zuordnen",
+      "ignore": "Ignorieren",
+      "codesRemembered": "Gilt ab sofort für alle Importe dieser Station.",
+      "otherErrors_one": "{{count}} Zeile mit Fehler",
+      "otherErrors_other": "{{count}} Zeilen mit Fehler",
+      "otherErrorsHint": "Bitte im Dienstplanprogramm korrigieren und die Datei erneut exportieren.",
+      "warnings_one": "{{count}} Hinweis",
+      "warnings_other": "{{count}} Hinweise",
+      "ignored_one": "{{count}} übersprungene Zeile",
+      "ignored_other": "{{count}} übersprungene Zeilen",
+      "recheck": "Erneut prüfen",
+      "fixFirst_one": "Noch {{count}} Fehler",
+      "fixFirst_other": "Noch {{count}} Fehler",
+      "toPreview": "Weiter zur Vorschau"
+    },
+    "preview": {
+      "title": "Vorschau der Änderungen",
+      "newRoster": "Für diesen Monat gibt es noch keinen Dienstplan – er wird als Entwurf angelegt.",
+      "intoDraft": "Der Entwurf wird aktualisiert.",
+      "intoPublished": "Der veröffentlichte Dienstplan (Version {{version}}) wird aktualisiert.",
+      "count": {
+        "added": "neu",
+        "changed": "geändert",
+        "removed": "entfällt",
+        "unchanged": "unverändert"
+      },
+      "change": {
+        "added": "Neu",
+        "changed": "Geändert",
+        "removed": "Entfällt"
+      },
+      "manual_one": "{{count}} Eintrag wurde in ShiftCare von Hand angelegt oder geändert und wird durch die Datei ersetzt.",
+      "manual_other": "{{count}} Einträge wurden in ShiftCare von Hand angelegt oder geändert und werden durch die Datei ersetzt.",
+      "manualBadge": "von Hand geändert",
+      "notifyHint": "Betroffene Mitarbeitende erhalten eine zusammengefasste Benachrichtigung.",
+      "more": "… und {{count}} weitere Änderungen",
+      "apply_one": "{{count}} Änderung übernehmen",
+      "apply_other": "{{count}} Änderungen übernehmen",
+      "applyUnchanged": "Übernehmen (keine Änderungen)",
+      "applied": "Dienstplan übernommen",
+      "applyFailed": "Übernehmen fehlgeschlagen",
+      "applyFailedHint": "Es wurde nichts geändert. Meist überschneidet sich ein Dienst mit einem Dienst auf einer anderen Station. Bitte prüfen und erneut versuchen.",
+      "superseded": "Inzwischen wurde eine neuere Datei für diesen Monat übernommen. Bitte die aktuelle Datei importieren.",
+      "diffLine": "{{added}} neu · {{changed}} geändert · {{removed}} entfällt · {{unchanged}} unverändert",
+      "notYetPublished": "Noch nicht sichtbar für das Team. Prüfe den Plan im Editor oder veröffentliche ihn direkt.",
+      "openEditor": "Im Editor ansehen",
+      "publish": "Veröffentlichen",
+      "published": "Dienstplan veröffentlicht",
+      "publishedHint": "Alle Mitarbeitenden sehen ihre Dienste jetzt in der App und wurden benachrichtigt.",
+      "newImport": "Neuer Import",
+      "mostlyRemoved": "Achtung: {{count}} bestehende Einträge würden entfallen. Die Datei gilt als vollständiger Dienstplan der Station für diesen Monat – ist sie wirklich vollständig?"
+    },
+    "status": {
+      "staged": "Geprüft",
+      "applied": "Übernommen",
+      "published": "Veröffentlicht",
+      "failed": "Fehlgeschlagen",
+      "cancelled": "Verworfen",
+      "superseded": "Überholt"
+    },
+    "history": {
+      "empty": "Noch keine Importe",
+      "duplicate": "gleiche Datei",
+      "by": "{{name}} · {{when}}",
+      "publishedAt": "veröffentlicht {{when}}",
+      "rows": "{{ok}} Dienste bereit · {{errors}} Fehler",
+      "failed": "Letzter Versuch fehlgeschlagen: {{message}}"
+    },
+    "kind": {
+      "file": "Dateiimport (CSV/XLSX)",
+      "api": "Direkte Schnittstelle (in Vorbereitung)",
+      "sftp": "Automatischer Dateiabruf (in Vorbereitung)"
+    },
+    "admin": {
+      "intro": "Hier legst du fest, aus welchen Dienstplanprogrammen Stationen ihren Plan importieren. Verfügbar ist der Dateiimport (CSV/XLSX). Direkte Schnittstellen zu einzelnen Anbietern sind noch nicht umgesetzt – sie werden erst angeboten, wenn sie entwickelt und getestet sind.",
+      "add": "Importprofil anlegen",
+      "edit": "Importprofil bearbeiten",
+      "empty": "Noch keine Importprofile",
+      "namePlaceholder": "z. B. Export aus dem Dienstplanprogramm",
+      "kind": "Art der Anbindung",
+      "kindFileHint": "Stationsleitungen laden den fertigen Plan als CSV oder Excel hoch.",
+      "notImplemented": "Noch nicht verfügbar: Für diese Art gibt es noch keinen Adapter, es werden keine Daten abgerufen.",
+      "vendor": "Quellsystem",
+      "vendorHint": "Name des Programms, aus dem exportiert wird (nur zur Information).",
+      "secret": "Zugangsdaten",
+      "secretHint": "Werden verschlüsselt im Vault gespeichert und sind danach nicht mehr lesbar.",
+      "secretStored": "Zugangsdaten sind hinterlegt. Ein neuer Wert ersetzt sie.",
+      "employeeMappings": "Bestätigte Mitarbeiter-IDs ({{count}})",
+      "codeMappings": "Zugeordnete Dienstkürzel ({{count}})",
+      "noMappings": "Noch keine – Personalnummern werden direkt erkannt.",
+      "noCodeMappings": "Noch keine – Kürzel wie F, S, N werden direkt erkannt.",
+      "removeMapping": "Zuordnung entfernen"
     }
   }
 }

@@ -70,6 +70,8 @@ export function mapRoster(row: ShiftRosterRow): RosterEntry {
     startsAt: date(row.starts_at),
     endsAt: date(row.ends_at),
     note: row.note,
+    updatedAt: date(row.updated_at ?? null),
+    importedAt: date(row.imported_at ?? null),
     shiftType:
       row.shift_type_id && row.shift_category
         ? {

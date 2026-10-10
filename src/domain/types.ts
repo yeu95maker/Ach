@@ -118,6 +118,10 @@ export interface RosterEntry {
   startsAt: Date | null
   endsAt: Date | null
   note: string | null
+  /** last change of this entry (manual or import) */
+  updatedAt?: Date | null
+  /** set when the entry came from an external roster import */
+  importedAt?: Date | null
   shiftType: ShiftTypeRef | null
   person: PersonRef | null
 }

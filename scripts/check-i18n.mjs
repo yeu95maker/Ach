@@ -67,7 +67,17 @@ const dynamic = {
   'staffing.group': ['recommended', 'possible', 'unavailable'],
   'admin.role': ['nurse', 'charge_nurse', 'deputy_head_nurse', 'head_nurse', 'hr', 'hospital_admin'],
   'admin.employmentType': ['full_time', 'part_time', 'marginal', 'trainee', 'agency', 'other'],
-  'admin.tabs': ['people', 'organization', 'shifts'],
+  'admin.tabs': ['people', 'organization', 'shifts', 'integrations'],
+  'integration.step': ['upload', 'columns', 'review', 'preview'],
+  'integration.role': ['employeeId', 'employeeName', 'lastName', 'firstName', 'date', 'code', 'start', 'end', 'break', 'externalShiftId'],
+  'integration.parse': ['invalid_date', 'invalid_time', 'invalid_break', 'no_employee', 'too_many_rows'],
+  'integration.message': ['empty', 'code_ignored', 'missing_date', 'outside_period', 'employee_unmatched', 'unknown_code', 'invalid_times', 'not_in_unit', 'duplicate_row', 'overlap_in_file', 'off_and_shift'],
+  'integration.status': ['staged', 'applied', 'published', 'failed', 'cancelled', 'superseded'],
+  'integration.kind': ['file', 'api', 'sftp'],
+  'integration.review.count': ['ok', 'warnings', 'errors', 'ignored'],
+  'integration.preview.count': ['added', 'changed', 'removed', 'unchanged'],
+  'integration.preview.change': ['added', 'changed', 'removed'],
+  'integration.adapter': ['csv', 'xlsx'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
 for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest'])
