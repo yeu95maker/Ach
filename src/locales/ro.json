@@ -61,7 +61,8 @@
     "savePassword": "Salvează parola",
     "passwordPolicy": "Cel puțin {{min}} caractere, litere mari și mici și o cifră.",
     "passwordMismatch": "Parolele nu coincid.",
-    "passwordUpdated": "Parola a fost schimbată"
+    "passwordUpdated": "Parola a fost schimbată",
+    "linkFailed": "Linkul a expirat sau nu este valid. Te rugăm să te autentifici din nou sau să soliciți un link nou."
   },
   "tenant": {
     "noEmploymentTitle": "Încă nu ești alocat unei unități",
@@ -361,7 +362,8 @@
       "not_configured": "Încă neconfigurat",
       "default": "Dezactivate",
       "granted": "Active",
-      "denied": "Blocate în browser"
+      "denied": "Blocate în browser",
+      "deniedDevice": "Blocat în setările dispozitivului"
     },
     "enable": "Activează",
     "disable": "Dezactivează",
@@ -375,7 +377,9 @@
     "privacy": "Confidențialitate",
     "privacyHint": "Datele medicale sunt stocate criptat",
     "signOut": "Deconectare",
-    "saved": "Salvat"
+    "saved": "Salvat",
+    "support": "Ajutor și contact",
+    "supportHint": "Întrebări, probleme, ștergerea contului"
   },
   "proficiency": {
     "native": "Limbă maternă",

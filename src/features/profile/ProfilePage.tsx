@@ -7,6 +7,7 @@ import {
   Globe,
   KeyRound,
   Languages,
+  LifeBuoy,
   LogOut,
   Mail,
   MonitorSmartphone,
@@ -16,9 +17,10 @@ import {
   Settings2,
   ShieldCheck,
 } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PersonAvatar } from '@/components/PersonAvatar'
+import { config } from '@/core/config'
 import { errorMessageKey } from '@/core/errors'
 import { changeLanguage, UI_LANGUAGES, type UiLanguage } from '@/core/i18n'
 import { useTheme } from '@/core/theme'
@@ -27,8 +29,10 @@ import { profileRepository } from '@/data/profileRepository'
 import { teamRepository } from '@/data/teamRepository'
 import { canAny } from '@/domain/permissions'
 import type { ThemePreference } from '@/domain/types'
-import { currentPushState, disablePush, enablePush, type PushState } from '@/features/notifications/push'
+import { currentPushState, disablePush, enablePush, loadPushState, type PushState } from '@/features/notifications/push'
 import { queryKeys } from '@/features/queryKeys'
+import { openExternal } from '@/native/bootstrap'
+import { isNative } from '@/native/platform'
 import { useCurrentUser, useEmployment, useTenant } from '@/features/tenant/TenantProvider'
 import { Badge, Button, Card, IconButton, ListGroup, ListRow, PageHeader, SectionTitle, SegmentedControl, Select, Spinner, useToast } from '@/ui'
 import { ChangePasswordSheet } from './ChangePasswordSheet'
@@ -49,6 +53,9 @@ export function ProfilePage() {
   const fileInput = useRef<HTMLInputElement>(null)
   const [sheet, setSheet] = useState<'edit' | 'languages' | 'password' | null>(null)
   const [pushState, setPushState] = useState<PushState>(currentPushState)
+  useEffect(() => {
+    void loadPushState().then(setPushState)
+  }, [])
 
   const directory = useQuery({
     queryKey: queryKeys.directory(employment.hospital.id),
@@ -242,10 +249,11 @@ export function ProfilePage() {
               <ListRow
                 icon={<Bell />}
                 title={t('profile.pushNotifications')}
-                subtitle={t(`profile.push.${pushState}`)}
+                subtitle={t(isNative() && pushState === 'denied' ? 'profile.push.deniedDevice' : `profile.push.${pushState}`)}
                 chevron={false}
                 trailing={
                   pushState !== 'unsupported' &&
+                  pushState !== 'not_configured' &&
                   pushState !== 'denied' && (
                     <Button size="sm" variant={pushState === 'granted' ? 'secondary' : 'accent'} onClick={togglePush}>
                       {pushState === 'granted' ? t('profile.disable') : t('profile.enable')}
@@ -261,7 +269,8 @@ export function ProfilePage() {
             <ListGroup>
               <ListRow icon={<KeyRound />} title={t('profile.changePassword')} onClick={() => setSheet('password')} />
               <ListRow icon={<MonitorSmartphone />} title={t('profile.signOutOthers')} subtitle={t('profile.signOutOthersHint')} onClick={signOutOthers} />
-              <ListRow icon={<ShieldCheck />} title={t('profile.privacy')} subtitle={t('profile.privacyHint')} />
+              <ListRow icon={<ShieldCheck />} title={t('profile.privacy')} subtitle={t('profile.privacyHint')} onClick={() => config && openExternal(config.privacyUrl)} />
+              <ListRow icon={<LifeBuoy />} title={t('profile.support')} subtitle={t('profile.supportHint')} onClick={() => config && openExternal(config.supportUrl)} />
             </ListGroup>
           </section>
 

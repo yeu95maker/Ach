@@ -1,0 +1,36 @@
+ShiftCare to aplikacja do grafików dyżurów dla szpitali i placówek opieki. Pielęgniarki widzą swój grafik, zgłaszają życzenia i składają wnioski urlopowe. Oddziałowe planują, zatwierdzają i szybko znajdują zastępstwo.
+
+Ważne: do korzystania z ShiftCare potrzebujesz konta od swojej placówki. Placówka wysyła zaproszenie; nie ma publicznej rejestracji.
+
+DLA PIELĘGNIAREK
+• Grafik w widoku miesiąca i listy, z godzinami dyżurów i datą ostatniej aktualizacji
+• Koledzy na dyżurze: kto dziś z Tobą pracuje
+• Plan życzeń: wybrane dyżury i dni wolne na kolejny grafik
+• Przeglądaj wolne dyżury i zgłaszaj chęć
+• Składaj wnioski urlopowe i śledź ich status
+• Zgłoszenie choroby w kilku krokach
+• Aktualności: komunikaty, szkolenia, zebrania zespołu i warsztaty
+• Historia grafików z ostatnich lat
+• Powiadomienia o nowym grafiku, zmianach i decyzjach
+
+DLA ODDZIAŁOWYCH
+• Edytor grafiku dla całego zespołu, ze wskazówkami dotyczącymi życzeń i czasu odpoczynku
+• Przeglądaj plany życzeń
+• Zatwierdzaj urlopy, potwierdzaj zgłoszenia choroby
+• Znajdź zastępstwo: kto jest wolny, zachowuje czas odpoczynku i zgłosił chęć
+• Ogłaszaj i przydzielaj wolne dyżury
+• Wysyłaj komunikaty do zespołu
+• Przenieś gotowy grafik z plików CSV lub Excel (XLSX) – ze sprawdzeniem i podglądem przed publikacją
+
+DLA ADMINISTRACJI
+• Zapraszaj pracowników, przydzielaj role i oddziały
+• Zarządzaj rodzajami dyżurów i organizacją
+• Uprawnienia według ról; wiele placówek pozostaje ściśle rozdzielonych
+
+PRYWATNOŚĆ
+• Bez reklam, bez śledzenia
+• Koledzy widzą przy zgłoszeniu choroby tylko okres, nigdy przyczynę
+• Komentarze do zgłoszeń choroby są dodatkowo szyfrowane
+• Twoje logowanie jest przechowywane w chronionej pamięci urządzenia
+
+ShiftCare jest dostępny po niemiecku, angielsku, turecku, rumuńsku i polsku, w jasnym i ciemnym motywie.

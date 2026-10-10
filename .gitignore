@@ -10,3 +10,10 @@ supabase/.branches
 supabase/.temp
 screenshots
 demo-videos
+
+# Native push credentials – never commit (docs/APP-STORES.md → Push)
+android/app/google-services.json
+ios/App/App/GoogleService-Info.plist
+*.jks
+*.keystore
+*.p8

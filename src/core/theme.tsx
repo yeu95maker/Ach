@@ -1,3 +1,4 @@
+import { syncSystemBars } from '@/native/bootstrap'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
 export type ThemePreference = 'system' | 'light' | 'dark'
@@ -42,6 +43,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement
     root.dataset.theme = resolved
     root.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', resolved === 'dark' ? '#090E18' : '#F5F7FB'))
+    syncSystemBars(resolved)
   }, [resolved])
 
   const setPreference = useCallback((next: ThemePreference) => {

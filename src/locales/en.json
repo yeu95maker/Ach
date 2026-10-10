@@ -61,7 +61,8 @@
     "savePassword": "Save password",
     "passwordPolicy": "At least {{min}} characters, upper and lower case letters and a number.",
     "passwordMismatch": "The passwords don't match.",
-    "passwordUpdated": "Password changed"
+    "passwordUpdated": "Password changed",
+    "linkFailed": "The link has expired or is invalid. Please sign in again or request a new link."
   },
   "tenant": {
     "noEmploymentTitle": "Not assigned to a facility yet",
@@ -355,7 +356,8 @@
       "not_configured": "Not set up yet",
       "default": "Off",
       "granted": "On",
-      "denied": "Blocked in browser"
+      "denied": "Blocked in browser",
+      "deniedDevice": "Blocked in the device settings"
     },
     "enable": "Enable",
     "disable": "Disable",
@@ -369,7 +371,9 @@
     "privacy": "Privacy",
     "privacyHint": "Health data is stored encrypted",
     "signOut": "Sign out",
-    "saved": "Saved"
+    "saved": "Saved",
+    "support": "Help & contact",
+    "supportHint": "Questions, problems, delete account"
   },
   "proficiency": {
     "native": "Native",

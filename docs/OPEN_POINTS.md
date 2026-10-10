@@ -51,8 +51,8 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 
 | # | Punkt | Status |
 | --- | --- | --- |
-| B1 | Native Apps (Capacitor) inkl. APNs/FCM-Versand in `push-dispatch` | Architektur vorbereitet, nicht umgesetzt |
-| B2 | Biometrischer Login (Keychain/Keystore-Adapter für `AuthStorage`) | Schnittstelle vorhanden, Adapter fehlt |
+| B1 | ~~Native Apps (Capacitor) inkl. APNs/FCM-Versand~~ | **Umgesetzt** (siehe APP-STORES.md): iOS/Android-Projekte, Keychain/Keystore-Sitzung, Deep Links, Push-Registrierung und -Versand, Store-Texte und Screenshots. Offen: Test auf echten Geräten (Checkliste APP-STORES.md §8), Push-Zugangsdaten (APNs-Schlüssel, Firebase), Signieren und Einreichen |
+| B2 | Biometrischer Login (Face ID / Fingerabdruck vor dem Lesen der Sitzung) | Keychain/Keystore-Adapter ist umgesetzt (`src/native/secureStorage.ts`), die Biometrie-Abfrage fehlt |
 | B3 | UI für MFA (TOTP) | In Auth aktiviert, UI fehlt |
 | B4 | Skript zur Rotation des Vault-Schlüssels | Vorgehen dokumentiert (SECURITY.md) |
 | B5 | ~~Admin-Oberflächen~~ | **Umgesetzt** (`/admin`). Offen: eigene Rollen anlegen (`roles.manage`), Qualifikationen pflegen, Hauseinstellungen. Für die Einladung muss die Edge Function `invite-employee` deployt sein (inkl. `APP_URL`). |
@@ -66,6 +66,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B13 | Oberfläche für die Wunschplan-**Hauskonfiguration** (`wish_plan_settings`: Limits, Standardfrist, Erinnerung) | Tabelle und RLS fertig. Frist und „Änderungen erlaubt“ sind pro Zeitraum in der UI einstellbar. |
 | B15 | Direkte Anbieter-Schnittstellen (API, SFTP) | Architektur, Profile und Vault-Speicherung vorhanden. **Kein Anbieter ist angebunden.** Pro Anbieter: Klärung, Edge Function, Tests |
 | B16 | Import für alte Excel-Dateien (`.xls`) und ODS | Nicht unterstützt. Export als XLSX/CSV nötig |
+| B17 | Konto-Löschung direkt in der App (Antrag an die Verwaltung + Löschung von Login und Profil) | Heute: Antrag über Support-Seite, Deaktivierung durch die Verwaltung. Nachrüsten, falls Apple es bei der Prüfung verlangt (APP-STORES.md §9) |
 | B14 | Planungsassistent (KI) | Datenbasis (`get_scheduling_context`), Besetzungsvorgaben und Vorschlagstabelle sind vorbereitet, der Assistent selbst nicht |
 
 ## C. Umgesetzte Annahmen ohne Rückfragebedarf

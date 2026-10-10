@@ -1,0 +1,1 @@
+Your roster in your pocket: shifts, who's on duty, wishes and leave. For ward leads: a roster editor, a cover finder and import from CSV or Excel.

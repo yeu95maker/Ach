@@ -1,0 +1,36 @@
+ShiftCare este aplicația de planificare a turelor pentru spitale și centre de îngrijire. Asistenții își văd programul, își trec dorințele și cer concediu. Asistenții șefi planifică, aprobă și găsesc rapid un înlocuitor.
+
+Important: pentru ShiftCare ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
+
+PENTRU ASISTENȚI
+• Programul în vizualizare lunară și listă, cu orele turelor și data ultimei actualizări
+• Colegi în tură: cine lucrează azi cu tine
+• Plan de dorințe: ture dorite și zile libere pentru următorul program
+• Vezi turele libere și anunță-ți interesul
+• Cere concediu și urmărește statusul
+• Concediu medical în câțiva pași
+• Noutăți: anunțuri, cursuri, ședințe de echipă și workshopuri
+• Istoricul programului pe ultimii ani
+• Notificări pentru program nou, modificări și decizii
+
+PENTRU ASISTENȚII ȘEFI
+• Editor de program pentru toată echipa, cu indicații despre dorințe și perioadele de odihnă
+• Evaluează planurile de dorințe
+• Aprobă concediile, confirmă concediile medicale
+• Găsește un înlocuitor: cine e liber, respectă perioada de odihnă și și-a anunțat interesul
+• Publică și atribuie ture libere
+• Trimite anunțuri echipei
+• Preia un program finalizat din fișiere CSV sau Excel (XLSX) – verificat și previzualizat înainte de publicare
+
+PENTRU ADMINISTRAȚIE
+• Invită angajați, atribuie roluri și secții
+• Gestionează tipurile de ture și organizarea
+• Drepturi pe rol; mai multe instituții rămân strict separate
+
+CONFIDENȚIALITATE
+• Fără reclame, fără urmărire
+• Colegii văd la un concediu medical doar perioada, niciodată motivul
+• Comentariile la concediile medicale sunt criptate suplimentar
+• Autentificarea ta rămâne în memoria protejată a dispozitivului
+
+ShiftCare este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.

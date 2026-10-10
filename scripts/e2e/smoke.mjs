@@ -194,6 +194,8 @@ for (const run of runs) {
   await p.goto(`${BASE}/team?tab=sick`)
   await p.getByRole('button', { name: 'Vertretung finden' }).first().click()
   await p.waitForSelector('dialog[open] >> text=Wer kann übernehmen?')
+  // Wait for the candidate list: the centred dialog grows when it arrives and would move the button mid-click.
+  await p.waitForSelector('dialog[open] >> text=Hinweise zu Ruhezeit')
   await p.locator('dialog[open]').getByRole('button', { name: 'Als offenen Dienst ausschreiben' }).click()
   await p.waitForSelector('text=Offener Dienst ausgeschrieben')
   await lead.context.close()

@@ -2,7 +2,9 @@ import { Eye, EyeOff } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useLocation } from 'react-router'
+import { config } from '@/core/config'
 import { authRepository, type OAuthProvider } from '@/data/authRepository'
+import { isNative } from '@/native/platform'
 import { Button, Field, Input, cn } from '@/ui'
 import { AuthLayout } from './AuthLayout'
 import { useSession } from './SessionProvider'
@@ -37,7 +39,10 @@ export function LoginPage() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [busy, setBusy] = useState<'password' | OAuthProvider | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  // Set by the native deep-link handler when an e-mail or OAuth link could not be used.
+  const [error, setError] = useState<string | null>(() => ((location.state as { authError?: string } | null)?.authError ? t('auth.linkFailed') : null))
+
+  const providers = config?.oauthProviders ?? []
 
   if (session) {
     const from = (location.state as { from?: string } | null)?.from ?? '/'
@@ -61,7 +66,8 @@ export function LoginPage() {
     setError(null)
     setBusy(provider)
     try {
-      await authRepository.signInWithOAuth(provider) // redirects
+      await authRepository.signInWithOAuth(provider) // web: redirects; native: opens the system browser
+      if (isNative()) setBusy(null)
     } catch {
       setError(t('errors.unknown'))
       setBusy(null)
@@ -70,20 +76,28 @@ export function LoginPage() {
 
   return (
     <AuthLayout title={t('auth.welcome')} subtitle={t('auth.welcomeSubtitle')}>
-      <div className="grid gap-3">
-        <Button variant="secondary" size="lg" fullWidth icon={<MicrosoftIcon />} loading={busy === 'azure'} disabled={!!busy} onClick={() => oauth('azure')}>
-          {t('auth.continueWithMicrosoft')}
-        </Button>
-        <Button variant="secondary" size="lg" fullWidth icon={<GoogleIcon />} loading={busy === 'google'} disabled={!!busy} onClick={() => oauth('google')}>
-          {t('auth.continueWithGoogle')}
-        </Button>
-      </div>
+      {providers.length > 0 && (
+        <>
+          <div className="grid gap-3">
+            {providers.includes('azure') && (
+              <Button variant="secondary" size="lg" fullWidth icon={<MicrosoftIcon />} loading={busy === 'azure'} disabled={!!busy} onClick={() => oauth('azure')}>
+                {t('auth.continueWithMicrosoft')}
+              </Button>
+            )}
+            {providers.includes('google') && (
+              <Button variant="secondary" size="lg" fullWidth icon={<GoogleIcon />} loading={busy === 'google'} disabled={!!busy} onClick={() => oauth('google')}>
+                {t('auth.continueWithGoogle')}
+              </Button>
+            )}
+          </div>
 
-      <div className="my-7 flex items-center gap-4 text-[13px] text-text-3">
-        <span className="h-px flex-1 bg-border" />
-        {t('auth.orWithEmail')}
-        <span className="h-px flex-1 bg-border" />
-      </div>
+          <div className="my-7 flex items-center gap-4 text-[13px] text-text-3">
+            <span className="h-px flex-1 bg-border" />
+            {t('auth.orWithEmail')}
+            <span className="h-px flex-1 bg-border" />
+          </div>
+        </>
+      )}
 
       <form onSubmit={onSubmit} className="space-y-5" noValidate>
         <Field label={t('auth.email')} htmlFor="email">

@@ -1,0 +1,15 @@
+ShiftCare is a business app for hospitals and care facilities (rostering, leave, sick notes, team news). Accounts are created by the employer; there is no public sign-up, so please use the demo accounts below. All names and data in the demo are fictional.
+
+Demo accounts (password for both: ShiftCare!2026)
+- Ward lead (all features): mira.schulz@shiftcare.dev
+- Nurse: anna.becker@shiftcare.dev
+
+Where to look
+- Dienstplan / Roster: own shifts, open shifts ("Offene Dienste"), history
+- Team: leave requests, sick notes, "Vertretung finden" (find cover)
+- Profil → Verwaltung (administration), Profil → Datenschutz (privacy policy) and Hilfe & Kontakt (support, account deletion)
+- The app language can be changed under Profil → App-Sprache (German, English, Turkish, Romanian, Polish).
+
+Accounts and sign-in: users only sign in with accounts provided by their employer (guideline 4.8 exception for enterprise accounts). This review build offers e-mail and password only.
+Account deletion: requested via Profil → Hilfe & Kontakt; the employer can also deactivate an account immediately.
+Push notifications are optional and only contain a generic text without health data.

@@ -61,7 +61,8 @@
     "savePassword": "Şifreyi kaydet",
     "passwordPolicy": "En az {{min}} karakter, büyük ve küçük harf ile bir rakam.",
     "passwordMismatch": "Şifreler eşleşmiyor.",
-    "passwordUpdated": "Şifre değiştirildi"
+    "passwordUpdated": "Şifre değiştirildi",
+    "linkFailed": "Bağlantının süresi dolmuş veya geçersiz. Lütfen yeniden giriş yap veya yeni bir bağlantı iste."
   },
   "tenant": {
     "noEmploymentTitle": "Henüz bir kuruma atanmadın",
@@ -355,7 +356,8 @@
       "not_configured": "Henüz ayarlanmadı",
       "default": "Kapalı",
       "granted": "Açık",
-      "denied": "Tarayıcıda engellendi"
+      "denied": "Tarayıcıda engellendi",
+      "deniedDevice": "Cihaz ayarlarında engellendi"
     },
     "enable": "Etkinleştir",
     "disable": "Devre dışı bırak",
@@ -369,7 +371,9 @@
     "privacy": "Gizlilik",
     "privacyHint": "Sağlık verileri şifreli saklanır",
     "signOut": "Çıkış yap",
-    "saved": "Kaydedildi"
+    "saved": "Kaydedildi",
+    "support": "Yardım ve iletişim",
+    "supportHint": "Sorular, sorunlar, hesabı silme"
   },
   "proficiency": {
     "native": "Ana dil",

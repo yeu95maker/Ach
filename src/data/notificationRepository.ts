@@ -50,6 +50,18 @@ export const notificationRepository = {
     )
   },
 
+  /** APNs device token (iOS) or FCM registration token (Android). */
+  async registerNativeToken(platform: 'ios' | 'android', token: string, deviceName: string): Promise<void> {
+    unwrap(
+      await db().rpc('register_device_token', {
+        p_platform: platform,
+        p_token: token,
+        p_device_name: deviceName,
+        p_app_version: __APP_VERSION__,
+      }),
+    )
+  },
+
   async unregisterDevice(token: string): Promise<void> {
     unwrap(await db().from('device_tokens').delete().eq('token', token))
   },

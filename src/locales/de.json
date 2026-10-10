@@ -61,7 +61,8 @@
     "savePassword": "Passwort speichern",
     "passwordPolicy": "Mindestens {{min}} Zeichen, Groß- und Kleinbuchstaben sowie eine Zahl.",
     "passwordMismatch": "Die Passwörter stimmen nicht überein.",
-    "passwordUpdated": "Passwort geändert"
+    "passwordUpdated": "Passwort geändert",
+    "linkFailed": "Der Link ist abgelaufen oder ungültig. Bitte melde dich erneut an oder fordere einen neuen Link an."
   },
   "tenant": {
     "noEmploymentTitle": "Noch keiner Einrichtung zugeordnet",
@@ -355,7 +356,8 @@
       "not_configured": "Noch nicht eingerichtet",
       "default": "Aus",
       "granted": "Aktiv",
-      "denied": "Im Browser blockiert"
+      "denied": "Im Browser blockiert",
+      "deniedDevice": "In den Geräteeinstellungen blockiert"
     },
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
@@ -369,7 +371,9 @@
     "privacy": "Datenschutz",
     "privacyHint": "Gesundheitsdaten werden verschlüsselt gespeichert",
     "signOut": "Abmelden",
-    "saved": "Gespeichert"
+    "saved": "Gespeichert",
+    "support": "Hilfe & Kontakt",
+    "supportHint": "Fragen, Probleme, Konto löschen"
   },
   "proficiency": {
     "native": "Muttersprache",

@@ -6,7 +6,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 | --- | --- |
 | Frontend | React 19, TypeScript (strict), Vite, Tailwind CSS 4, TanStack Query, React Router 7, i18next |
 | Backend | Supabase: PostgreSQL 15+ mit Row Level Security, Auth, Storage, Realtime, Edge Functions |
-| Mobile (geplant) | Capacitor-Wrapper derselben Web-App (siehe [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#mobile-ios--android)) |
+| Mobile | iOS- und Android-App (Capacitor) aus derselben Web-App, Store-Einträge in 5 Sprachen (siehe [docs/APP-STORES.md](docs/APP-STORES.md)) |
 
 ## Demo
 
@@ -27,6 +27,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
 - [docs/INTEGRATION-HUB.md](docs/INTEGRATION-HUB.md): Dienstplan-Import (CSV/XLSX), Adapter-Architektur, Dienstplanmodell, was funktioniert und was nicht
 - [docs/LEITUNG-UND-VERWALTUNG.md](docs/LEITUNG-UND-VERWALTUNG.md): Aktuelles, Vertretung bei Krankheit, offene Dienste, Verlauf, Verwaltung
+- [docs/APP-STORES.md](docs/APP-STORES.md): native Apps, Store-Texte, Screenshots, Datenschutzangaben, Push, Einreichung – was fertig ist und was du noch tun musst
 - [docs/OPEN_POINTS.md](docs/OPEN_POINTS.md): **offene Fragen und getroffene Annahmen, bitte prüfen**
 
 ## Schnellstart (lokal mit Supabase CLI)

@@ -1,0 +1,36 @@
+ShiftCare ist die Dienstplan-App für Krankenhäuser und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und finden schnell eine Vertretung.
+
+Wichtig: Für ShiftCare brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
+
+FÜR PFLEGEKRÄFTE
+• Dienstplan im Monats- und Listenblick, mit Dienstzeiten und Stand der letzten Änderung
+• Kollegen im Dienst: wer heute mit dir arbeitet
+• Wunschplan: Wunschdienste und freie Tage für den nächsten Plan eintragen
+• Offene Dienste ansehen und Interesse melden
+• Urlaub beantragen und den Status verfolgen
+• Krankmeldung in wenigen Schritten
+• Aktuelles: Mitteilungen, Fortbildungen, Teamsitzungen und Workshops
+• Dienstplan-Verlauf über die vergangenen Jahre
+• Benachrichtigungen bei neuem Plan, Änderungen und Entscheidungen
+
+FÜR STATIONSLEITUNGEN
+• Dienstplan-Editor für das ganze Team, mit Hinweisen zu Wünschen und Ruhezeiten
+• Wunschpläne auswerten
+• Urlaubsanträge genehmigen, Krankmeldungen bestätigen
+• Vertretung finden: wer frei ist, die Ruhezeit einhält und Interesse gemeldet hat
+• Offene Dienste ausschreiben und zuweisen
+• Mitteilungen an das Team senden
+• Fertigen Dienstplan aus CSV- oder Excel-Dateien (XLSX) übernehmen – mit Prüfung und Vorschau vor der Veröffentlichung
+
+FÜR DIE VERWALTUNG
+• Mitarbeitende einladen, Rollen und Stationen vergeben
+• Diensttypen und Organisation pflegen
+• Rechte je Rolle; mehrere Einrichtungen bleiben streng getrennt
+
+DATENSCHUTZ
+• Keine Werbung, kein Tracking
+• Kolleginnen und Kollegen sehen bei Krankmeldungen nur den Zeitraum, nie den Grund
+• Kommentare zu Krankmeldungen werden zusätzlich verschlüsselt
+• Deine Anmeldung liegt im geschützten Speicher deines Geräts
+
+ShiftCare gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.

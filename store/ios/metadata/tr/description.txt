@@ -1,0 +1,36 @@
+ShiftCare, hastaneler ve bakım kurumları için nöbet planı uygulamasıdır. Hemşireler planlarını görür, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve hızla yedek bulur.
+
+Önemli: ShiftCare'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
+
+HEMŞİRELER İÇİN
+• Aylık ve liste görünümünde nöbet planı, nöbet saatleri ve son güncelleme zamanı
+• Görevdeki meslektaşlar: bugün kiminle çalıştığını gör
+• İstek planı: bir sonraki plan için istediğin nöbetleri ve izin günlerini gir
+• Açık nöbetleri gör ve ilgini bildir
+• İzin talep et ve durumunu takip et
+• Birkaç adımda hastalık bildirimi
+• Güncel: duyurular, eğitimler, ekip toplantıları ve atölyeler
+• Geçmiş yıllara uzanan nöbet geçmişi
+• Yeni plan, değişiklikler ve kararlar için bildirimler
+
+SERVİS SORUMLULARI İÇİN
+• Tüm ekip için plan editörü; istekler ve dinlenme süreleriyle ilgili uyarılar
+• İstek planlarını değerlendir
+• İzin taleplerini onayla, hastalık bildirimlerini teyit et
+• Yedek bul: kim boş, dinlenme süresine uyuyor ve ilgi bildirmiş
+• Açık nöbet ilan et ve ata
+• Ekibine duyuru gönder
+• Hazır planı CSV veya Excel (XLSX) dosyasından aktar – yayından önce kontrol ve önizleme ile
+
+YÖNETİM İÇİN
+• Çalışanları davet et, rol ve servis ata
+• Nöbet türlerini ve organizasyonu yönet
+• Role göre yetkiler; birden fazla kurum kesinlikle ayrı kalır
+
+GİZLİLİK
+• Reklam yok, takip yok
+• Meslektaşlar hastalık bildiriminde yalnızca süreyi görür, nedeni asla görmez
+• Hastalık bildirimi notları ayrıca şifrelenir
+• Oturumun cihazının korumalı alanında saklanır
+
+ShiftCare Almanca, İngilizce, Türkçe, Rumence ve Lehçe olarak, açık ve koyu temayla kullanılabilir.

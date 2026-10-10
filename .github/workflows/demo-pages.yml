@@ -31,6 +31,8 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
           VITE_SUPABASE_URL: ${{ secrets.DEMO_SUPABASE_URL || vars.DEMO_SUPABASE_URL || 'https://rcavkoetogzjrovoczuu.supabase.co' }}
+          # The demo project has no Google/Microsoft sign-in configured.
+          VITE_OAUTH_PROVIDERS: ${{ vars.DEMO_OAUTH_PROVIDERS || '' }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.DEMO_SUPABASE_ANON_KEY || vars.DEMO_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjYXZrb2V0b2d6anJvdm9jenV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2Mzk0ODgsImV4cCI6MjEwNzIxNTQ4OH0.Jz-AaEdz1vCwvbZSEilafJX3ZehUYBz_q_IylqjU578' }}
         run: |
           case "$VITE_SUPABASE_URL" in

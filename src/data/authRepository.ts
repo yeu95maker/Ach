@@ -1,10 +1,15 @@
 import type { Session } from '@supabase/supabase-js'
 import { AppError, toAppError } from '@/core/errors'
+import { nativeRedirect } from '@/native/authCallback'
+import { openAuthUrl } from '@/native/bootstrap'
+import { isNative } from '@/native/platform'
 import { db } from './client'
 
 export type OAuthProvider = 'google' | 'azure'
 
-const redirectTo = (path = '/') => `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}${path}`
+/** Web: same origin. Native: shiftcare://auth-callback[/path], handled in src/native/bootstrap.ts. */
+const redirectTo = (path = '/') =>
+  isNative() ? nativeRedirect(path) : `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}${path}`
 
 export const authRepository = {
   async getSession(): Promise<Session | null> {
@@ -25,14 +30,17 @@ export const authRepository = {
 
   /** Google and Microsoft (Entra ID / Azure AD) via Supabase OAuth with PKCE. */
   async signInWithOAuth(provider: OAuthProvider) {
-    const { error } = await db().auth.signInWithOAuth({
+    const native = isNative()
+    const { data, error } = await db().auth.signInWithOAuth({
       provider,
       options: {
         redirectTo: redirectTo('/'),
         scopes: provider === 'azure' ? 'email openid profile' : undefined,
+        skipBrowserRedirect: native,
       },
     })
     if (error) throw toAppError(error)
+    if (native && data.url) await openAuthUrl(data.url)
   },
 
   async requestPasswordReset(email: string) {

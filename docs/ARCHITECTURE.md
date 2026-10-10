@@ -3,7 +3,7 @@
 ## Überblick
 
 ```
-┌────────────────────────────── Client (Web · später iOS/Android via Capacitor) ─────────────────────────────┐
+┌───────────────────────────────── Client (Web · iOS/Android via Capacitor) ─────────────────────────────────┐
 │  features/*  (Seiten, fachliche UI)                                                                        │
 │     │ verwenden                                                                                            │
 │  domain/*    (reine Logik & Typen: Kalender, Abwesenheiten, Rechte – keine Abhängigkeiten, Unit-getestet)  │
@@ -57,10 +57,10 @@ Auf Mobilgeräten wird `setAuthStorage()` vor dem ersten Supabase-Aufruf mit ein
 2. **Web:** Der Service Worker `public/sw.js` erhält eine Web-Push-Subscription (VAPID, `VITE_VAPID_PUBLIC_KEY`) und registriert sie über `register_device_token`.
 3. Die Edge Function `push-dispatch` (Cron oder DB-Webhook) versendet die Nachrichten, wiederholt fehlgeschlagene Zustellungen und entfernt abgelaufene Subscriptions.
 4. **Ohne VAPID** funktionieren In-App-Live-Benachrichtigungen (Realtime) und Systembenachrichtigungen bei geöffneter App trotzdem.
-5. **iOS/Android:** Der Capacitor-Push-Plugin registriert APNs- bzw. FCM-Tokens mit `platform = 'ios' | 'android'` über dasselbe RPC. Den Versand ergänzt man in `push-dispatch`.
+5. **iOS/Android:** `@capacitor/push-notifications` registriert APNs- bzw. FCM-Tokens mit `platform = 'ios' | 'android'` über dasselbe RPC (`src/native/push.ts`). `push-dispatch` versendet über APNs (Token-Auth, ES256) und FCM HTTP v1 (`supabase/functions/_shared/nativePush.ts`). Einrichtung: [APP-STORES.md](APP-STORES.md#6-push-benachrichtigungen-einrichten).
 
 ## Mobile (iOS & Android)
-Die App ist eine responsive SPA ohne Server-Rendering. Sie lässt sich daher unverändert mit **Capacitor** verpacken (`npx cap add ios android`, `webDir: dist`). Für Mobile sind vorbereitet:
+Die App ist eine responsive SPA ohne Server-Rendering und wird unverändert mit **Capacitor** verpackt (`ios/`, `android/`, `capacitor.config.ts`, Build: `npm run build:native`). Native Ergänzungen liegen in `src/native/` und sind im Browser wirkungslos: Sitzung im Keychain/Keystore, Deep Links `shiftcare://auth-callback`, Android-Zurück-Taste, Statusleiste, Push. Außerdem:
 - Safe-Area-Insets (Notch, Home-Indicator) in Shell und Sheets
 - große Touch-Ziele (≥ 44 pt), Bottom-Tab-Bar, Bottom-Sheets
 - OAuth-Redirect-URLs für `capacitor://localhost` und `shiftcare://auth-callback` in `supabase/config.toml`

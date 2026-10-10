@@ -1,0 +1,1 @@
+Nöbet planın hep yanında: nöbetler, görevdeki meslektaşlar, istekler ve izin. Sorumlular için: plan editörü, yedek bulma ve CSV ya da Excel'den aktarma.

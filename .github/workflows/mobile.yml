@@ -1,0 +1,83 @@
+# Native apps: builds the Capacitor shells for Android (debug APK + unsigned
+# release bundle) and iOS (simulator build without signing). Proves that the
+# native projects compile; store builds are signed on a Mac / in a signing
+# workflow (docs/APP-STORES.md → "Bauen und hochladen").
+# Backend: the public demo project (same defaults as demo-pages.yml), override
+# with the secrets or variables APP_SUPABASE_URL / APP_SUPABASE_ANON_KEY.
+name: Mobile apps
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/shiftcare-mvp-v1-xq3x36]
+    paths: [android/**, ios/**, capacitor.config.ts, src/native/**, package.json, package-lock.json, .github/workflows/mobile.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BASE_PATH: /
+  VITE_SUPABASE_URL: ${{ secrets.APP_SUPABASE_URL || vars.APP_SUPABASE_URL || 'https://rcavkoetogzjrovoczuu.supabase.co' }}
+  VITE_SUPABASE_ANON_KEY: ${{ secrets.APP_SUPABASE_ANON_KEY || vars.APP_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjYXZrb2V0b2d6anJvdm9jenV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2Mzk0ODgsImV4cCI6MjEwNzIxNTQ4OH0.Jz-AaEdz1vCwvbZSEilafJX3ZehUYBz_q_IylqjU578' }}
+  # Sign-in buttons only for providers configured in Supabase (none in the demo).
+  VITE_OAUTH_PROVIDERS: ${{ vars.APP_OAUTH_PROVIDERS || '' }}
+  VITE_NATIVE_PUSH: ${{ vars.APP_NATIVE_PUSH || 'false' }}
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      - run: npm run build
+      - run: npx cap sync android
+      - name: Gradle build
+        working-directory: android
+        run: ./gradlew --no-daemon assembleDebug bundleRelease lintDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shiftcare-android
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/outputs/bundle/release/*.aab
+            android/app/build/reports/lint-results-debug.html
+          if-no-files-found: error
+
+  ios:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx cap sync ios
+      - name: Xcode build (simulator, unsigned)
+        run: |
+          xcodebuild -version
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 40
+          test -d build/Build/Products/Release-iphonesimulator/App.app
+      - name: Package simulator app
+        run: cd build/Build/Products/Release-iphonesimulator && zip -qr "$GITHUB_WORKSPACE/ShiftCare-simulator.zip" App.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shiftcare-ios-simulator
+          path: ShiftCare-simulator.zip
+          if-no-files-found: error

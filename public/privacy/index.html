@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShiftCare Datenschutz</title>
+  <meta name="description" content="Datenschutzerklärung der ShiftCare-App für Pflegekräfte und Stationsleitungen." />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../legal.css" />
+</head>
+<body>
+<main>
+  <header>
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0F3D91"/><path d="M20 34.5h7l3.5-9 6 17 3.5-8H46" fill="none" stroke="#18B7B0" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <strong>ShiftCare</strong>
+    <nav class="lang"><a href="#de">Deutsch</a> · <a href="#en">English</a></nav>
+  </header>
+
+  <!-- Vor der Store-Einreichung alle [eckigen Klammern] ausfüllen und den Hinweis unten entfernen. -->
+  <p class="note">Entwurf: Angaben in [eckigen Klammern] ergänzt der Betreiber vor der Veröffentlichung. Draft: the operator fills in the details in [square brackets] before publication.</p>
+
+  <article id="de" lang="de">
+    <h1>Datenschutzerklärung</h1>
+    <p class="meta">Stand: 10. Oktober 2026 · gilt für die ShiftCare-App (iOS, Android) und die Web-App</p>
+
+    <section class="card">
+      <h2>1. Worum es geht</h2>
+      <p>ShiftCare ist eine Dienstplan- und Team-App für Krankenhäuser und Pflegeeinrichtungen. Ein Konto bekommst du nur über deinen Arbeitgeber: Die Einrichtung lädt dich ein. Eine öffentliche Registrierung gibt es nicht.</p>
+      <h2>2. Verantwortliche und Anbieter</h2>
+      <p><strong>Verantwortlich</strong> (Art. 4 Nr. 7 DSGVO) für deine Daten in ShiftCare ist <strong>deine Einrichtung</strong>, also das Krankenhaus oder der Träger, der dich eingeladen hat. Sie entscheidet, welche Daten über Dienste, Abwesenheiten und Teams gepflegt werden.</p>
+      <p><strong>Anbieter der App und Auftragsverarbeiter</strong> (Art. 28 DSGVO): [Name des Betreibers], [Anschrift], E-Mail: [datenschutz@…]. Datenschutzbeauftragte/r: [Name, Kontakt].</p>
+    </section>
+
+    <section class="card">
+      <h2>3. Welche Daten verarbeitet werden</h2>
+      <table>
+        <tr><th>Konto</th><td>Name, dienstliche E-Mail-Adresse, Passwort (nur als Hash bei Supabase Auth), bei Anmeldung mit Microsoft oder Google die dort hinterlegte Kennung</td></tr>
+        <tr><th>Profil (freiwillig)</th><td>Telefonnummer, Profilfoto (wird auf dem Gerät verkleinert, Standort- und Kameradaten werden entfernt), gesprochene Sprachen</td></tr>
+        <tr><th>Beschäftigung</th><td>Einrichtung, Station, Beruf, Rolle, Personalnummer, Qualifikationen</td></tr>
+        <tr><th>Dienstplan</th><td>Dienste, Frei-Tage, Dienstwünsche, Interesse an offenen Diensten, Dienstplan-Verlauf</td></tr>
+        <tr><th>Abwesenheiten</th><td>Urlaubsanträge; Krankmeldungen mit Zeitraum und optionalem Kommentar. Der Kommentar ist eine Gesundheitsangabe (Art. 9 DSGVO) und wird zusätzlich verschlüsselt gespeichert. Kolleginnen und Kollegen sehen nur, <em>dass</em> und <em>wie lange</em> jemand fehlt, nie den Grund.</td></tr>
+        <tr><th>Kommunikation</th><td>Mitteilungen der Leitung, Benachrichtigungen in der App</td></tr>
+        <tr><th>Geräte</th><td>Push-Token deines Geräts (nur wenn du Benachrichtigungen einschaltest), Gerätetyp, App-Version</td></tr>
+        <tr><th>Protokolle</th><td>Änderungsprotokoll (wer hat wann was geändert) und Anmeldeprotokoll zur Sicherheit und Nachvollziehbarkeit</td></tr>
+        <tr><th>Auf dem Gerät</th><td>Anmeldesitzung (iOS-Schlüsselbund bzw. Android-Keystore, nur auf diesem Gerät), Sprache und Darstellung</td></tr>
+      </table>
+      <p>ShiftCare nutzt <strong>keine Werbung, kein Tracking und keine Analyse-Dienste</strong>. Es werden keine Daten verkauft oder für Werbung genutzt. Standort, Kontakte, Kamera und Mikrofon werden nicht verwendet; ein Profilfoto wählst du selbst aus.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. Zwecke und Rechtsgrundlagen</h2>
+      <ul>
+        <li>Dienstplanung, Abwesenheiten und Teamkommunikation im Beschäftigungsverhältnis: Art. 6 Abs. 1 lit. b und c DSGVO in Verbindung mit § 26 BDSG bzw. den Regeln deines Landes</li>
+        <li>Krankmeldungen: Art. 9 Abs. 2 lit. b DSGVO (Pflichten aus dem Arbeitsrecht)</li>
+        <li>Freiwillige Profilangaben und Push-Benachrichtigungen: deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), jederzeit widerrufbar in der App unter Profil</li>
+        <li>Sicherheit und Missbrauchsschutz (Protokolle): berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>5. Wer die Daten sieht</h2>
+      <p>Der Zugriff ist rollenbasiert und wird in der Datenbank erzwungen: Du siehst deine eigenen Daten und das Kollegenverzeichnis deiner Station (Name, Foto, Beruf, Station, Qualifikationen, Sprachen). Leitungen und die Verwaltung sehen, was ihre Aufgabe erfordert. Andere Einrichtungen haben keinen Zugriff.</p>
+      <h2>6. Dienstleister</h2>
+      <ul>
+        <li><strong>Supabase</strong> (Datenbank, Anmeldung, Dateispeicher), Rechenzentrum [Region, z. B. Frankfurt am Main, EU]</li>
+        <li><strong>Apple Push Notification Service</strong> und <strong>Google Firebase Cloud Messaging</strong>: nur wenn du Push-Benachrichtigungen einschaltest. Übermittelt werden das Geräte-Token und ein allgemeiner Hinweis wie „Dienst geändert“ mit dem Stationsnamen, <strong>keine Gesundheitsdaten</strong>.</li>
+        <li><strong>Microsoft</strong> oder <strong>Google</strong>: nur wenn du dich darüber anmeldest</li>
+      </ul>
+      <p>Bei Dienstleistern außerhalb der EU erfolgt die Übermittlung auf Grundlage eines Angemessenheitsbeschlusses (EU-U.S. Data Privacy Framework) oder von Standardvertragsklauseln.</p>
+    </section>
+
+    <section class="card">
+      <h2>7. Speicherdauer</h2>
+      <p>Daten werden gespeichert, solange dein Beschäftigungsverhältnis in der Einrichtung besteht und gesetzliche Aufbewahrungspflichten es verlangen. Danach löscht die Einrichtung dein Konto. Rohdaten aus Dienstplan-Importen werden nach der Veröffentlichung, spätestens nach 30 Tagen, gelöscht. Push-Tokens werden entfernt, sobald du Benachrichtigungen ausschaltest oder sie ungültig werden.</p>
+      <h2>8. Deine Rechte</h2>
+      <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO) sowie auf Beschwerde bei einer Datenschutz-Aufsichtsbehörde. Wende dich dafür an deine Einrichtung oder an [datenschutz@…]. Wie du dein Konto löschen lässt, steht auf der <a href="../support/#konto-loeschen">Support-Seite</a>.</p>
+      <h2>9. Sicherheit</h2>
+      <p>Verbindungen sind TLS-verschlüsselt, Datenträger und Backups sind verschlüsselt, Kommentare zu Krankmeldungen zusätzlich auf Spaltenebene. In der App liegt die Sitzung im Schlüsselbund bzw. Keystore des Geräts und wird nicht in Cloud-Backups übernommen.</p>
+    </section>
+  </article>
+
+  <article id="en" lang="en">
+    <h1 style="margin-top:48px">Privacy policy</h1>
+    <p class="meta">Last updated: 10 October 2026 · applies to the ShiftCare app (iOS, Android) and the web app</p>
+
+    <section class="card">
+      <h2>1. About ShiftCare</h2>
+      <p>ShiftCare is a rostering and team app for hospitals and care facilities. You only get an account through your employer, which invites you. There is no public sign-up.</p>
+      <h2>2. Controller and provider</h2>
+      <p>The <strong>controller</strong> (Art. 4(7) GDPR) for your data in ShiftCare is <strong>your facility</strong>, i.e. the hospital or organisation that invited you.</p>
+      <p><strong>App provider and processor</strong> (Art. 28 GDPR): [operator name], [address], e-mail: [privacy@…]. Data protection officer: [name, contact].</p>
+    </section>
+
+    <section class="card">
+      <h2>3. Data we process</h2>
+      <table>
+        <tr><th>Account</th><td>Name, work e-mail, password (stored only as a hash by Supabase Auth), your Microsoft or Google identifier if you sign in with them</td></tr>
+        <tr><th>Profile (optional)</th><td>Phone number, profile photo (resized on your device, location and camera metadata removed), spoken languages</td></tr>
+        <tr><th>Employment</th><td>Facility, ward, profession, role, personnel number, qualifications</td></tr>
+        <tr><th>Roster</th><td>Shifts, days off, shift wishes, interest in open shifts, roster history</td></tr>
+        <tr><th>Absences</th><td>Leave requests; sick notes with period and optional comment. The comment is health data (Art. 9 GDPR) and is additionally encrypted. Colleagues only see <em>that</em> and <em>how long</em> someone is absent, never why.</td></tr>
+        <tr><th>Communication</th><td>Announcements from your ward lead, in-app notifications</td></tr>
+        <tr><th>Devices</th><td>Push token of your device (only if you turn on notifications), device type, app version</td></tr>
+        <tr><th>Logs</th><td>Change log (who changed what and when) and sign-in log for security and accountability</td></tr>
+        <tr><th>On your device</th><td>Sign-in session (iOS Keychain or Android Keystore, this device only), language and appearance</td></tr>
+      </table>
+      <p>ShiftCare uses <strong>no advertising, no tracking and no analytics services</strong>. Data is never sold or used for advertising. Location, contacts, camera and microphone are not used; you pick a profile photo yourself.</p>
+    </section>
+
+    <section class="card">
+      <h2>4. Purposes and legal bases</h2>
+      <ul>
+        <li>Rostering, absences and team communication in your employment: Art. 6(1)(b) and (c) GDPR together with Section 26 BDSG or the rules of your country</li>
+        <li>Sick notes: Art. 9(2)(b) GDPR (employment law obligations)</li>
+        <li>Optional profile details and push notifications: your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time under Profile</li>
+        <li>Security and abuse prevention (logs): legitimate interest (Art. 6(1)(f) GDPR)</li>
+      </ul>
+      <h2>5. Who can see the data</h2>
+      <p>Access is role-based and enforced in the database. You see your own data and the colleague directory of your ward. Ward leads and administrators see what their task requires. Other facilities have no access.</p>
+      <h2>6. Service providers</h2>
+      <ul>
+        <li><strong>Supabase</strong> (database, authentication, file storage), data centre [region, e.g. Frankfurt, EU]</li>
+        <li><strong>Apple Push Notification service</strong> and <strong>Google Firebase Cloud Messaging</strong>: only if you turn on push notifications. They receive the device token and a generic message such as "Shift changed" with the ward name, <strong>never health data</strong>.</li>
+        <li><strong>Microsoft</strong> or <strong>Google</strong>: only if you sign in with them</li>
+      </ul>
+      <p>Transfers to providers outside the EU rely on an adequacy decision (EU-U.S. Data Privacy Framework) or standard contractual clauses.</p>
+      <h2>7. Retention</h2>
+      <p>Data is kept while you work at the facility and as long as statutory retention periods require; afterwards the facility deletes your account. Raw data from roster imports is deleted after publication, at the latest after 30 days. Push tokens are removed when you turn off notifications or when they become invalid.</p>
+      <h2>8. Your rights</h2>
+      <p>You have the right of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR) and may lodge a complaint with a supervisory authority. Contact your facility or [privacy@…]. See the <a href="../support/#delete-account">support page</a> for account deletion.</p>
+      <h2>9. Security</h2>
+      <p>Connections use TLS, storage and backups are encrypted, and sick-note comments are additionally encrypted at column level. In the app the session is kept in the device Keychain or Keystore and is excluded from cloud backups.</p>
+    </section>
+  </article>
+</main>
+</body>
+</html>

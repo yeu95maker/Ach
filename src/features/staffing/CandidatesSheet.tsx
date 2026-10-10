@@ -63,18 +63,15 @@ export function CandidatesSheet({ shift, onClose, allowRelease }: { shift: Cover
 
   const onError = (e: unknown) => toast.show({ tone: 'error', title: t('errors.title'), description: t(errorMessageKey(e)) })
 
+  // mutateAsync instead of per-call callbacks: the roster refetch after success can unmount
+  // this sheet (the covered shift leaves the list), and React Query then skips mutate()'s
+  // onSuccess – the lead would get no confirmation.
   const doAssign = (c: ShiftCandidate) =>
     shift &&
-    assign.mutate(
-      { entryId: shift.entryId, employeeId: c.employeeId },
-      {
-        onSuccess: () => {
-          toast.show({ tone: 'success', title: t('staffing.assigned', { name: c.firstName }), description: t('staffing.assignedHint') })
-          onClose()
-        },
-        onError,
-      },
-    )
+    assign.mutateAsync({ entryId: shift.entryId, employeeId: c.employeeId }).then(() => {
+      toast.show({ tone: 'success', title: t('staffing.assigned', { name: c.firstName }), description: t('staffing.assignedHint') })
+      onClose()
+    }, onError)
 
   return (
     <Sheet
@@ -96,13 +93,10 @@ export function CandidatesSheet({ shift, onClose, allowRelease }: { shift: Cover
             loading={release.isPending}
             onClick={() =>
               shift &&
-              release.mutate(shift.entryId, {
-                onSuccess: () => {
-                  toast.show({ tone: 'success', title: t('staffing.released'), description: t('staffing.releasedHint') })
-                  onClose()
-                },
-                onError,
-              })
+              release.mutateAsync(shift.entryId).then(() => {
+                toast.show({ tone: 'success', title: t('staffing.released'), description: t('staffing.releasedHint') })
+                onClose()
+              }, onError)
             }
           >
             {t('staffing.release')}

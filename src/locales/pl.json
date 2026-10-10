@@ -61,7 +61,8 @@
     "savePassword": "Zapisz hasło",
     "passwordPolicy": "Co najmniej {{min}} znaków, wielkie i małe litery oraz cyfra.",
     "passwordMismatch": "Hasła nie są identyczne.",
-    "passwordUpdated": "Hasło zostało zmienione"
+    "passwordUpdated": "Hasło zostało zmienione",
+    "linkFailed": "Link wygasł lub jest nieprawidłowy. Zaloguj się ponownie lub poproś o nowy link."
   },
   "tenant": {
     "noEmploymentTitle": "Brak przypisania do placówki",
@@ -367,7 +368,8 @@
       "not_configured": "Jeszcze nie skonfigurowano",
       "default": "Wyłączone",
       "granted": "Włączone",
-      "denied": "Zablokowane w przeglądarce"
+      "denied": "Zablokowane w przeglądarce",
+      "deniedDevice": "Zablokowane w ustawieniach urządzenia"
     },
     "enable": "Włącz",
     "disable": "Wyłącz",
@@ -381,7 +383,9 @@
     "privacy": "Prywatność",
     "privacyHint": "Dane o zdrowiu są przechowywane w formie zaszyfrowanej",
     "signOut": "Wyloguj się",
-    "saved": "Zapisano"
+    "saved": "Zapisano",
+    "support": "Pomoc i kontakt",
+    "supportHint": "Pytania, problemy, usunięcie konta"
   },
   "proficiency": {
     "native": "Język ojczysty",

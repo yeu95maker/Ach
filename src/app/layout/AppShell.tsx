@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { Newspaper, Palmtree } from 'lucide-react'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { PersonAvatar } from '@/components/PersonAvatar'
 import { countUnreadNotifications } from '@/data/notificationRepository'
+import { refreshPushRegistration } from '@/features/notifications/push'
 import { useRealtimeNotifications } from '@/features/notifications/useRealtimeNotifications'
 import { queryKeys } from '@/features/queryKeys'
 import { useCurrentUser, useEmployment } from '@/features/tenant/TenantProvider'
@@ -34,6 +35,7 @@ export function AppShell() {
   const unread = useUnreadCount()
   const location = useLocation()
   useRealtimeNotifications()
+  useEffect(() => refreshPushRegistration(), [user.id])
 
   return (
     <div className="min-h-dvh md:flex">
