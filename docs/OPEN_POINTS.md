@@ -25,7 +25,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | # | Frage | Aktuelle Annahme |
 | --- | --- | --- |
 | W1 | ~~Wer darf einreichen?~~ **Entschieden (10.10.2026):** Pflegekräfte, Stationsleitung und stellvertretende Stationsleitung, nicht HR. | Umgesetzt. Neue Rolle `deputy_head_nurse` (stellvertretende Stationsleitung). |
-| W1a | Hat die **stellvertretende Stationsleitung** dieselben Rechte wie die Stationsleitung (Urlaub genehmigen, Kommentar zur Krankmeldung lesen, Dienstplan veröffentlichen)? Oder nur einen Teil davon, z. B. nur in Vertretung? | Dieselben Rechte, dauerhaft, für ihre Station. Eine Einschränkung wäre eine reine Datenänderung. |
+| W1a | ~~Rechte der stellvertretenden Stationsleitung?~~ **Entschieden (10.10.2026):** dieselben Rechte wie die Stationsleitung, dauerhaft für ihre Station. | Umgesetzt. |
 | W2 | ~~„Nicht verfügbar“ harter Ausschluss?~~ **Entschieden (10.10.2026):** Nein, starker Wunsch. | Umgesetzt (keine Sperre beim Einplanen, Widerspruch wird rot markiert). |
 | W3 | ~~Standardwerte?~~ **Entschieden (10.10.2026):** Frist 21 Tage vor Monatsbeginn, Erinnerung 3 Tage vorher, kein Limit für Wunschfrei. | Umgesetzt (Seed und Hausstandard angepasst). |
 | W4 | Planungszeitraum immer ein Kalendermonat? | Die Oberfläche legt Monate an, die Datenbank erlaubt Zeiträume bis 62 Tage (z. B. 4-Wochen-Pläne). |
