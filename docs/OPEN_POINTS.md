@@ -36,6 +36,17 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | W5 | Sollen Kolleg:innen sehen, wie viele Wünsche es für einen Tag gibt (ohne Namen)? | Nein, fremde Wünsche sind unsichtbar. |
 | W6 | ~~Automatische Bewertung nach Veröffentlichung?~~ **Entschieden (10.10.2026):** Nein. | Die Bewertung bleibt manuell. |
 
+## I. Integration Hub – Rückfragen
+
+| # | Frage | Aktuelle Annahme |
+| --- | --- | --- |
+| I1 | Ist die importierte Datei immer der **vollständige** Plan der Station für den Monat? | Ja: Was nicht in der Datei steht, entfällt beim Übernehmen. Die Vorschau zeigt das vorher und warnt, wenn mehr als die Hälfte wegfiele. Alternative: nur Personen ersetzen, die in der Datei vorkommen. |
+| I2 | Welche **Dienstplanprogramme** nutzen die ersten Einrichtungen, und welche Exportformate liefern sie? | Unbekannt. Unterstützt werden CSV und XLSX in Listen- oder Rasterform. Für direkte Schnittstellen braucht es pro Anbieter die Klärung aus INTEGRATION-HUB.md (API, Erlaubnis, Authentifizierung). |
+| I3 | Dürfen künftige automatische Synchronisierungen **ohne Freigabe** veröffentlichen? | Nein. Standard: prüfen und übernehmen als Entwurf, Veröffentlichung durch die Leitung. Eine Automatik wäre eine ausdrückliche Profil-Einstellung. |
+| I4 | Sind **Personalnummern** in allen Häusern eindeutig und dürfen sie als Schlüssel genutzt werden? | Ja, sonst über bestätigte Zuordnung pro Profil. |
+| I5 | Wie lange dürfen **Rohdaten** eines Imports aufbewahrt werden? | Bis zur Veröffentlichung, höchstens 30 Tage. Dateien werden gar nicht gespeichert, nur Name und Prüfsumme. |
+| I6 | Soll ein Import auch **mehrere Stationen** auf einmal enthalten dürfen (Hausexport)? | Nein, ein Import pro Station und Monat. |
+
 ## B. Technische offene Punkte
 
 | # | Punkt | Status |
@@ -53,6 +64,8 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B11 | Rechtstexte (Impressum, Datenschutzerklärung, AV-Vertrag), Hosting-Region EU (Frankfurt) | Organisatorisch |
 | B12 | ~~Mitteilungen erstellen (UI)~~ | **Umgesetzt** als „Aktuelles“ mit Kategorien, Terminen und Push |
 | B13 | Oberfläche für die Wunschplan-**Hauskonfiguration** (`wish_plan_settings`: Limits, Standardfrist, Erinnerung) | Tabelle und RLS fertig. Frist und „Änderungen erlaubt“ sind pro Zeitraum in der UI einstellbar. |
+| B15 | Direkte Anbieter-Schnittstellen (API, SFTP) | Architektur, Profile und Vault-Speicherung vorhanden. **Kein Anbieter ist angebunden.** Pro Anbieter: Klärung, Edge Function, Tests |
+| B16 | Import für alte Excel-Dateien (`.xls`) und ODS | Nicht unterstützt. Export als XLSX/CSV nötig |
 | B14 | Planungsassistent (KI) | Datenbasis (`get_scheduling_context`), Besetzungsvorgaben und Vorschlagstabelle sind vorbereitet, der Assistent selbst nicht |
 
 ## C. Umgesetzte Annahmen ohne Rückfragebedarf

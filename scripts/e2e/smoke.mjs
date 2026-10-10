@@ -4,7 +4,7 @@
  *   node scripts/e2e/smoke.mjs [outDir]
  * Requires: gateway (scripts/e2e/gateway.mjs) and `npm run dev` running.
  */
-import { mkdirSync } from 'node:fs'
+import { mkdirSync, writeFileSync } from 'node:fs'
 import { chromium } from 'playwright'
 
 const BASE = process.env.APP_URL ?? 'http://localhost:5173'
@@ -227,6 +227,60 @@ for (const run of runs) {
   await admin.page.getByRole('button', { name: 'Einladung senden' }).click()
   await admin.page.waitForSelector('text=Nora Neumann')
   await shot(admin.page, 'admin', '53-admin')
+  await admin.context.close()
+}
+
+// Integration Hub: import a CSV export for next month, map, publish; the nurse sees the shift
+{
+  const now = new Date()
+  const next = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+  const mm = String(next.getMonth() + 1).padStart(2, '0')
+  const day = (n) => `${String(n).padStart(2, '0')}.${mm}.${next.getFullYear()}`
+  const csvPath = `${OUT}/dienstplan-import.csv`
+  writeFileSync(
+    csvPath,
+    '\uFEFF' +
+      ['Personalnummer;Name;Datum;Dienst;Beginn;Ende', `P-1001;Becker, Anna;${day(2)};F;06:00;14:15`, `P-1001;Becker, Anna;${day(3)};FD;;`,
+       `P-1002;Weber, Jonas;${day(2)};N;21:45;06:15`, `EXT-9;Yılmaz, Leyla;${day(4)};S;;`].join('\r\n'),
+  )
+  const lead = await session('import', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  const p = lead.page
+  await p.goto(`${BASE}/schedule/import`)
+  await p.setInputFiles('[data-testid=import-file]', csvPath)
+  await p.waitForSelector('text=4 Dienste gelesen')
+  await shot(p, 'import', '60-columns')
+  await p.getByRole('button', { name: 'Prüfen' }).click()
+  await p.waitForSelector('text=1 Person zuordnen')
+  await p.locator('select[aria-label^="Person für"]').selectOption({ label: 'Yılmaz, Leyla · Pflegefachfrau' })
+  await p.locator('li', { hasText: 'EXT-9' }).getByRole('button', { name: 'Bestätigen' }).click()
+  await p.waitForSelector('text=1 Person zuordnen', { state: 'detached' })
+  await p.locator('select[aria-label="Kürzel FD zuordnen"]').selectOption({ label: 'F · Frühdienst' })
+  await p.locator('li', { hasText: 'FD' }).getByRole('button', { name: 'Bestätigen' }).click()
+  await p.getByRole('button', { name: 'Weiter zur Vorschau' }).click()
+  await p.waitForSelector('text=Vorschau der Änderungen')
+  await shot(p, 'import', '61-preview', { full: false })
+  await p.getByRole('button', { name: /Änderungen? übernehmen/ }).click()
+  await p.waitForSelector('text=Dienstplan übernommen')
+  if (await p.getByRole('button', { name: 'Veröffentlichen' }).count()) {
+    await p.getByRole('button', { name: 'Veröffentlichen' }).click()
+    await p.waitForSelector('text=Dienstplan veröffentlicht')
+  }
+  await p.goto(`${BASE}/schedule/import?tab=history`)
+  await p.waitForSelector('text=dienstplan-import.csv')
+  await shot(p, 'import', '62-history')
+  await lead.context.close()
+
+  const nurse = await session('import-nurse', { email: 'anna.becker@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  await nurse.page.goto(`${BASE}/schedule?view=day&date=${next.getFullYear()}-${mm}-02`)
+  await nurse.page.waitForSelector('text=Frühdienst')
+  await nurse.page.waitForSelector('text=/Stand:/')
+  await shot(nurse.page, 'import-nurse', '63-imported-day')
+  await nurse.context.close()
+
+  const admin = await session('integrations', { email: 'admin@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  await admin.page.goto(`${BASE}/admin?tab=integrations`)
+  await admin.page.waitForSelector('text=EXT-9')
+  await shot(admin.page, 'integrations', '64-profiles')
   await admin.context.close()
 }
 
