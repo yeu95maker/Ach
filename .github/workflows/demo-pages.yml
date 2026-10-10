@@ -1,6 +1,8 @@
 # Live demo on GitHub Pages (https://<owner>.github.io/<repo>/).
-# Requires repository secrets DEMO_SUPABASE_URL and DEMO_SUPABASE_ANON_KEY
-# and Settings → Pages → Source = "GitHub Actions". See docs/DEMO.md.
+# Requires Settings → Pages → Source = "GitHub Actions". See docs/DEMO.md.
+# Backend: the public ShiftCare demo project. URL and anon key are public by
+# design (they ship in the browser bundle; access is enforced by RLS). Override
+# them with the secrets or variables DEMO_SUPABASE_URL / DEMO_SUPABASE_ANON_KEY.
 name: Demo (GitHub Pages)
 
 on:
@@ -28,13 +30,13 @@ jobs:
       - name: Build
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
-          VITE_SUPABASE_URL: ${{ secrets.DEMO_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.DEMO_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.DEMO_SUPABASE_URL || vars.DEMO_SUPABASE_URL || 'https://rcavkoetogzjrovoczuu.supabase.co' }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.DEMO_SUPABASE_ANON_KEY || vars.DEMO_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjYXZrb2V0b2d6anJvdm9jenV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2Mzk0ODgsImV4cCI6MjEwNzIxNTQ4OH0.Jz-AaEdz1vCwvbZSEilafJX3ZehUYBz_q_IylqjU578' }}
         run: |
-          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
-            echo "::error::Secrets DEMO_SUPABASE_URL / DEMO_SUPABASE_ANON_KEY fehlen (siehe docs/DEMO.md)"
-            exit 1
-          fi
+          case "$VITE_SUPABASE_URL" in
+            https://*) ;;
+            *) echo "::error::DEMO_SUPABASE_URL ist keine https-URL (siehe docs/DEMO.md)"; exit 1 ;;
+          esac
           npm run build
           # SPA fallback: GitHub Pages serves 404.html for unknown paths (deep links).
           cp dist/index.html dist/404.html

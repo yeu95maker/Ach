@@ -41,9 +41,9 @@ Alle Aufnahmen stammen aus der echten App mit echter Datenbank, Rechten und Bena
 Demo-Zugänge (Passwort `ShiftCare!2026`): `anna.becker@shiftcare.dev` (Pflegekraft), `jonas.weber@shiftcare.dev` (Schichtleitung), `mira.schulz@shiftcare.dev` (Stationsleitung), `paul.richter@shiftcare.dev` (PDL).
 
 ## Live-Demo einrichten (GitHub Pages)
-Der Workflow `.github/workflows/demo-pages.yml` baut die App und veröffentlicht sie auf GitHub Pages. Einmalig nötig:
-1. Ein Supabase-Projekt anlegen und alle Migrationen sowie die Demo-Daten (`supabase/seed.sql`) einspielen.
-2. Im Repository unter **Settings → Secrets and variables → Actions** die Secrets `DEMO_SUPABASE_URL` und `DEMO_SUPABASE_ANON_KEY` anlegen.
-3. **Settings → Pages → Source: GitHub Actions** wählen.
-4. Unter **Actions → „Demo (GitHub Pages)“ → Run workflow** den Workflow starten. Die Demo läuft dann unter `https://yeu95maker.github.io/Ach/`.
-5. In Supabase unter **Auth → URL Configuration** die Pages-URL als Site-URL bzw. Redirect-URL eintragen. Das ist für den Passwort-Reset nötig.
+Der Workflow `.github/workflows/demo-pages.yml` baut die App und veröffentlicht sie auf GitHub Pages. Als Backend dient das Supabase-Projekt `shiftcare-demo` (Frankfurt) mit allen Migrationen und den Demo-Daten. URL und Anon-Key sind im Workflow hinterlegt. Sie sind öffentlich gedacht, weil sie ohnehin in der App landen, und der Schutz liegt in den RLS-Regeln. Ein anderes Projekt lässt sich über die Secrets oder Variablen `DEMO_SUPABASE_URL` und `DEMO_SUPABASE_ANON_KEY` einstellen.
+
+Einmalig nötig:
+1. **Settings → Pages → Source: GitHub Actions** wählen.
+2. Unter **Actions → „Demo (GitHub Pages)“ → Run workflow** den Workflow starten. Die Demo läuft dann unter `https://yeu95maker.github.io/Ach/`.
+3. In Supabase unter **Auth → URL Configuration** die Pages-URL als Site-URL eintragen. Das ist für den Passwort-Reset nötig.
