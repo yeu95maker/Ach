@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "ShiftCare \u2013 Dienstplanung & Teamkommunikation f\u00fcr Krankenh\u00e4user und Pflegeeinrichtungen",
+  "description": "ShiftCare – Dienstplanung & Teamkommunikation für Krankenhäuser und Pflegeeinrichtungen",
   "engines": {
     "node": ">=20"
   },
@@ -27,6 +27,7 @@
     "@tanstack/react-query": "^5.104.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
+    "fflate": "0.8.3",
     "i18next": "^26.4.2",
     "lucide-react": "^1.53.0",
     "react": "^19.3.0",
