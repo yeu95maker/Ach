@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { cn } from '@/ui'
 
-// Sick notes are deliberately not a quick action (decided 11.10.2026): they
+// Sick notes are deliberately not a quick action (decided 10.10.2026): they
 // live under "Meine Anträge" so they are available but not in the foreground.
 const ACTIONS: { to: string; labelKey: string; icon: LucideIcon; tone: string }[] = [
   { to: '/schedule', labelKey: 'actions.openSchedule', icon: CalendarDays, tone: 'bg-primary-soft text-primary-text' },

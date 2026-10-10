@@ -1,5 +1,5 @@
 -- =============================================================================
--- ShiftCare · Team lead features (decided 11.10.2026)
+-- ShiftCare · Team lead features (decided 10.10.2026)
 --
 --   1. "Aktuelles": announcements get a category (Fortbildung, Teamsitzung,
 --      Arztgespräch, Weiterbildung, Workshop, Information …) and optional

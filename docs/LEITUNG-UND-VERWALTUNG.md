@@ -1,6 +1,6 @@
 # Leitung, Aktuelles, Verlauf und Verwaltung
 
-Stand: 11.10.2026. Umgesetzt nach den Entscheidungen vom 11.10.2026:
+Stand: 10.10.2026. Umgesetzt nach den Entscheidungen vom 10.10.2026:
 - Offene Dienste: Mitarbeitende können Interesse melden.
 - Wünsche werden nach der Veröffentlichung nicht automatisch bewertet.
 - Der Admin-Bereich wird gebaut.

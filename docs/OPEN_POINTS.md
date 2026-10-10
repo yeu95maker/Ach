@@ -16,7 +16,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | A6 | Wie weit rückwirkend darf man sich **krank melden**? | Höchstens 30 Tage. |
 | A7 | **Urlaubsanspruch / Resturlaub** und Feiertage pro Bundesland? | Nicht im MVP. Arbeitstage werden als Mo–Fr ohne Feiertage gezählt. |
 | A8 | Sollen Benachrichtigungen bei Krankmeldungen an **alle** mit `sick_leave.view` gehen (inkl. HR)? | Ja, an alle mit diesem Recht im Scope. HR erhält dabei nur Name und Zeitraum. |
-| A9 | ~~Offene Dienste selbst übernehmen?~~ **Entschieden (11.10.2026):** Interesse melden. | Umgesetzt: „Ich kann einspringen“, die Leitung entscheidet (siehe LEITUNG-UND-VERWALTUNG.md). |
+| A9 | ~~Offene Dienste selbst übernehmen?~~ **Entschieden (10.10.2026):** Interesse melden. | Umgesetzt: „Ich kann einspringen“, die Leitung entscheidet (siehe LEITUNG-UND-VERWALTUNG.md). |
 | A10 | **SSO pro Krankenhaus** (Entra-ID-Tenant oder SAML) statt globalem Google- und Microsoft-Login? | Global konfiguriert. Für den Unternehmenseinsatz empfohlen: SAML-SSO pro Haus (Supabase Pro) und Einschränkung des Azure-Tenants. |
 | A11 | Muss ein Urlaubsantrag eine **Vorlaufzeit** einhalten? | Keine Regel. Beginn ab heute. Ein Setting `leave.min_notice_days` ist vorgesehen. |
 | A12 | **Rollenvergabe:** Ist die neue Regel richtig? Administrative Rechte gibt nur weiter, wer sie selbst hat. Niemand gibt sich selbst neue Rechte. Die alte Regel („nur Rollen, deren Rechte man komplett selbst hat“) hat HR und Administration sogar die Pflegekraft-Rolle verwehrt. | Umgesetzt. HR kann damit z. B. eine Stationsleitung ernennen, die Krankmeldungs-Kommentare lesen darf, obwohl HR selbst sie nicht lesen kann. |
@@ -34,7 +34,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | W3 | ~~Standardwerte?~~ **Entschieden (10.10.2026):** Frist 21 Tage vor Monatsbeginn, Erinnerung 3 Tage vorher, kein Limit für Wunschfrei. | Umgesetzt (Seed und Hausstandard angepasst). |
 | W4 | Planungszeitraum immer ein Kalendermonat? | Die Oberfläche legt Monate an, die Datenbank erlaubt Zeiträume bis 62 Tage (z. B. 4-Wochen-Pläne). |
 | W5 | Sollen Kolleg:innen sehen, wie viele Wünsche es für einen Tag gibt (ohne Namen)? | Nein, fremde Wünsche sind unsichtbar. |
-| W6 | ~~Automatische Bewertung nach Veröffentlichung?~~ **Entschieden (11.10.2026):** Nein. | Die Bewertung bleibt manuell. |
+| W6 | ~~Automatische Bewertung nach Veröffentlichung?~~ **Entschieden (10.10.2026):** Nein. | Die Bewertung bleibt manuell. |
 
 ## B. Technische offene Punkte
 
