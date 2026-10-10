@@ -65,6 +65,9 @@ const dynamic = {
   'news.category': ['information', 'training', 'further_education', 'workshop', 'team_meeting', 'doctor_meeting', 'other'],
   'staffing.flag': ['interested', 'vacation', 'sick', 'busy', 'plannedOff', 'restShort', 'wishFree', 'wishUnavailable', 'fits'],
   'staffing.group': ['recommended', 'possible', 'unavailable'],
+  'admin.role': ['nurse', 'charge_nurse', 'deputy_head_nurse', 'head_nurse', 'hr', 'hospital_admin'],
+  'admin.employmentType': ['full_time', 'part_time', 'marginal', 'trainee', 'agency', 'other'],
+  'admin.tabs': ['people', 'organization', 'shifts'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
 for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest'])

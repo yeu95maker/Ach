@@ -13,6 +13,7 @@ import {
   Moon,
   Pencil,
   Phone,
+  Settings2,
   ShieldCheck,
 } from 'lucide-react'
 import { useRef, useState } from 'react'
@@ -24,6 +25,7 @@ import { useTheme } from '@/core/theme'
 import { authRepository } from '@/data/authRepository'
 import { profileRepository } from '@/data/profileRepository'
 import { teamRepository } from '@/data/teamRepository'
+import { canAny } from '@/domain/permissions'
 import type { ThemePreference } from '@/domain/types'
 import { currentPushState, disablePush, enablePush, type PushState } from '@/features/notifications/push'
 import { queryKeys } from '@/features/queryKeys'
@@ -195,6 +197,9 @@ export function ProfilePage() {
             <SectionTitle>{t('profile.myArea')}</SectionTitle>
             <ListGroup>
               <ListRow icon={<ClipboardList />} title={t('requests.title')} subtitle={t('requests.subtitle')} to="/requests" />
+              {canAny(employment, ['employees.manage', 'roles.assign', 'organization.manage']) && (
+                <ListRow icon={<Settings2 />} title={t('admin.title')} subtitle={t('admin.subtitle')} to="/admin" />
+              )}
             </ListGroup>
           </section>
 

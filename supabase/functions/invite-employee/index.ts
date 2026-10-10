@@ -2,7 +2,7 @@
  * invite-employee – onboarding of a new employee by HR / hospital admins.
  *
  * 1. verifies the caller (JWT) holds `employees.manage` hospital-wide and may
- *    grant the requested role (permission subset rule, same as RLS)
+ *    grant the requested role (assignable_roles(), same rule as RLS)
  * 2. invites the person via Supabase Auth (or reuses an existing account)
  * 3. creates the employment, ward membership and role assignment
  *
@@ -48,18 +48,12 @@ Deno.serve(async (req) => {
   const permissions = new Set<string>(employment?.permissions ?? [])
   if (!permissions.has('employees.manage') || !permissions.has('roles.assign')) return json({ error: 'forbidden' }, 403)
 
-  const { data: role } = await admin
-    .from('roles')
-    .select('id, role_permissions(permission_key)')
-    .eq('key', roleKey)
-    .or(`hospital_id.is.null,hospital_id.eq.${input.hospital_id}`)
-    .eq('scope', 'hospital')
-    .maybeSingle()
-  if (!role) return json({ error: 'unknown role' }, 400)
+  // Same rule as RLS (private.can_grant_role): evaluated by the database for the caller.
+  const { data: roles, error: rolesError } = await caller.rpc('assignable_roles', { p_hospital_id: input.hospital_id })
+  if (rolesError) return json({ error: rolesError.message }, 400)
   // deno-lint-ignore no-explicit-any
-  if (!(role.role_permissions as any[]).every((rp) => permissions.has(rp.permission_key))) {
-    return json({ error: 'cannot grant a role with permissions you do not hold' }, 403)
-  }
+  const role = (roles as any[]).find((r) => r.role_key === roleKey)
+  if (!role) return json({ error: 'cannot grant this role' }, 403)
 
   // 2. Account: reuse an existing person (multi-hospital staff) or invite.
   let userId: string | undefined
@@ -75,8 +69,9 @@ Deno.serve(async (req) => {
     userId = data.user.id
   }
 
-  // 3. Employment, ward and role (composite FKs guarantee tenant consistency).
-  const { data: emp, error: empError } = await admin
+  // 3. Employment, ward and role – written with the caller's JWT, so RLS
+  //    (employees.manage, roles.assign, no self-escalation) applies.
+  const { data: emp, error: empError } = await caller
     .from('employees')
     .insert({ hospital_id: input.hospital_id, user_id: userId, job_title: input.job_title ?? '' })
     .select('id')
@@ -84,15 +79,19 @@ Deno.serve(async (req) => {
   if (empError) return json({ error: empError.message }, empError.code === '23505' ? 409 : 400)
 
   if (input.unit_id) {
-    await admin.from('employee_units').insert({ hospital_id: input.hospital_id, employee_id: emp.id, unit_id: input.unit_id, is_primary: true })
+    const { error } = await caller
+      .from('employee_units')
+      .insert({ hospital_id: input.hospital_id, employee_id: emp.id, unit_id: input.unit_id, is_primary: true })
+    if (error) return json({ error: error.message }, 400)
   }
-  await admin.from('employee_roles').insert({
+  const { error: roleError } = await caller.from('employee_roles').insert({
     hospital_id: input.hospital_id,
     employee_id: emp.id,
-    role_id: role.id,
+    role_id: role.role_id,
     unit_id: input.unit_id ?? null,
     granted_by: ctx.user.id,
   })
+  if (roleError) return json({ error: roleError.message }, 400)
 
   return json({ employee_id: emp.id, user_id: userId, invited: !existing }, 201)
 })

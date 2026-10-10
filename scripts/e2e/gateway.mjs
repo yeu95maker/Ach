@@ -321,6 +321,40 @@ async function handleAuth(req, res, url, claims) {
   return send(res, 404, { msg: `auth route ${route} not implemented in test gateway` })
 }
 
+// ------------------------------------------------------------ Edge Functions ----
+/**
+ * Emulates supabase/functions/invite-employee: the account is created with
+ * service rights, everything else runs as the caller (RLS decides).
+ */
+async function handleInvite(req, res, claims) {
+  if (!claims) return send(res, 401, { error: 'unauthorized' })
+  const input = (await readBody(req)) ?? {}
+  const email = String(input.email ?? '').trim().toLowerCase()
+  if (!input.hospital_id || !/^[^@\s]+@[^@\s]+$/.test(email) || !input.first_name || !input.last_name) return send(res, 400, { error: 'invalid input' })
+  const roleKey = input.role_key ?? 'nurse'
+  const roles = await asUser(claims, (c) => c.query('select * from public.assignable_roles($1)', [input.hospital_id]))
+  const role = roles.rows.find((r) => r.role_key === roleKey)
+  if (!role) return send(res, 403, { error: 'cannot grant this role' })
+
+  const existing = await pool.query('select id from public.users where lower(email) = $1', [email])
+  let userId = existing.rows[0]?.id
+  if (!userId) {
+    userId = randomUUID()
+    await pool.query(
+      `insert into auth.users (id, email, raw_user_meta_data) values ($1, $2, $3)`,
+      [userId, email, JSON.stringify({ first_name: input.first_name, last_name: input.last_name, locale: input.locale ?? 'de' })],
+    )
+  }
+  const employeeId = await asUser(claims, async (c) => {
+    const emp = await c.query('insert into public.employees (hospital_id, user_id, job_title) values ($1, $2, $3) returning id', [input.hospital_id, userId, input.job_title ?? ''])
+    const id = emp.rows[0].id
+    if (input.unit_id) await c.query('insert into public.employee_units (hospital_id, employee_id, unit_id, is_primary) values ($1, $2, $3, true)', [input.hospital_id, id, input.unit_id])
+    await c.query('insert into public.employee_roles (hospital_id, employee_id, role_id, unit_id) values ($1, $2, $3, $4)', [input.hospital_id, id, role.role_id, input.unit_id ?? null])
+    return id
+  })
+  return send(res, 201, { employee_id: employeeId, user_id: userId, invited: !existing.rows.length })
+}
+
 // ------------------------------------------------------------ Server ----
 createServer(async (req, res) => {
   if (req.method === 'OPTIONS') return send(res, 204, undefined)
@@ -330,6 +364,7 @@ createServer(async (req, res) => {
   try {
     if (url.pathname.startsWith('/auth/v1')) return await handleAuth(req, res, url, claims)
     if (url.pathname.startsWith('/rest/v1/')) return await handleRest(req, res, url, claims)
+    if (url.pathname === '/functions/v1/invite-employee') return await handleInvite(req, res, claims)
     if (url.pathname.startsWith('/storage/v1/object/sign/')) {
       const body = await readBody(req)
       return send(res, 200, (body?.paths ?? []).map((p) => ({ path: p, signedURL: null, error: 'not available in test gateway' })))
