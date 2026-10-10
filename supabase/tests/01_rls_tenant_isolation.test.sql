@@ -58,8 +58,12 @@ begin
   assert (select count(*) from public.units) = 3, 'nurse sees only own hospital units';
   assert not exists (select 1 from public.units where hospital_id = '10000000-0000-4000-a000-000000000002'), 'no foreign units';
 
-  -- schedules: published only, own hospital only
-  assert (select count(*) from public.schedules) = 1, 'nurse sees only the published roster of her hospital';
+  -- Seed history (ids 81…/91…, archived rosters) is excluded from the counts below.
+  -- schedules: published (+ archived history) only, own hospital only
+  assert (select count(*) from public.schedules where status = 'published') = 1, 'nurse sees only the published roster of her hospital';
+  assert not exists (select 1 from public.schedules where status = 'draft'), 'nurse sees no drafts';
+  assert (select count(*) from public.schedules where status = 'archived') = 24, 'nurse sees the archived history';
+  assert not exists (select 1 from public.schedules where hospital_id = '10000000-0000-4000-a000-000000000002'), 'no foreign rosters';
   assert not exists (select 1 from public.schedule_entries where hospital_id = '10000000-0000-4000-a000-000000000002'), 'no foreign shifts';
   assert not exists (select 1 from public.schedule_entries where schedule_id = '70000000-0000-4000-a000-000000000002'), 'no draft shifts';
   assert exists (select 1 from public.shift_roster where employee_id = '40000000-0000-4000-a000-000000000002'), 'nurse sees colleagues shifts';
@@ -71,8 +75,8 @@ begin
   assert (select count(*) from public.employees) = 1, 'nurse reads only her own employment';
 
   -- absences
-  assert (select count(*) from public.leave_requests) = 2, 'nurse sees only own leave requests';
-  assert (select count(*) from public.sick_leaves) = 0, 'nurse has no access to the sick_leaves table of colleagues';
+  assert (select count(*) from public.leave_requests where left(id::text, 2) <> '81') = 2, 'nurse sees only own leave requests';
+  assert (select count(*) from public.sick_leaves where left(id::text, 2) <> '91') = 0, 'nurse has no access to the sick_leaves table of colleagues';
   -- …but may see WHO on her ward is sick (decision 2026-10-10), never the reason
   assert (select count(*) from public.colleague_sick_leaves) = 1, 'nurse sees that a ward colleague is sick';
   assert (select employee_id from public.colleague_sick_leaves) = '40000000-0000-4000-a000-000000000003', 'it is Leyla';
@@ -192,11 +196,11 @@ select set_config('request.jwt.claims', json_build_object('sub', :'mira', 'role'
 set local role authenticated;
 do $$
 begin
-  assert (select count(*) from public.schedules) = 2, 'charge nurse sees published + draft roster of 3A';
+  assert (select count(*) from public.schedules where status <> 'archived') = 2, 'charge nurse sees published + draft roster of 3A';
   assert (select count(*) from public.users) = 4, 'charge nurse sees full profiles of her ward members';
   assert exists (select 1 from public.leave_requests where employee_id = '40000000-0000-4000-a000-000000000002' and status = 'pending'),
     'sees pending request of her team';
-  assert (select count(*) from public.sick_leaves) = 1, 'sees sick leave of her team';
+  assert (select count(*) from public.sick_leaves where left(id::text, 2) <> '91') = 1, 'sees sick leave of her team';
   assert public.get_sick_leave_comment('90000000-0000-4000-a000-000000000001') = 'Fieber, AU folgt', 'may read sick note';
   assert (public.get_dashboard('40000000-0000-4000-a000-000000000004') ->> 'pending_approvals')::int = 2, 'two approvals pending';
 
@@ -268,9 +272,9 @@ select set_config('request.jwt.claims', json_build_object('sub', :'jonas', 'role
 set local role authenticated;
 do $$
 begin
-  assert (select count(*) from public.sick_leaves) = 1, 'shift lead sees who is sick on her ward';
+  assert (select count(*) from public.sick_leaves where left(id::text, 2) <> '91') = 1, 'shift lead sees who is sick on her ward';
   assert (select count(*) from public.users) = 4, 'shift lead sees contact details of her ward';
-  assert (select count(*) from public.schedules) = 1, 'shift lead does not see draft rosters';
+  assert (select count(*) from public.schedules where status <> 'archived') = 1, 'shift lead does not see draft rosters';
   assert (select count(*) from public.leave_requests where employee_id <> '40000000-0000-4000-a000-000000000002') = 0,
     'shift lead does not see leave requests of others';
   begin
@@ -328,7 +332,7 @@ select set_config('request.jwt.claims', json_build_object('sub', :'hanna', 'role
 set local role authenticated;
 do $$
 begin
-  assert (select count(*) from public.sick_leaves) = 1, 'HR sees sick leave periods';
+  assert (select count(*) from public.sick_leaves where left(id::text, 2) <> '91') = 1, 'HR sees sick leave periods';
   assert (select count(*) from public.colleague_sick_leaves) = 0, 'colleague view is limited to shared wards';
   begin
     perform public.get_sick_leave_comment('90000000-0000-4000-a000-000000000001');
@@ -395,7 +399,7 @@ do $$
 begin
   assert (select count(*) from public.hospitals) = 2, 'system admin sees all tenants';
   assert (select count(*) from public.employees) = 0, 'system admin sees no employees';
-  assert (select count(*) from public.sick_leaves) = 0, 'system admin sees no sick leave';
+  assert (select count(*) from public.sick_leaves where left(id::text, 2) <> '91') = 0, 'system admin sees no sick leave';
   assert (select count(*) from public.audit_logs) > 0, 'system admin reads the platform audit log';
 end $$;
 rollback;

@@ -28,7 +28,8 @@
     "reportSick": "Zgłoś chorobę",
     "requestLeave": "Wniosek o urlop",
     "openSchedule": "Grafik",
-    "onDuty": "Koledzy na dyżurze"
+    "onDuty": "Koledzy na dyżurze",
+    "news": "Aktualności"
   },
   "auth": {
     "brandTitle": "Twój dyżur. Twój zespół. W jednym miejscu.",
@@ -324,6 +325,10 @@
       "wish_plan_reviewed": {
         "title": "Twoje życzenia zostały ocenione",
         "body": "{{period}} · {{count}} × {{wishStatus}}"
+      },
+      "open_shift_interest": {
+        "title": "{{name}} może przejąć dyżur",
+        "body": "Wolny dyżur {{date}}, {{time}} · {{unit}}"
       }
     }
   },
@@ -592,6 +597,58 @@
       "absence_sick": "Ta osoba jest w tym dniu na zwolnieniu.",
       "rest_period": "Od poprzedniego dyżuru minęło mniej niż 11 godzin odpoczynku.",
       "wish_conflict": "Dyżur jest sprzeczny ze złożonym życzeniem."
+    }
+  },
+  "news": {
+    "title": "Aktualności",
+    "subtitle": "Szkolenia, zebrania zespołu, terminy i nowości",
+    "new": "Nowe",
+    "filter": "Filtruj według kategorii",
+    "all": "Wszystkie",
+    "upcoming": "Terminy",
+    "latest": "Nowości",
+    "empty": "Brak aktualności",
+    "emptyManager": "Przyciskiem „Nowe” poinformujesz zespół o szkoleniach, zebraniach lub nowościach.",
+    "wholeHospital": "Cały szpital",
+    "category": {
+      "information": "Informacja",
+      "training": "Szkolenie",
+      "further_education": "Kształcenie podyplomowe",
+      "workshop": "Warsztat",
+      "team_meeting": "Zebranie zespołu",
+      "doctor_meeting": "Rozmowa z lekarzami",
+      "other": "Inne"
+    },
+    "composeTitle": "Wyślij do zespołu",
+    "composeSubtitle": "Wszyscy odbiorcy otrzymają powiadomienie w aplikacji i push.",
+    "categoryLabel": "Czego dotyczy?",
+    "audience": "Dla kogo?",
+    "audienceHint": "Wiadomość widzą tylko pracownicy tego oddziału (lub całego szpitala).",
+    "titleLabel": "Tytuł",
+    "titlePlaceholder": "np. Szkolenie z leczenia ran",
+    "bodyLabel": "Wiadomość",
+    "bodyPlaceholder": "Co zespół powinien wiedzieć?",
+    "eventSection": "Termin",
+    "date": "Data",
+    "from": "Od",
+    "to": "Do",
+    "location": "Miejsce",
+    "locationPlaceholder": "np. dyżurka",
+    "important": "Oznacz jako ważne",
+    "importantHint": "Wyróżnione i pokazane na górze.",
+    "send": "Wyślij",
+    "published": "Wysłano",
+    "publishedHint": "Twój zespół został powiadomiony.",
+    "remove": "Usuń",
+    "removeTitle": "Usunąć wiadomość?",
+    "removeHint": "Wiadomość zniknie u wszystkich odbiorców.",
+    "removed": "Usunięto",
+    "errors": {
+      "title": "Podaj tytuł.",
+      "body": "Napisz wiadomość.",
+      "endBeforeStart": "Koniec jest przed początkiem.",
+      "endWithoutStart": "Najpierw podaj początek.",
+      "target": "Wybierz, dla kogo jest wiadomość."
     }
   }
 }

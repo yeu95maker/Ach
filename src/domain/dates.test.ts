@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDaysISO, countWorkdays, daysBetweenInclusive, isoDateInTimeZone, monthGrid, weekDays } from './dates'
+import { addDaysISO, countWorkdays, daysBetweenInclusive, isoDateInTimeZone, monthGrid, weekDays, zonedDateTime } from './dates'
 
 describe('dates', () => {
   it('builds a full Monday-first month grid', () => {
@@ -35,5 +35,16 @@ describe('dates', () => {
     const instant = new Date('2026-10-09T23:30:00Z')
     expect(isoDateInTimeZone(instant, 'Europe/Berlin')).toBe('2026-10-10')
     expect(isoDateInTimeZone(instant, 'UTC')).toBe('2026-10-09')
+  })
+})
+
+describe('zonedDateTime', () => {
+  it('converts Berlin wall-clock time in summer and winter', () => {
+    expect(zonedDateTime('2026-07-01', '14:30', 'Europe/Berlin').toISOString()).toBe('2026-07-01T12:30:00.000Z')
+    expect(zonedDateTime('2026-12-01', '14:30', 'Europe/Berlin').toISOString()).toBe('2026-12-01T13:30:00.000Z')
+  })
+
+  it('handles the DST switch day', () => {
+    expect(zonedDateTime('2026-10-25', '10:00', 'Europe/Berlin').toISOString()).toBe('2026-10-25T09:00:00.000Z')
   })
 })

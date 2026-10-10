@@ -1,12 +1,14 @@
-import { CalendarDays, HeartPulse, Palmtree, UsersRound, type LucideIcon } from 'lucide-react'
+import { CalendarDays, Newspaper, Palmtree, UsersRound, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { cn } from '@/ui'
 
+// Sick notes are deliberately not a quick action (decided 11.10.2026): they
+// live under "Meine Anträge" so they are available but not in the foreground.
 const ACTIONS: { to: string; labelKey: string; icon: LucideIcon; tone: string }[] = [
-  { to: '/requests/sick/new', labelKey: 'actions.reportSick', icon: HeartPulse, tone: 'bg-danger-soft text-danger-text' },
-  { to: '/requests/leave/new', labelKey: 'actions.requestLeave', icon: Palmtree, tone: 'bg-accent-soft text-accent-text' },
   { to: '/schedule', labelKey: 'actions.openSchedule', icon: CalendarDays, tone: 'bg-primary-soft text-primary-text' },
+  { to: '/news', labelKey: 'actions.news', icon: Newspaper, tone: 'bg-accent-soft text-accent-text' },
+  { to: '/requests/leave/new', labelKey: 'actions.requestLeave', icon: Palmtree, tone: 'bg-success-soft text-success-text' },
   { to: '/team', labelKey: 'actions.onDuty', icon: UsersRound, tone: 'bg-late-soft text-late-text' },
 ]
 

@@ -4,6 +4,7 @@ import {
   CalendarClock,
   CalendarHeart,
   CalendarX2,
+  Hand,
   Hourglass,
   ClipboardCheck,
   CalendarPlus,
@@ -35,6 +36,7 @@ const ICONS: Record<NotificationType, LucideIcon> = {
   wish_plan_submitted: CheckCircle2,
   wish_plan_locked: CalendarX2,
   wish_plan_reviewed: ClipboardCheck,
+  open_shift_interest: Hand,
 }
 
 const TONES: Record<NotificationTone, string> = {

@@ -35,6 +35,7 @@ export type NotificationType =
   | 'wish_plan_submitted'
   | 'wish_plan_locked'
   | 'wish_plan_reviewed'
+  | 'open_shift_interest'
 
 export interface Hospital {
   id: string
@@ -182,6 +183,38 @@ export interface Announcement {
   body: string
   priority: 'normal' | 'important'
   publishedAt: Date
+}
+
+export type NewsCategory = 'information' | 'training' | 'further_education' | 'workshop' | 'team_meeting' | 'doctor_meeting' | 'other'
+
+/** "Aktuelles": information, Fortbildung, Teamsitzung, Arztgespräch … */
+export interface NewsItem extends Announcement {
+  category: NewsCategory
+  unitId: string | null
+  unitName: string | null
+  eventStartsAt: Date | null
+  eventEndsAt: Date | null
+  location: string | null
+  authorId: string | null
+}
+
+export interface NewsTarget {
+  hospitalId: string
+  /** null = whole hospital */
+  unitId: string | null
+  unitName: string | null
+}
+
+export interface NewsDraft {
+  hospitalId: string
+  unitId: string | null
+  category: NewsCategory
+  title: string
+  body: string
+  priority: 'normal' | 'important'
+  eventStartsAt: Date | null
+  eventEndsAt: Date | null
+  location: string | null
 }
 
 export interface OpenShift {

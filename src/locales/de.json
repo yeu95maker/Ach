@@ -28,7 +28,8 @@
     "reportSick": "Krankmeldung",
     "requestLeave": "Urlaub beantragen",
     "openSchedule": "Dienstplan",
-    "onDuty": "Kollegen im Dienst"
+    "onDuty": "Kollegen im Dienst",
+    "news": "Aktuelles"
   },
   "auth": {
     "brandTitle": "Dein Dienst. Dein Team. Auf einen Blick.",
@@ -312,6 +313,10 @@
       "wish_plan_reviewed": {
         "title": "Deine Wünsche wurden bewertet",
         "body": "{{period}} · {{count}} × {{wishStatus}}"
+      },
+      "open_shift_interest": {
+        "title": "{{name}} kann einspringen",
+        "body": "Offener Dienst {{date}}, {{time}} · {{unit}}"
       }
     }
   },
@@ -562,6 +567,58 @@
       "absence_sick": "Die Person ist an diesem Tag krank gemeldet.",
       "rest_period": "Zwischen dem vorherigen Dienst und diesem liegen weniger als 11 Stunden Ruhezeit.",
       "wish_conflict": "Der Dienst widerspricht dem eingereichten Wunsch."
+    }
+  },
+  "news": {
+    "title": "Aktuelles",
+    "subtitle": "Fortbildungen, Teamsitzungen, Termine und Neuigkeiten",
+    "new": "Neu",
+    "filter": "Nach Kategorie filtern",
+    "all": "Alle",
+    "upcoming": "Termine",
+    "latest": "Neuigkeiten",
+    "empty": "Noch keine Neuigkeiten",
+    "emptyManager": "Mit „Neu“ informierst du dein Team über Fortbildungen, Teamsitzungen oder Neuigkeiten.",
+    "wholeHospital": "Ganzes Haus",
+    "category": {
+      "information": "Information",
+      "training": "Fortbildung",
+      "further_education": "Weiterbildung",
+      "workshop": "Workshop",
+      "team_meeting": "Teamsitzung",
+      "doctor_meeting": "Gespräch mit Ärzten",
+      "other": "Sonstiges"
+    },
+    "composeTitle": "An das Team senden",
+    "composeSubtitle": "Alle Empfänger werden in der App und per Push benachrichtigt.",
+    "categoryLabel": "Worum geht es?",
+    "audience": "Für wen?",
+    "audienceHint": "Nur Mitarbeitende dieser Station (oder des ganzen Hauses) sehen die Nachricht.",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "z. B. Fortbildung Wundversorgung",
+    "bodyLabel": "Nachricht",
+    "bodyPlaceholder": "Was sollte das Team wissen?",
+    "eventSection": "Termin",
+    "date": "Datum",
+    "from": "Von",
+    "to": "Bis",
+    "location": "Ort",
+    "locationPlaceholder": "z. B. Stationszimmer",
+    "important": "Als wichtig markieren",
+    "importantHint": "Wird hervorgehoben und oben angezeigt.",
+    "send": "Senden",
+    "published": "Gesendet",
+    "publishedHint": "Dein Team wurde benachrichtigt.",
+    "remove": "Löschen",
+    "removeTitle": "Nachricht löschen?",
+    "removeHint": "Die Nachricht verschwindet für alle Empfänger.",
+    "removed": "Gelöscht",
+    "errors": {
+      "title": "Bitte gib einen Titel ein.",
+      "body": "Bitte schreibe eine Nachricht.",
+      "endBeforeStart": "Das Ende liegt vor dem Beginn.",
+      "endWithoutStart": "Bitte gib zuerst den Beginn an.",
+      "target": "Bitte wähle aus, für wen die Nachricht ist."
     }
   }
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { HeartPulse, Palmtree } from 'lucide-react'
+import { Newspaper, Palmtree } from 'lucide-react'
 import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, Outlet, useLocation } from 'react-router'
@@ -78,10 +78,10 @@ export function AppShell() {
         </nav>
 
         <div className="hidden space-y-2 px-4 pb-4 lg:block">
-          <ButtonLink to="/requests/sick/new" variant="secondary" fullWidth icon={<HeartPulse className="size-[18px] text-danger" />}>
-            {t('actions.reportSick')}
+          <ButtonLink to="/news" variant="secondary" fullWidth icon={<Newspaper className="size-[18px] text-accent" />}>
+            {t('actions.news')}
           </ButtonLink>
-          <ButtonLink to="/requests/leave/new" variant="secondary" fullWidth icon={<Palmtree className="size-[18px] text-accent" />}>
+          <ButtonLink to="/requests/leave/new" variant="secondary" fullWidth icon={<Palmtree className="size-[18px] text-success" />}>
             {t('actions.requestLeave')}
           </ButtonLink>
         </div>

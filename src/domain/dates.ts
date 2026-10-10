@@ -64,3 +64,31 @@ export function weekDays(anchor: Date): ISODate[] {
 export function isSameMonth(date: ISODate, anchor: Date): boolean {
   return date.slice(0, 7) === toISODate(anchor).slice(0, 7)
 }
+
+/** Offset of `timeZone` from UTC at `instant`, in minutes (Berlin summer time: +120). */
+function timeZoneOffsetMinutes(instant: Date, timeZone: string): number {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    hourCycle: 'h23',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).formatToParts(instant)
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value)
+  const asUtc = Date.UTC(get('year'), get('month') - 1, get('day'), get('hour'), get('minute'), get('second'))
+  return Math.round((asUtc - instant.getTime()) / 60000)
+}
+
+/** Wall-clock date + time ("2026-10-12", "14:30") in `timeZone` → instant. */
+export function zonedDateTime(date: ISODate, time: string, timeZone: string): Date {
+  const [y, m, d] = date.split('-').map(Number)
+  const [hh, mm] = time.split(':').map(Number)
+  const wallAsUtc = Date.UTC(y!, m! - 1, d!, hh ?? 0, mm ?? 0)
+  // Two passes handle the day of a DST switch.
+  let instant = wallAsUtc - timeZoneOffsetMinutes(new Date(wallAsUtc), timeZone) * 60000
+  instant = wallAsUtc - timeZoneOffsetMinutes(new Date(instant), timeZone) * 60000
+  return new Date(instant)
+}

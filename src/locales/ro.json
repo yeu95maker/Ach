@@ -28,7 +28,8 @@
     "reportSick": "Concediu medical",
     "requestLeave": "Cere concediu",
     "openSchedule": "Program",
-    "onDuty": "Colegi în tură"
+    "onDuty": "Colegi în tură",
+    "news": "Noutăți"
   },
   "auth": {
     "brandTitle": "Tura ta. Echipa ta. Dintr-o privire.",
@@ -318,6 +319,10 @@
       "wish_plan_reviewed": {
         "title": "Dorințele tale au fost evaluate",
         "body": "{{period}} · {{count}} × {{wishStatus}}"
+      },
+      "open_shift_interest": {
+        "title": "{{name}} poate prelua",
+        "body": "Tură liberă {{date}}, {{time}} · {{unit}}"
       }
     }
   },
@@ -577,6 +582,58 @@
       "absence_sick": "Persoana este în concediu medical în această zi.",
       "rest_period": "Între tura anterioară și aceasta sunt mai puțin de 11 ore de repaus.",
       "wish_conflict": "Tura contrazice dorința trimisă."
+    }
+  },
+  "news": {
+    "title": "Noutăți",
+    "subtitle": "Cursuri, ședințe de echipă, programări și noutăți",
+    "new": "Nou",
+    "filter": "Filtrează după categorie",
+    "all": "Toate",
+    "upcoming": "Programări",
+    "latest": "Noutăți",
+    "empty": "Încă nu există noutăți",
+    "emptyManager": "Cu „Nou” îți informezi echipa despre cursuri, ședințe sau noutăți.",
+    "wholeHospital": "Tot spitalul",
+    "category": {
+      "information": "Informare",
+      "training": "Instruire",
+      "further_education": "Specializare",
+      "workshop": "Workshop",
+      "team_meeting": "Ședință de echipă",
+      "doctor_meeting": "Discuție cu medicii",
+      "other": "Altele"
+    },
+    "composeTitle": "Trimite echipei",
+    "composeSubtitle": "Toți destinatarii sunt anunțați în aplicație și prin notificare push.",
+    "categoryLabel": "Despre ce este vorba?",
+    "audience": "Pentru cine?",
+    "audienceHint": "Doar angajații acestei secții (sau ai întregului spital) văd mesajul.",
+    "titleLabel": "Titlu",
+    "titlePlaceholder": "de ex. Instruire îngrijirea plăgilor",
+    "bodyLabel": "Mesaj",
+    "bodyPlaceholder": "Ce ar trebui să știe echipa?",
+    "eventSection": "Programare",
+    "date": "Data",
+    "from": "De la",
+    "to": "Până la",
+    "location": "Locație",
+    "locationPlaceholder": "de ex. camera secției",
+    "important": "Marchează ca important",
+    "importantHint": "Este evidențiat și afișat sus.",
+    "send": "Trimite",
+    "published": "Trimis",
+    "publishedHint": "Echipa ta a fost anunțată.",
+    "remove": "Șterge",
+    "removeTitle": "Ștergi mesajul?",
+    "removeHint": "Mesajul dispare pentru toți destinatarii.",
+    "removed": "Șters",
+    "errors": {
+      "title": "Te rugăm să introduci un titlu.",
+      "body": "Te rugăm să scrii un mesaj.",
+      "endBeforeStart": "Sfârșitul este înaintea începutului.",
+      "endWithoutStart": "Te rugăm să introduci mai întâi începutul.",
+      "target": "Te rugăm să alegi pentru cine este mesajul."
     }
   }
 }

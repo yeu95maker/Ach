@@ -28,7 +28,8 @@
     "reportSick": "Hastalık bildir",
     "requestLeave": "İzin talep et",
     "openSchedule": "Nöbet planı",
-    "onDuty": "Görevdeki meslektaşlar"
+    "onDuty": "Görevdeki meslektaşlar",
+    "news": "Güncel"
   },
   "auth": {
     "brandTitle": "Vardiyan. Ekibin. Tek bakışta.",
@@ -312,6 +313,10 @@
       "wish_plan_reviewed": {
         "title": "İsteklerin değerlendirildi",
         "body": "{{period}} · {{count}} × {{wishStatus}}"
+      },
+      "open_shift_interest": {
+        "title": "{{name}} devralabilir",
+        "body": "Açık vardiya {{date}}, {{time}} · {{unit}}"
       }
     }
   },
@@ -562,6 +567,58 @@
       "absence_sick": "Kişi bu gün raporlu.",
       "rest_period": "Önceki vardiyadan bu yana 11 saatten az dinlenme var.",
       "wish_conflict": "Vardiya gönderilen istekle çelişiyor."
+    }
+  },
+  "news": {
+    "title": "Güncel",
+    "subtitle": "Eğitimler, ekip toplantıları, randevular ve haberler",
+    "new": "Yeni",
+    "filter": "Kategoriye göre filtrele",
+    "all": "Tümü",
+    "upcoming": "Randevular",
+    "latest": "Haberler",
+    "empty": "Henüz haber yok",
+    "emptyManager": "“Yeni” ile ekibini eğitimler, ekip toplantıları veya haberler hakkında bilgilendir.",
+    "wholeHospital": "Tüm hastane",
+    "category": {
+      "information": "Bilgi",
+      "training": "Hizmet içi eğitim",
+      "further_education": "İleri eğitim",
+      "workshop": "Atölye",
+      "team_meeting": "Ekip toplantısı",
+      "doctor_meeting": "Doktorlarla görüşme",
+      "other": "Diğer"
+    },
+    "composeTitle": "Ekibe gönder",
+    "composeSubtitle": "Tüm alıcılar uygulamada ve anlık bildirimle bilgilendirilir.",
+    "categoryLabel": "Konu nedir?",
+    "audience": "Kimin için?",
+    "audienceHint": "Mesajı yalnızca bu servisin (veya tüm hastanenin) çalışanları görür.",
+    "titleLabel": "Başlık",
+    "titlePlaceholder": "örn. Yara bakımı eğitimi",
+    "bodyLabel": "Mesaj",
+    "bodyPlaceholder": "Ekip neyi bilmeli?",
+    "eventSection": "Randevu",
+    "date": "Tarih",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "location": "Yer",
+    "locationPlaceholder": "örn. servis odası",
+    "important": "Önemli olarak işaretle",
+    "importantHint": "Vurgulanır ve en üstte gösterilir.",
+    "send": "Gönder",
+    "published": "Gönderildi",
+    "publishedHint": "Ekibin bilgilendirildi.",
+    "remove": "Sil",
+    "removeTitle": "Mesaj silinsin mi?",
+    "removeHint": "Mesaj tüm alıcılar için kaybolur.",
+    "removed": "Silindi",
+    "errors": {
+      "title": "Lütfen bir başlık gir.",
+      "body": "Lütfen bir mesaj yaz.",
+      "endBeforeStart": "Bitiş, başlangıçtan önce.",
+      "endWithoutStart": "Lütfen önce başlangıcı gir.",
+      "target": "Lütfen mesajın kimin için olduğunu seç."
     }
   }
 }

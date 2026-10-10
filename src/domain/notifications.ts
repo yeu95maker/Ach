@@ -17,18 +17,20 @@ const META: Record<NotificationType, NotificationMeta> = {
   leave_rejected: { tone: 'danger', route: '/requests' },
   sick_leave_reported: { tone: 'danger', route: '/team?tab=sick' },
   sick_leave_updated: { tone: 'neutral', route: '/requests' },
-  announcement: { tone: 'accent', route: '/' },
+  announcement: { tone: 'accent', route: '/news' },
   message: { tone: 'neutral', route: '/notifications' },
   wish_plan_opened: { tone: 'accent', route: '/schedule/wishes' },
   wish_plan_deadline: { tone: 'warning', route: '/schedule/wishes' },
   wish_plan_submitted: { tone: 'success', route: '/schedule/wishes' },
   wish_plan_locked: { tone: 'neutral', route: '/schedule/wishes' },
   wish_plan_reviewed: { tone: 'primary', route: '/schedule/wishes' },
+  open_shift_interest: { tone: 'accent', route: '/schedule/open' },
 }
 
 export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): NotificationMeta {
   const meta = META[n.type] ?? META.message
-  if ((n.type === 'schedule_changed' || n.type === 'open_shift') && typeof n.payload.entry_date === 'string') {
+  if (n.type === 'open_shift' || n.type === 'open_shift_interest') return meta
+  if (n.type === 'schedule_changed' && typeof n.payload.entry_date === 'string') {
     return { ...meta, route: `/schedule?date=${n.payload.entry_date}&view=day` }
   }
   if (n.type.startsWith('wish_plan') && typeof n.payload.period_id === 'string') {

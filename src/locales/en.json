@@ -28,7 +28,8 @@
     "reportSick": "Call in sick",
     "requestLeave": "Request leave",
     "openSchedule": "Schedule",
-    "onDuty": "Colleagues on duty"
+    "onDuty": "Colleagues on duty",
+    "news": "News"
   },
   "auth": {
     "brandTitle": "Your shifts. Your team. At a glance.",
@@ -312,6 +313,10 @@
       "wish_plan_reviewed": {
         "title": "Your wishes have been reviewed",
         "body": "{{period}} · {{count}} × {{wishStatus}}"
+      },
+      "open_shift_interest": {
+        "title": "{{name}} can cover",
+        "body": "Open shift {{date}}, {{time}} · {{unit}}"
       }
     }
   },
@@ -562,6 +567,58 @@
       "absence_sick": "The person is off sick on this day.",
       "rest_period": "There are less than 11 hours of rest since the previous shift.",
       "wish_conflict": "The shift contradicts the submitted wish."
+    }
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Training, team meetings, dates and updates",
+    "new": "New",
+    "filter": "Filter by category",
+    "all": "All",
+    "upcoming": "Dates",
+    "latest": "Updates",
+    "empty": "No news yet",
+    "emptyManager": "Use “New” to tell your team about training, team meetings or updates.",
+    "wholeHospital": "Whole hospital",
+    "category": {
+      "information": "Information",
+      "training": "Training",
+      "further_education": "Further education",
+      "workshop": "Workshop",
+      "team_meeting": "Team meeting",
+      "doctor_meeting": "Meeting with doctors",
+      "other": "Other"
+    },
+    "composeTitle": "Send to the team",
+    "composeSubtitle": "All recipients are notified in the app and by push.",
+    "categoryLabel": "What is it about?",
+    "audience": "For whom?",
+    "audienceHint": "Only staff of this ward (or of the whole hospital) see the message.",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. Wound care training",
+    "bodyLabel": "Message",
+    "bodyPlaceholder": "What should the team know?",
+    "eventSection": "Date",
+    "date": "Date",
+    "from": "From",
+    "to": "To",
+    "location": "Location",
+    "locationPlaceholder": "e.g. ward office",
+    "important": "Mark as important",
+    "importantHint": "Highlighted and shown at the top.",
+    "send": "Send",
+    "published": "Sent",
+    "publishedHint": "Your team has been notified.",
+    "remove": "Delete",
+    "removeTitle": "Delete message?",
+    "removeHint": "The message disappears for all recipients.",
+    "removed": "Deleted",
+    "errors": {
+      "title": "Please enter a title.",
+      "body": "Please write a message.",
+      "endBeforeStart": "The end is before the start.",
+      "endWithoutStart": "Please enter the start first.",
+      "target": "Please choose who the message is for."
     }
   }
 }

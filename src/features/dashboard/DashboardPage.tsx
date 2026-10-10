@@ -1,4 +1,4 @@
-import { ArrowRight, Bell, ClipboardCheck, HeartPulse, Megaphone, Palmtree, Sparkles } from 'lucide-react'
+import { ArrowRight, Bell, ClipboardCheck, HeartPulse, Palmtree, Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { dayKindStyles } from '@/components/dayKindStyles'
@@ -9,9 +9,10 @@ import { notificationMeta } from '@/domain/notifications'
 import { NotificationIcon } from '@/features/notifications/NotificationIcon'
 import { useNotificationText } from '@/features/notifications/useNotificationText'
 import { useCurrentUser, useEmployment } from '@/features/tenant/TenantProvider'
+import { NewsPreview } from '@/features/news/NewsPreview'
 import { WishPlanPromo } from '@/features/wishes/WishPlanPromo'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
-import { Badge, Card, CardHeader, EmptyState, PageHeader, SkeletonCard, cn } from '@/ui'
+import { Card, CardHeader, EmptyState, PageHeader, SkeletonCard, cn } from '@/ui'
 import { QuickActions } from './QuickActions'
 import { NextShiftCard, TodayCard } from './TodayCard'
 import { useDashboard } from './useDashboard'
@@ -99,7 +100,7 @@ export function DashboardPage() {
                     {seesSick && (
                       <Link to="/team?tab=sick" className="flex items-center justify-between rounded-2xl bg-surface p-4 shadow-sm transition-transform hover:-translate-y-0.5">
                         <span className="flex items-center gap-3">
-                          <HeartPulse className="size-5 text-danger" aria-hidden />
+                          <HeartPulse className="size-5 text-text-3" aria-hidden />
                           <span className="font-medium">{t('dashboard.newSickReports')}</span>
                         </span>
                         <span className="text-2xl font-bold tabular">{data.unacknowledgedSickLeaves}</span>
@@ -145,6 +146,9 @@ export function DashboardPage() {
           </div>
 
           <div className="min-w-0 space-y-4 sm:space-y-5">
+            <Stagger index={1}>
+              <NewsPreview />
+            </Stagger>
             <Stagger index={2}>
               <Card>
                 <CardHeader title={t('dashboard.myRequests')} action={<SeeAll to="/requests" />} />
@@ -196,30 +200,6 @@ export function DashboardPage() {
               </Card>
             </Stagger>
 
-            {data.announcements.length > 0 && (
-              <Stagger index={4}>
-                <Card>
-                  <CardHeader title={t('dashboard.announcements')} />
-                  <ul className="space-y-4">
-                    {data.announcements.map((a) => (
-                      <li key={a.id} className="flex gap-3">
-                        <span className={cn('mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl', a.priority === 'important' ? 'bg-warning-soft text-warning-text' : 'bg-accent-soft text-accent-text')}>
-                          <Megaphone className="size-[18px]" aria-hidden />
-                        </span>
-                        <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <p className="text-[15px] font-semibold">{a.title}</p>
-                            {a.priority === 'important' && <Badge tone="warning">{t('dashboard.important')}</Badge>}
-                          </div>
-                          <p className="mt-1 line-clamp-3 text-sm text-text-2">{a.body}</p>
-                          <p className="mt-1 text-xs text-text-3">{fmt.relative(a.publishedAt)}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              </Stagger>
-            )}
           </div>
         </div>
       )}

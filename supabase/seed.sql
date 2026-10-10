@@ -275,3 +275,113 @@ from (values
 -- Current month: deadline passed → locked
 update public.wish_periods set deadline_at = now() - interval '25 days', status = 'locked'
  where id = 'a0000000-0000-4000-a000-000000000001';
+
+-- -----------------------------------------------------------------------------
+-- Dienstplan-Historie: 24 vergangene Monate für Station 3A (archiviert)
+-- Rotation läuft lückenlos in den aktuellen Monat weiter (nie N → F).
+-- -----------------------------------------------------------------------------
+insert into public.schedules (id, hospital_id, unit_id, period_start, period_end, status, version, published_at, published_by)
+select ('71000000-0000-4000-a000-' || lpad(m::text, 12, '0'))::uuid,
+       '10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001',
+       (date_trunc('month', current_date) - make_interval(months => m))::date,
+       (date_trunc('month', current_date) - make_interval(months => m - 1) - interval '1 day')::date,
+       'archived', 1,
+       date_trunc('month', current_date) - make_interval(months => m) - interval '10 days',
+       '00000000-0000-4000-a000-000000000004'
+from generate_series(1, 24) m;
+
+with staff (employee_id, offset_days, hired) as (
+  values
+    ('40000000-0000-4000-a000-000000000001'::uuid, 0, date '2019-04-01'),
+    ('40000000-0000-4000-a000-000000000002'::uuid, 2, date '2021-09-15'),
+    ('40000000-0000-4000-a000-000000000003'::uuid, 4, date '2022-01-01'),
+    ('40000000-0000-4000-a000-000000000004'::uuid, 1, date '2015-06-01')
+),
+days as (
+  select s.id as schedule_id, st.employee_id, d::date as entry_date,
+         (array['F','F','S','S','N','N','-'])[(((d::date - date_trunc('month', current_date)::date + st.offset_days) % 7) + 7) % 7 + 1] as code
+  from public.schedules s
+  cross join staff st
+  cross join lateral generate_series(s.period_start, s.period_end, interval '1 day') d
+  where s.id::text like '71000000-%' and d::date >= st.hired
+)
+insert into public.schedule_entries (hospital_id, schedule_id, employee_id, kind, shift_type_id, entry_date)
+select '10000000-0000-4000-a000-000000000001', d.schedule_id, d.employee_id,
+       case when d.code = '-' then 'off' else 'shift' end::public.schedule_entry_kind,
+       t.id, d.entry_date
+from days d
+left join public.shift_types t on t.hospital_id = '10000000-0000-4000-a000-000000000001' and t.code = d.code and d.code <> '-';
+
+-- Urlaub und Krankheit in der Vergangenheit (für die Monatsübersicht)
+insert into public.leave_requests (id, employee_id, leave_type, start_date, end_date) values
+  ('81000000-0000-4000-a000-000000000001', '40000000-0000-4000-a000-000000000001', 'vacation',
+   (date_trunc('month', current_date) - interval '4 months' + interval '6 days')::date,
+   (date_trunc('month', current_date) - interval '4 months' + interval '17 days')::date),
+  ('81000000-0000-4000-a000-000000000002', '40000000-0000-4000-a000-000000000001', 'vacation',
+   (date_trunc('month', current_date) - interval '14 months' + interval '2 days')::date,
+   (date_trunc('month', current_date) - interval '14 months' + interval '15 days')::date);
+
+update public.leave_requests
+   set status = 'approved', decided_by = '00000000-0000-4000-a000-000000000004', decided_at = now() - interval '5 months'
+ where id in ('81000000-0000-4000-a000-000000000001', '81000000-0000-4000-a000-000000000002');
+
+insert into public.sick_leaves (id, hospital_id, employee_id, start_date, end_date, status, reported_by)
+values ('91000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', '40000000-0000-4000-a000-000000000001',
+        (date_trunc('month', current_date) - interval '2 months' + interval '9 days')::date,
+        (date_trunc('month', current_date) - interval '2 months' + interval '11 days')::date,
+        'closed', '00000000-0000-4000-a000-000000000001');
+
+-- Nobody works while on vacation or sick.
+delete from public.schedule_entries se
+using public.schedules s
+where s.id = se.schedule_id and s.status = 'archived'
+  and (exists (select 1 from public.leave_requests lr
+               where lr.employee_id = se.employee_id and lr.status = 'approved'
+                 and se.entry_date between lr.start_date and lr.end_date)
+       or exists (select 1 from public.sick_leaves sl
+                  where sl.employee_id = se.employee_id and sl.status <> 'cancelled'
+                    and se.entry_date between sl.start_date and sl.end_date));
+
+-- Historic rows must not produce fresh notifications.
+delete from public.notifications
+ where entity_id in ('81000000-0000-4000-a000-000000000001', '81000000-0000-4000-a000-000000000002',
+                     '91000000-0000-4000-a000-000000000001');
+
+-- -----------------------------------------------------------------------------
+-- Aktuelles: Fortbildungen, Teamsitzung, Arztgespräch, Workshop, Weiterbildung
+-- -----------------------------------------------------------------------------
+update public.announcements set category = 'information' where title = 'Neue Hygienerichtlinie ab Montag';
+update public.announcements
+   set category = 'team_meeting', location = 'Stationszimmer 3A',
+       event_starts_at = ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '3 days 14 hours 30 minutes') at time zone 'Europe/Berlin'),
+       event_ends_at   = ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '3 days 15 hours 30 minutes') at time zone 'Europe/Berlin')
+ where title = 'Teambesprechung 3A';
+
+insert into public.announcements (hospital_id, unit_id, title, body, priority, category, event_starts_at, event_ends_at, location, published_at, author_id) values
+  ('10000000-0000-4000-a000-000000000001', null, 'Fortbildung: Reanimation (BLS/ALS)',
+   'Pflichtfortbildung für alle Pflegekräfte. Bitte über die Stationsleitung anmelden – es gibt 12 Plätze pro Termin.',
+   'important', 'training',
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '9 days 9 hours') at time zone 'Europe/Berlin'),
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '9 days 12 hours') at time zone 'Europe/Berlin'),
+   'Schulungsraum 2, Haus B', now() - interval '3 hours', '00000000-0000-4000-a000-000000000005'),
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', 'Gespräch mit Dr. Hoffmann (Kardiologie)',
+   'Austausch zu den neuen Abläufen bei der Herzkatheter-Vorbereitung. Fragen gerne vorab an Mira.',
+   'normal', 'doctor_meeting',
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '5 days 13 hours') at time zone 'Europe/Berlin'),
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '5 days 13 hours 45 minutes') at time zone 'Europe/Berlin'),
+   'Arztzimmer 3A', now() - interval '5 hours', '00000000-0000-4000-a000-000000000004'),
+  ('10000000-0000-4000-a000-000000000001', null, 'Workshop: Kinästhetik im Pflegealltag',
+   'Praktischer Workshop mit vielen Übungen. Bequeme Kleidung mitbringen.',
+   'normal', 'workshop',
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '16 days 10 hours') at time zone 'Europe/Berlin'),
+   ((date_trunc('day', now() at time zone 'Europe/Berlin') + interval '16 days 15 hours') at time zone 'Europe/Berlin'),
+   'Bewegungsraum, Haus A', now() - interval '2 days', '00000000-0000-4000-a000-000000000005'),
+  ('10000000-0000-4000-a000-000000000001', null, 'Weiterbildung Praxisanleitung: Anmeldung offen',
+   'Die berufsbegleitende Weiterbildung zur Praxisanleitung startet im neuen Jahr. Bewerbungen bis Monatsende an die PDL.',
+   'normal', 'further_education', null, null, null, now() - interval '4 days', '00000000-0000-4000-a000-000000000005');
+
+-- Benachrichtigungen aus den Seed-Mitteilungen nicht doppelt anzeigen
+delete from public.notifications n
+ where n.type = 'announcement'
+   and n.created_at > now() - interval '1 minute'
+   and n.entity_id in (select id from public.announcements where category in ('workshop', 'further_education'));

@@ -33,5 +33,7 @@ export const queryKeys = {
   editorEntries: (scheduleId: string) => ['editor-entries', scheduleId] as const,
   editorShiftTypes: (unitId: string) => ['editor-shift-types', unitId] as const,
   editorStaffing: (unitId: string) => ['editor-staffing', unitId] as const,
+  news: (hospitalId: string) => ['news', hospitalId] as const,
+  newsTargets: (hospitalId: string) => ['news-targets', hospitalId] as const,
   editorAbsences: (unitId: string, month: string) => ['editor-absences', unitId, month] as const,
 }

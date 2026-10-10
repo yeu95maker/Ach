@@ -43,6 +43,12 @@ export function createFormatter(language: string, timeZone: string) {
       const f = dtf('dr', { day: 'numeric', month: 'short', year: 'numeric' }, 'UTC')
       return a === b ? f.format(isoToUtcDate(a)) : f.formatRange(isoToUtcDate(a), isoToUtcDate(b))
     },
+    /** Do., 15. Okt. · 13:00 – 13:45 (instants, hospital time zone) */
+    eventTime: (start: Date, end: Date | null) => {
+      const day = dtf('ev', { weekday: 'short', day: 'numeric', month: 'short' }, timeZone).format(start)
+      const t = dtf('time', { hour: '2-digit', minute: '2-digit' }, timeZone)
+      return end ? `${day} · ${t.format(start)} – ${t.format(end)}` : `${day} · ${t.format(start)}`
+    },
     relative: (d: Date, now = new Date()) => {
       const diff = (d.getTime() - now.getTime()) / 1000
       const abs = Math.abs(diff)
