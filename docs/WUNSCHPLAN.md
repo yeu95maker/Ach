@@ -33,9 +33,16 @@ Dienstplan veröffentlichen → Benachrichtigung „Neuer Dienstplan“ (bestehe
 | `early` | Wunschfrühdienst | Blau | Sonnenaufgang | 1 |
 | `late` | Wunschspätdienst | Orange | Sonnenuntergang | 1 |
 | `preferred` | Bevorzugter Dienst (konkreter Schichttyp) | Türkis | Stern | 1 |
-| `unavailable` | Nicht verfügbar | Rot | Verbotszeichen | 3 |
+| `unavailable` | Nicht verfügbar | Rot | Verbotszeichen | 3 (starker Wunsch, **kein** harter Ausschluss) |
 
 \*Das Gewicht in `wish_preference_types` ist für eine künftige Planungsunterstützung vorbereitet. Die Farben der Wünsche unterscheiden sich bewusst von den Dienstplanfarben, damit Wunsch und Plan nie verwechselt werden.
+
+## Standardwerte (entschieden 10.10.2026)
+
+- Frist: **21 Tage** vor Beginn des Zeitraums
+- Erinnerung: **3 Tage** vor der Frist, einmalig, an alle ohne Einreichung
+- **Kein Limit** für Wunschfrei. Ein Limit ist pro Haus oder Station optional konfigurierbar.
+- „Nicht verfügbar“ ist ein starker Wunsch und kein harter Ausschluss. Die Planung sieht den Widerspruch rot markiert und entscheidet selbst.
 
 ## Status
 
@@ -68,9 +75,9 @@ Alle Tabellen hängen über zusammengesetzte Fremdschlüssel am Krankenhaus, hab
 
 | Berechtigung | Rollen | Bedeutung |
 | --- | --- | --- |
-| `wishes.submit` | Pflegekraft, Schichtleitung, Stations-/Pflegedienstleitung, HR | eigenen Wunschplan einreichen |
-| `wishes.view` | Stations-/Pflegedienstleitung, Hospital-Admin | Wünsche im eigenen Bereich sehen |
-| `wishes.manage` | Stations-/Pflegedienstleitung, Hospital-Admin | Zeiträume, Fristen und Konfiguration verwalten; Wünsche bewerten |
+| `wishes.submit` | Pflegekraft (auch als Schichtleitung), Stationsleitung, stellvertretende Stationsleitung, **nicht HR** | eigenen Wunschplan für die eigene(n) Station(en) einreichen |
+| `wishes.view` | Stationsleitung, stellv. Stationsleitung, Pflegedienstleitung, Hospital-Admin | Wünsche im eigenen Bereich sehen |
+| `wishes.manage` | Stationsleitung, stellv. Stationsleitung, Pflegedienstleitung, Hospital-Admin | Zeiträume, Fristen und Konfiguration verwalten; Wünsche bewerten |
 
 - Kolleg:innen und die Schichtleitung sehen **keine** fremden Wünsche.
 - Bewertet werden können nur Wünsche anderer Personen, nie die eigenen.

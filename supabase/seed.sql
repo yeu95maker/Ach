@@ -241,8 +241,9 @@ insert into public.announcements (hospital_id, unit_id, title, body, priority, p
 --   Station 3A · aktueller Monat: gesperrt, bereits bewertet (Historie)
 --   Station 3A · nächster Monat: offen, Frist in 7 Tagen – Anna hat eingereicht
 -- -----------------------------------------------------------------------------
-insert into public.wish_plan_settings (hospital_id, unit_id, allow_edit_after_submit, deadline_days_before_period, reminder_days_before_deadline, max_free_wishes)
-values ('10000000-0000-4000-a000-000000000001', null, true, 21, 3, 8);
+-- Hausstandard = Produktvorgabe: Frist 21 Tage, Erinnerung 3 Tage, kein Limit für Wunschfrei
+insert into public.wish_plan_settings (hospital_id, unit_id, allow_edit_after_submit, deadline_days_before_period, reminder_days_before_deadline)
+values ('10000000-0000-4000-a000-000000000001', null, true, 21, 3);
 
 insert into public.wish_periods (id, hospital_id, unit_id, period_start, period_end, deadline_at) values
   ('a0000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001',

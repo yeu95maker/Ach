@@ -16,6 +16,8 @@
 -- Pflegekraft: eigenen Wunschplan einreichen und ändern
 -- -----------------------------------------------------------------------------
 begin;
+-- Optionales Hauslimit (Standard: kein Limit) – hier für den Limit-Test gesetzt
+update public.wish_plan_settings set max_free_wishes = 8 where hospital_id = '10000000-0000-4000-a000-000000000001' and unit_id is null;
 select set_config('request.jwt.claims', json_build_object('sub', :'anna', 'role', 'authenticated')::text, true);
 set local role authenticated;
 do $$
@@ -57,7 +59,7 @@ begin
   exception when check_violation then null;
   end;
 
-  -- hospital limit: max. 8 × Wunschfrei
+  -- configured hospital limit: max. 8 × Wunschfrei
   begin
     perform public.submit_wish_plan('a0000000-0000-4000-a000-000000000002',
       (select jsonb_agg(jsonb_build_object('date', p_start + i, 'type', 'free')) from generate_series(0, 8) i));
@@ -271,6 +273,46 @@ begin
   begin
     perform public.submit_wish_plan('a0000000-0000-4000-a000-000000000002', '[]'::jsonb);
     raise exception 'foreign hospital must fail';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+rollback;
+
+-- -----------------------------------------------------------------------------
+-- Entscheidungen 10.10.2026: Wer reicht ein? Standardwerte?
+-- -----------------------------------------------------------------------------
+begin;
+do $$
+declare
+  s public.wish_plan_settings := private.wish_settings('30000000-0000-4000-a000-000000000004');  -- Haus ohne eigene Einstellungen
+begin
+  assert s.deadline_days_before_period = 21 and s.reminder_days_before_deadline = 3 and s.max_free_wishes is null,
+    'Standard: Frist 21 Tage, Erinnerung 3 Tage, kein Limit';
+  assert not exists (select 1 from public.role_permissions rp join public.roles r on r.id = rp.role_id
+                     where r.key = 'hr' and rp.permission_key = 'wishes.submit'), 'HR reicht keinen Wunschplan ein';
+  assert exists (select 1 from public.role_permissions rp join public.roles r on r.id = rp.role_id
+                 where r.key = 'head_nurse' and rp.permission_key = 'wishes.submit'), 'Stationsleitung reicht ein';
+  assert (select count(*) from public.role_permissions rp join public.roles r on r.id = rp.role_id where r.key = 'deputy_head_nurse')
+       = (select count(*) from public.role_permissions rp join public.roles r on r.id = rp.role_id where r.key = 'head_nurse'),
+    'Stellvertretung hat die Rechte der Stationsleitung';
+end $$;
+
+-- Leyla wird stellvertretende Stationsleitung auf 3A
+insert into public.employee_roles (hospital_id, employee_id, role_id, unit_id)
+select '10000000-0000-4000-a000-000000000001', '40000000-0000-4000-a000-000000000003', id, '30000000-0000-4000-a000-000000000001'
+from public.roles where key = 'deputy_head_nurse';
+
+select set_config('request.jwt.claims', json_build_object('sub', :'leyla', 'role', 'authenticated')::text, true);
+set local role authenticated;
+do $$
+begin
+  perform public.submit_wish_plan('a0000000-0000-4000-a000-000000000002',
+    jsonb_build_array(jsonb_build_object('date', (select period_start from public.wish_periods where id = 'a0000000-0000-4000-a000-000000000002') + 2, 'type', 'unavailable')));
+  assert (select count(*) from public.wish_overview where period_id = 'a0000000-0000-4000-a000-000000000002') = 5,
+    'Stellvertretung reicht selbst ein und sieht die Wünsche der Station';
+  begin
+    perform public.review_wishes(array(select id from public.wish_entries where employee_id = '40000000-0000-4000-a000-000000000003'), 'considered');
+    raise exception 'eigene Wünsche dürfen nicht selbst bewertet werden';
   exception when insufficient_privilege then null;
   end;
 end $$;

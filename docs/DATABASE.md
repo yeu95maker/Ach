@@ -90,6 +90,7 @@ Bewusst **kein** Tenant-Claim im JWT: Rechteänderungen (Rolle entzogen, Anstell
 | `nurse` | Pflegekraft | eigener Dienstplan, Kollegen, Urlaub/Krank melden | Haus |
 | `charge_nurse` | Schichtleitung | + Krankzeiträume im Bereich sehen (**ohne** medizinischen Kommentar) und Kontaktdaten des Teams, um die laufende Schicht zu organisieren. **Keine** Genehmigung, **keine** Dienstplanänderung | Station |
 | `head_nurse` | Stationsleitung **oder** Pflegedienstleitung | + Entwürfe sehen, Dienstplan bearbeiten/veröffentlichen, Urlaub genehmigen, Krankmeldungen inkl. Kommentar, Mitarbeiterübersicht, Mitteilungen, Qualifikationen, Dokumente | Station = **Stationsleitung**, Abteilung/Haus = **PDL** |
+| `deputy_head_nurse` | Stellvertretende Stationsleitung | wie Stationsleitung (Annahme, siehe OPEN_POINTS W1a) | Station |
 | `hr` | Personalabteilung | Mitarbeiter verwalten, Rollen vergeben, Urlaub/Krankzeiträume sehen (**ohne** medizinischen Kommentar, **ohne** Genehmigung) | Haus |
 | `hospital_admin` | Krankenhaus-Administration | Organisation, Einstellungen, Rollen, Audit-Log (**ohne** Gesundheitsdaten) | Haus |
 | `system_admin` | Plattformbetrieb | Mandanten verwalten, Plattform-Audit (**keine** Personal- oder Gesundheitsdaten) | Plattform |
