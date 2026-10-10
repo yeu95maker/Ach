@@ -52,6 +52,14 @@ npm run test:db        # Migrationen + Seed + RLS-Testsuite gegen PostgreSQL (PG
 
 Für Browser-Ende-zu-Ende-Tests ohne Docker gibt es `scripts/e2e/gateway.mjs`, einen minimalen Ersatz für die Supabase-API, der jede Anfrage mit echter RLS als `authenticated` ausführt, sowie `scripts/e2e/smoke.mjs` (Playwright: Screenshots aller Hauptseiten in Light/Dark auf Phone/Tablet/Desktop und ein vollständiger Ablauf Urlaubsantrag → Genehmigung → Benachrichtigung).
 
+### Demo-Video aufnehmen
+
+`scripts/e2e/demo-tour.mjs` nimmt einen geführten Rundgang mit deutschen Untertiteln auf. Es entstehen zwei Videos: Pflegekraft am Smartphone und Stationsleitung am Desktop. Voraussetzung sind laufendes Gateway, laufender Dev-Server und ein frischer Seed.
+
+```bash
+node scripts/e2e/demo-tour.mjs demo-videos   # FFMPEG=/pfad/zu/ffmpeg optional
+```
+
 ## Projektstruktur
 
 ```
