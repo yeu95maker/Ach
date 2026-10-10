@@ -31,8 +31,9 @@ Entwicklungs-Accounts aus dem Seed (Passwort `ShiftCare!2026`):
 | E-Mail | Rolle |
 | --- | --- |
 | `anna.becker@shiftcare.dev` | Pflegekraft, Station 3A |
-| `mira.schulz@shiftcare.dev` | Stationsleitung 3A |
-| `paul.richter@shiftcare.dev` | Pflegedienstleitung Innere Medizin |
+| `jonas.weber@shiftcare.dev` | Pflegekraft + Schichtleitung, Station 3A |
+| `mira.schulz@shiftcare.dev` | Stationsleitung 3A (`head_nurse`, Scope Station) |
+| `paul.richter@shiftcare.dev` | Pflegedienstleitung Innere Medizin (`head_nurse`, Scope Abteilung) |
 | `hanna.koch@shiftcare.dev` | HR |
 | `admin@shiftcare.dev` | Krankenhaus-Administration |
 | `tom.fischer@shiftcare.dev` | Pflegekraft in einem **anderen** Krankenhaus (Mandantentest) |

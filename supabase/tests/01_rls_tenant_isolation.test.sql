@@ -7,10 +7,10 @@
 
 -- Users
 --   anna  00000000-0000-4000-a000-000000000001  nurse            Klinikum / 3A
---   jonas 00000000-0000-4000-a000-000000000002  nurse            Klinikum / 3A
+--   jonas 00000000-0000-4000-a000-000000000002  nurse + shift lead (charge nurse)  Klinikum / 3A
 --   leyla 00000000-0000-4000-a000-000000000003  nurse (sick)     Klinikum / 3A
---   mira  00000000-0000-4000-a000-000000000004  charge nurse     Klinikum / 3A
---   paul  00000000-0000-4000-a000-000000000005  head nurse       Klinikum / dept. Innere
+--   mira  00000000-0000-4000-a000-000000000004  head nurse = Stationsleitung (unit scope)  Klinikum / 3A
+--   paul  00000000-0000-4000-a000-000000000005  head nurse = PDL (department scope)  Klinikum / Innere
 --   hanna 00000000-0000-4000-a000-000000000006  HR               Klinikum
 --   tom   00000000-0000-4000-a000-000000000008  nurse            St. Marien
 --   ops   00000000-0000-4000-a000-000000000010  system admin
@@ -175,7 +175,7 @@ end $$;
 rollback;
 
 -- -----------------------------------------------------------------------------
--- Charge nurse (Mira, Station 3A): manages her ward, nothing else
+-- Stationsleitung (Mira, head nurse with unit scope 3A): manages her ward, nothing else
 -- -----------------------------------------------------------------------------
 begin;
 select set_config('request.jwt.claims', json_build_object('sub', :'mira', 'role', 'authenticated')::text, true);
@@ -247,6 +247,45 @@ begin
   assert exists (select 1 from public.audit_logs where table_name = 'leave_requests' and action = 'UPDATE'
                    and actor_id = '00000000-0000-4000-a000-000000000004'), 'decision is audited with actor';
   assert not exists (select 1 from public.audit_logs where new_data ->> 'comment_encrypted' <> '***'), 'encrypted data is masked in audit';
+end $$;
+rollback;
+
+-- -----------------------------------------------------------------------------
+-- Schichtleitung (Jonas, charge nurse 3A): organises the shift, decides nothing
+-- -----------------------------------------------------------------------------
+begin;
+select set_config('request.jwt.claims', json_build_object('sub', :'jonas', 'role', 'authenticated')::text, true);
+set local role authenticated;
+do $$
+begin
+  assert (select count(*) from public.sick_leaves) = 1, 'shift lead sees who is sick on her ward';
+  assert (select count(*) from public.users) = 4, 'shift lead sees contact details of her ward';
+  assert (select count(*) from public.schedules) = 1, 'shift lead does not see draft rosters';
+  assert (select count(*) from public.leave_requests where employee_id <> '40000000-0000-4000-a000-000000000002') = 0,
+    'shift lead does not see leave requests of others';
+  begin
+    perform public.get_sick_leave_comment('90000000-0000-4000-a000-000000000001');
+    raise exception 'shift lead must not read medical comments';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    perform public.decide_leave_request('80000000-0000-4000-a000-000000000002', true);
+    raise exception 'shift lead must not decide leave';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    perform public.publish_schedule('70000000-0000-4000-a000-000000000002');
+    raise exception 'shift lead must not publish';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    insert into public.schedule_entries (hospital_id, schedule_id, employee_id, kind, entry_date)
+    values ('10000000-0000-4000-a000-000000000001', '70000000-0000-4000-a000-000000000001',
+            '40000000-0000-4000-a000-000000000001', 'off', current_date);
+    raise exception 'shift lead must not edit the roster';
+  exception when insufficient_privilege then null;
+  end;
+  assert (public.my_context() -> 'employments' -> 0 -> 'roles') ? 'charge_nurse', 'role is reported in context';
 end $$;
 rollback;
 

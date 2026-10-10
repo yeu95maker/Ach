@@ -16,6 +16,7 @@ PostgreSQL (Supabase), normalisiert, mandantenfähig, abgesichert durch Row Leve
 | `1000_rls` | Rechte-Baseline, RLS-Policies für alle Tabellen und Storage |
 | `1100_api` | Spaltenverschlüsselung, Views, Workflow-RPCs |
 | `1200_notification_triggers` | Fachereignisse → Benachrichtigungen → Push-Queue, Realtime |
+| `20261010…_role_shift_lead` | Rollenbedeutung: Charge Nurse = Schichtleitung, Head Nurse = Stationsleitung/PDL je nach Scope |
 
 ## Entitäten
 
@@ -79,13 +80,14 @@ Bewusst **kein** Tenant-Claim im JWT: Rechteänderungen (Rolle entzogen, Anstell
 - `roles` bündeln Berechtigungen. Systemrollen haben `hospital_id = NULL` und gelten für alle Häuser. Häuser können eigene Rollen anlegen.
 - `employee_roles` weist eine Rolle zu, optional **eingeschränkt** auf eine Abteilung oder eine Station. Ohne Einschränkung gilt sie für das ganze Haus.
 - RLS, RPCs und UI prüfen ausschließlich Berechtigungen. Eine neue Rolle braucht daher keinen Code.
+- Stationsleitung und PDL sind **dieselbe Rolle** mit unterschiedlichem Scope. So bleibt das Modell schlank, und eine PDL erbt automatisch alle Stationen ihrer Abteilung.
 - **Rechteausweitung ist ausgeschlossen:** Man kann nur Rollen vergeben bzw. Rollen mit Berechtigungen füllen, die man selbst hausweit besitzt (`private.can_grant_role`).
 
 | Rolle (Key) | Deutsch | Wesentliche Rechte | Typischer Scope |
 | --- | --- | --- | --- |
 | `nurse` | Pflegekraft | eigener Dienstplan, Kollegen, Urlaub/Krank melden | Haus |
-| `charge_nurse` | Stationsleitung | + Entwürfe sehen, Dienstplan bearbeiten/veröffentlichen, Urlaub genehmigen, Krankmeldungen inkl. Kommentar, Mitarbeiterübersicht, Mitteilungen | Station |
-| `head_nurse` | Pflegedienstleitung | wie Stationsleitung + Qualifikationen, Dokumente | Abteilung / Haus |
+| `charge_nurse` | Schichtleitung | + Krankzeiträume im Bereich sehen (**ohne** medizinischen Kommentar) und Kontaktdaten des Teams, um die laufende Schicht zu organisieren. **Keine** Genehmigung, **keine** Dienstplanänderung | Station |
+| `head_nurse` | Stationsleitung **oder** Pflegedienstleitung | + Entwürfe sehen, Dienstplan bearbeiten/veröffentlichen, Urlaub genehmigen, Krankmeldungen inkl. Kommentar, Mitarbeiterübersicht, Mitteilungen, Qualifikationen, Dokumente | Station = **Stationsleitung**, Abteilung/Haus = **PDL** |
 | `hr` | Personalabteilung | Mitarbeiter verwalten, Rollen vergeben, Urlaub/Krankzeiträume sehen (**ohne** medizinischen Kommentar, **ohne** Genehmigung) | Haus |
 | `hospital_admin` | Krankenhaus-Administration | Organisation, Einstellungen, Rollen, Audit-Log (**ohne** Gesundheitsdaten) | Haus |
 | `system_admin` | Plattformbetrieb | Mandanten verwalten, Plattform-Audit (**keine** Personal- oder Gesundheitsdaten) | Plattform |
@@ -141,6 +143,7 @@ Clients dürfen nur einfache Self-Service-Inserts direkt ausführen, z. B. einen
 - anonymer Zugriff wird abgewiesen
 - Pflegekraft sieht nur ihr Haus und nur ihre Personaldaten; Kollegen sieht sie nur über das sichere Verzeichnis
 - Stationsleitung genehmigt, bestätigt und veröffentlicht nur auf **ihrer** Station
+- Schichtleitung sieht Krankzeiträume und Kontakte ihrer Station, aber keine Kommentare, keine Entwürfe, keine fremden Urlaubsanträge und darf nichts genehmigen, veröffentlichen oder ändern
 - keine Selbstgenehmigung, keine Rechteausweitung durch HR
 - HR sieht Krankzeiträume, aber keine Kommentare
 - der Systemadmin sieht Mandanten, aber keine Personal- oder Gesundheitsdaten

@@ -6,8 +6,10 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 
 | # | Frage | Aktuelle Annahme |
 | --- | --- | --- |
-| A1 | **Rollenzuordnung:** Ist „Charge Nurse“ = *Stationsleitung* und „Head Nurse“ = *Pflegedienstleitung*? Oder ist „Charge Nurse“ eine *Schichtleitung* mit weniger Rechten? | `charge_nurse` = Stationsleitung (stationsbezogen), `head_nurse` = PDL (abteilungs- oder hausweit). Eine Schichtleitung ließe sich als eigene Rolle ohne Code ergänzen. |
-| A2 | Wer darf den **Kommentar einer Krankmeldung** lesen? | Die betroffene Person, Stationsleitung und PDL. **Nicht** HR, Hospital-Admin oder Systemadmin. |
+| A1 | ~~Rollenzuordnung~~ **Entschieden (10.10.2026):** „Charge Nurse“ = Schichtleitung. | Umgesetzt: `charge_nurse` = Schichtleitung, `head_nurse` = Stationsleitung (Scope Station) bzw. PDL (Scope Abteilung/Haus). |
+| A1a | Passen die **Rechte der Schichtleitung**? | Pflegekraft + Krankzeiträume der Station (ohne Kommentar) + Kontaktdaten des Teams. Sie darf eine Krankmeldung „zur Kenntnis nehmen“ (wer den Anruf annimmt), aber nichts genehmigen, veröffentlichen oder im Plan ändern. |
+| A1b | Ist es in Ordnung, dass Stationsleitung und PDL **eine Rolle mit unterschiedlichem Scope** sind? Oder braucht die PDL eigene Rechte, z. B. hausweite Auswertungen? | Eine Rolle. Bei Bedarf lässt sich eine eigene Rolle `nursing_director` ohne Code ergänzen. |
+| A2 | Wer darf den **Kommentar einer Krankmeldung** lesen? | Die betroffene Person, Stationsleitung und PDL. **Nicht** Schichtleitung, HR, Hospital-Admin oder Systemadmin. |
 | A3 | Sollen Kollegen sehen, dass jemand **krank oder im Urlaub** ist (z. B. im Dienstplan)? | Nein (Datenschutz). Kollegen sehen nur Dienste. Steht eine krank gemeldete Person noch im Plan, ist es Aufgabe der Leitung, den Plan anzupassen. |
 | A4 | Sehen Pflegekräfte die **Dienstpläne anderer Stationen**? | Ja, veröffentlichte Pläne des eigenen Hauses (für „Kollegen im Dienst – Ganzes Haus“). Lässt sich per Policy auf eigene Stationen beschränken. |
 | A5 | Darf die Stationsleitung **eigenen Urlaub** genehmigen? | Nein. Das übernimmt die nächsthöhere Ebene (PDL). |

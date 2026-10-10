@@ -6,7 +6,7 @@
 --
 --   Klinikum Musterstadt
 --     anna.becker@shiftcare.dev     Pflegekraft            Station 3A
---     jonas.weber@shiftcare.dev     Pflegekraft            Station 3A
+--     jonas.weber@shiftcare.dev     Pflegekraft + Schichtleitung  Station 3A
 --     leyla.yilmaz@shiftcare.dev    Pflegekraft            Station 3A
 --     mira.schulz@shiftcare.dev     Stationsleitung        Station 3A
 --     paul.richter@shiftcare.dev    Pflegedienstleitung    Innere Medizin
@@ -109,18 +109,21 @@ insert into public.employee_units (hospital_id, employee_id, unit_id, is_primary
   ('10000000-0000-4000-a000-000000000002', '40000000-0000-4000-a000-000000000009', '30000000-0000-4000-a000-000000000004', true);
 
 -- Role assignments (scope: unit / department / hospital-wide)
+-- head_nurse with unit scope = Stationsleitung, with department scope = PDL;
+-- charge_nurse = Schichtleitung.
 insert into public.employee_roles (hospital_id, employee_id, role_id, unit_id, department_id)
 select a.hospital_id, a.employee_id, r.id, a.unit_id, a.department_id
 from (values
   ('10000000-0000-4000-a000-000000000001'::uuid, '40000000-0000-4000-a000-000000000001'::uuid, 'nurse',          null::uuid, null::uuid),
   ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000002',       'nurse',          null,       null),
   ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000003',       'nurse',          null,       null),
-  ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000004',       'charge_nurse',   '30000000-0000-4000-a000-000000000001'::uuid, null),
+  ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000002',       'charge_nurse',   '30000000-0000-4000-a000-000000000001'::uuid, null),
+  ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000004',       'head_nurse',     '30000000-0000-4000-a000-000000000001',       null),
   ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000005',       'head_nurse',     null,       '20000000-0000-4000-a000-000000000001'::uuid),
   ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000006',       'hr',             null,       null),
   ('10000000-0000-4000-a000-000000000001',       '40000000-0000-4000-a000-000000000007',       'hospital_admin', null,       null),
   ('10000000-0000-4000-a000-000000000002',       '40000000-0000-4000-a000-000000000008',       'nurse',          null,       null),
-  ('10000000-0000-4000-a000-000000000002',       '40000000-0000-4000-a000-000000000009',       'charge_nurse',   '30000000-0000-4000-a000-000000000004', null)
+  ('10000000-0000-4000-a000-000000000002',       '40000000-0000-4000-a000-000000000009',       'head_nurse',     '30000000-0000-4000-a000-000000000004', null)
 ) as a(hospital_id, employee_id, role_key, unit_id, department_id)
 join public.roles r on r.key = a.role_key and r.hospital_id is null;
 
