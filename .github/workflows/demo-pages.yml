@@ -1,0 +1,53 @@
+# Live demo on GitHub Pages (https://<owner>.github.io/<repo>/).
+# Requires repository secrets DEMO_SUPABASE_URL and DEMO_SUPABASE_ANON_KEY
+# and Settings → Pages → Source = "GitHub Actions". See docs/DEMO.md.
+name: Demo (GitHub Pages)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: demo-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_SUPABASE_URL: ${{ secrets.DEMO_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.DEMO_SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+            echo "::error::Secrets DEMO_SUPABASE_URL / DEMO_SUPABASE_ANON_KEY fehlen (siehe docs/DEMO.md)"
+            exit 1
+          fi
+          npm run build
+          # SPA fallback: GitHub Pages serves 404.html for unknown paths (deep links).
+          cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

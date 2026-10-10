@@ -39,7 +39,7 @@ export async function enablePush(): Promise<PushState> {
   if (permission !== 'granted') return permission === 'denied' ? 'denied' : 'default'
   if (!config?.vapidPublicKey) return 'granted' // in-app + system notifications while open
 
-  const registration = await navigator.serviceWorker.register('/sw.js')
+  const registration = await navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`)
   await navigator.serviceWorker.ready
   const subscription =
     (await registration.pushManager.getSubscription()) ??
@@ -50,7 +50,7 @@ export async function enablePush(): Promise<PushState> {
 
 export async function disablePush(): Promise<void> {
   if (!pushSupported()) return
-  const registration = await navigator.serviceWorker.getRegistration('/sw.js')
+  const registration = await navigator.serviceWorker.getRegistration(`${import.meta.env.BASE_URL}sw.js`)
   const subscription = await registration?.pushManager.getSubscription()
   if (subscription) {
     await notificationRepository.unregisterDevice(subscription.endpoint)

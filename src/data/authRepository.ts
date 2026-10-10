@@ -4,7 +4,7 @@ import { db } from './client'
 
 export type OAuthProvider = 'google' | 'azure'
 
-const redirectTo = (path = '/') => `${window.location.origin}${path}`
+const redirectTo = (path = '/') => `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}${path}`
 
 export const authRepository = {
   async getSession(): Promise<Session | null> {

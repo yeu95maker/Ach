@@ -2,6 +2,9 @@
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()))
 
+/** Resolves app paths ('/schedule') against the scope, so sub-path deployments work. */
+const appUrl = (path) => new URL(String(path).replace(/^\//, ''), self.registration.scope).href
+
 self.addEventListener('push', (event) => {
   let data = {}
   try {
@@ -13,8 +16,8 @@ self.addEventListener('push', (event) => {
   event.waitUntil(
     self.registration.showNotification(title, {
       body: data.body || '',
-      icon: '/favicon.svg',
-      badge: '/favicon.svg',
+      icon: appUrl('/favicon.svg'),
+      badge: appUrl('/favicon.svg'),
       tag: data.tag,
       data: { url: data.url || '/notifications' },
     }),
@@ -23,7 +26,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const url = (event.notification.data && event.notification.data.url) || '/'
+  const url = appUrl((event.notification.data && event.notification.data.url) || '/')
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       for (const client of clients) {

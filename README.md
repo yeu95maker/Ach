@@ -8,6 +8,15 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 | Backend | Supabase: PostgreSQL 15+ mit Row Level Security, Auth, Storage, Realtime, Edge Functions |
 | Mobile (geplant) | Capacitor-Wrapper derselben Web-App (siehe [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#mobile-ios--android)) |
 
+## Demo
+
+**[▶ Zur Demo mit Videos und Screenshots](docs/DEMO.md)**
+
+| | |
+| --- | --- |
+| ![Dashboard](docs/demo/dashboard-desktop.png) | ![Dienstplan-Editor](docs/demo/dienstplan-editor.png) |
+| [▶ Video: Pflegekraft am Smartphone](docs/demo/demo-pflegekraft-smartphone.webm) | [▶ Video: Stationsleitung am Desktop](docs/demo/demo-stationsleitung-desktop.webm) |
+
 ## Dokumentation
 
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): Schichten, Ordnerstruktur, Datenfluss, Auth, Push, Mobile
