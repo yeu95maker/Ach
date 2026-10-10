@@ -1,4 +1,4 @@
-import { CalendarCog, CalendarHeart, ChevronLeft, ChevronRight, ClipboardList } from 'lucide-react'
+import { CalendarCog, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, ClipboardList, History } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LEGEND_KINDS } from '@/components/dayKindStyles'
@@ -52,25 +52,29 @@ export function SchedulePage() {
         actions={<SegmentedControl label={t('schedule.viewLabel')} options={views} value={nav.view} onChange={nav.setView} className="w-[264px]" />}
       />
 
-      {(can(employment, 'wishes.submit') || canAny(employment, ['wishes.view', 'wishes.manage', 'schedule.manage'])) && (
-        <nav aria-label={t('wishes.title')} className="-mt-2 mb-6 flex flex-wrap gap-2">
-          {can(employment, 'wishes.submit') && (
-            <ButtonLink to="/schedule/wishes" variant="soft" size="sm" icon={<CalendarHeart className="size-4" />}>
-              {t('wishes.title')}
-            </ButtonLink>
-          )}
-          {can(employment, 'schedule.manage') && (
-            <ButtonLink to="/schedule/plan" variant="secondary" size="sm" icon={<CalendarCog className="size-4" />}>
-              {t('editor.title')}
-            </ButtonLink>
-          )}
-          {canAny(employment, ['wishes.view', 'wishes.manage']) && (
-            <ButtonLink to="/schedule/wishes/manage" variant="secondary" size="sm" icon={<ClipboardList className="size-4" />}>
-              {t('wishes.manageLink')}
-            </ButtonLink>
-          )}
-        </nav>
-      )}
+      <nav aria-label={t('schedule.more')} className="-mt-2 mb-6 flex flex-wrap gap-2">
+        {can(employment, 'wishes.submit') && (
+          <ButtonLink to="/schedule/wishes" variant="soft" size="sm" icon={<CalendarHeart className="size-4" />}>
+            {t('wishes.title')}
+          </ButtonLink>
+        )}
+        <ButtonLink to="/schedule/open" variant="secondary" size="sm" icon={<CalendarPlus className="size-4" />}>
+          {t('openShifts.title')}
+        </ButtonLink>
+        <ButtonLink to="/schedule/history" variant="secondary" size="sm" icon={<History className="size-4" />}>
+          {t('history.title')}
+        </ButtonLink>
+        {can(employment, 'schedule.manage') && (
+          <ButtonLink to="/schedule/plan" variant="secondary" size="sm" icon={<CalendarCog className="size-4" />}>
+            {t('editor.title')}
+          </ButtonLink>
+        )}
+        {canAny(employment, ['wishes.view', 'wishes.manage']) && (
+          <ButtonLink to="/schedule/wishes/manage" variant="secondary" size="sm" icon={<ClipboardList className="size-4" />}>
+            {t('wishes.manageLink')}
+          </ButtonLink>
+        )}
+      </nav>
 
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-1">

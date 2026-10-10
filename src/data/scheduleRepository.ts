@@ -7,14 +7,14 @@ const ROSTER_COLUMNS =
   'entry_id, hospital_id, schedule_id, schedule_status, unit_id, unit_name, employee_id, kind, entry_date, starts_at, ends_at, note, shift_type_id, shift_code, shift_name, shift_category, shift_color, first_name, last_name, avatar_path, job_title, qualifications'
 
 export const scheduleRepository = {
-  /** Own roster entries in a date range (published rosters only). */
+  /** Own roster entries in a date range (published rosters and the archived history). */
   async fetchMyRoster(employeeId: string, from: ISODate, to: ISODate): Promise<RosterEntry[]> {
     const rows = unwrapList<ShiftRosterRow>(
       await db()
         .from('shift_roster')
         .select(ROSTER_COLUMNS)
         .eq('employee_id', employeeId)
-        .eq('schedule_status', 'published')
+        .in('schedule_status', ['published', 'archived'])
         .gte('entry_date', from)
         .lte('entry_date', to)
         .order('starts_at', { ascending: true, nullsFirst: true }),

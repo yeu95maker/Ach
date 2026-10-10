@@ -136,7 +136,8 @@
     "publishConfirmText": "Everyone scheduled will see the roster immediately and receive a notification.",
     "publishNow": "Publish now",
     "published": "Roster published",
-    "publishedHint": "The team has been notified."
+    "publishedHint": "The team has been notified.",
+    "more": "More roster features"
   },
   "team": {
     "title": "Team",
@@ -668,5 +669,18 @@
     "interestCount_other": "{{count}} volunteers",
     "staff": "Fill shift",
     "howItWorks": "Tap “I can cover” to volunteer. Management decides and you will be notified."
+  },
+  "history": {
+    "title": "My history",
+    "subtitle": "Your shifts of past months and years",
+    "empty": "No past shifts yet",
+    "noShifts": "No shifts",
+    "previousYear": "Previous year",
+    "nextYear": "Next year",
+    "since": "History since {{date}}. Tap a month to open the roster.",
+    "vacationDays_one": "{{count}} day of leave",
+    "vacationDays_other": "{{count}} days of leave",
+    "sickDays_one": "{{count}} sick day",
+    "sickDays_other": "{{count}} sick days"
   }
 }

@@ -109,8 +109,8 @@ as $$
   shifts as (
     select date_trunc('month', se.entry_date)::date as month,
            coalesce(st.category::text, 'other') as category,
-           extract(epoch from (se.ends_at - se.starts_at))::integer / 60
-             - coalesce(st.break_minutes, 0) as minutes
+           -- same rule as the roster view: planned time from start to end
+           extract(epoch from (se.ends_at - se.starts_at))::integer / 60 as minutes
     from public.schedule_entries se
     join public.schedules s on s.id = se.schedule_id and s.status in ('published', 'archived')
     left join public.shift_types st on st.id = se.shift_type_id

@@ -138,7 +138,8 @@
     "publishConfirmText": "Toți cei planificați văd programul imediat și primesc o notificare.",
     "publishNow": "Publică acum",
     "published": "Program publicat",
-    "publishedHint": "Echipa a fost anunțată."
+    "publishedHint": "Echipa a fost anunțată.",
+    "more": "Alte funcții ale planului"
   },
   "team": {
     "title": "Echipă",
@@ -686,5 +687,20 @@
     "interestCount_other": "{{count}} de voluntari",
     "staff": "Ocupă tura",
     "howItWorks": "Cu „Pot prelua” te oferi. Conducerea decide, iar tu primești o notificare."
+  },
+  "history": {
+    "title": "Istoricul meu",
+    "subtitle": "Turele tale din lunile și anii trecuți",
+    "empty": "Încă nu există ture trecute",
+    "noShifts": "Fără ture",
+    "previousYear": "Anul anterior",
+    "nextYear": "Anul următor",
+    "since": "Istoric din {{date}}. Atinge o lună pentru a deschide planul.",
+    "vacationDays_one": "{{count}} zi de concediu",
+    "vacationDays_few": "{{count}} zile de concediu",
+    "vacationDays_other": "{{count}} de zile de concediu",
+    "sickDays_one": "{{count}} zi de boală",
+    "sickDays_few": "{{count}} zile de boală",
+    "sickDays_other": "{{count}} de zile de boală"
   }
 }

@@ -140,7 +140,8 @@
     "publishConfirmText": "Wszystkie zaplanowane osoby od razu zobaczą grafik i otrzymają powiadomienie.",
     "publishNow": "Opublikuj teraz",
     "published": "Grafik opublikowany",
-    "publishedHint": "Zespół został powiadomiony."
+    "publishedHint": "Zespół został powiadomiony.",
+    "more": "Więcej funkcji grafiku"
   },
   "team": {
     "title": "Zespół",
@@ -704,5 +705,22 @@
     "interestCount_other": "{{count}} chętnej osoby",
     "staff": "Obsadź",
     "howItWorks": "Przyciskiem „Mogę wziąć dyżur” zgłaszasz chęć. Kierownictwo decyduje, a ty dostajesz powiadomienie."
+  },
+  "history": {
+    "title": "Moja historia",
+    "subtitle": "Twoje dyżury z minionych miesięcy i lat",
+    "empty": "Brak minionych dyżurów",
+    "noShifts": "Brak dyżurów",
+    "previousYear": "Poprzedni rok",
+    "nextYear": "Następny rok",
+    "since": "Historia od {{date}}. Dotknij miesiąca, aby otworzyć grafik.",
+    "vacationDays_one": "{{count}} dzień urlopu",
+    "vacationDays_few": "{{count}} dni urlopu",
+    "vacationDays_many": "{{count}} dni urlopu",
+    "vacationDays_other": "{{count}} dnia urlopu",
+    "sickDays_one": "{{count}} dzień choroby",
+    "sickDays_few": "{{count}} dni choroby",
+    "sickDays_many": "{{count}} dni choroby",
+    "sickDays_other": "{{count}} dnia choroby"
   }
 }

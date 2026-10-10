@@ -136,7 +136,8 @@
     "publishConfirmText": "Planlanan herkes planı hemen görür ve bir bildirim alır.",
     "publishNow": "Şimdi yayınla",
     "published": "Nöbet planı yayınlandı",
-    "publishedHint": "Ekip bilgilendirildi."
+    "publishedHint": "Ekip bilgilendirildi.",
+    "more": "Diğer plan işlevleri"
   },
   "team": {
     "title": "Ekip",
@@ -668,5 +669,18 @@
     "interestCount_other": "{{count}} gönüllü",
     "staff": "Doldur",
     "howItWorks": "“Ben gelebilirim” ile ilgini bildirirsin. Sorumlu karar verir, sen bilgilendirilirsin."
+  },
+  "history": {
+    "title": "Geçmişim",
+    "subtitle": "Geçmiş ay ve yıllardaki vardiyaların",
+    "empty": "Henüz geçmiş vardiya yok",
+    "noShifts": "Vardiya yok",
+    "previousYear": "Önceki yıl",
+    "nextYear": "Sonraki yıl",
+    "since": "{{date}} tarihinden beri geçmiş. Planı açmak için bir aya dokun.",
+    "vacationDays_one": "{{count}} izin günü",
+    "vacationDays_other": "{{count}} izin günü",
+    "sickDays_one": "{{count}} hastalık günü",
+    "sickDays_other": "{{count}} hastalık günü"
   }
 }

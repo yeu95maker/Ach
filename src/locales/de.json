@@ -136,7 +136,8 @@
     "publishConfirmText": "Alle eingeplanten Mitarbeitenden sehen den Plan sofort und erhalten eine Benachrichtigung.",
     "publishNow": "Jetzt veröffentlichen",
     "published": "Dienstplan veröffentlicht",
-    "publishedHint": "Das Team wurde benachrichtigt."
+    "publishedHint": "Das Team wurde benachrichtigt.",
+    "more": "Weitere Dienstplan-Funktionen"
   },
   "team": {
     "title": "Team",
@@ -668,5 +669,18 @@
     "interestCount_other": "{{count}} Interessent:innen",
     "staff": "Besetzen",
     "howItWorks": "Mit „Ich kann einspringen“ meldest du Interesse. Die Leitung entscheidet, du wirst benachrichtigt."
+  },
+  "history": {
+    "title": "Mein Verlauf",
+    "subtitle": "Deine Dienste der vergangenen Monate und Jahre",
+    "empty": "Noch keine vergangenen Dienste",
+    "noShifts": "Keine Dienste",
+    "previousYear": "Vorheriges Jahr",
+    "nextYear": "Nächstes Jahr",
+    "since": "Verlauf seit {{date}}. Tippe auf einen Monat, um den Dienstplan zu öffnen.",
+    "vacationDays_one": "{{count}} Urlaubstag",
+    "vacationDays_other": "{{count}} Urlaubstage",
+    "sickDays_one": "{{count}} Krankheitstag",
+    "sickDays_other": "{{count}} Krankheitstage"
   }
 }
