@@ -102,9 +102,38 @@ end $$;
 rollback;
 
 -- -----------------------------------------------------------------------------
+-- Open shift: nobody can volunteer while on duty at that time
+-- -----------------------------------------------------------------------------
+begin;
+-- make sure Anna works at exactly that time (independent of the calendar day)
+delete from public.schedule_entries o
+using public.schedule_entries x
+where x.schedule_id = '70000000-0000-4000-a000-000000000001' and x.employee_id is null
+  and o.employee_id = '40000000-0000-4000-a000-000000000001' and o.entry_date between x.entry_date - 1 and x.entry_date;
+insert into public.schedule_entries (hospital_id, schedule_id, employee_id, kind, shift_type_id, entry_date)
+select hospital_id, schedule_id, '40000000-0000-4000-a000-000000000001', 'shift', shift_type_id, entry_date
+from public.schedule_entries where schedule_id = '70000000-0000-4000-a000-000000000001' and employee_id is null limit 1;
+select set_config('request.jwt.claims', json_build_object('sub', :'anna', 'role', 'authenticated')::text, true);
+set local role authenticated;
+do $$
+begin
+  perform public.express_open_shift_interest(
+    (select id from public.schedule_entries where schedule_id = '70000000-0000-4000-a000-000000000001' and employee_id is null limit 1), null);
+  raise exception 'volunteering while on duty must fail';
+exception when exclusion_violation then null;
+end $$;
+rollback;
+
+-- -----------------------------------------------------------------------------
 -- Open shift: Anna volunteers, Mira assigns
 -- -----------------------------------------------------------------------------
 begin;
+-- Anna is free around the open shift (independent of the calendar day)
+delete from public.schedule_entries o
+using public.schedule_entries x
+where x.schedule_id = '70000000-0000-4000-a000-000000000001' and x.employee_id is null
+  and o.employee_id = '40000000-0000-4000-a000-000000000001' and o.kind = 'shift'
+  and tstzrange(o.starts_at, o.ends_at) && tstzrange(x.starts_at, x.ends_at);
 select set_config('request.jwt.claims', json_build_object('sub', :'anna', 'role', 'authenticated')::text, true);
 set local role authenticated;
 do $$

@@ -668,7 +668,8 @@
     "interestCount_one": "{{count}} Interessent:in",
     "interestCount_other": "{{count}} Interessent:innen",
     "staff": "Besetzen",
-    "howItWorks": "Mit „Ich kann einspringen“ meldest du Interesse. Die Leitung entscheidet, du wirst benachrichtigt."
+    "howItWorks": "Mit „Ich kann einspringen“ meldest du Interesse. Die Leitung entscheidet, du wirst benachrichtigt.",
+    "overlap": "Du hast zu dieser Zeit schon Dienst."
   },
   "history": {
     "title": "Mein Verlauf",

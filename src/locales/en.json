@@ -668,7 +668,8 @@
     "interestCount_one": "{{count}} volunteer",
     "interestCount_other": "{{count}} volunteers",
     "staff": "Fill shift",
-    "howItWorks": "Tap “I can cover” to volunteer. Management decides and you will be notified."
+    "howItWorks": "Tap “I can cover” to volunteer. Management decides and you will be notified.",
+    "overlap": "You are already on duty at that time."
   },
   "history": {
     "title": "My history",

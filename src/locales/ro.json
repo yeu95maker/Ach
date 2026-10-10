@@ -686,7 +686,8 @@
     "interestCount_few": "{{count}} voluntari",
     "interestCount_other": "{{count}} de voluntari",
     "staff": "Ocupă tura",
-    "howItWorks": "Cu „Pot prelua” te oferi. Conducerea decide, iar tu primești o notificare."
+    "howItWorks": "Cu „Pot prelua” te oferi. Conducerea decide, iar tu primești o notificare.",
+    "overlap": "Ești deja în tură la această oră."
   },
   "history": {
     "title": "Istoricul meu",

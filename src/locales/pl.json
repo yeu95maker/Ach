@@ -704,7 +704,8 @@
     "interestCount_many": "{{count}} chętnych",
     "interestCount_other": "{{count}} chętnej osoby",
     "staff": "Obsadź",
-    "howItWorks": "Przyciskiem „Mogę wziąć dyżur” zgłaszasz chęć. Kierownictwo decyduje, a ty dostajesz powiadomienie."
+    "howItWorks": "Przyciskiem „Mogę wziąć dyżur” zgłaszasz chęć. Kierownictwo decyduje, a ty dostajesz powiadomienie.",
+    "overlap": "O tej porze masz już dyżur."
   },
   "history": {
     "title": "Moja historia",

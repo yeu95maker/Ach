@@ -668,7 +668,8 @@
     "interestCount_one": "{{count}} gönüllü",
     "interestCount_other": "{{count}} gönüllü",
     "staff": "Doldur",
-    "howItWorks": "“Ben gelebilirim” ile ilgini bildirirsin. Sorumlu karar verir, sen bilgilendirilirsin."
+    "howItWorks": "“Ben gelebilirim” ile ilgini bildirirsin. Sorumlu karar verir, sen bilgilendirilirsin.",
+    "overlap": "Bu saatte zaten vardiyan var."
   },
   "history": {
     "title": "Geçmişim",

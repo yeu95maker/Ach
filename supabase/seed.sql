@@ -191,10 +191,14 @@ select d.hospital_id, d.schedule_id, d.employee_id,
 from days d
 left join public.shift_types t on t.hospital_id = d.hospital_id and t.code = d.code and d.code <> '-';
 
--- An open late shift in three days on Station 3A
+-- An open late shift on Station 3A, on Anna's next day off (so someone can volunteer)
 insert into public.schedule_entries (hospital_id, schedule_id, employee_id, kind, shift_type_id, entry_date, note)
 select '10000000-0000-4000-a000-000000000001', '70000000-0000-4000-a000-000000000001', null, 'shift',
-       '60000000-0000-4000-a000-000000000002', least(current_date + 3, (date_trunc('month', current_date) + interval '1 month - 1 day')::date),
+       '60000000-0000-4000-a000-000000000002',
+       coalesce(
+         (select d::date from generate_series(current_date + 2, (date_trunc('month', current_date) + interval '1 month - 1 day')::date, interval '1 day') d
+          where (d::date - date_trunc('month', current_date)::date) % 7 = 6 order by d limit 1),
+         least(current_date + 3, (date_trunc('month', current_date) + interval '1 month - 1 day')::date)),
        'Springer gesucht';
 
 -- Publishing creates the "new roster" notifications through the triggers.

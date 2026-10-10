@@ -232,6 +232,11 @@ begin
   if v_emp is null then
     raise exception 'Only members of the ward can volunteer' using errcode = '42501';
   end if;
+  if exists (select 1 from public.schedule_entries o
+             where o.employee_id = v_emp and o.kind = 'shift'
+               and tstzrange(o.starts_at, o.ends_at) && tstzrange(v_entry.starts_at, v_entry.ends_at)) then
+    raise exception 'You already work at that time' using errcode = '23P01';
+  end if;
 
   insert into public.open_shift_interests (hospital_id, entry_id, employee_id, note)
   values (v_entry.hospital_id, p_entry_id, v_emp, nullif(btrim(p_note), ''))

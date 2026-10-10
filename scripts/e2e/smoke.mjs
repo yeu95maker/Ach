@@ -175,6 +175,61 @@ for (const run of runs) {
   await lead.context.close()
 }
 
+// Team lead: Aktuelles, sick-leave cover, open shifts; staff: history; admin
+{
+  const lead = await session('lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  const p = lead.page
+  await p.goto(`${BASE}/news`)
+  await p.getByRole('button', { name: 'Neu' }).click()
+  await p.locator('label', { hasText: 'Fortbildung' }).first().click()
+  await p.fill('#news-title', 'Fortbildung Wundversorgung')
+  await p.fill('#news-body', 'Bitte bis Freitag anmelden.')
+  await p.fill('#news-date', '2027-01-14')
+  await p.fill('#news-from', '09:00')
+  await p.fill('#news-to', '12:00')
+  await p.getByRole('button', { name: 'Senden' }).click()
+  await p.waitForSelector('text=Dein Team wurde benachrichtigt.')
+  await shot(p, 'lead', '50-news')
+
+  await p.goto(`${BASE}/team?tab=sick`)
+  await p.getByRole('button', { name: 'Vertretung finden' }).first().click()
+  await p.waitForSelector('dialog[open] >> text=Wer kann übernehmen?')
+  await p.locator('dialog[open]').getByRole('button', { name: 'Als offenen Dienst ausschreiben' }).click()
+  await p.waitForSelector('text=Offener Dienst ausgeschrieben')
+  await lead.context.close()
+
+  const nurse = await session('nurse-lead-flows', { email: 'anna.becker@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  await nurse.page.goto(`${BASE}/schedule/open`)
+  // the seeded open late shift (on the nurse's day off) is the first "Spätdienst" card
+  const openCard = (page) => page.locator('div.rounded-\\[var\\(--radius-card\\)\\]', { hasText: 'Spätdienst' }).first()
+  await openCard(nurse.page).getByRole('button', { name: 'Ich kann einspringen' }).click()
+  await nurse.page.waitForSelector('text=Du hast Interesse gemeldet')
+  await nurse.page.goto(`${BASE}/schedule/history`)
+  await nurse.page.waitForSelector('text=Verlauf seit')
+  await shot(nurse.page, 'nurse-lead-flows', '51-history')
+  await nurse.page.goto(`${BASE}/news`)
+  await nurse.page.waitForSelector('text=Fortbildung Wundversorgung')
+  await nurse.context.close()
+
+  const lead2 = await session('lead-staffing', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'dark' })
+  await lead2.page.goto(`${BASE}/schedule/open`)
+  await openCard(lead2.page).getByRole('button', { name: 'Besetzen' }).click()
+  await lead2.page.waitForSelector('dialog[open] >> text=Hat Interesse gemeldet')
+  await shot(lead2.page, 'lead-staffing', '52-candidates', { full: false })
+  await lead2.context.close()
+
+  const admin = await session('admin', { email: 'admin@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  await admin.page.goto(`${BASE}/admin`)
+  await admin.page.getByRole('button', { name: 'Einladen' }).click()
+  await admin.page.fill('#inv-first', 'Nora')
+  await admin.page.fill('#inv-last', 'Neumann')
+  await admin.page.fill('#inv-email', 'nora.neumann@shiftcare.dev')
+  await admin.page.getByRole('button', { name: 'Einladung senden' }).click()
+  await admin.page.waitForSelector('text=Nora Neumann')
+  await shot(admin.page, 'admin', '53-admin')
+  await admin.context.close()
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

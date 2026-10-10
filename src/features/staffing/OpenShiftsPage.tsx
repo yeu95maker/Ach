@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { dayKindStyles } from '@/components/dayKindStyles'
 import { QueryError, Stagger } from '@/components/QueryState'
-import { errorMessageKey } from '@/core/errors'
+import { errorMessageKey, toAppError } from '@/core/errors'
 import { can } from '@/domain/permissions'
 import type { CoverShift } from '@/domain/staffing'
 import { useEmployment } from '@/features/tenant/TenantProvider'
@@ -39,7 +39,8 @@ export function OpenShiftsPage() {
               ? { tone: 'success', title: t('openShifts.interestSent'), description: t('openShifts.interestSentHint') }
               : { tone: 'info', title: t('openShifts.interestWithdrawn') },
           ),
-        onError: (e) => toast.show({ tone: 'error', title: t('errors.title'), description: t(errorMessageKey(e)) }),
+        onError: (e) =>
+          toast.show({ tone: 'error', title: t('errors.title'), description: toAppError(e).kind === 'conflict' ? t('openShifts.overlap') : t(errorMessageKey(e)) }),
       },
     )
 
