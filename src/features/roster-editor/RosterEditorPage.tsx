@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { AlertTriangle, ArrowLeft, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, Info, Send } from 'lucide-react'
+import { AlertTriangle, ArrowLeft, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, Info, Send, UserSearch } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
@@ -15,9 +15,11 @@ import { fromISODate, isoDateInTimeZone, isWithin, monthGrid } from '@/domain/da
 import { can } from '@/domain/permissions'
 import { cellChange, cellIssues, dailyCounts, requiredOn, restViolations, type Brush, type PlanningIssue } from '@/domain/rosterPlanning'
 import { durationMinutes } from '@/domain/schedule'
+import type { CoverShift } from '@/domain/staffing'
 import type { ISODate, RosterEntry } from '@/domain/types'
 import type { Wish } from '@/domain/wishes'
 import { queryKeys } from '@/features/queryKeys'
+import { CandidatesSheet } from '@/features/staffing/CandidatesSheet'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 import { useWishPeriods } from '@/features/wishes/useWishes'
@@ -147,6 +149,7 @@ export function RosterEditorPage() {
   // --- editing ------------------------------------------------------------------
   const [brush, setBrush] = useState<Brush>({ kind: 'inspect' })
   const [inspect, setInspect] = useState<{ row: GridRow; date: ISODate } | null>(null)
+  const [cover, setCover] = useState<CoverShift | null>(null)
   const [pending, setPending] = useState<Set<string>>(new Set())
   const [confirmPublish, setConfirmPublish] = useState(false)
   const [showAllIssues, setShowAllIssues] = useState(false)
@@ -369,9 +372,15 @@ export function RosterEditorPage() {
             shiftTypes={types}
             busy={setCell.isPending}
             onSet={(b) => apply(inspectRow, inspect.date, b)}
+            onFindCover={(e) => {
+              setInspect(null)
+              setCover(toCoverShift(e))
+            }}
           />
         )}
       </Sheet>
+
+      <CandidatesSheet shift={cover} onClose={() => setCover(null)} allowRelease />
 
       <Sheet
         open={confirmPublish}
@@ -402,7 +411,36 @@ export function RosterEditorPage() {
   )
 }
 
-function CellDetails({ row, date, shiftTypes, busy, onSet }: { row: GridRow; date: ISODate; shiftTypes: EditorShiftType[]; busy: boolean; onSet: (b: Brush) => void }) {
+function toCoverShift(e: RosterEntry): CoverShift {
+  return {
+    entryId: e.id,
+    scheduleId: e.scheduleId,
+    unitId: e.unitId,
+    unitName: e.unitName,
+    date: e.date,
+    startsAt: e.startsAt!,
+    endsAt: e.endsAt!,
+    shiftCode: e.shiftType?.code ?? null,
+    shiftName: e.shiftType?.name ?? null,
+    category: e.shiftType?.category ?? null,
+  }
+}
+
+function CellDetails({
+  row,
+  date,
+  shiftTypes,
+  busy,
+  onSet,
+  onFindCover,
+}: {
+  row: GridRow
+  date: ISODate
+  shiftTypes: EditorShiftType[]
+  busy: boolean
+  onSet: (b: Brush) => void
+  onFindCover: (entry: RosterEntry) => void
+}) {
   const { t } = useTranslation()
   const fmt = useHospitalFormatter()
   const entry = row.entries.get(date) ?? null
@@ -450,6 +488,12 @@ function CellDetails({ row, date, shiftTypes, busy, onSet }: { row: GridRow; dat
             </li>
           ))}
         </ul>
+      )}
+
+      {entry?.kind === 'shift' && entry.startsAt && entry.endsAt && entry.endsAt > new Date() && (
+        <Button variant="soft" fullWidth icon={<UserSearch className="size-[18px]" />} onClick={() => onFindCover(entry)}>
+          {t('staffing.whoCanCover')}
+        </Button>
       )}
 
       <div>

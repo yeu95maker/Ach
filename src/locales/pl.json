@@ -299,7 +299,7 @@
         "body": "{{range}} · {{status}}"
       },
       "announcement": {
-        "title": "Nowy komunikat",
+        "title": "Aktualności · {{category}}",
         "body": "{{title}}"
       },
       "message": {
@@ -650,5 +650,59 @@
       "endWithoutStart": "Najpierw podaj początek.",
       "target": "Wybierz, dla kogo jest wiadomość."
     }
+  },
+  "staffing": {
+    "whoCanCover": "Kto może przejąć?",
+    "findCover": "Znajdź zastępstwo",
+    "shiftsToCover_one": "{{count}} dyżur wymaga zastępstwa",
+    "shiftsToCover_few": "{{count}} dyżury wymagają zastępstwa",
+    "shiftsToCover_many": "{{count}} dyżurów wymaga zastępstwa",
+    "shiftsToCover_other": "{{count}} dyżuru wymaga zastępstwa",
+    "noShiftsToCover": "Brak dyżurów do obsadzenia w tym okresie – wszystko załatwione.",
+    "monthLoad_one": "{{count}} dyżur w tym miesiącu · {{hours}}",
+    "monthLoad_few": "{{count}} dyżury w tym miesiącu · {{hours}}",
+    "monthLoad_many": "{{count}} dyżurów w tym miesiącu · {{hours}}",
+    "monthLoad_other": "{{count}} dyżuru w tym miesiącu · {{hours}}",
+    "assign": "Przydziel",
+    "assigned": "{{name}} przejmuje dyżur",
+    "assignedHint": "Obie osoby zostały powiadomione, grafik jest zaktualizowany.",
+    "release": "Ogłoś jako wolny dyżur",
+    "released": "Wolny dyżur ogłoszony",
+    "releasedHint": "Twój zespół został powiadomiony i może się zgłosić.",
+    "noMembers": "Na tym oddziale nie ma innych pracowników.",
+    "legalHint": "Wskazówki dot. odpoczynku i życzeń to zalecenia. Decyzja należy do ciebie.",
+    "group": {
+      "recommended": "Pasuje ({{count}})",
+      "possible": "Możliwe, z uwagą ({{count}})",
+      "unavailable": "Niedostępni ({{count}})"
+    },
+    "flag": {
+      "interested": "Zgłosił(a) chęć",
+      "vacation": "Urlop",
+      "sick": "Chory/a",
+      "busy": "Na dyżurze ({{code}})",
+      "plannedOff": "Zaplanowane wolne",
+      "restShort": "Tylko {{hours}} h odpoczynku",
+      "wishFree": "Życzenie: wolne",
+      "wishUnavailable": "Życzenie: niedostępny/a",
+      "fits": "Dostępny/a"
+    }
+  },
+  "openShifts": {
+    "title": "Wolne dyżury",
+    "subtitle": "Dyżury, na które wciąż kogoś szukamy",
+    "emptyHint": "Gdy dyżur się zwolni, zobaczysz go tutaj.",
+    "volunteer": "Mogę wziąć dyżur",
+    "withdraw": "Wycofaj zgłoszenie",
+    "youVolunteered": "Zgłosiłeś/aś się",
+    "interestSent": "Zgłoszenie wysłane",
+    "interestSentHint": "Kierownictwo oddziału zostało powiadomione i zdecyduje.",
+    "interestWithdrawn": "Zgłoszenie wycofane",
+    "interestCount_one": "{{count}} chętna osoba",
+    "interestCount_few": "{{count}} chętne osoby",
+    "interestCount_many": "{{count}} chętnych",
+    "interestCount_other": "{{count}} chętnej osoby",
+    "staff": "Obsadź",
+    "howItWorks": "Przyciskiem „Mogę wziąć dyżur” zgłaszasz chęć. Kierownictwo decyduje, a ty dostajesz powiadomienie."
   }
 }

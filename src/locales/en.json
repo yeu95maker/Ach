@@ -287,7 +287,7 @@
         "body": "{{range}} · {{status}}"
       },
       "announcement": {
-        "title": "New announcement",
+        "title": "News · {{category}}",
         "body": "{{title}}"
       },
       "message": {
@@ -620,5 +620,53 @@
       "endWithoutStart": "Please enter the start first.",
       "target": "Please choose who the message is for."
     }
+  },
+  "staffing": {
+    "whoCanCover": "Who can cover?",
+    "findCover": "Find cover",
+    "shiftsToCover_one": "{{count}} shift needs cover",
+    "shiftsToCover_other": "{{count}} shifts need cover",
+    "noShiftsToCover": "No shifts to cover in this period – all sorted.",
+    "monthLoad_one": "{{count}} shift this month · {{hours}}",
+    "monthLoad_other": "{{count}} shifts this month · {{hours}}",
+    "assign": "Assign",
+    "assigned": "{{name}} takes the shift",
+    "assignedHint": "Both have been notified and the roster is updated.",
+    "release": "Post as open shift",
+    "released": "Open shift posted",
+    "releasedHint": "Your team has been notified and can volunteer.",
+    "noMembers": "There are no other staff on this ward.",
+    "legalHint": "Rest-time and wish hints are recommendations. The decision is yours.",
+    "group": {
+      "recommended": "Good fit ({{count}})",
+      "possible": "Possible, with a note ({{count}})",
+      "unavailable": "Not available ({{count}})"
+    },
+    "flag": {
+      "interested": "Volunteered",
+      "vacation": "On leave",
+      "sick": "Sick",
+      "busy": "On duty ({{code}})",
+      "plannedOff": "Planned day off",
+      "restShort": "Only {{hours}} h rest",
+      "wishFree": "Wish: day off",
+      "wishUnavailable": "Wished unavailable",
+      "fits": "Available"
+    }
+  },
+  "openShifts": {
+    "title": "Open shifts",
+    "subtitle": "Shifts that still need someone",
+    "emptyHint": "As soon as a shift becomes open, you will see it here.",
+    "volunteer": "I can cover",
+    "withdraw": "Withdraw interest",
+    "youVolunteered": "You volunteered",
+    "interestSent": "Interest sent",
+    "interestSentHint": "Ward management has been notified and will decide.",
+    "interestWithdrawn": "Interest withdrawn",
+    "interestCount_one": "{{count}} volunteer",
+    "interestCount_other": "{{count}} volunteers",
+    "staff": "Fill shift",
+    "howItWorks": "Tap “I can cover” to volunteer. Management decides and you will be notified."
   }
 }

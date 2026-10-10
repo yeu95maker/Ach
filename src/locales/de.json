@@ -287,7 +287,7 @@
         "body": "{{range}} · {{status}}"
       },
       "announcement": {
-        "title": "Neue Mitteilung",
+        "title": "Aktuelles · {{category}}",
         "body": "{{title}}"
       },
       "message": {
@@ -620,5 +620,53 @@
       "endWithoutStart": "Bitte gib zuerst den Beginn an.",
       "target": "Bitte wähle aus, für wen die Nachricht ist."
     }
+  },
+  "staffing": {
+    "whoCanCover": "Wer kann übernehmen?",
+    "findCover": "Vertretung finden",
+    "shiftsToCover_one": "{{count}} Dienst braucht eine Vertretung",
+    "shiftsToCover_other": "{{count}} Dienste brauchen eine Vertretung",
+    "noShiftsToCover": "Keine offenen Dienste in diesem Zeitraum – alles geregelt.",
+    "monthLoad_one": "{{count}} Dienst diesen Monat · {{hours}}",
+    "monthLoad_other": "{{count}} Dienste diesen Monat · {{hours}}",
+    "assign": "Einplanen",
+    "assigned": "{{name}} übernimmt den Dienst",
+    "assignedHint": "Beide wurden benachrichtigt, der Dienstplan ist aktualisiert.",
+    "release": "Als offenen Dienst ausschreiben",
+    "released": "Offener Dienst ausgeschrieben",
+    "releasedHint": "Dein Team wurde benachrichtigt und kann Interesse melden.",
+    "noMembers": "Auf dieser Station gibt es keine weiteren Mitarbeitenden.",
+    "legalHint": "Hinweise zu Ruhezeit und Wünschen sind Empfehlungen. Die Entscheidung liegt bei dir.",
+    "group": {
+      "recommended": "Passt ({{count}})",
+      "possible": "Möglich, mit Hinweis ({{count}})",
+      "unavailable": "Nicht verfügbar ({{count}})"
+    },
+    "flag": {
+      "interested": "Hat Interesse gemeldet",
+      "vacation": "Urlaub",
+      "sick": "Krank",
+      "busy": "Im Dienst ({{code}})",
+      "plannedOff": "Frei geplant",
+      "restShort": "Ruhezeit nur {{hours}} h",
+      "wishFree": "Wunsch: frei",
+      "wishUnavailable": "Nicht verfügbar gewünscht",
+      "fits": "Verfügbar"
+    }
+  },
+  "openShifts": {
+    "title": "Offene Dienste",
+    "subtitle": "Dienste, für die noch jemand gesucht wird",
+    "emptyHint": "Sobald ein Dienst frei wird, siehst du ihn hier.",
+    "volunteer": "Ich kann einspringen",
+    "withdraw": "Interesse zurückziehen",
+    "youVolunteered": "Du hast Interesse gemeldet",
+    "interestSent": "Interesse gemeldet",
+    "interestSentHint": "Die Stationsleitung wurde benachrichtigt und entscheidet.",
+    "interestWithdrawn": "Interesse zurückgezogen",
+    "interestCount_one": "{{count}} Interessent:in",
+    "interestCount_other": "{{count}} Interessent:innen",
+    "staff": "Besetzen",
+    "howItWorks": "Mit „Ich kann einspringen“ meldest du Interesse. Die Leitung entscheidet, du wirst benachrichtigt."
   }
 }

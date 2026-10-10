@@ -210,7 +210,20 @@ async function handleRest(req, res, url, claims) {
       values.push(isJson ? JSON.stringify(v) : v)
       return `${ident(k)} => $${values.length}`
     })
-    const result = await asUser(claims, (c) => c.query(`select public.${fn}(${named.join(', ')}) as r`, values))
+    // Like PostgREST: set-returning functions answer with an array, others with a single value.
+    const meta = await pool.query(`select bool_or(p.proretset) as retset, bool_or(t.typtype = 'c') as composite
+                                   from pg_proc p join pg_type t on t.oid = p.prorettype
+                                   where p.pronamespace = 'public'::regnamespace and p.proname = $1`, [fn.replaceAll('"', '')])
+    const call = `public.${fn}(${named.join(', ')})`
+    if (meta.rows[0]?.retset) {
+      const result = await asUser(claims, (c) => c.query(`select coalesce(jsonb_agg(to_jsonb(x)), '[]') as r from ${call} x`, values))
+      return send(res, 200, result.rows[0].r)
+    }
+    if (meta.rows[0]?.composite) {
+      const result = await asUser(claims, (c) => c.query(`select case when x is null then null else to_jsonb(x) end as r from ${call} x`, values))
+      return send(res, 200, result.rows[0]?.r ?? null)
+    }
+    const result = await asUser(claims, (c) => c.query(`select ${call} as r`, values))
     return send(res, 200, result.rows[0]?.r ?? null)
   }
 
@@ -243,9 +256,14 @@ async function handleRest(req, res, url, claims) {
         const conflict = upsert
           ? `on conflict on constraint ${ident(`${path}_pkey`)} do update set ${cols.map((k) => `${ident(k)} = excluded.${ident(k)}`).join(', ')}`
           : ''
-        const ret = returning ? `returning ${returning.split(',').map((c) => ident(c.trim())).join(', ')}` : ''
+        // Embeds in the returned representation ("…, units(name)") are resolved with a follow-up select.
+        const embeds = !!returning?.includes('(')
+        const ret = !returning ? '' : embeds ? 'returning id' : `returning ${returning.split(',').map((c) => ident(c.trim())).join(', ')}`
         const r = await c.query(`insert into public.${table} (${cols.map(ident).join(', ')}) values (${cols.map((_, i) => `$${i + 1}`).join(', ')}) ${conflict} ${ret}`, vals)
-        inserted.push(...r.rows)
+        if (embeds) {
+          const again = await c.query(`select ${parseSelect(returning, path)} from public.${table} t where t.id = any($1)`, [r.rows.map((x) => x.id)])
+          inserted.push(...again.rows)
+        } else inserted.push(...r.rows)
       }
     })
     return returning ? send(res, 201, inserted) : send(res, 201, undefined)

@@ -23,6 +23,7 @@ export function useNotificationText() {
         unit: p('unit_name'),
         name: p('employee_name'),
         title: p('title'),
+        category: n.type === 'announcement' ? t(`news.category.${p('category') || 'information'}`) : '',
         leaveType: p('leave_type') ? t(`leaveType.${p('leave_type')}`) : '',
         range,
         period,

@@ -62,9 +62,12 @@ const dynamic = {
   wishPeriodStatus: ['draft', 'open', 'locked', 'archived'],
   'editor.issue': ['absence_vacation', 'absence_sick', 'rest_period', 'wish_conflict'],
   'editor.issueLong': ['absence_vacation', 'absence_sick', 'rest_period', 'wish_conflict'],
+  'news.category': ['information', 'training', 'further_education', 'workshop', 'team_meeting', 'doctor_meeting', 'other'],
+  'staffing.flag': ['interested', 'vacation', 'sick', 'busy', 'plannedOff', 'restShort', 'wishFree', 'wishUnavailable', 'fits'],
+  'staffing.group': ['recommended', 'possible', 'unavailable'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
-for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed'])
+for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest'])
   for (const part of ['title', 'body']) if (!hasKey(ref, `notifications.types.${type}.${part}`)) errors.push(`[de] missing notifications.types.${type}.${part}`)
 
 if (errors.length) {

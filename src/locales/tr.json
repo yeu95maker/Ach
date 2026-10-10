@@ -287,7 +287,7 @@
         "body": "{{range}} · {{status}}"
       },
       "announcement": {
-        "title": "Yeni duyuru",
+        "title": "Güncel · {{category}}",
         "body": "{{title}}"
       },
       "message": {
@@ -620,5 +620,53 @@
       "endWithoutStart": "Lütfen önce başlangıcı gir.",
       "target": "Lütfen mesajın kimin için olduğunu seç."
     }
+  },
+  "staffing": {
+    "whoCanCover": "Kim devralabilir?",
+    "findCover": "Yerine birini bul",
+    "shiftsToCover_one": "{{count}} vardiya için yedek gerekiyor",
+    "shiftsToCover_other": "{{count}} vardiya için yedek gerekiyor",
+    "noShiftsToCover": "Bu dönemde açık vardiya yok – her şey yolunda.",
+    "monthLoad_one": "Bu ay {{count}} vardiya · {{hours}}",
+    "monthLoad_other": "Bu ay {{count}} vardiya · {{hours}}",
+    "assign": "Planla",
+    "assigned": "Vardiyayı {{name}} devralıyor",
+    "assignedHint": "İkisi de bilgilendirildi, plan güncellendi.",
+    "release": "Açık vardiya olarak duyur",
+    "released": "Açık vardiya duyuruldu",
+    "releasedHint": "Ekibin bilgilendirildi ve ilgisini bildirebilir.",
+    "noMembers": "Bu serviste başka çalışan yok.",
+    "legalHint": "Dinlenme süresi ve istek uyarıları öneridir. Karar senindir.",
+    "group": {
+      "recommended": "Uygun ({{count}})",
+      "possible": "Mümkün, uyarıyla ({{count}})",
+      "unavailable": "Müsait değil ({{count}})"
+    },
+    "flag": {
+      "interested": "İlgi bildirdi",
+      "vacation": "İzinde",
+      "sick": "Hasta",
+      "busy": "Vardiyada ({{code}})",
+      "plannedOff": "İzin günü planlı",
+      "restShort": "Sadece {{hours}} sa dinlenme",
+      "wishFree": "İstek: izin",
+      "wishUnavailable": "Müsait değil isteği",
+      "fits": "Müsait"
+    }
+  },
+  "openShifts": {
+    "title": "Açık vardiyalar",
+    "subtitle": "Hâlâ birinin arandığı vardiyalar",
+    "emptyHint": "Bir vardiya açıldığında burada görürsün.",
+    "volunteer": "Ben gelebilirim",
+    "withdraw": "İlgiyi geri çek",
+    "youVolunteered": "İlgini bildirdin",
+    "interestSent": "İlgi bildirildi",
+    "interestSentHint": "Servis sorumlusu bilgilendirildi ve karar verecek.",
+    "interestWithdrawn": "İlgi geri çekildi",
+    "interestCount_one": "{{count}} gönüllü",
+    "interestCount_other": "{{count}} gönüllü",
+    "staff": "Doldur",
+    "howItWorks": "“Ben gelebilirim” ile ilgini bildirirsin. Sorumlu karar verir, sen bilgilendirilirsin."
   }
 }

@@ -11,6 +11,7 @@ import { daysBetweenInclusive } from '@/domain/dates'
 import { can } from '@/domain/permissions'
 import type { TeamSickLeave } from '@/domain/types'
 import { queryKeys } from '@/features/queryKeys'
+import { SickCoverList } from '@/features/staffing/SickCoverList'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 import { Button, Card, EmptyState, SkeletonCard, Spinner, useToast } from '@/ui'
@@ -66,6 +67,11 @@ function SickCard({ item }: { item: TeamSickLeave }) {
           )}
         </div>
       </div>
+      {can(employment, 'schedule.manage') && (
+        <div className="mt-4 border-t border-border/70 pt-4">
+          <SickCoverList sickLeaveId={item.id} />
+        </div>
+      )}
       <div className="mt-4 flex flex-wrap justify-end gap-2">
         {can(employment, 'sick_leave.view_details') && !showComment && (
           <Button size="sm" variant="ghost" icon={<Eye className="size-4" />} onClick={() => setShowComment(true)}>

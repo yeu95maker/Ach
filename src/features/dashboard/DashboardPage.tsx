@@ -172,7 +172,7 @@ export function DashboardPage() {
 
             <Stagger index={3}>
               <Card>
-                <CardHeader title={t('dashboard.openShifts')} subtitle={t('dashboard.openShiftsSubtitle')} />
+                <CardHeader title={t('dashboard.openShifts')} subtitle={t('dashboard.openShiftsSubtitle')} action={data.openShifts.length > 0 ? <SeeAll to="/schedule/open" /> : undefined} />
                 {data.openShifts.length === 0 ? (
                   <EmptyState compact icon={<Sparkles />} title={t('dashboard.noOpenShifts')} />
                 ) : (
@@ -181,7 +181,7 @@ export function DashboardPage() {
                       const style = dayKindStyles[s.category ?? 'other']
                       return (
                         <li key={s.id}>
-                          <Link to={`/schedule?date=${s.date}&view=day`} className="flex items-center gap-3 rounded-2xl border border-dashed border-border-strong px-4 py-3 transition-colors hover:bg-surface-2/60">
+                          <Link to="/schedule/open" className="flex items-center gap-3 rounded-2xl border border-dashed border-border-strong px-4 py-3 transition-colors hover:bg-surface-2/60">
                             <span className={cn('h-10 w-1.5 shrink-0 rounded-full', style.solid)} aria-hidden />
                             <span className="min-w-0 flex-1">
                               <span className="block truncate text-[15px] font-medium">

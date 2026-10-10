@@ -293,7 +293,7 @@
         "body": "{{range}} · {{status}}"
       },
       "announcement": {
-        "title": "Anunț nou",
+        "title": "Noutăți · {{category}}",
         "body": "{{title}}"
       },
       "message": {
@@ -635,5 +635,56 @@
       "endWithoutStart": "Te rugăm să introduci mai întâi începutul.",
       "target": "Te rugăm să alegi pentru cine este mesajul."
     }
+  },
+  "staffing": {
+    "whoCanCover": "Cine poate prelua?",
+    "findCover": "Găsește înlocuitor",
+    "shiftsToCover_one": "{{count}} tură are nevoie de înlocuitor",
+    "shiftsToCover_few": "{{count}} ture au nevoie de înlocuitor",
+    "shiftsToCover_other": "{{count}} de ture au nevoie de înlocuitor",
+    "noShiftsToCover": "Nicio tură de acoperit în această perioadă – totul e rezolvat.",
+    "monthLoad_one": "{{count}} tură luna aceasta · {{hours}}",
+    "monthLoad_few": "{{count}} ture luna aceasta · {{hours}}",
+    "monthLoad_other": "{{count}} de ture luna aceasta · {{hours}}",
+    "assign": "Planifică",
+    "assigned": "{{name}} preia tura",
+    "assignedHint": "Amândoi au fost anunțați, planul este actualizat.",
+    "release": "Publică drept tură liberă",
+    "released": "Tură liberă publicată",
+    "releasedHint": "Echipa ta a fost anunțată și se poate oferi.",
+    "noMembers": "Pe această secție nu mai sunt alți angajați.",
+    "legalHint": "Indicațiile privind repausul și dorințele sunt recomandări. Decizia îți aparține.",
+    "group": {
+      "recommended": "Potrivit ({{count}})",
+      "possible": "Posibil, cu observație ({{count}})",
+      "unavailable": "Indisponibil ({{count}})"
+    },
+    "flag": {
+      "interested": "S-a oferit",
+      "vacation": "Concediu",
+      "sick": "Bolnav",
+      "busy": "În tură ({{code}})",
+      "plannedOff": "Zi liberă planificată",
+      "restShort": "Doar {{hours}} h repaus",
+      "wishFree": "Dorință: liber",
+      "wishUnavailable": "Dorință: indisponibil",
+      "fits": "Disponibil"
+    }
+  },
+  "openShifts": {
+    "title": "Ture libere",
+    "subtitle": "Ture pentru care încă se caută cineva",
+    "emptyHint": "Imediat ce o tură devine liberă, o vezi aici.",
+    "volunteer": "Pot prelua",
+    "withdraw": "Retrage oferta",
+    "youVolunteered": "Te-ai oferit",
+    "interestSent": "Ofertă trimisă",
+    "interestSentHint": "Conducerea secției a fost anunțată și decide.",
+    "interestWithdrawn": "Ofertă retrasă",
+    "interestCount_one": "{{count}} voluntar",
+    "interestCount_few": "{{count}} voluntari",
+    "interestCount_other": "{{count}} de voluntari",
+    "staff": "Ocupă tura",
+    "howItWorks": "Cu „Pot prelua” te oferi. Conducerea decide, iar tu primești o notificare."
   }
 }
