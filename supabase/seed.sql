@@ -389,3 +389,12 @@ delete from public.notifications n
  where n.type = 'announcement'
    and n.created_at > now() - interval '1 minute'
    and n.entity_id in (select id from public.announcements where category in ('workshop', 'further_education'));
+
+-- -----------------------------------------------------------------------------
+-- Integration Hub: one file-import profile per hospital
+-- -----------------------------------------------------------------------------
+insert into public.integration_sources (id, hospital_id, name, kind, vendor, settings) values
+  ('c0000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', 'Dateiimport (CSV/Excel)', 'file',
+   'Export aus dem Dienstplanprogramm der Klinik', '{"date_format": "dmy", "employee_key": "personnel_number"}'),
+  ('c0000000-0000-4000-a000-000000000002', '10000000-0000-4000-a000-000000000002', 'Dateiimport (CSV/Excel)', 'file',
+   null, '{"date_format": "dmy", "employee_key": "personnel_number"}');
