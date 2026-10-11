@@ -8,6 +8,8 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 | Backend | Supabase: PostgreSQL 15+ mit Row Level Security, Auth, Storage, Realtime, Edge Functions |
 | Mobile | iOS- und Android-App (Capacitor) aus derselben Web-App, Store-Einträge in 5 Sprachen (siehe [docs/APP-STORES.md](docs/APP-STORES.md)) |
 
+> **Property Marketplace (MVP):** a separate Next.js + Supabase app lives in [`marketplace/`](marketplace/README.md).
+
 ## Demo
 
 **[▶ Zur Demo mit Videos und Screenshots](docs/DEMO.md)**

@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --color-brand-50: #effaf6;
+  --color-brand-100: #d7f2e7;
+  --color-brand-200: #b0e4d1;
+  --color-brand-500: #1f9d74;
+  --color-brand-600: #12805e;
+  --color-brand-700: #0f664c;
+  --color-brand-800: #0e523e;
+  --color-brand-900: #0b3b2d;
+  --color-gold-100: #fdf3d7;
+  --color-gold-500: #c58b12;
+  --color-gold-700: #8a5f07;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #f6f7f8;
+  color: #111827;
+}
+
+/* Bottom navigation leaves room for the iPhone home indicator. */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.maplibregl-map {
+  font-family: inherit;
+}
