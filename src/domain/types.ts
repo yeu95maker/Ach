@@ -42,6 +42,10 @@ export type NotificationType =
   | 'swap_declined'
   | 'swap_approved'
   | 'swap_rejected'
+  | 'document_published'
+  | 'document_reminder'
+  | 'training_assigned'
+  | 'training_due'
 
 export interface Hospital {
   id: string

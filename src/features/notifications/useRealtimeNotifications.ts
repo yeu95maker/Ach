@@ -48,6 +48,8 @@ export function useRealtimeNotifications() {
         void queryClient.invalidateQueries({ queryKey: queryKeys.swaps(user.id) })
         if (n.type === 'swap_approved') void queryClient.invalidateQueries({ queryKey: queryKeys.rosterAll(employment.employeeId) })
       }
+      if (n.type.startsWith('document')) void queryClient.invalidateQueries({ queryKey: queryKeys.documents(user.id) })
+      if (n.type.startsWith('training')) void queryClient.invalidateQueries({ queryKey: queryKeys.myTrainings(user.id) })
       if (n.type.startsWith('sick')) {
         void queryClient.invalidateQueries({ queryKey: queryKeys.teamSick(employment.hospital.id) })
         void queryClient.invalidateQueries({ queryKey: queryKeys.mySick(employment.employeeId) })

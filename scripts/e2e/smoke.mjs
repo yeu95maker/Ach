@@ -428,6 +428,50 @@ for (const run of runs) {
   }
 }
 
+// Dokumente + Pflichtfortbildungen: lead publishes an SOP, nurse confirms; training reported and confirmed
+{
+  const lead = await session('docs-lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  const l = lead.page
+  await l.goto(`${BASE}/documents`)
+  await l.getByRole('button', { name: 'Neues Dokument' }).click()
+  await l.setInputFiles('[data-testid=doc-file]', { name: 'sop-sturzprophylaxe.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.4\n% test\n') })
+  await l.fill('#doc-title', 'SOP Sturzprophylaxe')
+  await l.locator('dialog[open]').getByRole('button', { name: 'Hochladen und veröffentlichen' }).click()
+  await l.waitForSelector('text=Dokument veröffentlicht')
+  await l.waitForSelector('text=0 von 4 bestätigt')
+
+  await l.goto(`${BASE}/trainings?tab=ward`)
+  await l.getByRole('button', { name: 'Neue Pflichtfortbildung' }).click()
+  await l.fill('#req-title', 'Hygieneschulung')
+  await l.locator('dialog[open]').getByRole('button', { name: 'Anlegen' }).click()
+  await l.waitForSelector('text=Pflichtfortbildung angelegt')
+
+  const nurse = await session('docs-nurse', { email: 'anna.becker@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  const n = nurse.page
+  await n.goto(`${BASE}/`)
+  await n.waitForSelector('text=Zu erledigen')
+  await n.goto(`${BASE}/documents`)
+  const card = n.locator('[data-testid=document-card]', { hasText: 'SOP Sturzprophylaxe' })
+  await shot(n, 'docs', '95-nurse-documents', { full: false })
+  await card.getByRole('button', { name: 'Gelesen und verstanden' }).click()
+  await n.waitForSelector('text=Lesebestätigung gespeichert')
+  await n.goto(`${BASE}/trainings`)
+  const training = n.locator('[data-testid=training-card]', { hasText: 'Hygieneschulung' })
+  await training.getByRole('button', { name: 'Teilnahme melden' }).click()
+  await n.locator('dialog[open]').getByRole('button', { name: 'Speichern' }).click()
+  await n.waitForSelector('text=Teilnahme gespeichert')
+  await nurse.context.close()
+
+  await l.goto(`${BASE}/documents`)
+  await l.waitForSelector('text=1 von 4 bestätigt')
+  await l.goto(`${BASE}/trainings?tab=ward`)
+  await l.getByRole('button', { name: /Anna Becker: Hygieneschulung/ }).click()
+  await l.locator('dialog[open]').getByRole('button', { name: 'Bestätigen' }).click()
+  await l.waitForSelector('text=Teilnahme bestätigt')
+  await shot(l, 'docs', '96-lead-trainings')
+  await lead.context.close()
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

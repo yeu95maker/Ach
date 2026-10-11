@@ -33,6 +33,17 @@ const TITLES: Record<string, string> = {
   sick_leave_updated: 'Krankmeldung aktualisiert',
   announcement: 'Neue Mitteilung',
   message: 'Neue Nachricht',
+  open_shift_interest: 'Jemand kann einspringen',
+  roster_sync: 'Neuer Dienstplanstand',
+  swap_requested: 'Tauschanfrage',
+  swap_pending: 'Diensttausch wartet auf Genehmigung',
+  swap_declined: 'Tauschanfrage abgelehnt',
+  swap_approved: 'Diensttausch genehmigt',
+  swap_rejected: 'Diensttausch abgelehnt',
+  document_published: 'Neues Dokument',
+  document_reminder: 'Bitte Dokument bestätigen',
+  training_assigned: 'Neue Pflichtfortbildung',
+  training_due: 'Pflichtfortbildung fällig',
 }
 
 // deno-lint-ignore no-explicit-any

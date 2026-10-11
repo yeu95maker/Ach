@@ -40,6 +40,8 @@ export function useNotificationText() {
         partnerShift,
         context: n.type.startsWith('swap') && n.payload.handover === true ? 'handover' : undefined,
         status: p('status') && n.type === 'sick_leave_updated' ? t(`sickStatus.${p('status')}`) : '',
+        trainingStatus: p('status') && n.type === 'training_due' ? t(`trainings.status.${p('status')}`) : '',
+        version: p('version'),
         wishStatus: p('status') && n.type === 'wish_plan_reviewed' ? t(`wishStatus.${p('status')}`) : '',
         deadline: p('deadline_at') ? `${fmt.dateShort(isoDateInTimeZone(new Date(p('deadline_at')), timeZone))}, ${fmt.time(new Date(p('deadline_at')))}` : '',
         count: Number(p('count') || 0),

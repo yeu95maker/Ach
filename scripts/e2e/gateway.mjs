@@ -388,6 +388,37 @@ async function handleRosterSync(req, res) {
   }
 }
 
+
+// ------------------------------------------------------------ Storage ----
+// Only metadata is kept (storage.objects); the storage RLS policies decide.
+const objectPath = (url, prefix) => {
+  const rest = decodeURIComponent(url.pathname.slice(prefix.length))
+  const i = rest.indexOf('/')
+  return { bucket: rest.slice(0, i), name: rest.slice(i + 1) }
+}
+
+async function handleUpload(req, res, url, claims) {
+  await new Promise((resolve) => { req.on('data', () => {}); req.on('end', resolve) })
+  const { bucket, name } = objectPath(url, '/storage/v1/object/')
+  const row = await asUser(claims, async (c) =>
+    (await c.query('insert into storage.objects (bucket_id, name, owner) values ($1, $2, $3) returning id', [bucket, name, claims?.sub ?? null])).rows[0])
+  return send(res, 200, { Id: row.id, Key: `${bucket}/${name}` })
+}
+
+async function handleSign(req, res, url, claims) {
+  if (req.method === 'GET') {
+    res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'access-control-allow-origin': '*' })
+    return res.end('Pulshift test file')
+  }
+  const body = await readBody(req)
+  if (body?.paths) return send(res, 200, body.paths.map((p) => ({ path: p, signedURL: null, error: 'not available in test gateway' })))
+  const { bucket, name } = objectPath(url, '/storage/v1/object/sign/')
+  const visible = await asUser(claims, async (c) =>
+    (await c.query('select 1 from storage.objects where bucket_id = $1 and name = $2', [bucket, name])).rowCount > 0)
+  if (!visible) return send(res, 400, { statusCode: '404', error: 'not_found', message: 'Object not found' })
+  return send(res, 200, { signedURL: `/object/sign/${bucket}/${encodeURI(name)}?token=test` })
+}
+
 // ------------------------------------------------------------ Server ----
 createServer(async (req, res) => {
   if (req.method === 'OPTIONS') return send(res, 204, undefined)
@@ -399,10 +430,8 @@ createServer(async (req, res) => {
     if (url.pathname.startsWith('/rest/v1/')) return await handleRest(req, res, url, claims)
     if (url.pathname === '/functions/v1/invite-employee') return await handleInvite(req, res, claims)
     if (url.pathname === '/functions/v1/roster-sync') return await handleRosterSync(req, res)
-    if (url.pathname.startsWith('/storage/v1/object/sign/')) {
-      const body = await readBody(req)
-      return send(res, 200, (body?.paths ?? []).map((p) => ({ path: p, signedURL: null, error: 'not available in test gateway' })))
-    }
+    if (url.pathname.startsWith('/storage/v1/object/sign/')) return await handleSign(req, res, url, claims)
+    if (url.pathname.startsWith('/storage/v1/object/') && req.method === 'POST') return await handleUpload(req, res, url, claims)
     return send(res, 404, { message: 'not found' })
   } catch (e) {
     const [status, body] = pgError(e)

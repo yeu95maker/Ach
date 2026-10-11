@@ -348,6 +348,22 @@
       "swap_rejected": {
         "title": "Shift swap rejected",
         "body": "The shift on {{date}} stays as planned. {{note}}"
+      },
+      "document_published": {
+        "title": "New document: {{title}}",
+        "body": "{{unit}} · version {{version}}"
+      },
+      "document_reminder": {
+        "title": "Please read and confirm",
+        "body": "{{title}} (version {{version}})"
+      },
+      "training_assigned": {
+        "title": "New mandatory training: {{title}}",
+        "body": "{{unit}} – please report your participation once done"
+      },
+      "training_due": {
+        "title": "Training: {{title}}",
+        "body": "Status: {{trainingStatus}}"
       }
     }
   },
@@ -1161,5 +1177,130 @@
       "wish": "{{name}}: wish “not available”",
       "wishYou": "Your wish: “not available”"
     }
+  },
+  "todo": {
+    "title": "To do",
+    "documents_one": "Read and confirm {{count}} document",
+    "documents_other": "Read and confirm {{count}} documents",
+    "trainings_one": "{{count}} mandatory training open",
+    "trainings_other": "{{count}} mandatory trainings open"
+  },
+  "documents": {
+    "title": "Documents & SOPs",
+    "subtitle": "Procedures, guidelines and forms of your ward",
+    "teamHint": "SOPs, guidelines, read confirmation",
+    "new": "New document",
+    "newTitle": "Publish a new document",
+    "newHint": "Everyone on the chosen ward (or in the whole hospital) is notified.",
+    "newVersionTitle": "New version {{version}}",
+    "newVersionHint": "The previous version is archived. Read confirmations start again.",
+    "publish": "Upload and publish",
+    "published": "Document published",
+    "publishedHint": "The team has been notified.",
+    "file": "File",
+    "fileHint": "PDF, Word (DOCX) or image, up to 20 MB",
+    "fileError": {
+      "type": "This file type is not supported.",
+      "size": "The file is larger than 20 MB.",
+      "name": "Invalid file name."
+    },
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. SOP hand disinfection",
+    "categoryLabel": "Type",
+    "category": {
+      "sop": "SOP / procedure",
+      "guideline": "Guideline",
+      "checklist": "Checklist",
+      "form": "Form",
+      "information": "Information",
+      "other": "Other"
+    },
+    "audience": "For",
+    "wholeHospital": "Whole hospital",
+    "description": "Description",
+    "requiresAck": "Request read confirmation",
+    "requiresAckHint": "Everyone confirms “Read and understood”. You see who is still missing.",
+    "acksTitle": "Read confirmations",
+    "reminded_one": "Reminder sent to {{count}} person",
+    "reminded_other": "Reminder sent to {{count}} people",
+    "remindedRecently": "The last reminder was less than 24 hours ago.",
+    "remind": "Remind the {{count}} missing",
+    "notYet": "open",
+    "draft": "Draft",
+    "confirmedOn": "Confirmed {{when}}",
+    "pleaseConfirm": "Please confirm",
+    "ackProgress": "{{acked}} of {{audience}} confirmed",
+    "open": "Open",
+    "confirm": "Read and understood",
+    "confirmedToast": "Read confirmation saved",
+    "whoConfirmed": "Who confirmed?",
+    "newVersion": "New version",
+    "archive": "Archive",
+    "archiveConfirm": "Archive “{{title}}”? The team will no longer see it.",
+    "archived": "Document archived",
+    "empty": "No documents yet",
+    "emptyHint": "As soon as your ward lead publishes a document, you will find it here.",
+    "emptyHintLead": "Publish SOPs, guidelines or forms for your ward.",
+    "toConfirm_one": "{{count}} to confirm",
+    "toConfirm_other": "{{count}} to confirm",
+    "all": "All documents"
+  },
+  "trainings": {
+    "title": "Mandatory trainings",
+    "subtitle": "What you need to prove – and by when",
+    "teamHint": "Status, certificates, reminders",
+    "mine": "Mine",
+    "ward": "Ward",
+    "every_one": "every year",
+    "every_other": "every {{count}} years",
+    "everyMonths_one": "every month",
+    "everyMonths_other": "every {{count}} months",
+    "once": "once",
+    "status": {
+      "missing": "Missing",
+      "expired": "Expired",
+      "due_soon": "Due soon",
+      "valid": "Valid"
+    },
+    "lastOn": "Attended on {{date}}",
+    "validUntil": "valid until {{date}}",
+    "verified": "confirmed",
+    "selfReported": "self-reported",
+    "hasCertificate": "Certificate on file",
+    "report": "Report participation",
+    "reportTitle": "Report participation",
+    "recordFor": "Record participation: {{name}}",
+    "reported": "Participation saved",
+    "reportedHint": "Your ward lead can confirm it.",
+    "save": "Save",
+    "date": "Date attended",
+    "certificate": "Certificate (e.g. attendance certificate)",
+    "certificateHint": "Only you and your ward lead can see it.",
+    "note": "Note",
+    "empty": "No mandatory trainings",
+    "emptyHint": "No mandatory training is set up for you right now.",
+    "new": "New mandatory training",
+    "newTitle": "New mandatory training",
+    "newHint": "Everyone it applies to is notified and reminded while it is missing or about to expire.",
+    "create": "Create",
+    "created": "Mandatory training created",
+    "createdHint": "The team has been notified.",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. Resuscitation training",
+    "interval": "Repeat",
+    "appliesTo": "Applies to",
+    "verify": "Confirm",
+    "verifiedToast": "Participation confirmed",
+    "recordNew": "Record participation",
+    "remove": "Delete entry",
+    "removeConfirm": "Really delete this entry?",
+    "noneDefined": "No mandatory trainings yet",
+    "noneDefinedHint": "Define which trainings are mandatory on your ward.",
+    "person": "Person",
+    "openCount_one": "{{count}} open",
+    "openCount_other": "{{count}} open",
+    "archive": "No longer require",
+    "archiveConfirm": "Stop requiring “{{title}}”? Existing records are kept.",
+    "archived": "Mandatory training ended"
   }
 }

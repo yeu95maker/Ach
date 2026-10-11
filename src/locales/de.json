@@ -348,6 +348,22 @@
       "swap_rejected": {
         "title": "Diensttausch abgelehnt",
         "body": "Der Dienst am {{date}} bleibt wie geplant. {{note}}"
+      },
+      "document_published": {
+        "title": "Neues Dokument: {{title}}",
+        "body": "{{unit}} · Version {{version}}"
+      },
+      "document_reminder": {
+        "title": "Bitte lesen und bestätigen",
+        "body": "{{title}} (Version {{version}})"
+      },
+      "training_assigned": {
+        "title": "Neue Pflichtfortbildung: {{title}}",
+        "body": "{{unit}} – bitte Teilnahme melden, sobald erledigt"
+      },
+      "training_due": {
+        "title": "Fortbildung: {{title}}",
+        "body": "Status: {{trainingStatus}}"
       }
     }
   },
@@ -1161,5 +1177,130 @@
       "wish": "{{name}}: Wunsch „nicht verfügbar“",
       "wishYou": "Dein Wunsch: „nicht verfügbar“"
     }
+  },
+  "todo": {
+    "title": "Zu erledigen",
+    "documents_one": "{{count}} Dokument lesen und bestätigen",
+    "documents_other": "{{count}} Dokumente lesen und bestätigen",
+    "trainings_one": "{{count}} Pflichtfortbildung offen",
+    "trainings_other": "{{count}} Pflichtfortbildungen offen"
+  },
+  "documents": {
+    "title": "Dokumente & SOPs",
+    "subtitle": "Verfahrensanweisungen, Richtlinien und Formulare deiner Station",
+    "teamHint": "SOPs, Richtlinien, Lesebestätigung",
+    "new": "Neues Dokument",
+    "newTitle": "Neues Dokument veröffentlichen",
+    "newHint": "Alle auf der gewählten Station (oder im ganzen Haus) werden benachrichtigt.",
+    "newVersionTitle": "Neue Version {{version}}",
+    "newVersionHint": "Die bisherige Version wird archiviert. Lesebestätigungen beginnen neu.",
+    "publish": "Hochladen und veröffentlichen",
+    "published": "Dokument veröffentlicht",
+    "publishedHint": "Das Team wurde benachrichtigt.",
+    "file": "Datei",
+    "fileHint": "PDF, Word (DOCX) oder Bild, höchstens 20 MB",
+    "fileError": {
+      "type": "Dieses Dateiformat wird nicht unterstützt.",
+      "size": "Die Datei ist größer als 20 MB.",
+      "name": "Ungültiger Dateiname."
+    },
+    "titleLabel": "Titel",
+    "titlePlaceholder": "z. B. SOP Händedesinfektion",
+    "categoryLabel": "Art",
+    "category": {
+      "sop": "SOP / Verfahrensanweisung",
+      "guideline": "Richtlinie",
+      "checklist": "Checkliste",
+      "form": "Formular",
+      "information": "Information",
+      "other": "Sonstiges"
+    },
+    "audience": "Für",
+    "wholeHospital": "Ganzes Haus",
+    "description": "Beschreibung",
+    "requiresAck": "Lesebestätigung anfordern",
+    "requiresAckHint": "Jede Person bestätigt „Gelesen und verstanden“. Du siehst, wer noch fehlt.",
+    "acksTitle": "Lesebestätigungen",
+    "reminded_one": "Erinnerung an {{count}} Person gesendet",
+    "reminded_other": "Erinnerung an {{count}} Personen gesendet",
+    "remindedRecently": "Die letzte Erinnerung ist noch keine 24 Stunden her.",
+    "remind": "Die {{count}} Fehlenden erinnern",
+    "notYet": "noch offen",
+    "draft": "Entwurf",
+    "confirmedOn": "Bestätigt {{when}}",
+    "pleaseConfirm": "Bitte bestätigen",
+    "ackProgress": "{{acked}} von {{audience}} bestätigt",
+    "open": "Öffnen",
+    "confirm": "Gelesen und verstanden",
+    "confirmedToast": "Lesebestätigung gespeichert",
+    "whoConfirmed": "Wer hat bestätigt?",
+    "newVersion": "Neue Version",
+    "archive": "Archivieren",
+    "archiveConfirm": "„{{title}}“ archivieren? Das Team sieht es danach nicht mehr.",
+    "archived": "Dokument archiviert",
+    "empty": "Noch keine Dokumente",
+    "emptyHint": "Sobald deine Leitung ein Dokument veröffentlicht, findest du es hier.",
+    "emptyHintLead": "Veröffentliche SOPs, Richtlinien oder Formulare für deine Station.",
+    "toConfirm_one": "{{count}} zu bestätigen",
+    "toConfirm_other": "{{count}} zu bestätigen",
+    "all": "Alle Dokumente"
+  },
+  "trainings": {
+    "title": "Pflichtfortbildungen",
+    "subtitle": "Was du nachweisen musst – und bis wann",
+    "teamHint": "Status, Nachweise, Erinnerungen",
+    "mine": "Meine",
+    "ward": "Station",
+    "every_one": "jährlich",
+    "every_other": "alle {{count}} Jahre",
+    "everyMonths_one": "jeden Monat",
+    "everyMonths_other": "alle {{count}} Monate",
+    "once": "einmalig",
+    "status": {
+      "missing": "Fehlt",
+      "expired": "Abgelaufen",
+      "due_soon": "Bald fällig",
+      "valid": "Gültig"
+    },
+    "lastOn": "Teilgenommen am {{date}}",
+    "validUntil": "gültig bis {{date}}",
+    "verified": "bestätigt",
+    "selfReported": "selbst gemeldet",
+    "hasCertificate": "Nachweis vorhanden",
+    "report": "Teilnahme melden",
+    "reportTitle": "Teilnahme melden",
+    "recordFor": "Teilnahme eintragen: {{name}}",
+    "reported": "Teilnahme gespeichert",
+    "reportedHint": "Deine Leitung kann sie bestätigen.",
+    "save": "Speichern",
+    "date": "Datum der Teilnahme",
+    "certificate": "Nachweis (z. B. Teilnahmebescheinigung)",
+    "certificateHint": "Nur du und die Leitung können ihn sehen.",
+    "note": "Bemerkung",
+    "empty": "Keine Pflichtfortbildungen",
+    "emptyHint": "Für dich ist gerade keine Pflichtfortbildung hinterlegt.",
+    "new": "Neue Pflichtfortbildung",
+    "newTitle": "Neue Pflichtfortbildung",
+    "newHint": "Alle, für die sie gilt, werden benachrichtigt und erinnert, solange sie fehlt oder bald abläuft.",
+    "create": "Anlegen",
+    "created": "Pflichtfortbildung angelegt",
+    "createdHint": "Das Team wurde benachrichtigt.",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "z. B. Reanimationstraining",
+    "interval": "Wiederholung",
+    "appliesTo": "Gilt für",
+    "verify": "Bestätigen",
+    "verifiedToast": "Teilnahme bestätigt",
+    "recordNew": "Teilnahme eintragen",
+    "remove": "Eintrag löschen",
+    "removeConfirm": "Diesen Eintrag wirklich löschen?",
+    "noneDefined": "Noch keine Pflichtfortbildungen",
+    "noneDefinedHint": "Lege fest, welche Fortbildungen auf deiner Station Pflicht sind.",
+    "person": "Person",
+    "openCount_one": "{{count}} offen",
+    "openCount_other": "{{count}} offen",
+    "archive": "Nicht mehr verlangen",
+    "archiveConfirm": "„{{title}}“ nicht mehr verlangen? Bisherige Nachweise bleiben gespeichert.",
+    "archived": "Pflichtfortbildung beendet"
   }
 }

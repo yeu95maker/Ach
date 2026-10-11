@@ -31,6 +31,10 @@ const META: Record<NotificationType, NotificationMeta> = {
   swap_declined: { tone: 'neutral', route: '/schedule/swaps' },
   swap_approved: { tone: 'success', route: '/schedule/swaps' },
   swap_rejected: { tone: 'danger', route: '/schedule/swaps' },
+  document_published: { tone: 'primary', route: '/documents' },
+  document_reminder: { tone: 'warning', route: '/documents' },
+  training_assigned: { tone: 'accent', route: '/trainings' },
+  training_due: { tone: 'warning', route: '/trainings' },
 }
 
 export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): NotificationMeta {

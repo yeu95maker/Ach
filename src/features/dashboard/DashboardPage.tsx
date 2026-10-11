@@ -16,6 +16,7 @@ import { Card, CardHeader, EmptyState, PageHeader, SkeletonCard, cn } from '@/ui
 import { QuickActions } from './QuickActions'
 import { NextShiftCard, TodayCard } from './TodayCard'
 import { useDashboard } from './useDashboard'
+import { TodoCard } from './TodoCard'
 import { WardStatusCard } from './WardStatusCard'
 
 function greetingKey(now: Date) {
@@ -70,6 +71,9 @@ export function DashboardPage() {
             </Stagger>
             <Stagger index={1}>
               <NextShiftCard entry={data.nextShift} />
+            </Stagger>
+            <Stagger index={2}>
+              <TodoCard />
             </Stagger>
             <Stagger index={2}>
               <WardStatusCard />

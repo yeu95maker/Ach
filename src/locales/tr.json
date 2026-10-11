@@ -348,6 +348,22 @@
       "swap_rejected": {
         "title": "Vardiya değişimi reddedildi",
         "body": "{{date}} vardiyası planlandığı gibi kalıyor. {{note}}"
+      },
+      "document_published": {
+        "title": "Yeni belge: {{title}}",
+        "body": "{{unit}} · sürüm {{version}}"
+      },
+      "document_reminder": {
+        "title": "Lütfen okuyup onayla",
+        "body": "{{title}} (sürüm {{version}})"
+      },
+      "training_assigned": {
+        "title": "Yeni zorunlu eğitim: {{title}}",
+        "body": "{{unit}} – tamamladığında katılımını bildir"
+      },
+      "training_due": {
+        "title": "Eğitim: {{title}}",
+        "body": "Durum: {{trainingStatus}}"
       }
     }
   },
@@ -1161,5 +1177,130 @@
       "wish": "{{name}}: „müsait değil“ isteği",
       "wishYou": "İsteğin: „müsait değil“"
     }
+  },
+  "todo": {
+    "title": "Yapılacaklar",
+    "documents_one": "{{count}} belgeyi oku ve onayla",
+    "documents_other": "{{count}} belgeyi oku ve onayla",
+    "trainings_one": "{{count}} zorunlu eğitim açık",
+    "trainings_other": "{{count}} zorunlu eğitim açık"
+  },
+  "documents": {
+    "title": "Belgeler ve SOP'ler",
+    "subtitle": "Servisinin prosedürleri, yönergeleri ve formları",
+    "teamHint": "SOP'ler, yönergeler, okuma onayı",
+    "new": "Yeni belge",
+    "newTitle": "Yeni belge yayınla",
+    "newHint": "Seçilen servisteki (veya tüm hastanedeki) herkese bildirim gider.",
+    "newVersionTitle": "Yeni sürüm {{version}}",
+    "newVersionHint": "Önceki sürüm arşivlenir. Okuma onayları yeniden başlar.",
+    "publish": "Yükle ve yayınla",
+    "published": "Belge yayınlandı",
+    "publishedHint": "Ekibe bildirim gönderildi.",
+    "file": "Dosya",
+    "fileHint": "PDF, Word (DOCX) veya görsel, en fazla 20 MB",
+    "fileError": {
+      "type": "Bu dosya türü desteklenmiyor.",
+      "size": "Dosya 20 MB'tan büyük.",
+      "name": "Geçersiz dosya adı."
+    },
+    "titleLabel": "Başlık",
+    "titlePlaceholder": "örn. SOP El dezenfeksiyonu",
+    "categoryLabel": "Tür",
+    "category": {
+      "sop": "SOP / prosedür",
+      "guideline": "Yönerge",
+      "checklist": "Kontrol listesi",
+      "form": "Form",
+      "information": "Bilgi",
+      "other": "Diğer"
+    },
+    "audience": "Kimin için",
+    "wholeHospital": "Tüm hastane",
+    "description": "Açıklama",
+    "requiresAck": "Okuma onayı iste",
+    "requiresAckHint": "Herkes „Okudum ve anladım“ı onaylar. Kimin eksik olduğunu görürsün.",
+    "acksTitle": "Okuma onayları",
+    "reminded_one": "{{count}} kişiye hatırlatma gönderildi",
+    "reminded_other": "{{count}} kişiye hatırlatma gönderildi",
+    "remindedRecently": "Son hatırlatmanın üzerinden 24 saat geçmedi.",
+    "remind": "Eksik {{count}} kişiye hatırlat",
+    "notYet": "açık",
+    "draft": "Taslak",
+    "confirmedOn": "Onaylandı {{when}}",
+    "pleaseConfirm": "Lütfen onayla",
+    "ackProgress": "{{audience}} kişiden {{acked}} onayladı",
+    "open": "Aç",
+    "confirm": "Okudum ve anladım",
+    "confirmedToast": "Okuma onayı kaydedildi",
+    "whoConfirmed": "Kim onayladı?",
+    "newVersion": "Yeni sürüm",
+    "archive": "Arşivle",
+    "archiveConfirm": "„{{title}}“ arşivlensin mi? Ekip artık göremez.",
+    "archived": "Belge arşivlendi",
+    "empty": "Henüz belge yok",
+    "emptyHint": "Servis sorumlun bir belge yayınladığında burada bulacaksın.",
+    "emptyHintLead": "Servisin için SOP, yönerge veya form yayınla.",
+    "toConfirm_one": "Onaylanacak {{count}}",
+    "toConfirm_other": "Onaylanacak {{count}}",
+    "all": "Tüm belgeler"
+  },
+  "trainings": {
+    "title": "Zorunlu eğitimler",
+    "subtitle": "Neyi ne zamana kadar belgelemen gerektiği",
+    "teamHint": "Durum, belgeler, hatırlatmalar",
+    "mine": "Benim",
+    "ward": "Servis",
+    "every_one": "her yıl",
+    "every_other": "her {{count}} yılda bir",
+    "everyMonths_one": "her ay",
+    "everyMonths_other": "her {{count}} ayda bir",
+    "once": "bir kez",
+    "status": {
+      "missing": "Eksik",
+      "expired": "Süresi doldu",
+      "due_soon": "Yakında",
+      "valid": "Geçerli"
+    },
+    "lastOn": "Katılım: {{date}}",
+    "validUntil": "{{date}} tarihine kadar geçerli",
+    "verified": "onaylandı",
+    "selfReported": "kendisi bildirdi",
+    "hasCertificate": "Belge mevcut",
+    "report": "Katılımı bildir",
+    "reportTitle": "Katılımı bildir",
+    "recordFor": "Katılım kaydet: {{name}}",
+    "reported": "Katılım kaydedildi",
+    "reportedHint": "Servis sorumlun onaylayabilir.",
+    "save": "Kaydet",
+    "date": "Katılım tarihi",
+    "certificate": "Belge (örn. katılım belgesi)",
+    "certificateHint": "Yalnızca sen ve servis sorumlun görebilir.",
+    "note": "Not",
+    "empty": "Zorunlu eğitim yok",
+    "emptyHint": "Şu anda senin için tanımlı zorunlu eğitim yok.",
+    "new": "Yeni zorunlu eğitim",
+    "newTitle": "Yeni zorunlu eğitim",
+    "newHint": "Kapsamdaki herkese bildirim gider; eksik olduğu veya süresi dolmak üzere olduğu sürece hatırlatılır.",
+    "create": "Oluştur",
+    "created": "Zorunlu eğitim oluşturuldu",
+    "createdHint": "Ekibe bildirim gönderildi.",
+    "titleLabel": "Başlık",
+    "titlePlaceholder": "örn. Resüsitasyon eğitimi",
+    "interval": "Tekrar",
+    "appliesTo": "Kimin için",
+    "verify": "Onayla",
+    "verifiedToast": "Katılım onaylandı",
+    "recordNew": "Katılım kaydet",
+    "remove": "Kaydı sil",
+    "removeConfirm": "Bu kayıt gerçekten silinsin mi?",
+    "noneDefined": "Henüz zorunlu eğitim yok",
+    "noneDefinedHint": "Servisinde hangi eğitimlerin zorunlu olduğunu belirle.",
+    "person": "Kişi",
+    "openCount_one": "{{count}} açık",
+    "openCount_other": "{{count}} açık",
+    "archive": "Artık isteme",
+    "archiveConfirm": "„{{title}}“ artık istenmesin mi? Mevcut kayıtlar saklanır.",
+    "archived": "Zorunlu eğitim sonlandırıldı"
   }
 }

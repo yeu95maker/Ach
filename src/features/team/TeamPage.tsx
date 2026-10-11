@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { MessagesSquare } from 'lucide-react'
+import { FileText, GraduationCap, MessagesSquare } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router'
 import { teamRepository } from '@/data/teamRepository'
 import { can } from '@/domain/permissions'
@@ -67,6 +67,27 @@ export function TeamPage() {
           {chatUnread > 0 && <CountBadge count={chatUnread} />}
         </Link>
       )}
+
+      <div className="mb-6 grid gap-3 sm:grid-cols-2">
+        <Link to="/documents" className="flex items-center gap-3 rounded-2xl border border-border/70 bg-surface p-4 shadow-card transition-transform hover:-translate-y-0.5">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary-text">
+            <FileText className="size-5" aria-hidden />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[15px] font-semibold">{t('documents.title')}</span>
+            <span className="block truncate text-sm text-text-3">{t('documents.teamHint')}</span>
+          </span>
+        </Link>
+        <Link to="/trainings" className="flex items-center gap-3 rounded-2xl border border-border/70 bg-surface p-4 shadow-card transition-transform hover:-translate-y-0.5">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-text">
+            <GraduationCap className="size-5" aria-hidden />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[15px] font-semibold">{t('trainings.title')}</span>
+            <span className="block truncate text-sm text-text-3">{t('trainings.teamHint')}</span>
+          </span>
+        </Link>
+      </div>
 
       <div role="tablist" aria-label={t('team.title')} className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
         {tabs.map((tab) => (

@@ -80,9 +80,12 @@ const dynamic = {
   'integration.adapter': ['csv', 'xlsx'],
   'swaps.status': ['pending_partner', 'pending_lead', 'approved', 'declined', 'rejected', 'cancelled', 'expired'],
   'swaps.warn': ['rest', 'restYou', 'wish', 'wishYou'],
+  'documents.category': ['sop', 'guideline', 'checklist', 'form', 'information', 'other'],
+  'documents.fileError': ['type', 'size', 'name'],
+  'trainings.status': ['missing', 'expired', 'due_soon', 'valid'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
-for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest', 'roster_sync', 'swap_requested', 'swap_pending', 'swap_declined', 'swap_approved', 'swap_rejected'])
+for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest', 'roster_sync', 'swap_requested', 'swap_pending', 'swap_declined', 'swap_approved', 'swap_rejected', 'document_published', 'document_reminder', 'training_assigned', 'training_due'])
   for (const part of ['title', 'body']) if (!hasKey(ref, `notifications.types.${type}.${part}`)) errors.push(`[de] missing notifications.types.${type}.${part}`)
 
 if (errors.length) {
