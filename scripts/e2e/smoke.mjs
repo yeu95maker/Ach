@@ -218,6 +218,16 @@ for (const run of runs) {
   await openCard(lead2.page).getByRole('button', { name: 'Besetzen' }).click()
   await lead2.page.waitForSelector('dialog[open] >> text=Hat Interesse gemeldet')
   await shot(lead2.page, 'lead-staffing', '52-candidates', { full: false })
+  await lead2.page.keyboard.press('Escape')
+  await lead2.page.locator('dialog[open]').waitFor({ state: 'detached' })
+  // Einspringen 2.0: one tap confirms the volunteer
+  await openCard(lead2.page).locator('li', { hasText: 'Anna Becker' }).getByRole('button', { name: 'Bestätigen' }).click()
+  await lead2.page.waitForSelector('text=Anna Becker übernimmt den Dienst')
+  // Stationsstatus on the dashboard
+  await lead2.page.goto(`${BASE}/`)
+  await lead2.page.waitForSelector('text=Stationsstatus heute')
+  await lead2.page.waitForSelector('dl >> text=Krank')
+  await shot(lead2.page, 'lead-staffing', '54-ward-status')
   await lead2.context.close()
 
   const admin = await session('admin', { email: 'admin@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
@@ -297,7 +307,9 @@ for (const run of runs) {
   await a.selectOption('#int-kind', 'api')
   await a.locator('dialog[open]').getByRole('button', { name: 'Speichern' }).click()
   await a.waitForSelector('text=Adresse der Schnittstelle')
-  await a.getByRole('button', { name: 'Neuer Schlüssel' }).click()
+  // the DB suite may leave other interface profiles behind – use the one just created
+  await a.locator('div.rounded-\\[var\\(--radius-card\\)\\]', { hasText: 'Schnittstelle Dienstplanprogramm' })
+    .getByRole('button', { name: 'Neuer Schlüssel' }).click()
   await a.fill('#api-key-label', 'Smoke-Test')
   await a.locator('dialog[open]').getByRole('button', { name: 'Schlüssel erzeugen' }).click()
   await a.waitForSelector('#api-key-value')

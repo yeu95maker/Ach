@@ -1,5 +1,5 @@
 import type { ShiftCategory } from '@/domain/types'
-import type { CoverShift, ShiftCandidate } from '@/domain/staffing'
+import type { CoverShift, ShiftCandidate, WardStatus } from '@/domain/staffing'
 import { db, unwrap, unwrapList } from './client'
 
 interface CoverShiftRow {
@@ -43,6 +43,30 @@ export interface OpenShiftInterest {
   note: string | null
   status: InterestStatus
   createdAt: Date
+  /** Name from the staff directory (null if not visible) */
+  person: { firstName: string; lastName: string } | null
+}
+
+interface WardStatusJson {
+  unit_id: string
+  unit_name: string
+  date: string
+  shifts: {
+    shift_type_id: string
+    code: string
+    name: string
+    category: ShiftCategory
+    start_time: string
+    end_time: string
+    planned: number
+    open: number
+    min_staff: number | null
+    target_staff: number | null
+  }[]
+  sick: number
+  leave: number | null
+  open_shifts: number
+  understaffed: boolean
 }
 
 const num = (v: number | string | null) => (v === null ? null : Number(v))
@@ -117,12 +141,53 @@ export const staffingRepository = {
   },
 
   /** Own interests, or all interests for managed wards (RLS). */
-  async fetchInterests(entryIds: string[]): Promise<OpenShiftInterest[]> {
+  async fetchInterests(hospitalId: string, entryIds: string[]): Promise<OpenShiftInterest[]> {
     if (!entryIds.length) return []
     const rows = unwrapList<{ id: string; entry_id: string; employee_id: string; note: string | null; status: InterestStatus; created_at: string }>(
       await db().from('open_shift_interests').select('id, entry_id, employee_id, note, status, created_at').in('entry_id', entryIds),
     )
-    return rows.map((r) => ({ id: r.id, entryId: r.entry_id, employeeId: r.employee_id, note: r.note, status: r.status, createdAt: new Date(r.created_at) }))
+    const ids = [...new Set(rows.map((r) => r.employee_id))]
+    const people = ids.length
+      ? unwrapList<{ employee_id: string; first_name: string; last_name: string }>(
+          await db().from('employee_directory').select('employee_id, first_name, last_name').eq('hospital_id', hospitalId).in('employee_id', ids),
+        )
+      : []
+    const byId = new Map(people.map((p) => [p.employee_id, { firstName: p.first_name, lastName: p.last_name }]))
+    return rows.map((r) => ({
+      id: r.id,
+      entryId: r.entry_id,
+      employeeId: r.employee_id,
+      note: r.note,
+      status: r.status,
+      createdAt: new Date(r.created_at),
+      person: byId.get(r.employee_id) ?? null,
+    }))
+  },
+
+  /** Stationsstatus for one ward and day (default: today in the hospital's time zone). */
+  async fetchWardStatus(unitId: string, date?: string): Promise<WardStatus> {
+    const r = unwrap<WardStatusJson>(await db().rpc('get_ward_status', { p_unit_id: unitId, p_date: date ?? null }))
+    return {
+      unitId: r.unit_id,
+      unitName: r.unit_name,
+      date: r.date,
+      shifts: r.shifts.map((x) => ({
+        shiftTypeId: x.shift_type_id,
+        code: x.code,
+        name: x.name,
+        category: x.category,
+        startTime: x.start_time,
+        endTime: x.end_time,
+        planned: x.planned,
+        open: x.open,
+        minStaff: x.min_staff,
+        targetStaff: x.target_staff,
+      })),
+      sick: r.sick,
+      leave: r.leave,
+      openShifts: r.open_shifts,
+      understaffed: r.understaffed,
+    }
   },
 
   async expressInterest(entryId: string, note: string | null): Promise<void> {

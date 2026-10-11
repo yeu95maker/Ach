@@ -679,7 +679,13 @@
     "interestCount_other": "{{count}} gönüllü",
     "staff": "Doldur",
     "howItWorks": "“Ben gelebilirim” ile ilgini bildirirsin. Sorumlu karar verir, sen bilgilendirilirsin.",
-    "overlap": "Bu saatte zaten vardiyan var."
+    "overlap": "Bu saatte zaten vardiyan var.",
+    "volunteers": "Gönüllü olan meslektaşlar",
+    "confirm": "Onayla",
+    "confirmed": "Vardiyayı {{name}} devralıyor",
+    "confirmedHint": "Kişiye bildirim gider, diğer talepler reddedilir.",
+    "confirmOverlap": "Bu kişinin o saatte zaten vardiyası var.",
+    "unknownPerson": "Bilinmeyen kişi"
   },
   "history": {
     "title": "Geçmişim",
@@ -1055,5 +1061,21 @@
     "edited": "düzenlendi",
     "unread_one": "{{count}} yeni mesaj",
     "unread_other": "{{count}} yeni mesaj"
+  },
+  "wardStatus": {
+    "title": "Bugünkü servis durumu",
+    "subtitle": "{{unit}} · yayınlanan plan",
+    "pickUnit": "Servis seç",
+    "understaffed": "Asgari personel sayısına ulaşılmadı",
+    "noShifts": "Bugün için planlanmış vardiya yok.",
+    "open_one": "{{count}} açık",
+    "open_other": "{{count}} açık",
+    "plannedOf": "{{planned}} / {{need}}",
+    "planned_one": "{{count}} planlı",
+    "planned_other": "{{count}} planlı",
+    "sick": "Hasta",
+    "leave": "İzin",
+    "openShifts": "Açık vardiyalar",
+    "toOpenShifts": "Açık vardiyaları gör"
   }
 }

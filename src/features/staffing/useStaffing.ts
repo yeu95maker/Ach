@@ -17,6 +17,7 @@ function useInvalidateRosters() {
         ['editor-entries'],
         ['roster'],
         ['on-duty'],
+        ['ward-status'],
         queryKeys.dashboard(employment.employeeId),
       ].map((queryKey) => queryClient.invalidateQueries({ queryKey })),
     )
@@ -64,9 +65,10 @@ export function useOpenShifts(unitIds: string[]) {
 }
 
 export function useOpenShiftInterests(entryIds: string[]) {
+  const employment = useEmployment()
   return useQuery({
     queryKey: queryKeys.openInterests(entryIds),
-    queryFn: () => staffingRepository.fetchInterests(entryIds),
+    queryFn: () => staffingRepository.fetchInterests(employment.hospital.id, entryIds),
     enabled: entryIds.length > 0,
   })
 }
@@ -77,5 +79,14 @@ export function useInterestMutation() {
     mutationFn: (v: { entryId: string; interested: boolean; note?: string | null }) =>
       v.interested ? staffingRepository.expressInterest(v.entryId, v.note ?? null) : staffingRepository.withdrawInterest(v.entryId),
     onSuccess: () => invalidate(),
+  })
+}
+
+export function useWardStatus(unitId: string | null) {
+  return useQuery({
+    queryKey: queryKeys.wardStatus(unitId ?? ''),
+    queryFn: () => staffingRepository.fetchWardStatus(unitId!),
+    enabled: !!unitId,
+    staleTime: 60_000,
   })
 }

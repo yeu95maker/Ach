@@ -14,6 +14,43 @@ export interface CoverShift {
   category: ShiftCategory | null
 }
 
+/** One shift type of a ward on one day (get_ward_status). */
+export interface WardShiftStatus {
+  shiftTypeId: string
+  code: string
+  name: string
+  category: ShiftCategory
+  startTime: string
+  endTime: string
+  planned: number
+  open: number
+  minStaff: number | null
+  targetStaff: number | null
+}
+
+/** Stationsstatus: staffing of one ward on one day. */
+export interface WardStatus {
+  unitId: string
+  unitName: string
+  date: ISODate
+  shifts: WardShiftStatus[]
+  sick: number
+  /** null when the caller may not see leave on this ward */
+  leave: number | null
+  openShifts: number
+  understaffed: boolean
+}
+
+export type WardShiftLevel = 'ok' | 'low' | 'short' | 'none'
+
+/** short = below minimum, low = below target, ok = fine, none = no requirement set. */
+export function wardShiftLevel(s: Pick<WardShiftStatus, 'planned' | 'minStaff' | 'targetStaff'>): WardShiftLevel {
+  if (s.minStaff == null && s.targetStaff == null) return 'none'
+  if (s.minStaff != null && s.planned < s.minStaff) return 'short'
+  if (s.targetStaff != null && s.planned < s.targetStaff) return 'low'
+  return 'ok'
+}
+
 /** Result row of get_shift_candidates(). */
 export interface ShiftCandidate {
   employeeId: string

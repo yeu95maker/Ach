@@ -715,7 +715,13 @@
     "interestCount_other": "{{count}} chętnej osoby",
     "staff": "Obsadź",
     "howItWorks": "Przyciskiem „Mogę wziąć dyżur” zgłaszasz chęć. Kierownictwo decyduje, a ty dostajesz powiadomienie.",
-    "overlap": "O tej porze masz już dyżur."
+    "overlap": "O tej porze masz już dyżur.",
+    "volunteers": "Zgłoszeni współpracownicy",
+    "confirm": "Potwierdź",
+    "confirmed": "{{name}} przejmuje dyżur",
+    "confirmedHint": "Osoba otrzyma powiadomienie, pozostałe zgłoszenia zostaną odrzucone.",
+    "confirmOverlap": "Ta osoba ma już dyżur w tym czasie.",
+    "unknownPerson": "Nieznana osoba"
   },
   "history": {
     "title": "Moja historia",
@@ -1121,5 +1127,25 @@
     "unread_few": "{{count}} nowe wiadomości",
     "unread_many": "{{count}} nowych wiadomości",
     "unread_other": "{{count}} nowej wiadomości"
+  },
+  "wardStatus": {
+    "title": "Stan oddziału dziś",
+    "subtitle": "{{unit}} · opublikowany grafik",
+    "pickUnit": "Wybierz oddział",
+    "understaffed": "Minimalna obsada nie została osiągnięta",
+    "noShifts": "Na dziś nie zaplanowano dyżurów.",
+    "open_one": "{{count}} wolny",
+    "open_few": "{{count}} wolne",
+    "open_many": "{{count}} wolnych",
+    "open_other": "{{count}} wolnych",
+    "plannedOf": "{{planned}} z {{need}}",
+    "planned_one": "{{count}} zaplanowana",
+    "planned_few": "{{count}} zaplanowane",
+    "planned_many": "{{count}} zaplanowanych",
+    "planned_other": "{{count}} zaplanowanych",
+    "sick": "Chorzy",
+    "leave": "Urlop",
+    "openShifts": "Wolne dyżury",
+    "toOpenShifts": "Zobacz wolne dyżury"
   }
 }

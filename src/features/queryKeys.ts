@@ -41,6 +41,7 @@ export const queryKeys = {
   shiftCandidates: (entryId: string) => ['shift-candidates', entryId] as const,
   openShifts: (hospitalId: string, unitIds: string[]) => ['open-shifts', hospitalId, ...unitIds] as const,
   openInterests: (entryIds: string[]) => ['open-interests', ...entryIds] as const,
+  wardStatus: (unitId: string) => ['ward-status', unitId] as const,
   history: (employeeId: string, year: number) => ['history', employeeId, year] as const,
   historyStart: (employeeId: string) => ['history-start', employeeId] as const,
   editorAbsences: (unitId: string, month: string) => ['editor-absences', unitId, month] as const,

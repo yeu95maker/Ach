@@ -679,7 +679,13 @@
     "interestCount_other": "{{count}} Interessent:innen",
     "staff": "Besetzen",
     "howItWorks": "Mit „Ich kann einspringen“ meldest du Interesse. Die Leitung entscheidet, du wirst benachrichtigt.",
-    "overlap": "Du hast zu dieser Zeit schon Dienst."
+    "overlap": "Du hast zu dieser Zeit schon Dienst.",
+    "volunteers": "Gemeldete Kolleg:innen",
+    "confirm": "Bestätigen",
+    "confirmed": "{{name}} übernimmt den Dienst",
+    "confirmedHint": "Die Person wird benachrichtigt, andere Meldungen werden abgesagt.",
+    "confirmOverlap": "Die Person hat zu dieser Zeit schon Dienst.",
+    "unknownPerson": "Unbekannte Person"
   },
   "history": {
     "title": "Mein Verlauf",
@@ -1055,5 +1061,21 @@
     "edited": "bearbeitet",
     "unread_one": "{{count}} neue Nachricht",
     "unread_other": "{{count}} neue Nachrichten"
+  },
+  "wardStatus": {
+    "title": "Stationsstatus heute",
+    "subtitle": "{{unit}} · veröffentlichter Plan",
+    "pickUnit": "Station wählen",
+    "understaffed": "Mindestbesetzung nicht erreicht",
+    "noShifts": "Für heute sind keine Dienste geplant.",
+    "open_one": "{{count}} offen",
+    "open_other": "{{count}} offen",
+    "plannedOf": "{{planned}} von {{need}}",
+    "planned_one": "{{count}} geplant",
+    "planned_other": "{{count}} geplant",
+    "sick": "Krank",
+    "leave": "Urlaub",
+    "openShifts": "Offene Dienste",
+    "toOpenShifts": "Offene Dienste ansehen"
   }
 }

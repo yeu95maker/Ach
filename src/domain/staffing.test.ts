@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { candidateFlags, isRecommended, type ShiftCandidate } from './staffing'
+import { candidateFlags, wardShiftLevel, isRecommended, type ShiftCandidate } from './staffing'
 
 const base: ShiftCandidate = {
   employeeId: 'e',
@@ -40,5 +40,15 @@ describe('candidateFlags', () => {
 
   it('shows volunteers first', () => {
     expect(candidateFlags({ ...base, interested: true })[0]!.key).toBe('interested')
+  })
+})
+
+describe('wardShiftLevel', () => {
+  it('compares planned staff with minimum and target', () => {
+    expect(wardShiftLevel({ planned: 0, minStaff: 1, targetStaff: 2 })).toBe('short')
+    expect(wardShiftLevel({ planned: 1, minStaff: 1, targetStaff: 2 })).toBe('low')
+    expect(wardShiftLevel({ planned: 2, minStaff: 1, targetStaff: 2 })).toBe('ok')
+    expect(wardShiftLevel({ planned: 1, minStaff: 1, targetStaff: null })).toBe('ok')
+    expect(wardShiftLevel({ planned: 3, minStaff: null, targetStaff: null })).toBe('none')
   })
 })

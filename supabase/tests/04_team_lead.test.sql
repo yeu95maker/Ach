@@ -261,9 +261,18 @@ end $$;
 reset role;
 do $$
 begin
+  -- Einspringen 2.0: only suitable colleagues (available, rest ok, no "unavailable" wish) are notified
+  -- (in the seed nobody fits: Jonas works the night, Anna lacks rest, Leyla is sick)
   assert (select count(*) from public.notifications
-          where type = 'open_shift' and entity_id = current_setting('test.released')::uuid) >= 3,
-    'ward is notified about the released shift';
+          where type = 'open_shift' and entity_id = current_setting('test.released')::uuid)
+       = (select count(*) from private.suitable_cover_user_ids(current_setting('test.released')::uuid) u
+          where u <> '00000000-0000-4000-a000-000000000004'::uuid),
+    'exactly the suitable colleagues are notified about the released shift';
+  assert not exists (
+    select 1 from public.notifications n
+    where n.type = 'open_shift' and n.entity_id = current_setting('test.released')::uuid
+      and n.recipient_id not in (select private.suitable_cover_user_ids(current_setting('test.released')::uuid))),
+    'only suitable colleagues are notified';
 end $$;
 rollback;
 

@@ -1,4 +1,4 @@
-import { CalendarCheck, Hand, Sparkles, UserCheck, Users } from 'lucide-react'
+import { CalendarCheck, Check, Hand, Sparkles, UserCheck, Users } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { dayKindStyles } from '@/components/dayKindStyles'
@@ -10,7 +10,7 @@ import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
 import { Badge, Button, Card, EmptyState, PageHeader, SkeletonCard, cn, useToast } from '@/ui'
 import { CandidatesSheet } from './CandidatesSheet'
-import { useInterestMutation, useOpenShiftInterests, useOpenShifts } from './useStaffing'
+import { useAssignShift, useInterestMutation, useOpenShiftInterests, useOpenShifts } from './useStaffing'
 
 export function OpenShiftsPage() {
   const { t } = useTranslation()
@@ -25,6 +25,7 @@ export function OpenShiftsPage() {
   const entryIds = useMemo(() => (shifts.data ?? []).map((s) => s.entryId), [shifts.data])
   const interests = useOpenShiftInterests(entryIds)
   const interest = useInterestMutation()
+  const assign = useAssignShift()
   const [staffing, setStaffing] = useState<CoverShift | null>(null)
   const memberOf = new Set(employment.units.map((u) => u.id))
   const canManage = can(employment, 'schedule.manage')
@@ -42,6 +43,15 @@ export function OpenShiftsPage() {
         onError: (e) =>
           toast.show({ tone: 'error', title: t('errors.title'), description: toAppError(e).kind === 'conflict' ? t('openShifts.overlap') : t(errorMessageKey(e)) }),
       },
+    )
+
+  // Einspringen 2.0: the lead confirms a volunteer with one tap (assign_shift
+  // accepts this interest and declines the others; the person gets a push).
+  const confirm = (s: CoverShift, employeeId: string, name: string) =>
+    assign.mutateAsync({ entryId: s.entryId, employeeId }).then(
+      () => toast.show({ tone: 'success', title: t('openShifts.confirmed', { name }), description: t('openShifts.confirmedHint') }),
+      (e: unknown) =>
+        toast.show({ tone: 'error', title: t('errors.title'), description: toAppError(e).kind === 'conflict' ? t('openShifts.confirmOverlap') : t(errorMessageKey(e)) }),
     )
 
   return (
@@ -85,6 +95,25 @@ export function OpenShiftsPage() {
                     </div>
                   </div>
                 </div>
+                {manages && pending.length > 0 && (
+                  <ul className="mt-4 space-y-2" aria-label={t('openShifts.volunteers')}>
+                    {pending.map((p) => {
+                      const name = p.person ? `${p.person.firstName} ${p.person.lastName}` : t('openShifts.unknownPerson')
+                      const busy = assign.isPending && assign.variables?.entryId === s.entryId && assign.variables.employeeId === p.employeeId
+                      return (
+                        <li key={p.id} className="flex items-center justify-between gap-3 rounded-2xl bg-surface-2/70 px-4 py-2.5">
+                          <span className="min-w-0">
+                            <span className="block truncate text-[15px] font-medium">{name}</span>
+                            {p.note && <span className="block truncate text-sm text-text-3">{p.note}</span>}
+                          </span>
+                          <Button size="sm" icon={<Check className="size-4" />} loading={busy} disabled={assign.isPending && !busy} onClick={() => void confirm(s, p.employeeId, name)}>
+                            {t('openShifts.confirm')}
+                          </Button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
                 <div className="mt-4 flex flex-wrap justify-end gap-2">
                   {memberOf.has(s.unitId) &&
                     (mine ? (

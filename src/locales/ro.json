@@ -697,7 +697,13 @@
     "interestCount_other": "{{count}} de voluntari",
     "staff": "Ocupă tura",
     "howItWorks": "Cu „Pot prelua” te oferi. Conducerea decide, iar tu primești o notificare.",
-    "overlap": "Ești deja în tură la această oră."
+    "overlap": "Ești deja în tură la această oră.",
+    "volunteers": "Colegi care s-au oferit",
+    "confirm": "Confirmă",
+    "confirmed": "{{name}} preia tura",
+    "confirmedHint": "Persoana este anunțată, celelalte oferte sunt refuzate.",
+    "confirmOverlap": "Persoana are deja tură la acea oră.",
+    "unknownPerson": "Persoană necunoscută"
   },
   "history": {
     "title": "Istoricul meu",
@@ -1088,5 +1094,23 @@
     "unread_one": "{{count}} mesaj nou",
     "unread_few": "{{count}} mesaje noi",
     "unread_other": "{{count}} de mesaje noi"
+  },
+  "wardStatus": {
+    "title": "Starea secției azi",
+    "subtitle": "{{unit}} · plan publicat",
+    "pickUnit": "Alege secția",
+    "understaffed": "Necesarul minim de personal nu este atins",
+    "noShifts": "Nu sunt planificate ture pentru azi.",
+    "open_one": "{{count}} liberă",
+    "open_few": "{{count}} libere",
+    "open_other": "{{count}} libere",
+    "plannedOf": "{{planned}} din {{need}}",
+    "planned_one": "{{count}} planificat",
+    "planned_few": "{{count}} planificați",
+    "planned_other": "{{count}} planificați",
+    "sick": "Bolnavi",
+    "leave": "Concediu",
+    "openShifts": "Ture libere",
+    "toOpenShifts": "Vezi turele libere"
   }
 }

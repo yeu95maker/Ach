@@ -679,7 +679,13 @@
     "interestCount_other": "{{count}} volunteers",
     "staff": "Fill shift",
     "howItWorks": "Tap “I can cover” to volunteer. Management decides and you will be notified.",
-    "overlap": "You are already on duty at that time."
+    "overlap": "You are already on duty at that time.",
+    "volunteers": "Colleagues who volunteered",
+    "confirm": "Confirm",
+    "confirmed": "{{name}} takes the shift",
+    "confirmedHint": "They will be notified; other offers are declined.",
+    "confirmOverlap": "This person is already on duty at that time.",
+    "unknownPerson": "Unknown person"
   },
   "history": {
     "title": "My history",
@@ -1055,5 +1061,21 @@
     "edited": "edited",
     "unread_one": "{{count}} new message",
     "unread_other": "{{count}} new messages"
+  },
+  "wardStatus": {
+    "title": "Ward status today",
+    "subtitle": "{{unit}} · published roster",
+    "pickUnit": "Choose ward",
+    "understaffed": "Minimum staffing not reached",
+    "noShifts": "No shifts are planned for today.",
+    "open_one": "{{count}} open",
+    "open_other": "{{count}} open",
+    "plannedOf": "{{planned}} of {{need}}",
+    "planned_one": "{{count}} planned",
+    "planned_other": "{{count}} planned",
+    "sick": "Sick",
+    "leave": "Leave",
+    "openShifts": "Open shifts",
+    "toOpenShifts": "View open shifts"
   }
 }
