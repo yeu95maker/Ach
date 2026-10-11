@@ -11,4 +11,4 @@ export function nativePlatform(): NativePlatform | null {
 export const isNative = () => nativePlatform() !== null
 
 /** Custom URL scheme registered in Info.plist and AndroidManifest.xml. */
-export const AUTH_CALLBACK = 'shiftcare://auth-callback'
+export const AUTH_CALLBACK = 'pulshift://auth-callback'

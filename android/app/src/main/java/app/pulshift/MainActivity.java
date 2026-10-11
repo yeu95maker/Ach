@@ -1,4 +1,4 @@
-package dev.shiftcare.app;
+package app.pulshift;
 
 import com.getcapacitor.BridgeActivity;
 

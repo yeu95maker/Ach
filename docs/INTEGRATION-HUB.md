@@ -1,8 +1,8 @@
-# ShiftCare Integration Hub
+# Pulshift Integration Hub
 
 Stand: 10.10.2026.
 
-Die Einrichtungen behalten ihr bisheriges Dienstplanprogramm. Die Stationsleitung überträgt den fertigen Plan nach ShiftCare. ShiftCare liest ihn ein, ordnet ihn zu, prüft ihn, zeigt die Änderungen und veröffentlicht ihn nach ausdrücklicher Freigabe an die richtigen Mitarbeitenden.
+Die Einrichtungen behalten ihr bisheriges Dienstplanprogramm. Die Stationsleitung überträgt den fertigen Plan nach Pulshift. Pulshift liest ihn ein, ordnet ihn zu, prüft ihn, zeigt die Änderungen und veröffentlicht ihn nach ausdrücklicher Freigabe an die richtigen Mitarbeitenden.
 
 ## Was heute funktioniert und was nicht
 
@@ -13,7 +13,7 @@ Die Einrichtungen behalten ihr bisheriges Dienstplanprogramm. Die Stationsleitun
 | Aufbau **Liste** (eine Zeile pro Dienst) | ✅ |
 | Aufbau **Raster** (eine Zeile pro Person, eine Spalte pro Tag) | ✅ |
 | Altes Excel-Format `.xls`, ODS, PDF | ❌ nicht unterstützt: bitte als XLSX oder CSV exportieren |
-| **Direkte Schnittstelle (API)** zu einem Anbieter | ❌ **nicht umgesetzt.** Es gibt kein einziges Herstellersystem, das ShiftCare heute direkt anbindet. |
+| **Direkte Schnittstelle (API)** zu einem Anbieter | ❌ **nicht umgesetzt.** Es gibt kein einziges Herstellersystem, das Pulshift heute direkt anbindet. |
 | **Automatischer Dateiabruf** (z. B. SFTP) | ❌ nicht umgesetzt |
 | Zugangsdaten für künftige Schnittstellen sicher hinterlegen (Vault) | ✅ umgesetzt (nur Speicherung, kein Abruf) |
 
@@ -30,7 +30,7 @@ Geprüft wird das automatisiert: in `supabase/tests/06_integration.test.sql` und
 
 1. **Datei:** Station, Monat und Importprofil wählen, dann die Datei hochladen. Die Datei wird **nur im Browser** gelesen.
 2. **Spalten:**
-   - ShiftCare schlägt die Zuordnung vor. Es erkennt deutsche und englische Überschriften, Titelzeilen über der Kopfzeile, Tagesspalten im Raster und das Tabellenblatt.
+   - Pulshift schlägt die Zuordnung vor. Es erkennt deutsche und englische Überschriften, Titelzeilen über der Kopfzeile, Tagesspalten im Raster und das Tabellenblatt.
    - Die Stationsleitung prüft und korrigiert. Nicht lesbare Werte erscheinen mit Zeilennummer.
    - Die Zuordnung wird pro Profil und Station gemerkt, solange die Kopfzeile gleich bleibt.
 3. **Prüfen** (auf dem Server):
@@ -39,7 +39,7 @@ Geprüft wird das automatisiert: in `supabase/tests/06_integration.test.sql` und
    - Andere Fehler (außerhalb des Zeitraums, Überschneidung in der Datei, ungültige Zeiten) im Quellprogramm korrigieren und die Datei neu hochladen.
    - Solange es Fehler gibt, geht es nicht weiter.
 4. **Vorschau:** neue, geänderte, entfallende und unveränderte Dienste.
-   - Einträge, die in ShiftCare von Hand angelegt oder geändert wurden, sind markiert.
+   - Einträge, die in Pulshift von Hand angelegt oder geändert wurden, sind markiert.
    - Fiele mehr als die Hälfte des bisherigen Plans weg, erscheint eine deutliche Warnung.
 5. **Übernehmen:** Die Änderungen werden in einer einzigen Transaktion geschrieben, ganz oder gar nicht.
    - Gibt es noch keinen Plan für den Monat, wird er als Entwurf angelegt.
@@ -105,7 +105,7 @@ Ein Adapter liefert nur `RawTable`s (Kopfzeile, Zeilen als Text, Zeilennummern).
 3. Tests mit echten Beispieldateien in `__fixtures__` ergänzen (Generator: `scripts/fixtures/make-import-fixtures.py`).
 
 **Direkte Anbieter-Schnittstelle:** Vor jeder Umsetzung muss geklärt und dokumentiert sein:
-- Gibt es eine **offizielle API**, und darf ShiftCare sie nutzen (Vertrag, Lizenz, Zustimmung der Einrichtung)?
+- Gibt es eine **offizielle API**, und darf Pulshift sie nutzen (Vertrag, Lizenz, Zustimmung der Einrichtung)?
 - Wie wird **authentifiziert** (OAuth, API-Key, Zertifikat)? Wie werden die Zugangsdaten erneuert?
 - Welche Daten sind abrufbar (Dienste, Kürzel, Mitarbeiterkennungen, Stationen)?
 - Lassen sich **Änderungen erkennen** (Zeitstempel, Versionen, Webhooks)?
@@ -202,7 +202,7 @@ Eine Einrichtung sieht keine Profile, Zuordnungen, Importe oder Protokolle einer
 | Technischer Fehler beim Übernehmen (z. B. Überschneidung mit einem Dienst auf einer anderen Station) | Es wird nichts geschrieben, der Import bleibt „geprüft“, der Fehler steht im Verlauf. **Erneut versuchen** ist möglich. |
 | Veraltete Datei (inzwischen wurde eine neuere für Station und Monat übernommen) | Übernehmen wird verweigert (Status „überholt“). Ältere, noch nicht übernommene Uploads werden beim Übernehmen automatisch als überholt markiert. |
 | Gleichzeitige Importe | werden über eine Sperre auf dem Dienstplan serialisiert. |
-| Handänderungen in ShiftCare | Die Vorschau markiert sie. Die Datei bleibt führend. |
+| Handänderungen in Pulshift | Die Vorschau markiert sie. Die Datei bleibt führend. |
 | Versionsstände | `schedules.version` bei jeder Veröffentlichung; Importläufe mit Zeitpunkt, Person, Diff-Zahlen und Datei-Hash. |
 
 ## Wunschplan

@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Auth callbacks (OAuth, password reset): shiftcare://auth-callback -->
+            <!-- Auth callbacks (OAuth, password reset): pulshift://auth-callback -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

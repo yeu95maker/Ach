@@ -1,6 +1,6 @@
-ShiftCare este aplicația de planificare a turelor pentru spitale și centre de îngrijire. Asistenții își văd programul, își trec dorințele și cer concediu. Asistenții șefi planifică, aprobă și găsesc rapid un înlocuitor.
+Pulshift este aplicația de planificare a turelor pentru spitale și centre de îngrijire. Asistenții își văd programul, își trec dorințele și cer concediu. Asistenții șefi planifică, aprobă și găsesc rapid un înlocuitor.
 
-Important: pentru ShiftCare ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
+Important: pentru Pulshift ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
 
 PENTRU ASISTENȚI
 • Programul în vizualizare lunară și listă, cu orele turelor și data ultimei actualizări
@@ -34,4 +34,4 @@ CONFIDENȚIALITATE
 • Comentariile la concediile medicale sunt criptate suplimentar
 • Autentificarea ta rămâne în memoria protejată a dispozitivului
 
-ShiftCare este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.
+Pulshift este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.

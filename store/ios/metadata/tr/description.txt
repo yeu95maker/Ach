@@ -1,6 +1,6 @@
-ShiftCare, hastaneler ve bakım kurumları için nöbet planı uygulamasıdır. Hemşireler planlarını görür, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve hızla yedek bulur.
+Pulshift, hastaneler ve bakım kurumları için nöbet planı uygulamasıdır. Hemşireler planlarını görür, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve hızla yedek bulur.
 
-Önemli: ShiftCare'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
+Önemli: Pulshift'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
 
 HEMŞİRELER İÇİN
 • Aylık ve liste görünümünde nöbet planı, nöbet saatleri ve son güncelleme zamanı
@@ -34,4 +34,4 @@ GİZLİLİK
 • Hastalık bildirimi notları ayrıca şifrelenir
 • Oturumun cihazının korumalı alanında saklanır
 
-ShiftCare Almanca, İngilizce, Türkçe, Rumence ve Lehçe olarak, açık ve koyu temayla kullanılabilir.
+Pulshift Almanca, İngilizce, Türkçe, Rumence ve Lehçe olarak, açık ve koyu temayla kullanılabilir.

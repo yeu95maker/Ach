@@ -140,19 +140,19 @@ jobs:
           rm -f "$ANDROID_KEYSTORE_PATH"
           "$JAVA_HOME/bin/jarsigner" -verify android/app/build/outputs/bundle/release/app-release.aab | grep -q "jar verified" \
             || { echo "::error::Das Bundle ist nicht signiert"; exit 1; }
-          mv android/app/build/outputs/bundle/release/app-release.aab "ShiftCare-$VERSION_NAME-$VERSION_CODE.aab"
+          mv android/app/build/outputs/bundle/release/app-release.aab "Pulshift-$VERSION_NAME-$VERSION_CODE.aab"
       - uses: actions/upload-artifact@v4
         with:
-          name: shiftcare-android-${{ inputs.version }}-${{ github.run_number }}
-          path: ShiftCare-*.aab
+          name: pulshift-android-${{ inputs.version }}-${{ github.run_number }}
+          path: Pulshift-*.aab
           if-no-files-found: error
       - name: Upload to Google Play (internal testing)
         if: env.PLAY_JSON != ''
         uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: dev.shiftcare.app # = appId in capacitor.config.ts
-          releaseFiles: ShiftCare-*.aab
+          packageName: app.pulshift # = appId in capacitor.config.ts
+          releaseFiles: Pulshift-*.aab
           track: internal
           status: draft
       - name: Summary

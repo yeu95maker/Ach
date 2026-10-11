@@ -1,6 +1,6 @@
 /**
  * Renders app icons and launch screens for iOS, Android and Google Play from
- * the ShiftCare mark (resources/icon.svg). Pixel-exact via headless Chromium;
+ * the Pulshift mark (resources/icon.svg). Pixel-exact via headless Chromium;
  * ImageMagick strips the alpha channel where Apple requires opaque images.
  *
  *   CHROMIUM_PATH=/opt/pw-browsers/chromium node scripts/native/make-icons.mjs

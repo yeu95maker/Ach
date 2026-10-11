@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Your shifts. Your team. At a glance.",
-    "brandSubtitle": "ShiftCare makes rosters, sick leave and time off as simple as a busy ward needs them to be.",
+    "brandSubtitle": "Pulshift makes rosters, sick leave and time off as simple as a busy ward needs them to be.",
     "brandPoint1": "Always up-to-date roster – on the go",
     "brandPoint2": "See who is on shift with you today",
     "brandPoint3": "Securely hosted and GDPR compliant",
@@ -820,7 +820,7 @@
     "dropTitle": "Drop the file here or choose it",
     "dropHint": "CSV or Excel (XLSX) from your rostering software – as a list (one row per shift) or a grid (one row per person, one column per day).",
     "chooseFile": "Choose file",
-    "privacyHint": "The file is read on your device only. ShiftCare receives the recognised shifts; names and original rows are deleted after publishing.",
+    "privacyHint": "The file is read on your device only. Pulshift receives the recognised shifts; names and original rows are deleted after publishing.",
     "errors": {
       "format": "This format is not supported. Please export as CSV or XLSX.",
       "size": "The file is larger than 15 MB.",
@@ -887,7 +887,7 @@
       "duplicate": "This file was already imported for this ward and month. The preview shows whether anything changed.",
       "employees_one": "Match {{count}} person",
       "employees_other": "Match {{count}} people",
-      "employeesHint": "ShiftCare does not know these IDs from the file yet. The match is saved and used automatically next time.",
+      "employeesHint": "Pulshift does not know these IDs from the file yet. The match is saved and used automatically next time.",
       "idInFile": "ID in the file: {{id}}",
       "rows_one": "{{count}} shift",
       "rows_other": "{{count}} shifts",
@@ -929,8 +929,8 @@
         "changed": "Changed",
         "removed": "Removed"
       },
-      "manual_one": "{{count}} entry was created or changed by hand in ShiftCare and is replaced by the file.",
-      "manual_other": "{{count}} entries were created or changed by hand in ShiftCare and are replaced by the file.",
+      "manual_one": "{{count}} entry was created or changed by hand in Pulshift and is replaced by the file.",
+      "manual_other": "{{count}} entries were created or changed by hand in Pulshift and are replaced by the file.",
       "manualBadge": "changed by hand",
       "notifyHint": "Affected staff receive one summary notification.",
       "more": "… and {{count}} more changes",

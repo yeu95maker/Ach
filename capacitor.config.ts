@@ -9,8 +9,8 @@ import type { CapacitorConfig } from '@capacitor/cli'
  * (docs/APP-STORES.md → "Vor dem ersten Upload").
  */
 const config: CapacitorConfig = {
-  appId: 'dev.shiftcare.app',
-  appName: 'ShiftCare',
+  appId: 'app.pulshift',
+  appName: 'Pulshift',
   webDir: 'dist',
   // Origins seen by Supabase: capacitor://localhost (iOS), https://localhost (Android).
   server: { androidScheme: 'https' },

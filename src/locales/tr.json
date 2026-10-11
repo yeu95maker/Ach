@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Vardiyan. Ekibin. Tek bakışta.",
-    "brandSubtitle": "ShiftCare, nöbet planını, hastalık bildirimini ve izni servis hayatının gerektirdiği kadar kolaylaştırır.",
+    "brandSubtitle": "Pulshift, nöbet planını, hastalık bildirimini ve izni servis hayatının gerektirdiği kadar kolaylaştırır.",
     "brandPoint1": "Her zaman güncel nöbet planı – her yerde",
     "brandPoint2": "Bugün seninle kimin görevde olduğunu gör",
     "brandPoint3": "Güvenli ve KVKK/GDPR uyumlu barındırma",
@@ -820,7 +820,7 @@
     "dropTitle": "Dosyayı buraya sürükle veya seç",
     "dropHint": "Vardiya programından CSV veya Excel (XLSX) – liste (vardiya başına bir satır) veya tablo (kişi başına bir satır, gün başına bir sütun) olarak.",
     "chooseFile": "Dosya seç",
-    "privacyHint": "Dosya yalnızca cihazında okunur. ShiftCare'e yalnızca tanınan vardiyalar gider; adlar ve orijinal satırlar yayından sonra silinir.",
+    "privacyHint": "Dosya yalnızca cihazında okunur. Pulshift'e yalnızca tanınan vardiyalar gider; adlar ve orijinal satırlar yayından sonra silinir.",
     "errors": {
       "format": "Bu biçim desteklenmiyor. Lütfen CSV veya XLSX olarak dışa aktar.",
       "size": "Dosya 15 MB'tan büyük.",
@@ -887,7 +887,7 @@
       "duplicate": "Bu dosya bu servis ve ay için zaten içe aktarıldı. Önizleme bir değişiklik olup olmadığını gösterir.",
       "employees_one": "{{count}} kişiyi eşleştir",
       "employees_other": "{{count}} kişiyi eşleştir",
-      "employeesHint": "ShiftCare dosyadaki bu ID'leri henüz tanımıyor. Eşleştirme kaydedilir ve bir sonraki içe aktarmada otomatik kullanılır.",
+      "employeesHint": "Pulshift dosyadaki bu ID'leri henüz tanımıyor. Eşleştirme kaydedilir ve bir sonraki içe aktarmada otomatik kullanılır.",
       "idInFile": "Dosyadaki ID: {{id}}",
       "rows_one": "{{count}} vardiya",
       "rows_other": "{{count}} vardiya",
@@ -929,8 +929,8 @@
         "changed": "Değişti",
         "removed": "Kalktı"
       },
-      "manual_one": "ShiftCare'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
-      "manual_other": "ShiftCare'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manual_one": "Pulshift'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manual_other": "Pulshift'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
       "manualBadge": "elle değiştirildi",
       "notifyHint": "İlgili çalışanlar tek bir özet bildirim alır.",
       "more": "… ve {{count}} değişiklik daha",

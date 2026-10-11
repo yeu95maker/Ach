@@ -15,7 +15,7 @@ Tipp: Manche Einstellungsseiten von GitHub und Apple sind in der mobilen Ansicht
 | 5. Android: Google-Play-Konto, Upload-Schlüssel erzeugen lassen | play.google.com/console, GitHub | 15 Min. + Prüfung durch Google |
 | 6. Android-Build starten und in der Play Console hochladen | GitHub Actions, Play Console | 15 Min. |
 
-**Vorher entscheiden** (siehe [APP-STORES.md](APP-STORES.md#2-vor-dem-ersten-upload--bitte-zuerst-klären)): App-Name und App-ID. Vorbelegt ist `dev.shiftcare.app`. Wenn du eine eigene ID willst (z. B. `de.deinefirma.shiftcare`), sag sie mir **vor** Schritt 2, dann stelle ich sie überall um. Nach dem ersten Upload ist sie nicht mehr änderbar.
+**Vorher entscheiden** (siehe [APP-STORES.md](APP-STORES.md#2-vor-dem-ersten-upload--bitte-zuerst-klären)): App-Name „Pulshift“ und App-ID `app.pulshift` sind festgelegt. Wenn du doch eine andere ID willst (z. B. `de.deinefirma.pulshift`), sag sie mir **vor** Schritt 2, dann stelle ich sie überall um. Nach dem ersten Upload ist sie nicht mehr änderbar.
 
 ## 1. Apple Developer Program
 
@@ -26,10 +26,10 @@ Tipp: Manche Einstellungsseiten von GitHub und Apple sind in der mobilen Ansicht
 ## 2. App-ID registrieren und App anlegen
 
 1. https://developer.apple.com/account/resources/identifiers/list → **„+“** → *App IDs* → *App* → Weiter.
-2. *Description*: `ShiftCare`, *Bundle ID*: **Explicit** `dev.shiftcare.app` (oder deine eigene).
+2. *Description*: `Pulshift`, *Bundle ID*: **Explicit** `app.pulshift` (oder deine eigene).
 3. Unter *Capabilities* **Push Notifications** anhaken → *Continue* → *Register*.
 4. https://appstoreconnect.apple.com → **Apps** → **„+“** → *Neue App*:
-   - Plattform **iOS**, Name z. B. „ShiftCare – Dienstplan Pflege“, Primärsprache **Deutsch**
+   - Plattform **iOS**, Name z. B. „Pulshift – Dienstplan Pflege“, Primärsprache **Deutsch**
    - Bundle-ID: die eben registrierte auswählen, SKU: `shiftcare`
 5. Deine **Team-ID** findest du unter https://developer.apple.com/account → *Membership details* (10 Zeichen, z. B. `A1B2C3D4E5`).
 
@@ -56,7 +56,7 @@ Tipp: Manche Einstellungsseiten von GitHub und Apple sind in der mobilen Ansicht
 1. GitHub → **Actions** → links **„Store release“** → **Run workflow** → Plattform `ios`, Version `1.0.0` → **Run workflow**.
 2. Nach etwa 15 Minuten ist der Lauf grün. App Store Connect braucht danach noch 10–30 Minuten zur Verarbeitung.
 3. App Store Connect → deine App → **TestFlight** → *Interne Tests* → Gruppe anlegen → dich selbst hinzufügen.
-4. Die App **TestFlight** aus dem App Store auf dem iPad installieren, mit derselben Apple-ID anmelden → ShiftCare installieren.
+4. Die App **TestFlight** aus dem App Store auf dem iPad installieren, mit derselben Apple-ID anmelden → Pulshift installieren.
 5. Testen nach der Checkliste in [APP-STORES.md §8](APP-STORES.md#8-test-auf-echten-geräten-vor-der-einreichung).
 
 Jeder weitere Lauf erhöht die Build-Nummer automatisch. Für ein Update im Store erhöhst du nur die Version (z. B. `1.0.1`).
@@ -66,7 +66,7 @@ Jeder weitere Lauf erhöht die Build-Nummer automatisch. Für ein Update im Stor
 1. https://play.google.com/console → Konto anlegen (25 USD einmalig), Identität bestätigen.
 2. Den Upload-Schlüssel erzeugt GitHub für dich. Dafür braucht der Workflow einmalig die Erlaubnis, Secrets zu setzen:
    - https://github.com/settings/personal-access-tokens/new
-   - *Token name*: `ShiftCare Schlüssel`, *Expiration*: 7 Tage
+   - *Token name*: `Pulshift Schlüssel`, *Expiration*: 7 Tage
    - *Repository access*: **Only select repositories** → `yeu95maker/Ach`
    - *Permissions* → *Repository permissions* → **Secrets: Read and write**
    - **Generate token** → Token kopieren
@@ -79,7 +79,7 @@ Wichtig: In der Play Console **Play App Signing** aktiviert lassen (Standard). D
 ## 6. Android-App bauen und hochladen
 
 1. Actions → **„Store release“** → Plattform `android`, Version `1.0.0`.
-2. Wenn der Lauf grün ist: unten bei **Artifacts** die Datei herunterladen. Die Dateien-App entpackt das ZIP beim Antippen; darin liegt `ShiftCare-1.0.0-<nr>.aab`.
+2. Wenn der Lauf grün ist: unten bei **Artifacts** die Datei herunterladen. Die Dateien-App entpackt das ZIP beim Antippen; darin liegt `Pulshift-1.0.0-<nr>.aab`.
 3. Play Console → **App erstellen** (Name, Standardsprache Deutsch, App, kostenlos) → **Testen → Interner Test → Neuen Release erstellen** → AAB hochladen → Release-Name übernehmen → speichern und überprüfen.
 4. Dich selbst als Tester eintragen und die App über den Testlink auf einem Android-Gerät installieren.
 
@@ -90,7 +90,7 @@ Optional: Für automatische Uploads in den internen Test ein Google-Cloud-Dienst
 | Meldung im Lauf | Ursache und Lösung |
 | --- | --- |
 | „Es fehlen GitHub-Secrets“ | Schritt 3.6 prüfen, Namen exakt so schreiben |
-| `No profiles for 'dev.shiftcare.app' were found` / `Cloud signing permission error` | Der API-Schlüssel hat nicht die Rolle **Admin** (Schritt 3.2) |
+| `No profiles for 'app.pulshift' were found` / `Cloud signing permission error` | Der API-Schlüssel hat nicht die Rolle **Admin** (Schritt 3.2) |
 | `No suitable application records were found` | Die App fehlt in App Store Connect oder hat eine andere Bundle-ID (Schritt 2.4) |
 | `The bundle version must be higher` | Der Build wurde schon einmal hochgeladen. Lauf einfach neu starten, die Nummer steigt automatisch |
 | Android: „Es fehlt der Android-Upload-Schlüssel“ | Schritt 5 ausführen |

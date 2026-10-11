@@ -2,7 +2,7 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   ShiftCare design tokens
+   Pulshift design tokens
    Semantic tokens only – components never use raw hex values.
    Dark mode uses its own palette (not an inversion of light).
    --------------------------------------------------------------------------- */

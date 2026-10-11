@@ -7,7 +7,7 @@ import { db } from './client'
 
 export type OAuthProvider = 'google' | 'azure'
 
-/** Web: same origin. Native: shiftcare://auth-callback[/path], handled in src/native/bootstrap.ts. */
+/** Web: same origin. Native: pulshift://auth-callback[/path], handled in src/native/bootstrap.ts. */
 const redirectTo = (path = '/') =>
   isNative() ? nativeRedirect(path) : `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, '')}${path}`
 

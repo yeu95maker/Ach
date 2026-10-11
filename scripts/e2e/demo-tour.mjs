@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Records a guided video tour of ShiftCare (German captions).
+ * Records a guided video tour of Pulshift (German captions).
  *   node scripts/e2e/demo-tour.mjs [outDir]
  * Requires: test gateway + `npm run dev` (see scripts/e2e/gateway.mjs), fresh seed.
  */

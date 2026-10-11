@@ -6,7 +6,7 @@ import type { AuthStorage } from '@/core/authStorage'
  * Items stay on this device only (no iCloud sync, not restored to other devices).
  */
 export async function createSecureAuthStorage(): Promise<AuthStorage> {
-  await SecureStorage.setKeyPrefix('shiftcare_')
+  await SecureStorage.setKeyPrefix('pulshift_')
   await SecureStorage.setSynchronize(false)
   await SecureStorage.setDefaultKeychainAccess(KeychainAccess.whenUnlockedThisDeviceOnly)
   return {

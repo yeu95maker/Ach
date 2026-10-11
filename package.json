@@ -1,9 +1,9 @@
 {
-  "name": "shiftcare",
+  "name": "pulshift",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "ShiftCare – Dienstplanung & Teamkommunikation für Krankenhäuser und Pflegeeinrichtungen",
+  "description": "Pulshift – Dienstplanung & Teamkommunikation für Krankenhäuser und Pflegeeinrichtungen",
   "engines": {
     "node": ">=20"
   },

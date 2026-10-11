@@ -46,7 +46,7 @@ export type ApnsConfig = {
   keyP8: string
   keyId: string
   teamId: string
-  /** Bundle identifier, e.g. dev.shiftcare.app */
+  /** Bundle identifier, e.g. app.pulshift */
   topic: string
   /** false → api.sandbox.push.apple.com (development builds). */
   production: boolean

@@ -1,6 +1,6 @@
-ShiftCare is the rostering app for hospitals and care facilities. Nurses see their roster, enter shift wishes and request leave. Ward leads plan, approve and quickly find cover.
+Pulshift is the rostering app for hospitals and care facilities. Nurses see their roster, enter shift wishes and request leave. Ward leads plan, approve and quickly find cover.
 
-Please note: you need an account from your facility to use ShiftCare. Your facility invites you; there is no public sign-up.
+Please note: you need an account from your facility to use Pulshift. Your facility invites you; there is no public sign-up.
 
 FOR NURSES
 • Your roster in month and list view, with shift times and when it was last updated
@@ -34,4 +34,4 @@ PRIVACY
 • Sick-note comments are additionally encrypted
 • Your sign-in is kept in your device's secure storage
 
-ShiftCare is available in German, English, Turkish, Romanian and Polish, with light and dark appearance.
+Pulshift is available in German, English, Turkish, Romanian and Polish, with light and dark appearance.

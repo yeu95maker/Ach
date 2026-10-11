@@ -1,5 +1,5 @@
 /**
- * Domain model of ShiftCare – framework- and backend-agnostic.
+ * Domain model of Pulshift – framework- and backend-agnostic.
  * The data layer maps database rows into these types; UI code only ever
  * works with these types.
  */

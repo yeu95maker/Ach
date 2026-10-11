@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Dein Dienst. Dein Team. Auf einen Blick.",
-    "brandSubtitle": "ShiftCare macht Dienstplan, Krankmeldung und Urlaub so einfach, wie es im Stationsalltag sein muss.",
+    "brandSubtitle": "Pulshift macht Dienstplan, Krankmeldung und Urlaub so einfach, wie es im Stationsalltag sein muss.",
     "brandPoint1": "Dienstplan immer aktuell – auch unterwegs",
     "brandPoint2": "Sehen, wer heute mit dir im Dienst ist",
     "brandPoint3": "Sicher und DSGVO-konform gehostet",
@@ -820,7 +820,7 @@
     "dropTitle": "Datei hierher ziehen oder auswählen",
     "dropHint": "CSV oder Excel (XLSX) aus deinem Dienstplanprogramm – als Liste (eine Zeile pro Dienst) oder als Raster (eine Zeile pro Person, eine Spalte pro Tag).",
     "chooseFile": "Datei auswählen",
-    "privacyHint": "Die Datei wird nur auf deinem Gerät gelesen. An ShiftCare gehen nur die erkannten Dienste; Namen und Originalzeilen werden nach der Veröffentlichung gelöscht.",
+    "privacyHint": "Die Datei wird nur auf deinem Gerät gelesen. An Pulshift gehen nur die erkannten Dienste; Namen und Originalzeilen werden nach der Veröffentlichung gelöscht.",
     "errors": {
       "format": "Dieses Format wird nicht unterstützt. Bitte exportiere als CSV oder XLSX.",
       "size": "Die Datei ist größer als 15 MB.",
@@ -887,7 +887,7 @@
       "duplicate": "Diese Datei wurde für Station und Monat bereits importiert. Die Vorschau zeigt, ob sich etwas geändert hat.",
       "employees_one": "{{count}} Person zuordnen",
       "employees_other": "{{count}} Personen zuordnen",
-      "employeesHint": "Diese IDs aus der Datei kennt ShiftCare noch nicht. Die Zuordnung wird gespeichert und beim nächsten Import automatisch verwendet.",
+      "employeesHint": "Diese IDs aus der Datei kennt Pulshift noch nicht. Die Zuordnung wird gespeichert und beim nächsten Import automatisch verwendet.",
       "idInFile": "ID in der Datei: {{id}}",
       "rows_one": "{{count}} Dienst",
       "rows_other": "{{count}} Dienste",
@@ -929,8 +929,8 @@
         "changed": "Geändert",
         "removed": "Entfällt"
       },
-      "manual_one": "{{count}} Eintrag wurde in ShiftCare von Hand angelegt oder geändert und wird durch die Datei ersetzt.",
-      "manual_other": "{{count}} Einträge wurden in ShiftCare von Hand angelegt oder geändert und werden durch die Datei ersetzt.",
+      "manual_one": "{{count}} Eintrag wurde in Pulshift von Hand angelegt oder geändert und wird durch die Datei ersetzt.",
+      "manual_other": "{{count}} Einträge wurden in Pulshift von Hand angelegt oder geändert und werden durch die Datei ersetzt.",
       "manualBadge": "von Hand geändert",
       "notifyHint": "Betroffene Mitarbeitende erhalten eine zusammengefasste Benachrichtigung.",
       "more": "… und {{count}} weitere Änderungen",

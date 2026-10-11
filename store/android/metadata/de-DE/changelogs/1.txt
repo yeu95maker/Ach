@@ -1,1 +1,1 @@
-Erste Version von ShiftCare für iPhone, iPad und Android.
+Erste Version von Pulshift für iPhone, iPad und Android.

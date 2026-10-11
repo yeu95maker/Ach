@@ -205,7 +205,7 @@ begin
                              s.period_start, s.period_end, 'x.csv', repeat('f', 64), 'list', '{}', rows);
   prev := public.preview_import(run.id);
   assert (prev -> 'schedule' ->> 'id')::uuid = s.id, 'imports into the existing draft';
-  assert (prev -> 'counts' ->> 'manual')::int > 0, 'entries made in ShiftCare are flagged';
+  assert (prev -> 'counts' ->> 'manual')::int > 0, 'entries made in Pulshift are flagged';
   assert (prev -> 'counts' ->> 'removed')::int > 0, 'the file is the complete roster – others are removed';
 
   -- simulate a conflicting shift elsewhere: Leyla works on ITS1 at the same time

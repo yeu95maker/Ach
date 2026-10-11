@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * ShiftCare local test gateway – NOT for production.
+ * Pulshift local test gateway – NOT for production.
  *
  * A tiny stand-in for the Supabase API (Auth + PostgREST subset) on top of a
  * plain PostgreSQL that was prepared with scripts/db-test.sh. Every data
@@ -8,7 +8,7 @@
  * like PostgREST does – so Row Level Security is exercised for real.
  *
  * Used for browser end-to-end checks where Docker / the Supabase CLI are not
- * available. Supports only what the ShiftCare client uses.
+ * available. Supports only what the Pulshift client uses.
  *
  *   PGHOST=/tmp PGPORT=5432 PGDATABASE=shiftcare_test node scripts/e2e/gateway.mjs
  */

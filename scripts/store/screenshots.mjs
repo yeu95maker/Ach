@@ -220,7 +220,7 @@ async function featureGraphic(lang, file) {
     p { margin: 0; font-size: 25px; color: #d7e4ff; line-height: 1.3; }
   </style></head><body>
     <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#ffffff"/><path d="M20 34.5h7l3.5-9 6 17 3.5-8H46" fill="none" stroke="#0F3D91" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div><div class="name">ShiftCare</div><h1>${title}</h1><p>${subtitle}</p></div>
+    <div><div class="name">Pulshift</div><h1>${title}</h1><p>${subtitle}</p></div>
   </body></html>`)
   await page.evaluate(() => document.fonts.ready)
   mkdirSync(dirname(file), { recursive: true })

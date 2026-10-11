@@ -278,7 +278,7 @@ export function ProfilePage() {
             <ListRow icon={<LogOut />} tone="danger" title={t('profile.signOut')} chevron={false} onClick={() => void authRepository.signOut('local')} />
           </ListGroup>
 
-          <p className="text-center text-xs text-text-3">ShiftCare {__APP_VERSION__}</p>
+          <p className="text-center text-xs text-text-3">Pulshift {__APP_VERSION__}</p>
         </div>
       </div>
 

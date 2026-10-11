@@ -1,6 +1,6 @@
-ShiftCare to aplikacja do grafików dyżurów dla szpitali i placówek opieki. Pielęgniarki widzą swój grafik, zgłaszają życzenia i składają wnioski urlopowe. Oddziałowe planują, zatwierdzają i szybko znajdują zastępstwo.
+Pulshift to aplikacja do grafików dyżurów dla szpitali i placówek opieki. Pielęgniarki widzą swój grafik, zgłaszają życzenia i składają wnioski urlopowe. Oddziałowe planują, zatwierdzają i szybko znajdują zastępstwo.
 
-Ważne: do korzystania z ShiftCare potrzebujesz konta od swojej placówki. Placówka wysyła zaproszenie; nie ma publicznej rejestracji.
+Ważne: do korzystania z Pulshift potrzebujesz konta od swojej placówki. Placówka wysyła zaproszenie; nie ma publicznej rejestracji.
 
 DLA PIELĘGNIAREK
 • Grafik w widoku miesiąca i listy, z godzinami dyżurów i datą ostatniej aktualizacji
@@ -34,4 +34,4 @@ PRYWATNOŚĆ
 • Komentarze do zgłoszeń choroby są dodatkowo szyfrowane
 • Twoje logowanie jest przechowywane w chronionej pamięci urządzenia
 
-ShiftCare jest dostępny po niemiecku, angielsku, turecku, rumuńsku i polsku, w jasnym i ciemnym motywie.
+Pulshift jest dostępny po niemiecku, angielsku, turecku, rumuńsku i polsku, w jasnym i ciemnym motywie.

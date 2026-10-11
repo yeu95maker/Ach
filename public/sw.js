@@ -1,4 +1,4 @@
-/* ShiftCare service worker – Web Push only (no offline caching yet). */
+/* Pulshift service worker – Web Push only (no offline caching yet). */
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()))
 
@@ -10,9 +10,9 @@ self.addEventListener('push', (event) => {
   try {
     data = event.data ? event.data.json() : {}
   } catch {
-    data = { title: 'ShiftCare', body: event.data ? event.data.text() : '' }
+    data = { title: 'Pulshift', body: event.data ? event.data.text() : '' }
   }
-  const title = data.title || 'ShiftCare'
+  const title = data.title || 'Pulshift'
   event.waitUntil(
     self.registration.showNotification(title, {
       body: data.body || '',

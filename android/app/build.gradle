@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "dev.shiftcare.app"
+    namespace = "app.pulshift"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "dev.shiftcare.app"
+        applicationId "app.pulshift"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         // Release builds set these from CI (.github/workflows/release.yml); local builds use the defaults.

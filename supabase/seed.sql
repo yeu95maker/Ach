@@ -1,5 +1,5 @@
 -- =============================================================================
--- ShiftCare · Development seed (local `supabase db reset` only – never production)
+-- Pulshift · Development seed (local `supabase db reset` only – never production)
 --
 -- Two hospitals so tenant isolation can be verified by hand and in tests.
 -- All accounts use the password:  ShiftCare!2026

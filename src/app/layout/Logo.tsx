@@ -14,7 +14,7 @@ export function Logo({ className }: { className?: string }) {
     <span className={cn('flex items-center gap-2.5', className)}>
       <LogoMark />
       <span className="text-[19px] font-bold tracking-tight text-text">
-        Shift<span className="text-accent">Care</span>
+        Pul<span className="text-accent">shift</span>
       </span>
     </span>
   )

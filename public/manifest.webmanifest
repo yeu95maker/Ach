@@ -1,6 +1,6 @@
 {
-  "name": "ShiftCare",
-  "short_name": "ShiftCare",
+  "name": "Pulshift",
+  "short_name": "Pulshift",
   "description": "Dienstplan, Team und Anträge für Pflegekräfte",
   "start_url": "./",
   "scope": "./",

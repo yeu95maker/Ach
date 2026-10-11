@@ -49,7 +49,7 @@ jobs:
         run: ./gradlew --no-daemon assembleDebug bundleRelease lintDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: shiftcare-android
+          name: pulshift-android
           path: |
             android/app/build/outputs/apk/debug/*.apk
             android/app/build/outputs/bundle/release/*.aab
@@ -75,9 +75,9 @@ jobs:
             -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 40
           test -d build/Build/Products/Release-iphonesimulator/App.app
       - name: Package simulator app
-        run: cd build/Build/Products/Release-iphonesimulator && zip -qr "$GITHUB_WORKSPACE/ShiftCare-simulator.zip" App.app
+        run: cd build/Build/Products/Release-iphonesimulator && zip -qr "$GITHUB_WORKSPACE/Pulshift-simulator.zip" App.app
       - uses: actions/upload-artifact@v4
         with:
-          name: shiftcare-ios-simulator
-          path: ShiftCare-simulator.zip
+          name: pulshift-ios-simulator
+          path: Pulshift-simulator.zip
           if-no-files-found: error

@@ -1,4 +1,4 @@
-# ShiftCare
+# Pulshift
 
 Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, Kollegen im Dienst, Krankmeldung, Urlaub, Benachrichtigungen und Profil – mandantenfähig, sicher und als Web-App sowie später für iOS und Android.
 

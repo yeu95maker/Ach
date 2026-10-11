@@ -1,6 +1,6 @@
 # Live demo on GitHub Pages (https://<owner>.github.io/<repo>/).
 # Requires Settings → Pages → Source = "GitHub Actions". See docs/DEMO.md.
-# Backend: the public ShiftCare demo project. URL and anon key are public by
+# Backend: the public Pulshift demo project. URL and anon key are public by
 # design (they ship in the browser bundle; access is enforced by RLS). Override
 # them with the secrets or variables DEMO_SUPABASE_URL / DEMO_SUPABASE_ANON_KEY.
 name: Demo (GitHub Pages)

@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
 
     // Payload carries no health data: generic title + deep link only.
     const msg: PushMessage = {
-      title: TITLES[notification.type] ?? 'ShiftCare',
+      title: TITLES[notification.type] ?? 'Pulshift',
       body: typeof notification.payload?.unit_name === 'string' ? notification.payload.unit_name : '',
       url: notification.type.startsWith('schedule') ? '/schedule' : '/notifications',
       tag: notification.type,

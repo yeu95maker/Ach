@@ -1,6 +1,6 @@
-ShiftCare ist die Dienstplan-App für Krankenhäuser und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und finden schnell eine Vertretung.
+Pulshift ist die Dienstplan-App für Krankenhäuser und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und finden schnell eine Vertretung.
 
-Wichtig: Für ShiftCare brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
+Wichtig: Für Pulshift brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
 
 FÜR PFLEGEKRÄFTE
 • Dienstplan im Monats- und Listenblick, mit Dienstzeiten und Stand der letzten Änderung
@@ -34,4 +34,4 @@ DATENSCHUTZ
 • Kommentare zu Krankmeldungen werden zusätzlich verschlüsselt
 • Deine Anmeldung liegt im geschützten Speicher deines Geräts
 
-ShiftCare gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.
+Pulshift gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.

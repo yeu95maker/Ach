@@ -1,4 +1,4 @@
-# ShiftCare – Demo
+# Pulshift – Demo
 
 Alle Aufnahmen stammen aus der echten App mit echter Datenbank, Rechten und Benachrichtigungen. Die Daten sind die Demo-Daten aus `supabase/seed.sql`.
 
