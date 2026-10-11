@@ -19,14 +19,13 @@ Stand: 11.10.2026. Alles, was sich im Code und im Repository vorbereiten lässt,
 
 ## Offen – nur du kannst das
 
-### 1. Betreiberangaben (blockiert die Einreichung)
-Schick mir die folgenden Angaben, ich trage sie ein und entferne den „Entwurf“-Hinweis:
-- **Betreiber:** Firmenname bzw. dein Name, Anschrift, E-Mail für Datenschutz und für Support, ggf. Datenschutzbeauftragte/r
-- **Kontakt für Apples Prüfung:** Vorname, Nachname, E-Mail, Telefon. Diese Angaben sieht nur Apple.
-- **Copyright-Zeile,** z. B. `2026 Musterfirma GmbH`
-- **Rechenzentrum** des Supabase-Projekts, z. B. „Frankfurt am Main, EU“
+### 1. Betreiberangaben ✅
+Am 11.10.2026 eingetragen: Betreiber Yeukai A Kamalo (Dossenheim), Kontakt-E-Mail für Datenschutz und Support, Copyright, Prüfkontakt und Rechenzentrum Frankfurt am Main. Auf der Support-Seite steht jetzt ein Impressum. Der „Entwurf“-Hinweis ist entfernt, `check-listings.mjs --strict` ist grün.
 
-Die Datenschutzerklärung bitte rechtlich prüfen lassen. Die App verarbeitet Krankmeldungen (Art. 9 DSGVO), und gegenüber den Kliniken bist du Auftragsverarbeiter. Für die Kliniken brauchst du außerdem einen Vertrag zur Auftragsverarbeitung (AVV).
+Noch selbst zu erledigen:
+- **Telefonnummer für Apples Prüfung** direkt in App Store Connect eintragen (*App-Prüfung → Kontaktinformationen*). Sie steht bewusst nicht im öffentlichen Repository.
+- **Datenschutzerklärung rechtlich prüfen lassen.** Besonders: ob ein Datenschutzbeauftragter benannt werden muss, die Rolle als Auftragsverarbeiter und der AVV mit den Kliniken. Die App verarbeitet Krankmeldungen (Art. 9 DSGVO).
+- Später besser eine eigene geschäftliche E-Mail-Adresse und Domain verwenden (z. B. support@pulshift.app).
 
 ### 2. Entwicklerkonten
 - **Apple Developer Program**, 99 USD pro Jahr. Für eine Business-App am besten **als Organisation** (dafür braucht es eine D-U-N-S-Nummer, kostenlos über Apple).
