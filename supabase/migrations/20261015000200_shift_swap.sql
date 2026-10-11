@@ -62,13 +62,13 @@ create trigger shift_swaps_audit
 alter table public.shift_swaps enable row level security;
 grant select on public.shift_swaps to authenticated;
 
--- The two people involved, and the leads of the ward.
+-- The two people involved, and the leads of the ward once the colleague agreed.
 create policy shift_swaps_select on public.shift_swaps
   for select to authenticated
   using (
     requester_id in (select private.my_employee_ids())
     or partner_id in (select private.my_employee_ids())
-    or unit_id in (select private.units_with_permission('schedule.manage'))
+    or (status <> 'pending_partner' and unit_id in (select private.units_with_permission('schedule.manage')))
   );
 
 -- -----------------------------------------------------------------------------
