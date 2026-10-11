@@ -84,6 +84,13 @@ const CAPTIONS = {
     ro: ['Înlocuitor în câteva secunde', 'Cine e liber, respectă odihna și e interesat'],
     pl: ['Zastępstwo w kilka sekund', 'Kto jest wolny, ma czas odpoczynku i chęć'],
   },
+  chat: {
+    de: ['Das ganze Team im Gespräch', 'Stationschat für Tausch, Fragen und Absprachen'],
+    en: ['Your whole ward in one chat', 'Ward chat for swaps, questions and quick updates'],
+    tr: ['Tüm ekip tek sohbette', 'Nöbet değişimi, sorular ve haberler için servis sohbeti'],
+    ro: ['Toată echipa într-un chat', 'Chatul secției pentru schimburi, întrebări și noutăți'],
+    pl: ['Cały zespół w jednym czacie', 'Czat oddziału do zamian, pytań i ustaleń'],
+  },
   editor: {
     de: ['Der ganze Dienstplan in deiner Hand', 'Planen mit Wünschen, Ruhezeiten und offenen Diensten'],
     en: ['The whole roster in your hands', 'Plan with wishes, rest periods and open shifts'],
@@ -113,6 +120,7 @@ const SCREENS = {
   phone: [
     { id: 'home', user: NURSE, path: '/' },
     { id: 'schedule', user: NURSE, path: '/schedule', theme: 'dark' },
+    { id: 'chat', user: NURSE, path: '/team/chat' },
     { id: 'wishes', user: NURSE, path: '/schedule/wishes' },
     { id: 'open', user: NURSE, path: '/schedule/open' },
     { id: 'cover', user: LEAD, path: '/team?tab=sick', action: 'cover' },
@@ -121,6 +129,7 @@ const SCREENS = {
   tablet: [
     { id: 'editor', user: LEAD, path: '/schedule/plan' },
     { id: 'cover', user: LEAD, path: '/team?tab=sick', action: 'cover' },
+    { id: 'chat', user: LEAD, path: '/team/chat' },
     { id: 'schedule', user: NURSE, path: '/schedule' },
     { id: 'home', user: NURSE, path: '/' },
     { id: 'news', user: NURSE, path: '/news' },
