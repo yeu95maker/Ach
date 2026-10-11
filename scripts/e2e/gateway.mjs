@@ -360,6 +360,34 @@ async function handleInvite(req, res, claims) {
   return send(res, 201, { employee_id: employeeId, user_id: userId, invited: !existing.rows.length })
 }
 
+/**
+ * Emulates supabase/functions/roster-sync: the sender authenticates with the
+ * API key; the delivery runs as service_role through public.ingest_roster().
+ * (The shape validation of the real function lives in _shared/rosterPayload.ts
+ * and has its own unit tests; the database validates again.)
+ */
+async function handleRosterSync(req, res) {
+  if (req.method !== 'POST') return send(res, 405, { error: 'method_not_allowed' })
+  const key = (req.headers.authorization ?? '').replace(/^Bearer /i, '').trim() || String(req.headers['x-pulshift-key'] ?? '').trim()
+  if (!key) return send(res, 401, { error: 'missing_api_key' })
+  const body = await readBody(req)
+  const client = await pool.connect()
+  try {
+    await client.query('begin')
+    await client.query('set local role service_role')
+    const r = await client.query('select public.ingest_roster($1, $2) as result', [key, JSON.stringify(body)])
+    await client.query('commit')
+    const result = r.rows[0].result
+    return send(res, result.status === 'staged' ? 202 : 200, result)
+  } catch (e) {
+    await client.query('rollback').catch(() => {})
+    const status = e.code === '28000' ? 401 : e.code === 'P0429' ? 429 : e.code === '22023' ? 422 : 500
+    return send(res, status, { error: e.message })
+  } finally {
+    client.release()
+  }
+}
+
 // ------------------------------------------------------------ Server ----
 createServer(async (req, res) => {
   if (req.method === 'OPTIONS') return send(res, 204, undefined)
@@ -370,6 +398,7 @@ createServer(async (req, res) => {
     if (url.pathname.startsWith('/auth/v1')) return await handleAuth(req, res, url, claims)
     if (url.pathname.startsWith('/rest/v1/')) return await handleRest(req, res, url, claims)
     if (url.pathname === '/functions/v1/invite-employee') return await handleInvite(req, res, claims)
+    if (url.pathname === '/functions/v1/roster-sync') return await handleRosterSync(req, res)
     if (url.pathname.startsWith('/storage/v1/object/sign/')) {
       const body = await readBody(req)
       return send(res, 200, (body?.paths ?? []).map((p) => ({ path: p, signedURL: null, error: 'not available in test gateway' })))

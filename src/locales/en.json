@@ -320,6 +320,10 @@
       "open_shift_interest": {
         "title": "{{name}} can cover",
         "body": "Open shift {{date}}, {{time}} · {{unit}}"
+      },
+      "roster_sync": {
+        "title": "New roster version from {{source}}",
+        "body": "{{unit}} · {{period}} · {{count}} changes – please review and apply"
       }
     }
   },
@@ -964,15 +968,16 @@
       "by": "{{name}} · {{when}}",
       "publishedAt": "published {{when}}",
       "rows": "{{ok}} shifts ready · {{errors}} errors",
-      "failed": "Last attempt failed: {{message}}"
+      "failed": "Last attempt failed: {{message}}",
+      "viaApi": "Interface"
     },
     "kind": {
       "file": "File import (CSV/XLSX)",
-      "api": "Direct interface (in preparation)",
+      "api": "Pulshift interface (automatic)",
       "sftp": "Automatic file pickup (in preparation)"
     },
     "admin": {
-      "intro": "Define here from which rostering software wards import their roster. File import (CSV/XLSX) is available. Direct interfaces to individual vendors are not implemented yet – they are only offered once they have been built and tested.",
+      "intro": "Decide here how wards take over their roster from your existing rostering program: as a file (CSV/XLSX) or automatically through the Pulshift interface. With the interface, your rostering program, your IT or an export job sends the published roster to Pulshift; the ward lead confirms changes with one tap. Ready-made direct connections to specific vendors (e.g. ATOSS, SP-Expert) are not available yet.",
       "add": "Add import profile",
       "edit": "Edit import profile",
       "empty": "No import profiles yet",
@@ -989,7 +994,29 @@
       "codeMappings": "Mapped shift codes ({{count}})",
       "noMappings": "None yet – personnel numbers are recognised directly.",
       "noCodeMappings": "None yet – codes like F, S, N are recognised directly.",
-      "removeMapping": "Remove mapping"
+      "removeMapping": "Remove mapping",
+      "kindApiHint": "Your rostering program or IT sends the published roster to Pulshift automatically. After saving, create a key here."
+    },
+    "api": {
+      "intro": "Your hospital's system sends the published roster to this address. Every new version is shown to the ward lead for confirmation; unchanged deliveries are ignored.",
+      "endpoint": "Interface address",
+      "keys_one": "{{count}} active key",
+      "keys_other": "{{count}} active keys",
+      "newKey": "New key",
+      "label": "Label",
+      "labelHint": "What the key is for, e.g. the sending system.",
+      "create": "Create key",
+      "createdTitle": "Key created",
+      "onlyOnce": "Copy the key now and pass it securely to your IT. It is shown only this once.",
+      "key": "API key",
+      "howTo": "Delivery: POST to the address, header “Authorization: Bearer <key>”, body in the “Pulshift Roster Exchange v1” format (see docs/SCHNITTSTELLE.md).",
+      "copy": "Copy",
+      "copied": "Copied",
+      "lastUsed": "last used {{when}}",
+      "neverUsed": "never used",
+      "revoke": "Revoke",
+      "revoked": "revoked",
+      "noKeys": "No key yet"
     }
   },
   "chat": {

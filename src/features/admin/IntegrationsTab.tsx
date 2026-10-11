@@ -8,6 +8,7 @@ import { integrationRepository, type IntegrationKind, type IntegrationSource } f
 import type { DateFormat } from '@/domain/integration/types'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { Badge, Button, Card, CardHeader, EmptyState, Field, IconButton, Input, Select, Sheet, SkeletonCard, useToast } from '@/ui'
+import { ApiKeys } from './ApiKeys'
 import { useAdminEmployees, useAdminShiftTypes, useOrganization } from './useAdmin'
 
 type Draft = Omit<IntegrationSource, 'id'> & { id?: string }
@@ -82,7 +83,7 @@ export function IntegrationsTab() {
   const hasSecret = useQuery({
     queryKey: ['integration-secret', draft?.id],
     queryFn: () => integrationRepository.hasSecret(draft!.id!),
-    enabled: !!draft?.id && draft.kind !== 'file',
+    enabled: !!draft?.id && draft.kind === 'sftp',
   })
   const units = (org.data ?? []).flatMap((d) => d.units)
 
@@ -123,7 +124,7 @@ export function IntegrationsTab() {
             title={
               <span className="flex flex-wrap items-center gap-2">
                 {s.name}
-                <Badge tone={s.kind === 'file' ? 'success' : 'neutral'}>{t(`integration.kind.${s.kind}`)}</Badge>
+                <Badge tone={s.kind === 'sftp' ? 'neutral' : 'success'}>{t(`integration.kind.${s.kind}`)}</Badge>
                 {!s.isActive && <Badge tone="warning">{t('admin.inactive')}</Badge>}
               </span>
             }
@@ -134,7 +135,8 @@ export function IntegrationsTab() {
               </IconButton>
             }
           />
-          {s.kind !== 'file' && <p className="text-sm text-warning-text">{t('integration.admin.notImplemented')}</p>}
+          {s.kind === 'sftp' && <p className="text-sm text-warning-text">{t('integration.admin.notImplemented')}</p>}
+          {s.kind === 'api' && <ApiKeys source={s} />}
           <Mappings source={s} />
         </Card>
       ))}
@@ -160,7 +162,7 @@ export function IntegrationsTab() {
             <Field label={t('admin.org.name')} htmlFor="int-name">
               <Input id="int-name" value={draft.name} maxLength={120} placeholder={t('integration.admin.namePlaceholder')} onChange={(e) => setDraft({ ...draft, name: e.target.value })} />
             </Field>
-            <Field label={t('integration.admin.kind')} htmlFor="int-kind" hint={draft.kind === 'file' ? t('integration.admin.kindFileHint') : t('integration.admin.notImplemented')}>
+            <Field label={t('integration.admin.kind')} htmlFor="int-kind" hint={draft.kind === 'file' ? t('integration.admin.kindFileHint') : draft.kind === 'api' ? t('integration.admin.kindApiHint') : t('integration.admin.notImplemented')}>
               <Select id="int-kind" value={draft.kind} onChange={(e) => setDraft({ ...draft, kind: e.target.value as IntegrationKind })}>
                 {(['file', 'api', 'sftp'] as const).map((k) => (
                   <option key={k} value={k}>
@@ -195,7 +197,7 @@ export function IntegrationsTab() {
                 </Select>
               </Field>
             </div>
-            {draft.kind !== 'file' && draft.id && (
+            {draft.kind === 'sftp' && draft.id && (
               <Field
                 label={t('integration.admin.secret')}
                 htmlFor="int-secret"

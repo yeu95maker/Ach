@@ -25,6 +25,7 @@ const META: Record<NotificationType, NotificationMeta> = {
   wish_plan_locked: { tone: 'neutral', route: '/schedule/wishes' },
   wish_plan_reviewed: { tone: 'primary', route: '/schedule/wishes' },
   open_shift_interest: { tone: 'accent', route: '/schedule/open' },
+  roster_sync: { tone: 'warning', route: '/schedule/import?tab=history' },
 }
 
 export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): NotificationMeta {
@@ -32,6 +33,9 @@ export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): 
   if (n.type === 'open_shift' || n.type === 'open_shift_interest') return meta
   if (n.type === 'schedule_changed' && typeof n.payload.entry_date === 'string') {
     return { ...meta, route: `/schedule?date=${n.payload.entry_date}&view=day` }
+  }
+  if (n.type === 'roster_sync' && typeof n.payload.run_id === 'string') {
+    return { ...meta, route: `/schedule/import?run=${n.payload.run_id}` }
   }
   if (n.type === 'message' && typeof n.payload.unit_id === 'string') {
     return { ...meta, route: `/team/chat?unit=${n.payload.unit_id}` }

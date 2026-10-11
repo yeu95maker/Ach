@@ -13,11 +13,12 @@ Die Einrichtungen behalten ihr bisheriges Dienstplanprogramm. Die Stationsleitun
 | Aufbau **Liste** (eine Zeile pro Dienst) | ✅ |
 | Aufbau **Raster** (eine Zeile pro Person, eine Spalte pro Tag) | ✅ |
 | Altes Excel-Format `.xls`, ODS, PDF | ❌ nicht unterstützt: bitte als XLSX oder CSV exportieren |
-| **Direkte Schnittstelle (API)** zu einem Anbieter | ❌ **nicht umgesetzt.** Es gibt kein einziges Herstellersystem, das Pulshift heute direkt anbindet. |
+| **Pulshift-Schnittstelle** (Roster Exchange v1): das Quellsystem oder die IT liefert den veröffentlichten Plan automatisch, die Leitung bestätigt | ✅ umgesetzt und getestet, siehe [SCHNITTSTELLE.md](SCHNITTSTELLE.md) |
+| **Direktanbindung an einen bestimmten Hersteller** (ATOSS, SP-Expert, PEP …) | ❌ **nicht umgesetzt.** Kein Herstellersystem wird heute direkt abgefragt; dafür fehlen Schnittstellenbeschreibung und Testzugang. |
 | **Automatischer Dateiabruf** (z. B. SFTP) | ❌ nicht umgesetzt |
-| Zugangsdaten für künftige Schnittstellen sicher hinterlegen (Vault) | ✅ umgesetzt (nur Speicherung, kein Abruf) |
+| Zugangsdaten für künftige Abrufe sicher hinterlegen (Vault) | ✅ umgesetzt (nur Speicherung, kein Abruf) |
 
-In der Oberfläche heißen die Arten „Direkte Schnittstelle (in Vorbereitung)“ und „Automatischer Dateiabruf (in Vorbereitung)“. Solche Profile lassen sich zwar anlegen, aber nicht zum Import verwenden. Die Datenbank lehnt das ab.
+In der Oberfläche heißen die Arten „Dateiimport (CSV/XLSX)“, „Pulshift-Schnittstelle (automatisch)“ und „Automatischer Dateiabruf (in Vorbereitung)“. Profile der letzten Art lassen sich anlegen, aber nicht verwenden; die Datenbank lehnt das ab.
 
 **Definition of Done erfüllt:**
 - Eine CSV- oder XLSX-Datei wird eingelesen und geprüft.

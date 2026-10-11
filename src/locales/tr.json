@@ -320,6 +320,10 @@
       "open_shift_interest": {
         "title": "{{name}} devralabilir",
         "body": "Açık vardiya {{date}}, {{time}} · {{unit}}"
+      },
+      "roster_sync": {
+        "title": "{{source}} kaynağından yeni plan sürümü",
+        "body": "{{unit}} · {{period}} · {{count}} değişiklik – lütfen kontrol edip uygula"
       }
     }
   },
@@ -964,15 +968,16 @@
       "by": "{{name}} · {{when}}",
       "publishedAt": "yayınlandı {{when}}",
       "rows": "{{ok}} vardiya hazır · {{errors}} hata",
-      "failed": "Son deneme başarısız: {{message}}"
+      "failed": "Son deneme başarısız: {{message}}",
+      "viaApi": "Arayüz"
     },
     "kind": {
       "file": "Dosya içe aktarma (CSV/XLSX)",
-      "api": "Doğrudan arayüz (hazırlanıyor)",
+      "api": "Pulshift arayüzü (otomatik)",
       "sftp": "Otomatik dosya alma (hazırlanıyor)"
     },
     "admin": {
-      "intro": "Servislerin planlarını hangi vardiya programlarından içe aktaracağını burada belirlersin. Dosya içe aktarma (CSV/XLSX) kullanılabilir. Tek tek sağlayıcılara doğrudan arayüzler henüz yok – ancak geliştirilip test edildiklerinde sunulur.",
+      "intro": "Servislerin planı mevcut vardiya programından nasıl alacağını burada belirlersin: dosya (CSV/XLSX) ile veya Pulshift arayüzü üzerinden otomatik. Arayüzde vardiya programınız, BT ekibiniz ya da bir dışa aktarma görevi yayınlanan planı Pulshift'e gönderir; servis sorumlusu değişiklikleri tek dokunuşla onaylar. Tek tek sağlayıcılara (ör. ATOSS, SP-Expert) hazır doğrudan bağlantılar henüz yok.",
       "add": "İçe aktarma profili ekle",
       "edit": "İçe aktarma profilini düzenle",
       "empty": "Henüz içe aktarma profili yok",
@@ -989,7 +994,29 @@
       "codeMappings": "Eşleştirilmiş vardiya kodları ({{count}})",
       "noMappings": "Henüz yok – personel numaraları doğrudan tanınır.",
       "noCodeMappings": "Henüz yok – F, S, N gibi kodlar doğrudan tanınır.",
-      "removeMapping": "Eşleştirmeyi kaldır"
+      "removeMapping": "Eşleştirmeyi kaldır",
+      "kindApiHint": "Vardiya programınız veya BT ekibiniz yayınlanan planı otomatik olarak Pulshift'e gönderir. Kaydettikten sonra burada bir anahtar oluştur."
+    },
+    "api": {
+      "intro": "Kurumunuzun sistemi yayınlanan planı bu adrese gönderir. Her yeni sürüm onay için servis sorumlusuna gösterilir; değişmeyen gönderimler yok sayılır.",
+      "endpoint": "Arayüz adresi",
+      "keys_one": "{{count}} etkin anahtar",
+      "keys_other": "{{count}} etkin anahtar",
+      "newKey": "Yeni anahtar",
+      "label": "Açıklama",
+      "labelHint": "Anahtarın ne için olduğu, ör. gönderen sistem.",
+      "create": "Anahtar oluştur",
+      "createdTitle": "Anahtar oluşturuldu",
+      "onlyOnce": "Anahtarı şimdi kopyala ve BT ekibinize güvenli şekilde ilet. Yalnızca bu kez gösterilir.",
+      "key": "API anahtarı",
+      "howTo": "Gönderim: adrese POST, „Authorization: Bearer <anahtar>“ başlığı, „Pulshift Roster Exchange v1“ biçiminde içerik (bkz. docs/SCHNITTSTELLE.md).",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "lastUsed": "son kullanım {{when}}",
+      "neverUsed": "hiç kullanılmadı",
+      "revoke": "Engelle",
+      "revoked": "engellendi",
+      "noKeys": "Henüz anahtar yok"
     }
   },
   "chat": {

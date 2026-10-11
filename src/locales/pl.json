@@ -332,6 +332,10 @@
       "open_shift_interest": {
         "title": "{{name}} może przejąć dyżur",
         "body": "Wolny dyżur {{date}}, {{time}} · {{unit}}"
+      },
+      "roster_sync": {
+        "title": "Nowa wersja grafiku z {{source}}",
+        "body": "{{unit}} · {{period}} · zmiany: {{count}} – sprawdź i zastosuj"
       }
     }
   },
@@ -1026,15 +1030,16 @@
       "by": "{{name}} · {{when}}",
       "publishedAt": "opublikowano {{when}}",
       "rows": "{{ok}} dyżurów gotowych · {{errors}} błędów",
-      "failed": "Ostatnia próba nieudana: {{message}}"
+      "failed": "Ostatnia próba nieudana: {{message}}",
+      "viaApi": "Interfejs"
     },
     "kind": {
       "file": "Import pliku (CSV/XLSX)",
-      "api": "Bezpośredni interfejs (w przygotowaniu)",
+      "api": "Interfejs Pulshift (automatycznie)",
       "sftp": "Automatyczne pobieranie plików (w przygotowaniu)"
     },
     "admin": {
-      "intro": "Tutaj określasz, z jakich programów do planowania oddziały importują grafik. Dostępny jest import plików (CSV/XLSX). Bezpośrednie interfejsy do poszczególnych dostawców nie są jeszcze wdrożone – będą oferowane dopiero po opracowaniu i przetestowaniu.",
+      "intro": "Tutaj określasz, jak oddziały przejmują grafik z istniejącego programu: z pliku (CSV/XLSX) lub automatycznie przez interfejs Pulshift. Przy interfejsie wasz program do grafików, dział IT lub zadanie eksportu wysyła opublikowany grafik do Pulshift; oddziałowa zatwierdza zmiany jednym dotknięciem. Gotowych bezpośrednich połączeń z konkretnymi dostawcami (np. ATOSS, SP-Expert) jeszcze nie ma.",
       "add": "Dodaj profil importu",
       "edit": "Edytuj profil importu",
       "empty": "Brak profili importu",
@@ -1051,7 +1056,31 @@
       "codeMappings": "Przypisane kody dyżurów ({{count}})",
       "noMappings": "Jeszcze brak – numery kadrowe są rozpoznawane bezpośrednio.",
       "noCodeMappings": "Jeszcze brak – kody jak F, S, N są rozpoznawane bezpośrednio.",
-      "removeMapping": "Usuń przypisanie"
+      "removeMapping": "Usuń przypisanie",
+      "kindApiHint": "Wasz program do grafików lub dział IT automatycznie wysyła opublikowany grafik do Pulshift. Po zapisaniu utwórz tutaj klucz."
+    },
+    "api": {
+      "intro": "System placówki wysyła opublikowany grafik pod ten adres. Każda nowa wersja trafia do oddziałowej do zatwierdzenia; niezmienione dostawy są pomijane.",
+      "endpoint": "Adres interfejsu",
+      "keys_one": "{{count}} aktywny klucz",
+      "keys_few": "{{count}} aktywne klucze",
+      "keys_many": "{{count}} aktywnych kluczy",
+      "keys_other": "{{count}} aktywnego klucza",
+      "newKey": "Nowy klucz",
+      "label": "Nazwa",
+      "labelHint": "Do czego służy klucz, np. system wysyłający.",
+      "create": "Utwórz klucz",
+      "createdTitle": "Klucz utworzony",
+      "onlyOnce": "Skopiuj klucz teraz i bezpiecznie przekaż go działowi IT. Jest wyświetlany tylko ten jeden raz.",
+      "key": "Klucz API",
+      "howTo": "Dostawa: POST na adres, nagłówek „Authorization: Bearer <klucz>”, treść w formacie „Pulshift Roster Exchange v1” (opis: docs/SCHNITTSTELLE.md).",
+      "copy": "Kopiuj",
+      "copied": "Skopiowano",
+      "lastUsed": "ostatnio użyty {{when}}",
+      "neverUsed": "jeszcze nieużywany",
+      "revoke": "Zablokuj",
+      "revoked": "zablokowany",
+      "noKeys": "Brak klucza"
     }
   },
   "chat": {

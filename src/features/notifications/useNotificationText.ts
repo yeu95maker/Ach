@@ -21,6 +21,7 @@ export function useNotificationText() {
       const time = p('starts_at') && p('ends_at') ? fmt.timeRange(new Date(p('starts_at')), new Date(p('ends_at'))) : ''
       const vars = {
         unit: p('unit_name'),
+        source: p('source_name'),
         name: p('employee_name'),
         title: p('title'),
         category: n.type === 'announcement' ? t(`news.category.${p('category') || 'information'}`) : '',

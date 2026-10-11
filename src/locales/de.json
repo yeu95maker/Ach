@@ -320,6 +320,10 @@
       "open_shift_interest": {
         "title": "{{name}} kann einspringen",
         "body": "Offener Dienst {{date}}, {{time}} · {{unit}}"
+      },
+      "roster_sync": {
+        "title": "Neuer Dienstplanstand aus {{source}}",
+        "body": "{{unit}} · {{period}} · {{count}} Änderungen – bitte prüfen und übernehmen"
       }
     }
   },
@@ -964,15 +968,16 @@
       "by": "{{name}} · {{when}}",
       "publishedAt": "veröffentlicht {{when}}",
       "rows": "{{ok}} Dienste bereit · {{errors}} Fehler",
-      "failed": "Letzter Versuch fehlgeschlagen: {{message}}"
+      "failed": "Letzter Versuch fehlgeschlagen: {{message}}",
+      "viaApi": "Schnittstelle"
     },
     "kind": {
       "file": "Dateiimport (CSV/XLSX)",
-      "api": "Direkte Schnittstelle (in Vorbereitung)",
+      "api": "Pulshift-Schnittstelle (automatisch)",
       "sftp": "Automatischer Dateiabruf (in Vorbereitung)"
     },
     "admin": {
-      "intro": "Hier legst du fest, aus welchen Dienstplanprogrammen Stationen ihren Plan importieren. Verfügbar ist der Dateiimport (CSV/XLSX). Direkte Schnittstellen zu einzelnen Anbietern sind noch nicht umgesetzt – sie werden erst angeboten, wenn sie entwickelt und getestet sind.",
+      "intro": "Hier legst du fest, wie Stationen ihren Dienstplan aus dem vorhandenen Dienstplanprogramm übernehmen: per Datei (CSV/XLSX) oder automatisch über die Pulshift-Schnittstelle. Bei der Schnittstelle sendet euer Dienstplanprogramm, eure IT oder ein Export-Job den veröffentlichten Plan an Pulshift; die Leitung bestätigt Änderungen mit einem Tipp. Fertige Direktanbindungen an einzelne Anbieter (z. B. ATOSS, SP-Expert) gibt es noch nicht.",
       "add": "Importprofil anlegen",
       "edit": "Importprofil bearbeiten",
       "empty": "Noch keine Importprofile",
@@ -989,7 +994,29 @@
       "codeMappings": "Zugeordnete Dienstkürzel ({{count}})",
       "noMappings": "Noch keine – Personalnummern werden direkt erkannt.",
       "noCodeMappings": "Noch keine – Kürzel wie F, S, N werden direkt erkannt.",
-      "removeMapping": "Zuordnung entfernen"
+      "removeMapping": "Zuordnung entfernen",
+      "kindApiHint": "Euer Dienstplanprogramm oder eure IT sendet den veröffentlichten Plan automatisch an Pulshift. Nach dem Speichern erzeugst du hier einen Schlüssel."
+    },
+    "api": {
+      "intro": "Das System eures Hauses sendet den veröffentlichten Plan an diese Adresse. Jede neue Version erscheint bei der Stationsleitung zum Bestätigen; unveränderte Lieferungen werden ignoriert.",
+      "endpoint": "Adresse der Schnittstelle",
+      "keys_one": "{{count}} aktiver Schlüssel",
+      "keys_other": "{{count}} aktive Schlüssel",
+      "newKey": "Neuer Schlüssel",
+      "label": "Bezeichnung",
+      "labelHint": "Wofür der Schlüssel ist, z. B. das System, das sendet.",
+      "create": "Schlüssel erzeugen",
+      "createdTitle": "Schlüssel erzeugt",
+      "onlyOnce": "Kopiere den Schlüssel jetzt und gib ihn sicher an eure IT weiter. Er wird nur dieses eine Mal angezeigt.",
+      "key": "API-Schlüssel",
+      "howTo": "Lieferung: POST an die Adresse, Kopfzeile „Authorization: Bearer <Schlüssel>“, Inhalt im Format „Pulshift Roster Exchange v1“ (Beschreibung: docs/SCHNITTSTELLE.md).",
+      "copy": "Kopieren",
+      "copied": "Kopiert",
+      "lastUsed": "zuletzt genutzt {{when}}",
+      "neverUsed": "noch nie genutzt",
+      "revoke": "Sperren",
+      "revoked": "gesperrt",
+      "noKeys": "Noch kein Schlüssel"
     }
   },
   "chat": {

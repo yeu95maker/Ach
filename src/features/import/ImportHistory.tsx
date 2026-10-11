@@ -51,7 +51,7 @@ export function ImportHistory() {
                   {h.unitName} · {fmt.monthYear(h.periodStart)}
                 </p>
                 <p className="text-sm text-text-3">
-                  {t('integration.history.by', { name: h.createdByName || '–', when: fmt.relative(h.createdAt) })}
+                  {t('integration.history.by', { name: h.createdByName || t('integration.history.viaApi'), when: fmt.relative(h.createdAt) })}
                   {h.publishedAt && ` · ${t('integration.history.publishedAt', { when: fmt.relative(h.publishedAt) })}`}
                 </p>
                 <p className="mt-1 text-sm text-text-2">

@@ -156,7 +156,33 @@ const mapRun = (r: RunRow): ImportRun => ({
   createdAt: new Date(r.created_at),
 })
 
+export type ApiKey = { id: string; label: string | null; prefix: string; createdAt: Date; lastUsedAt: Date | null; revokedAt: Date | null }
+
 export const integrationRepository = {
+  /** Keys of a "Pulshift-Schnittstelle" profile; the hash is never readable. */
+  async listApiKeys(sourceId: string): Promise<ApiKey[]> {
+    const rows = unwrapList<{ id: string; label: string | null; key_prefix: string; created_at: string; last_used_at: string | null; revoked_at: string | null }>(
+      await db().from('integration_api_keys').select('id, label, key_prefix, created_at, last_used_at, revoked_at').eq('source_id', sourceId).order('created_at', { ascending: false }),
+    )
+    return rows.map((r) => ({
+      id: r.id,
+      label: r.label,
+      prefix: r.key_prefix,
+      createdAt: new Date(r.created_at),
+      lastUsedAt: r.last_used_at ? new Date(r.last_used_at) : null,
+      revokedAt: r.revoked_at ? new Date(r.revoked_at) : null,
+    }))
+  },
+
+  /** Returns the plain key – shown once, never stored in readable form. */
+  async createApiKey(sourceId: string, label: string): Promise<{ id: string; key: string }> {
+    return unwrap<{ id: string; key: string }>(await db().rpc('create_integration_api_key', { p_source_id: sourceId, p_label: label || null }))
+  },
+
+  async revokeApiKey(keyId: string) {
+    unwrap(await db().rpc('revoke_integration_api_key', { p_key_id: keyId }))
+  },
+
   async fetchSources(hospitalId: string): Promise<IntegrationSource[]> {
     const rows = unwrapList<{ id: string; unit_id: string | null; name: string; kind: IntegrationKind; vendor: string | null; settings: IntegrationSource['settings']; is_active: boolean }>(
       await db().from('integration_sources').select('id, unit_id, name, kind, vendor, settings, is_active').eq('hospital_id', hospitalId).order('name'),

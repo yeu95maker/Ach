@@ -286,6 +286,61 @@ for (const run of runs) {
   await admin.context.close()
 }
 
+// Automatische Synchronisierung: admin creates an interface profile + key, the planning
+// system delivers, the ward lead is notified and confirms the changes
+{
+  const admin = await session('sync-admin', { email: 'admin@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  const a = admin.page
+  await a.goto(`${BASE}/admin?tab=integrations`)
+  await a.getByRole('button', { name: 'Importprofil anlegen' }).click()
+  await a.fill('#int-name', 'Schnittstelle Dienstplanprogramm')
+  await a.selectOption('#int-kind', 'api')
+  await a.locator('dialog[open]').getByRole('button', { name: 'Speichern' }).click()
+  await a.waitForSelector('text=Adresse der Schnittstelle')
+  await a.getByRole('button', { name: 'Neuer Schlüssel' }).click()
+  await a.fill('#api-key-label', 'Smoke-Test')
+  await a.locator('dialog[open]').getByRole('button', { name: 'Schlüssel erzeugen' }).click()
+  await a.waitForSelector('#api-key-value')
+  const key = await a.inputValue('#api-key-value')
+  await shot(a, 'sync', '80-admin-key', { full: false })
+  await admin.context.close()
+
+  const m = new Date(); m.setUTCDate(1); m.setUTCMonth(m.getUTCMonth() + 3)
+  const iso = (d) => d.toISOString().slice(0, 10)
+  const day = (n) => iso(new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth(), n)))
+  const payload = {
+    unit: '3A',
+    period: { start: day(1), end: iso(new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 0))) },
+    source_version: 'Smoke v1',
+    shifts: [
+      { employee: 'P-1001', date: day(3), code: 'F' },
+      { employee: 'P-1001', date: day(4), code: 'S' },
+      { employee: 'P-1003', date: day(3), code: 'N' },
+    ],
+  }
+  const deliver = (body) =>
+    fetch('http://localhost:54321/functions/v1/roster-sync', { method: 'POST', headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' }, body: JSON.stringify(body) })
+  const r1 = await deliver(payload)
+  const j1 = await r1.json()
+  if (r1.status !== 202 || j1.status !== 'staged') problems.push(`[sync] first delivery: ${r1.status} ${JSON.stringify(j1)}`)
+  const j2 = await (await deliver(payload)).json()
+  if (j2.status !== 'unchanged') problems.push(`[sync] repeated delivery: ${JSON.stringify(j2)}`)
+  const bad = await fetch('http://localhost:54321/functions/v1/roster-sync', { method: 'POST', headers: { authorization: 'Bearer pls_wrong' }, body: JSON.stringify(payload) })
+  if (bad.status !== 401) problems.push(`[sync] wrong key: ${bad.status}`)
+
+  const lead = await session('sync-lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  const p = lead.page
+  await p.goto(`${BASE}/notifications`)
+  await p.getByText('Neuer Dienstplanstand aus Schnittstelle Dienstplanprogramm').first().click()
+  await p.waitForURL(/\/schedule\/import\?run=/)
+  await p.getByRole('button', { name: 'Weiter zur Vorschau' }).click()
+  await p.waitForSelector('text=Vorschau der Änderungen')
+  await shot(p, 'sync', '81-lead-preview', { full: false })
+  await p.getByRole('button', { name: /Änderungen? übernehmen/ }).click()
+  await p.waitForSelector('text=Dienstplan übernommen')
+  await lead.context.close()
+}
+
 // Stationschat: nurse writes, the ward lead sees it live in her chat and hides a message
 {
   const nurse = await session('chat-nurse', { email: 'leyla.yilmaz@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })

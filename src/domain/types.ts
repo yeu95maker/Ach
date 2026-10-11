@@ -36,6 +36,7 @@ export type NotificationType =
   | 'wish_plan_locked'
   | 'wish_plan_reviewed'
   | 'open_shift_interest'
+  | 'roster_sync'
 
 export interface Hospital {
   id: string

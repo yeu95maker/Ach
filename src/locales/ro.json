@@ -326,6 +326,10 @@
       "open_shift_interest": {
         "title": "{{name}} poate prelua",
         "body": "Tură liberă {{date}}, {{time}} · {{unit}}"
+      },
+      "roster_sync": {
+        "title": "Versiune nouă a programului din {{source}}",
+        "body": "{{unit}} · {{period}} · {{count}} modificări – te rugăm să verifici și să aplici"
       }
     }
   },
@@ -995,15 +999,16 @@
       "by": "{{name}} · {{when}}",
       "publishedAt": "publicat {{when}}",
       "rows": "{{ok}} ture pregătite · {{errors}} erori",
-      "failed": "Ultima încercare a eșuat: {{message}}"
+      "failed": "Ultima încercare a eșuat: {{message}}",
+      "viaApi": "Interfață"
     },
     "kind": {
       "file": "Import de fișier (CSV/XLSX)",
-      "api": "Interfață directă (în pregătire)",
+      "api": "Interfața Pulshift (automat)",
       "sftp": "Preluare automată de fișiere (în pregătire)"
     },
     "admin": {
-      "intro": "Aici stabilești din ce programe de planificare își importă secțiile planul. Este disponibil importul de fișiere (CSV/XLSX). Interfețele directe către furnizori nu sunt încă implementate – sunt oferite doar după ce au fost dezvoltate și testate.",
+      "intro": "Aici stabilești cum preiau secțiile programul din aplicația de planificare existentă: ca fișier (CSV/XLSX) sau automat prin interfața Pulshift. Prin interfață, programul vostru de planificare, IT-ul sau un job de export trimite programul publicat către Pulshift; asistentul șef confirmă modificările cu o atingere. Conexiuni directe gata făcute către anumiți furnizori (de ex. ATOSS, SP-Expert) nu există încă.",
       "add": "Adaugă profil de import",
       "edit": "Editează profilul de import",
       "empty": "Încă nu există profiluri de import",
@@ -1020,7 +1025,30 @@
       "codeMappings": "Coduri de tură asociate ({{count}})",
       "noMappings": "Încă niciunul – numerele de personal sunt recunoscute direct.",
       "noCodeMappings": "Încă niciunul – codurile ca F, S, N sunt recunoscute direct.",
-      "removeMapping": "Elimină asocierea"
+      "removeMapping": "Elimină asocierea",
+      "kindApiHint": "Programul vostru de planificare sau IT-ul trimite automat programul publicat către Pulshift. După salvare, creezi aici o cheie."
+    },
+    "api": {
+      "intro": "Sistemul instituției trimite programul publicat la această adresă. Fiecare versiune nouă apare la asistentul șef pentru confirmare; livrările nemodificate sunt ignorate.",
+      "endpoint": "Adresa interfeței",
+      "keys_one": "{{count}} cheie activă",
+      "keys_few": "{{count}} chei active",
+      "keys_other": "{{count}} de chei active",
+      "newKey": "Cheie nouă",
+      "label": "Denumire",
+      "labelHint": "Pentru ce este cheia, de ex. sistemul care trimite.",
+      "create": "Creează cheia",
+      "createdTitle": "Cheie creată",
+      "onlyOnce": "Copiază cheia acum și transmite-o în siguranță echipei IT. Este afișată doar acum.",
+      "key": "Cheie API",
+      "howTo": "Livrare: POST la adresă, antet „Authorization: Bearer <cheie>”, conținut în formatul „Pulshift Roster Exchange v1” (vezi docs/SCHNITTSTELLE.md).",
+      "copy": "Copiază",
+      "copied": "Copiat",
+      "lastUsed": "folosită ultima dată {{when}}",
+      "neverUsed": "nefolosită încă",
+      "revoke": "Blochează",
+      "revoked": "blocată",
+      "noKeys": "Încă nicio cheie"
     }
   },
   "chat": {
