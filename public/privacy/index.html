@@ -21,7 +21,7 @@
 
   <article id="de" lang="de">
     <h1>Datenschutzerklärung</h1>
-    <p class="meta">Stand: 10. Oktober 2026 · gilt für die Pulshift-App (iOS, Android) und die Web-App</p>
+    <p class="meta">Stand: 11. Oktober 2026 · gilt für die Pulshift-App (iOS, Android) und die Web-App</p>
 
     <section class="card">
       <h2>1. Worum es geht</h2>
@@ -37,14 +37,17 @@
         <tr><th>Konto</th><td>Name, dienstliche E-Mail-Adresse, Passwort (nur als Hash bei Supabase Auth), bei Anmeldung mit Microsoft oder Google die dort hinterlegte Kennung</td></tr>
         <tr><th>Profil (freiwillig)</th><td>Telefonnummer, Profilfoto (wird auf dem Gerät verkleinert, Standort- und Kameradaten werden entfernt), gesprochene Sprachen</td></tr>
         <tr><th>Beschäftigung</th><td>Einrichtung, Station, Beruf, Rolle, Personalnummer, Qualifikationen</td></tr>
-        <tr><th>Dienstplan</th><td>Dienste, Frei-Tage, Dienstwünsche, Interesse an offenen Diensten, Dienstplan-Verlauf</td></tr>
+        <tr><th>Dienstplan</th><td>Dienste, Frei-Tage, Dienstwünsche, Interesse an offenen Diensten, Diensttausch-Anfragen (wer mit wem welchen Dienst tauschen möchte, Zusage, Entscheidung der Leitung), Dienstplan-Verlauf. Liefert das Dienstplanprogramm deiner Einrichtung den Plan über die Pulshift-Schnittstelle, werden dafür Personalnummer, Datum, Dienstkürzel und Dienstzeiten übermittelt.</td></tr>
         <tr><th>Abwesenheiten</th><td>Urlaubsanträge; Krankmeldungen mit Zeitraum und optionalem Kommentar. Der Kommentar ist eine Gesundheitsangabe (Art. 9 DSGVO) und wird zusätzlich verschlüsselt gespeichert. Kolleginnen und Kollegen sehen nur, <em>dass</em> und <em>wie lange</em> jemand fehlt, nie den Grund.</td></tr>
         <tr><th>Kommunikation</th><td>Mitteilungen der Leitung, Nachrichten im Stationschat (lesbar für die Mitglieder der Station und die Leitung, nicht für Personalabteilung oder Verwaltung), Benachrichtigungen in der App. Gelöschte oder ausgeblendete Chatnachrichten werden sofort entfernt.</td></tr>
+        <tr><th>Dokumente</th><td>Dokumente deiner Station oder Einrichtung (z. B. SOPs, Richtlinien, Formulare) und deine Lesebestätigung mit Zeitpunkt. Die Leitung sieht, wer ein Dokument bestätigt hat.</td></tr>
+        <tr><th>Pflichtfortbildungen</th><td>Welche Fortbildungen für dich gelten, Datum deiner Teilnahme, Gültigkeit, ob die Leitung sie bestätigt hat, optional ein Nachweis (z. B. Teilnahmebescheinigung als Datei). Den Nachweis sehen nur du und die für Fortbildungen zuständige Leitung, nicht deine Kolleginnen und Kollegen.</td></tr>
+        <tr><th>Konto-Löschung</th><td>Dein Antrag auf Löschung (Zeitpunkt, optionale Nachricht) und wer ihn abgeschlossen hat</td></tr>
         <tr><th>Geräte</th><td>Push-Token deines Geräts (nur wenn du Benachrichtigungen einschaltest), Gerätetyp, App-Version</td></tr>
         <tr><th>Protokolle</th><td>Änderungsprotokoll (wer hat wann was geändert) und Anmeldeprotokoll zur Sicherheit und Nachvollziehbarkeit</td></tr>
         <tr><th>Auf dem Gerät</th><td>Anmeldesitzung (iOS-Schlüsselbund bzw. Android-Keystore, nur auf diesem Gerät), Sprache und Darstellung</td></tr>
       </table>
-      <p>Pulshift nutzt <strong>keine Werbung, kein Tracking und keine Analyse-Dienste</strong>. Es werden keine Daten verkauft oder für Werbung genutzt. Standort, Kontakte, Kamera und Mikrofon werden nicht verwendet; ein Profilfoto wählst du selbst aus.</p>
+      <p>Pulshift nutzt <strong>keine Werbung, kein Tracking und keine Analyse-Dienste</strong>. Es werden keine Daten verkauft oder für Werbung genutzt. Standort, Kontakte, Kamera und Mikrofon werden nicht verwendet; Profilfoto, Dokumente und Nachweise wählst du selbst über die Dateiauswahl aus. Dateiinhalte werden nicht ausgewertet.</p>
     </section>
 
     <section class="card">
@@ -52,6 +55,7 @@
       <ul>
         <li>Dienstplanung, Abwesenheiten und Teamkommunikation im Beschäftigungsverhältnis: Art. 6 Abs. 1 lit. b und c DSGVO in Verbindung mit § 26 BDSG bzw. den Regeln deines Landes</li>
         <li>Krankmeldungen: Art. 9 Abs. 2 lit. b DSGVO (Pflichten aus dem Arbeitsrecht)</li>
+        <li>Lesebestätigungen und Fortbildungsnachweise: Nachweis von Unterweisungen und Pflichtfortbildungen im Beschäftigungsverhältnis (Art. 6 Abs. 1 lit. b und c DSGVO)</li>
         <li>Freiwillige Profilangaben und Push-Benachrichtigungen: deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), jederzeit widerrufbar in der App unter Profil</li>
         <li>Sicherheit und Missbrauchsschutz (Protokolle): berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</li>
       </ul>
@@ -71,17 +75,17 @@
 
     <section class="card">
       <h2>7. Speicherdauer</h2>
-      <p>Daten werden gespeichert, solange dein Beschäftigungsverhältnis in der Einrichtung besteht und gesetzliche Aufbewahrungspflichten es verlangen. Danach löscht die Einrichtung dein Konto. Rohdaten aus Dienstplan-Importen werden nach der Veröffentlichung, spätestens nach 30 Tagen, gelöscht. Push-Tokens werden entfernt, sobald du Benachrichtigungen ausschaltest oder sie ungültig werden.</p>
+      <p>Daten werden gespeichert, solange dein Beschäftigungsverhältnis in der Einrichtung besteht und gesetzliche Aufbewahrungspflichten es verlangen. Danach löscht die Einrichtung dein Konto. Beantragst du die Löschung in der App (Profil → Konto löschen), sperrt die Verwaltung deinen Zugang; Anmeldekonto, Profil, Profilbild, Geräte und Einstellungen werden innerhalb von 30 Tagen gelöscht. Dienstpläne, Abwesenheiten, Lesebestätigungen und Fortbildungsnachweise, die die Einrichtung aufbewahren muss, bleiben bis zum Ende der Frist erhalten. Archivierte Dokumente bleiben für die Verwaltung nachvollziehbar. Rohdaten aus Dienstplan-Importen werden nach der Veröffentlichung, spätestens nach 30 Tagen, gelöscht. Push-Tokens werden entfernt, sobald du Benachrichtigungen ausschaltest oder sie ungültig werden.</p>
       <h2>8. Deine Rechte</h2>
-      <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO) sowie auf Beschwerde bei einer Datenschutz-Aufsichtsbehörde. Wende dich dafür an deine Einrichtung oder an [datenschutz@…]. Wie du dein Konto löschen lässt, steht auf der <a href="../support/#konto-loeschen">Support-Seite</a>.</p>
+      <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO) sowie auf Beschwerde bei einer Datenschutz-Aufsichtsbehörde. Wende dich dafür an deine Einrichtung oder an [datenschutz@…]. Die Löschung deines Kontos kannst du direkt in der App unter <strong>Profil → Konto löschen</strong> beantragen; mehr dazu auf der <a href="../support/#konto-loeschen">Support-Seite</a>.</p>
       <h2>9. Sicherheit</h2>
-      <p>Verbindungen sind TLS-verschlüsselt, Datenträger und Backups sind verschlüsselt, Kommentare zu Krankmeldungen zusätzlich auf Spaltenebene. In der App liegt die Sitzung im Schlüsselbund bzw. Keystore des Geräts und wird nicht in Cloud-Backups übernommen.</p>
+      <p>Verbindungen sind TLS-verschlüsselt, Datenträger und Backups sind verschlüsselt, Kommentare zu Krankmeldungen zusätzlich auf Spaltenebene. Dateien liegen in einem nicht öffentlichen Speicher und werden nur über kurzlebige Links (5 Minuten) geöffnet. Die Pulshift-Schnittstelle nutzt Schlüssel, von denen nur ein Hash gespeichert wird. In der App liegt die Sitzung im Schlüsselbund bzw. Keystore des Geräts und wird nicht in Cloud-Backups übernommen.</p>
     </section>
   </article>
 
   <article id="en" lang="en">
     <h1 style="margin-top:48px">Privacy policy</h1>
-    <p class="meta">Last updated: 10 October 2026 · applies to the Pulshift app (iOS, Android) and the web app</p>
+    <p class="meta">Last updated: 11 October 2026 · applies to the Pulshift app (iOS, Android) and the web app</p>
 
     <section class="card">
       <h2>1. About Pulshift</h2>
@@ -97,14 +101,17 @@
         <tr><th>Account</th><td>Name, work e-mail, password (stored only as a hash by Supabase Auth), your Microsoft or Google identifier if you sign in with them</td></tr>
         <tr><th>Profile (optional)</th><td>Phone number, profile photo (resized on your device, location and camera metadata removed), spoken languages</td></tr>
         <tr><th>Employment</th><td>Facility, ward, profession, role, personnel number, qualifications</td></tr>
-        <tr><th>Roster</th><td>Shifts, days off, shift wishes, interest in open shifts, roster history</td></tr>
+        <tr><th>Roster</th><td>Shifts, days off, shift wishes, interest in open shifts, shift swap requests (who wants to swap which shift with whom, the colleague's answer, the ward lead's decision), roster history. If your facility's rostering system sends the roster through the Pulshift interface, personnel number, date, shift code and shift times are transferred for this.</td></tr>
         <tr><th>Absences</th><td>Leave requests; sick notes with period and optional comment. The comment is health data (Art. 9 GDPR) and is additionally encrypted. Colleagues only see <em>that</em> and <em>how long</em> someone is absent, never why.</td></tr>
         <tr><th>Communication</th><td>Announcements from your ward lead, messages in the ward chat (readable by the ward's members and its lead, not by HR or administration), in-app notifications. Deleted or hidden chat messages are removed immediately.</td></tr>
+        <tr><th>Documents</th><td>Documents of your ward or facility (e.g. SOPs, guidelines, forms) and your read confirmation with its time. The ward lead sees who has confirmed a document.</td></tr>
+        <tr><th>Mandatory trainings</th><td>Which trainings apply to you, the date you attended, validity, whether your ward lead confirmed it, optionally a certificate file. Only you and the lead responsible for trainings can see the certificate, not your colleagues.</td></tr>
+        <tr><th>Account deletion</th><td>Your deletion request (time, optional message) and who completed it</td></tr>
         <tr><th>Devices</th><td>Push token of your device (only if you turn on notifications), device type, app version</td></tr>
         <tr><th>Logs</th><td>Change log (who changed what and when) and sign-in log for security and accountability</td></tr>
         <tr><th>On your device</th><td>Sign-in session (iOS Keychain or Android Keystore, this device only), language and appearance</td></tr>
       </table>
-      <p>Pulshift uses <strong>no advertising, no tracking and no analytics services</strong>. Data is never sold or used for advertising. Location, contacts, camera and microphone are not used; you pick a profile photo yourself.</p>
+      <p>Pulshift uses <strong>no advertising, no tracking and no analytics services</strong>. Data is never sold or used for advertising. Location, contacts, camera and microphone are not used; you pick profile photos, documents and certificates yourself in the file picker. File contents are not analysed.</p>
     </section>
 
     <section class="card">
@@ -112,6 +119,7 @@
       <ul>
         <li>Rostering, absences and team communication in your employment: Art. 6(1)(b) and (c) GDPR together with Section 26 BDSG or the rules of your country</li>
         <li>Sick notes: Art. 9(2)(b) GDPR (employment law obligations)</li>
+        <li>Read confirmations and training certificates: proof of instructions and mandatory trainings in your employment (Art. 6(1)(b) and (c) GDPR)</li>
         <li>Optional profile details and push notifications: your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time under Profile</li>
         <li>Security and abuse prevention (logs): legitimate interest (Art. 6(1)(f) GDPR)</li>
       </ul>
@@ -125,11 +133,11 @@
       </ul>
       <p>Transfers to providers outside the EU rely on an adequacy decision (EU-U.S. Data Privacy Framework) or standard contractual clauses.</p>
       <h2>7. Retention</h2>
-      <p>Data is kept while you work at the facility and as long as statutory retention periods require; afterwards the facility deletes your account. Raw data from roster imports is deleted after publication, at the latest after 30 days. Push tokens are removed when you turn off notifications or when they become invalid.</p>
+      <p>Data is kept while you work at the facility and as long as statutory retention periods require; afterwards the facility deletes your account. If you request deletion in the app (Profile → Delete account), the administration blocks your access; sign-in account, profile, profile photo, devices and settings are deleted within 30 days. Rosters, absences, read confirmations and training records the facility must keep remain until the retention period ends. Archived documents remain traceable for the administration. Raw data from roster imports is deleted after publication, at the latest after 30 days. Push tokens are removed when you turn off notifications or when they become invalid.</p>
       <h2>8. Your rights</h2>
-      <p>You have the right of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR) and may lodge a complaint with a supervisory authority. Contact your facility or [privacy@…]. See the <a href="../support/#delete-account">support page</a> for account deletion.</p>
+      <p>You have the right of access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR) and may lodge a complaint with a supervisory authority. Contact your facility or [privacy@…]. You can request deletion of your account directly in the app under <strong>Profile → Delete account</strong>; see the <a href="../support/#delete-account">support page</a>.</p>
       <h2>9. Security</h2>
-      <p>Connections use TLS, storage and backups are encrypted, and sick-note comments are additionally encrypted at column level. In the app the session is kept in the device Keychain or Keystore and is excluded from cloud backups.</p>
+      <p>Connections use TLS, storage and backups are encrypted, and sick-note comments are additionally encrypted at column level. Files are kept in non-public storage and only opened via short-lived links (5 minutes). Keys for the Pulshift interface are stored only as a hash. In the app the session is kept in the device Keychain or Keystore and is excluded from cloud backups.</p>
     </section>
   </article>
 </main>

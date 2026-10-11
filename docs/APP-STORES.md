@@ -81,15 +81,16 @@ Versionsnummern pro Release erhöhen: iOS in Xcode (*Version* = `MARKETING_VERSI
 - **Altersfreigabe:** Fragebogen überall „Nein/Keine“ → 4+
 - **Preis:** kostenlos, keine In-App-Käufe
 - **Exportvorschriften:** Die App verwendet nur Standardverschlüsselung (HTTPS). `ITSAppUsesNonExemptEncryption = false` steht in der `Info.plist`; die Frage erscheint dann nicht.
-- **Prüfhinweise und Demo-Konto:** `store/ios/metadata/review_information/` (Leitung `mira.schulz@shiftcare.dev`, Pflegekraft `anna.becker@shiftcare.dev`, Passwort `ShiftCare!2026`)
+- **Prüfhinweise und Demo-Konto:** `store/ios/metadata/review_information/` (Leitung `mira.schulz@shiftcare.dev`, Pflegekräfte `anna.becker@shiftcare.dev` und `jonas.weber@shiftcare.dev`, Passwort `ShiftCare!2026`)
+- **Kontolöschung (5.1.1(v)):** in der App unter Profil → Konto löschen; die Verwaltung schließt den Antrag ab (sperrt sofort), der Betreiber löscht innerhalb von 30 Tagen
 - **App-Datenschutz („Nutrition Label“).** Tracking: **Nein**. Alle Daten: *mit der Identität verknüpft*, Zweck *App-Funktionalität*, nicht für Werbung:
 
 | Datentyp (Apple) | Was in Pulshift |
 | --- | --- |
 | Kontaktinformationen → Name, E-Mail-Adresse, Telefonnummer | Konto, Profil (Telefon freiwillig) |
 | Gesundheit & Fitness → Gesundheit | optionaler Kommentar zur Krankmeldung |
-| Nutzerinhalte → Fotos oder Videos | Profilfoto (freiwillig) |
-| Nutzerinhalte → Andere Nutzerinhalte | Mitteilungen, Stationschat, Wünsche, Anträge |
+| Nutzerinhalte → Fotos oder Videos | Profilfoto (freiwillig), Fotos als Fortbildungsnachweis (freiwillig) |
+| Nutzerinhalte → Andere Nutzerinhalte | Mitteilungen, Stationschat, Wünsche, Anträge, Diensttausch, Lesebestätigungen, Dokumente und Fortbildungsnachweise (Dateien) |
 | Kennungen → Nutzer-ID | Konto-ID, Personalnummer |
 | Sonstige Daten | Dienstplan, Station, Rolle |
 
@@ -99,15 +100,17 @@ Nicht erhoben: Standort, Kontakte, Browserverlauf, Suchverlauf, Käufe, Finanzda
 - **Kategorie:** Business. **Werbung:** Nein. **Zielgruppe:** ab 18. **Inhaltsfreigabe (IARC):** Kategorie „Referenz, Nachrichten oder Bildung“ bzw. Business, alle Fragen „Nein“.
 - **App-Zugriff:** „Alle oder einige Funktionen sind eingeschränkt“ → Demo-Konten wie oben.
 - **Gesundheits-Apps-Erklärung:** keine Gesundheitsfunktionen (Dienstplanung am Arbeitsplatz).
-- **Datensicherheit:** Daten werden **erhoben**, **nicht geteilt** (Supabase, Apple und Google sind Auftragsverarbeiter), Übertragung verschlüsselt, Löschung auf Anfrage (`…/support/#delete-account`):
+- **Datensicherheit:** Daten werden **erhoben**, **nicht geteilt** (Supabase, Apple und Google sind Auftragsverarbeiter), Übertragung verschlüsselt, Löschung **in der App** (Profil → Konto löschen) und über die Web-Adresse `…/support/#delete-account` (Google verlangt eine Lösch-URL):
 
 | Datentyp (Google) | Zweck | Pflicht? |
 | --- | --- | --- |
 | Persönliche Daten → Name, E-Mail-Adresse, Nutzer-IDs | App-Funktionen, Kontoverwaltung | ja |
 | Persönliche Daten → Telefonnummer | App-Funktionen | optional |
 | Gesundheit und Fitness → Gesundheitsdaten | App-Funktionen (Kommentar zur Krankmeldung) | optional |
-| Fotos und Videos → Fotos | App-Funktionen (Profilfoto) | optional |
+| Fotos und Videos → Fotos | App-Funktionen (Profilfoto, Fortbildungsnachweis) | optional |
+| Dateien und Dokumente | App-Funktionen (Dokumente/SOPs der Leitung, Fortbildungsnachweise) | optional |
 | Nachrichten → Andere In-App-Nachrichten | App-Funktionen (Mitteilungen, Stationschat) | ja |
+| App-Aktivitäten → Sonstige nutzergenerierte Inhalte | App-Funktionen (Diensttausch, Lesebestätigungen, Fortbildungsmeldungen) | ja |
 | Geräte- oder andere IDs | Push-Benachrichtigungen (FCM-Token) | optional |
 
 ## 6. Push-Benachrichtigungen einrichten
