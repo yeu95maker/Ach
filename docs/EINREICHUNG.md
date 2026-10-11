@@ -38,7 +38,7 @@ Die Store-Builds zeigen im Moment auf das **Demo-Projekt**. Für die Einreichung
 - **a) Erst einmal mit der Demo einreichen.** Das ist schnell und sicher: Die Prüfer nutzen die Demo-Konten. Für echte Kunden folgt dann ein Update mit dem Produktions-Backend.
 - **b) Gleich mit eigenem Produktions-Projekt (empfohlen, wenn Kunden schon warten).** Du legst ein neues Supabase-Projekt in der Region EU an. Ich spiele alle Migrationen ein und lege dort eine getrennte Demo-Einrichtung mit den Demo-Konten für die Prüfer an; sie ist per RLS von echten Kunden getrennt. Danach setzt du bei GitHub unter *Settings → Variables* `APP_SUPABASE_URL` und `APP_SUPABASE_ANON_KEY`.
 
-In jedem Fall gilt: In Supabase unter **Authentication → URL Configuration → Redirect URLs** diese Einträge ergänzen: `pulshift://auth-callback`, `pulshift://auth-callback/**`, `capacitor://localhost`, `https://localhost`.
+✅ Erledigt am 11.10.2026 (Demo-Projekt): In Supabase unter **Authentication → URL Configuration → Redirect URLs** sind `pulshift://auth-callback`, `pulshift://auth-callback/**`, `capacitor://localhost` und `https://localhost` eingetragen. Bei einem eigenen Produktions-Projekt (Weg b) müssen dieselben vier Einträge dort ebenfalls gesetzt werden.
 
 ### 4. Push-Benachrichtigungen (optional für die erste Version)
 Ohne Einrichtung zeigt die App unter Profil „Noch nicht eingerichtet“. Alles andere funktioniert trotzdem. Zum Einschalten: APNs-Schlüssel und Firebase-Projekt anlegen (`docs/APP-STORES.md` §6), dann die GitHub-Variable `APP_NATIVE_PUSH=true` setzen.
