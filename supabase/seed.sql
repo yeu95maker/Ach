@@ -398,3 +398,25 @@ insert into public.integration_sources (id, hospital_id, name, kind, vendor, set
    'Export aus dem Dienstplanprogramm der Klinik', '{"date_format": "dmy", "employee_key": "personnel_number"}'),
   ('c0000000-0000-4000-a000-000000000002', '10000000-0000-4000-a000-000000000002', 'Dateiimport (CSV/Excel)', 'file',
    null, '{"date_format": "dmy", "employee_key": "personnel_number"}');
+
+-- -----------------------------------------------------------------------------
+-- Stationschat 3A: a short, realistic conversation
+-- -----------------------------------------------------------------------------
+insert into public.unit_messages (hospital_id, unit_id, author_user_id, author_employee_id, body, created_at) values
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000004', '40000000-0000-4000-a000-000000000004',
+   'Guten Morgen zusammen! Die neuen Infusionspumpen sind da und stehen im Lager. Einweisung am Donnerstag um 14:30 im Stationszimmer.', now() - interval '26 hours'),
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000003', '40000000-0000-4000-a000-000000000003',
+   'Super, danke! Ich bin Donnerstag im Frühdienst, komme danach dazu.', now() - interval '25 hours 40 minutes'),
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000002', '40000000-0000-4000-a000-000000000002',
+   'Kann jemand am Samstag mit mir den Spätdienst tauschen? Ich hätte dafür Sonntag frei.', now() - interval '3 hours'),
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000001', '40000000-0000-4000-a000-000000000001',
+   'Ich schau gleich in meinen Plan und melde mich!', now() - interval '2 hours 50 minutes'),
+  ('10000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '00000000-0000-4000-a000-000000000004', '40000000-0000-4000-a000-000000000004',
+   'Denkt bitte daran: Tausch ist erst gültig, wenn er im Dienstplan steht. Schreibt mir kurz, dann trage ich ihn ein.', now() - interval '2 hours 30 minutes');
+
+-- Mira and Leyla have read everything; Anna and Jonas have one unread message.
+insert into public.unit_chat_reads (user_id, unit_id, last_read_at) values
+  ('00000000-0000-4000-a000-000000000004', '30000000-0000-4000-a000-000000000001', now() - interval '2 hours 30 minutes'),
+  ('00000000-0000-4000-a000-000000000003', '30000000-0000-4000-a000-000000000001', now() - interval '2 hours 30 minutes'),
+  ('00000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', now() - interval '2 hours 50 minutes'),
+  ('00000000-0000-4000-a000-000000000002', '30000000-0000-4000-a000-000000000001', now() - interval '2 hours 55 minutes');

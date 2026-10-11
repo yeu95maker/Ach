@@ -26,6 +26,7 @@ const HistoryPage = named(() => import('@/features/schedule/HistoryPage'), 'Hist
 const AdminPage = named(() => import('@/features/admin/AdminPage'), 'AdminPage')
 const ImportPage = named(() => import('@/features/import/ImportPage'), 'ImportPage')
 const NewsPage = named(() => import('@/features/news/NewsPage'), 'NewsPage')
+const ChatPage = named(() => import('@/features/chat/ChatPage'), 'ChatPage')
 const ForgotPasswordPage = named(() => import('@/features/auth/ForgotPasswordPage'), 'ForgotPasswordPage')
 const ResetPasswordPage = named(() => import('@/features/auth/ResetPasswordPage'), 'ResetPasswordPage')
 
@@ -86,6 +87,7 @@ export const router = createBrowserRouter([
             ),
           },
           { path: 'team', element: <TeamPage /> },
+          { path: 'team/chat', element: <ChatPage /> },
           { path: 'profile', element: <ProfilePage /> },
           { path: 'requests', element: <MyRequestsPage /> },
           {

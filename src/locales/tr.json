@@ -294,8 +294,8 @@
         "body": "{{title}}"
       },
       "message": {
-        "title": "Yeni mesaj",
-        "body": "{{title}}"
+        "title": "Servis sohbetinde yeni mesajlar",
+        "body": "{{unit}}"
       },
       "wish_plan_opened": {
         "title": "İstek planı açıldı",
@@ -391,7 +391,8 @@
     "auth": "Oturumunun süresi doldu. Lütfen tekrar giriş yap.",
     "unknown": "Lütfen birazdan tekrar dene.",
     "notFoundTitle": "Sayfa bulunamadı",
-    "notFoundText": "Bu sayfa mevcut değil."
+    "notFoundText": "Bu sayfa mevcut değil.",
+    "rate_limited": "Çok hızlı yazıyorsun. Lütfen biraz bekle."
   },
   "wishType": {
     "free": "İzin isteği",
@@ -990,5 +991,42 @@
       "noCodeMappings": "Henüz yok – F, S, N gibi kodlar doğrudan tanınır.",
       "removeMapping": "Eşleştirmeyi kaldır"
     }
+  },
+  "chat": {
+    "title": "Servis sohbeti",
+    "ward": "Servis",
+    "noWard": "Servis sohbeti yok",
+    "noWardHint": "Her servisin bir sohbeti var. Henüz bir servise atanmadın.",
+    "moderatorOnly": "Bu servisin üyesi değilsin, sorumlu olarak okuyorsun.",
+    "loadOlder": "Eski mesajları yükle",
+    "intro": "{{unit}} ekibi burada yazışır. Servisin tüm üyeleri ve sorumlu okuyabilir. Lütfen hasta bilgisi ve sağlık bilgisi paylaşma.",
+    "messages": "Mesajlar",
+    "empty": "Henüz mesaj yok",
+    "emptyHint": "Ekibine ilk mesajı yaz.",
+    "placeholder": "{{unit}} için mesaj",
+    "messageLabel": "Mesaj",
+    "send": "Gönder",
+    "save": "Kaydet",
+    "actions": "Mesaj",
+    "edit": "Düzenle",
+    "editing": "Mesajı düzenle",
+    "cancelEdit": "Düzenlemeyi iptal et",
+    "delete": "Sil",
+    "deleteHint": "Metin kalıcı olarak silinir.",
+    "deleted": "Mesaj silindi",
+    "hide": "Gizle",
+    "hideHint": "Sorumlu olarak: metin herkes için kaldırılır.",
+    "hidden": "Mesaj gizlendi",
+    "sentAt": "Gönderildi: {{when}}",
+    "today": "Bugün",
+    "newMessages": "Yeni mesajlar",
+    "formerMember": "Eski üye",
+    "messageActions": "{{name}} tarafından mesaj, {{time}}",
+    "you": "Sen",
+    "removedByAuthor": "Mesaj silindi",
+    "removedByLead": "Sorumlu tarafından gizlendi",
+    "edited": "düzenlendi",
+    "unread_one": "{{count}} yeni mesaj",
+    "unread_other": "{{count}} yeni mesaj"
   }
 }

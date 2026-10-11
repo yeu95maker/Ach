@@ -74,3 +74,11 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 - Du-Form in allen Sprachen.
 - Standardsprache Deutsch, Fallback Deutsch. Sprache und Darstellung werden im Profil gespeichert und gelten geräteübergreifend.
 - Profilbilder werden auf 512 px verkleinert und als WebP gespeichert.
+
+## C · Stationschat
+
+| # | Frage | Annahme bis zur Klärung |
+| --- | --- | --- |
+| C1 | Wie lange dürfen Chatnachrichten aufbewahrt werden? | Unbegrenzt, bis eine Frist festgelegt ist. Vorschlag: automatische Löschung nach 12 Monaten |
+| C2 | Ist der Chat mit dem Betriebs-/Personalrat abgestimmt (§ 87 BetrVG)? | Muss die Einrichtung vor dem Einsatz klären |
+| C3 | Sollen Leitungen den Chat für ihre Station abschalten können? | Nein, der Chat ist immer an |

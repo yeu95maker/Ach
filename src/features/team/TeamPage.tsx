@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router'
+import { MessagesSquare } from 'lucide-react'
+import { Link, useSearchParams } from 'react-router'
 import { teamRepository } from '@/data/teamRepository'
 import { can } from '@/domain/permissions'
 import { queryKeys } from '@/features/queryKeys'
+import { useChats } from '@/features/chat/useChat'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { CountBadge, PageHeader, cn } from '@/ui'
 import { ColleaguesTab } from './ColleaguesTab'
@@ -17,6 +19,8 @@ export function TeamPage() {
   const { t } = useTranslation()
   const employment = useEmployment()
   const [params, setParams] = useSearchParams()
+  const chats = useChats()
+  const chatUnread = (chats.data ?? []).reduce((n, c) => n + c.unreadCount, 0)
 
   const canApprove = can(employment, 'leave.approve') || can(employment, 'leave.view')
   const canSick = can(employment, 'sick_leave.view')
@@ -45,6 +49,24 @@ export function TeamPage() {
   return (
     <>
       <PageHeader title={t('team.title')} subtitle={employment.hospital.name} />
+
+      {(chats.data?.length ?? 0) > 0 && (
+        <Link
+          to="/team/chat"
+          className="mb-5 flex items-center gap-4 rounded-[var(--radius-card)] border border-border/70 bg-surface p-4 shadow-card transition-transform hover:-translate-y-0.5 sm:p-5"
+        >
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary-text">
+            <MessagesSquare className="size-5" aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[16px] font-semibold">{t('chat.title')}</span>
+            <span className="block truncate text-sm text-text-2">
+              {chatUnread ? t('chat.unread', { count: chatUnread }) : chats.data!.map((c) => c.unitCode ?? c.unitName).join(' · ')}
+            </span>
+          </span>
+          {chatUnread > 0 && <CountBadge count={chatUnread} />}
+        </Link>
+      )}
 
       <div role="tablist" aria-label={t('team.title')} className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
         {tabs.map((tab) => (

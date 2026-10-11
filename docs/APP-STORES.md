@@ -43,6 +43,8 @@ Stand: 10.10.2026. Dieses Dokument beschreibt die nativen Apps (iOS, Android), d
 
 ## 4. Bauen und hochladen
 
+**Ohne Mac:** Der Workflow `Store release` baut, signiert und lädt hoch. Schritt für Schritt nur mit iPad: [RELEASE-OHNE-MAC.md](RELEASE-OHNE-MAC.md). Die folgenden Abschnitte beschreiben den Weg mit eigenem Mac bzw. Android Studio.
+
 ### Gemeinsam
 ```sh
 npm ci
@@ -87,7 +89,7 @@ Versionsnummern pro Release erhöhen: iOS in Xcode (*Version* = `MARKETING_VERSI
 | Kontaktinformationen → Name, E-Mail-Adresse, Telefonnummer | Konto, Profil (Telefon freiwillig) |
 | Gesundheit & Fitness → Gesundheit | optionaler Kommentar zur Krankmeldung |
 | Nutzerinhalte → Fotos oder Videos | Profilfoto (freiwillig) |
-| Nutzerinhalte → Andere Nutzerinhalte | Mitteilungen, Wünsche, Anträge |
+| Nutzerinhalte → Andere Nutzerinhalte | Mitteilungen, Stationschat, Wünsche, Anträge |
 | Kennungen → Nutzer-ID | Konto-ID, Personalnummer |
 | Sonstige Daten | Dienstplan, Station, Rolle |
 
@@ -105,7 +107,7 @@ Nicht erhoben: Standort, Kontakte, Browserverlauf, Suchverlauf, Käufe, Finanzda
 | Persönliche Daten → Telefonnummer | App-Funktionen | optional |
 | Gesundheit und Fitness → Gesundheitsdaten | App-Funktionen (Kommentar zur Krankmeldung) | optional |
 | Fotos und Videos → Fotos | App-Funktionen (Profilfoto) | optional |
-| Nachrichten → Andere In-App-Nachrichten | App-Funktionen (Mitteilungen) | ja |
+| Nachrichten → Andere In-App-Nachrichten | App-Funktionen (Mitteilungen, Stationschat) | ja |
 | Geräte- oder andere IDs | Push-Benachrichtigungen (FCM-Token) | optional |
 
 ## 6. Push-Benachrichtigungen einrichten

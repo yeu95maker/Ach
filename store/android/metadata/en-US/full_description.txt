@@ -5,6 +5,7 @@ Please note: you need an account from your facility to use ShiftCare. Your facil
 FOR NURSES
 • Your roster in month and list view, with shift times and when it was last updated
 • Who's on duty: see who is working with you today
+• Ward chat: message your whole ward team, e.g. to swap shifts
 • Wish plan: enter preferred shifts and days off for the next roster
 • See open shifts and register your interest
 • Request leave and follow its status

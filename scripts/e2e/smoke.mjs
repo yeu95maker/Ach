@@ -286,6 +286,32 @@ for (const run of runs) {
   await admin.context.close()
 }
 
+// Stationschat: nurse writes, the ward lead sees it live in her chat and hides a message
+{
+  const nurse = await session('chat-nurse', { email: 'leyla.yilmaz@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  await nurse.page.goto(`${BASE}/team`)
+  await nurse.page.getByRole('link', { name: /Stationschat/ }).click()
+  await nurse.page.waitForSelector('text=Bitte keine Patientendaten')
+  await nurse.page.fill('#chat-input', 'Wer hat Lust, Freitag zusammen zur Fortbildung zu fahren?')
+  await nurse.page.getByRole('button', { name: 'Senden' }).click()
+  await nurse.page.waitForSelector('text=zusammen zur Fortbildung')
+  await shot(nurse.page, 'chat', '70-nurse', { full: false })
+
+  const lead = await session('chat-lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+  await lead.page.goto(`${BASE}/team/chat`)
+  await lead.page.waitForSelector('text=zusammen zur Fortbildung')
+  await lead.page.getByRole('button', { name: /Nachricht von Leyla/ }).last().click()
+  await lead.page.locator('dialog[open]').getByRole('button', { name: /Ausblenden/ }).click()
+  await lead.page.waitForSelector('text=Nachricht ausgeblendet')
+  await shot(lead.page, 'chat', '71-lead', { full: false })
+
+  await nurse.page.reload()
+  await nurse.page.waitForSelector('text=Von der Leitung ausgeblendet')
+  if (await nurse.page.locator('text=zusammen zur Fortbildung').count()) problems.push('[chat] hidden text still visible')
+  await nurse.context.close()
+  await lead.context.close()
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

@@ -27,6 +27,8 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
 - [docs/INTEGRATION-HUB.md](docs/INTEGRATION-HUB.md): Dienstplan-Import (CSV/XLSX), Adapter-Architektur, Dienstplanmodell, was funktioniert und was nicht
 - [docs/LEITUNG-UND-VERWALTUNG.md](docs/LEITUNG-UND-VERWALTUNG.md): Aktuelles, Vertretung bei Krankheit, offene Dienste, Verlauf, Verwaltung
+- [docs/STATIONSCHAT.md](docs/STATIONSCHAT.md): Chat pro Station – wer liest mit, Moderation, Benachrichtigungen, Datenschutz
+- [docs/RELEASE-OHNE-MAC.md](docs/RELEASE-OHNE-MAC.md): App in TestFlight und Google Play bringen – nur mit iPad und GitHub
 - [docs/APP-STORES.md](docs/APP-STORES.md): native Apps, Store-Texte, Screenshots, Datenschutzangaben, Push, Einreichung – was fertig ist und was du noch tun musst
 - [docs/OPEN_POINTS.md](docs/OPEN_POINTS.md): **offene Fragen und getroffene Annahmen, bitte prüfen**
 

@@ -5,6 +5,7 @@ ShiftCare, hastaneler ve bakım kurumları için nöbet planı uygulamasıdır. 
 HEMŞİRELER İÇİN
 • Aylık ve liste görünümünde nöbet planı, nöbet saatleri ve son güncelleme zamanı
 • Görevdeki meslektaşlar: bugün kiminle çalıştığını gör
+• Servis sohbeti: tüm servis ekibiyle yazış, örneğin nöbet değişimi için
 • İstek planı: bir sonraki plan için istediğin nöbetleri ve izin günlerini gir
 • Açık nöbetleri gör ve ilgini bildir
 • İzin talep et ve durumunu takip et

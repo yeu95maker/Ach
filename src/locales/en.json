@@ -294,8 +294,8 @@
         "body": "{{title}}"
       },
       "message": {
-        "title": "New message",
-        "body": "{{title}}"
+        "title": "New messages in the ward chat",
+        "body": "{{unit}}"
       },
       "wish_plan_opened": {
         "title": "Shift wishes are open",
@@ -391,7 +391,8 @@
     "auth": "Your session has expired. Please sign in again.",
     "unknown": "Please try again in a moment.",
     "notFoundTitle": "Page not found",
-    "notFoundText": "This page doesn't exist (anymore)."
+    "notFoundText": "This page doesn't exist (anymore).",
+    "rate_limited": "You're writing very fast. Please wait a moment."
   },
   "wishType": {
     "free": "Day off wish",
@@ -990,5 +991,42 @@
       "noCodeMappings": "None yet – codes like F, S, N are recognised directly.",
       "removeMapping": "Remove mapping"
     }
+  },
+  "chat": {
+    "title": "Ward chat",
+    "ward": "Ward",
+    "noWard": "No ward chat",
+    "noWardHint": "Every ward has a chat. You are not assigned to a ward yet.",
+    "moderatorOnly": "You are not a member of this ward and are reading as a lead.",
+    "loadOlder": "Load older messages",
+    "intro": "This is where the {{unit}} team talks. All ward members and the ward lead can read along. Please don't share patient data or health information.",
+    "messages": "Messages",
+    "empty": "No messages yet",
+    "emptyHint": "Write the first message to your team.",
+    "placeholder": "Message {{unit}}",
+    "messageLabel": "Message",
+    "send": "Send",
+    "save": "Save",
+    "actions": "Message",
+    "edit": "Edit",
+    "editing": "Editing message",
+    "cancelEdit": "Cancel editing",
+    "delete": "Delete",
+    "deleteHint": "The text is removed permanently.",
+    "deleted": "Message deleted",
+    "hide": "Hide",
+    "hideHint": "As a lead: removes the text for everyone.",
+    "hidden": "Message hidden",
+    "sentAt": "Sent {{when}}",
+    "today": "Today",
+    "newMessages": "New messages",
+    "formerMember": "Former member",
+    "messageActions": "Message from {{name}}, {{time}}",
+    "you": "You",
+    "removedByAuthor": "Message deleted",
+    "removedByLead": "Hidden by the ward lead",
+    "edited": "edited",
+    "unread_one": "{{count}} new message",
+    "unread_other": "{{count}} new messages"
   }
 }

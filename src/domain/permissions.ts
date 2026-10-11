@@ -31,6 +31,7 @@ export const PERMISSIONS = [
   'wishes.manage',
   'schedule.import',
   'integrations.manage',
+  'chat.moderate',
 ] as const
 
 export type Permission = (typeof PERMISSIONS)[number]

@@ -54,7 +54,7 @@ const dynamic = {
   requestStatus: ['pending', 'approved', 'rejected', 'cancelled'],
   sickStatus: ['reported', 'acknowledged', 'closed', 'cancelled'],
   proficiency: ['native', 'fluent', 'intermediate', 'basic'],
-  errors: ['forbidden', 'conflict', 'validation', 'not_found', 'network', 'auth', 'unknown'],
+  errors: ['forbidden', 'conflict', 'validation', 'not_found', 'rate_limited', 'network', 'auth', 'unknown'],
   'profile.push': ['unsupported', 'not_configured', 'default', 'granted', 'denied'],
   wishType: ['free', 'night', 'early', 'late', 'preferred', 'unavailable'],
   wishTypeShort: ['free', 'night', 'early', 'late', 'preferred', 'unavailable'],

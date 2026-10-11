@@ -300,8 +300,8 @@
         "body": "{{title}}"
       },
       "message": {
-        "title": "Mesaj nou",
-        "body": "{{title}}"
+        "title": "Mesaje noi în chatul secției",
+        "body": "{{unit}}"
       },
       "wish_plan_opened": {
         "title": "Plan de dorințe deschis",
@@ -397,7 +397,8 @@
     "auth": "Sesiunea a expirat. Te rugăm să te autentifici din nou.",
     "unknown": "Te rugăm să încerci din nou peste puțin timp.",
     "notFoundTitle": "Pagina nu a fost găsită",
-    "notFoundText": "Această pagină nu (mai) există."
+    "notFoundText": "Această pagină nu (mai) există.",
+    "rate_limited": "Scrii foarte repede. Te rugăm să aștepți puțin."
   },
   "wishType": {
     "free": "Dorință zi liberă",
@@ -1021,5 +1022,43 @@
       "noCodeMappings": "Încă niciunul – codurile ca F, S, N sunt recunoscute direct.",
       "removeMapping": "Elimină asocierea"
     }
+  },
+  "chat": {
+    "title": "Chatul secției",
+    "ward": "Secție",
+    "noWard": "Niciun chat de secție",
+    "noWardHint": "Fiecare secție are un chat. Încă nu ești alocat unei secții.",
+    "moderatorOnly": "Nu ești membru al acestei secții și citești ca șef.",
+    "loadOlder": "Încarcă mesajele mai vechi",
+    "intro": "Aici scrie echipa {{unit}}. Toți membrii secției și asistentul șef pot citi. Te rugăm să nu scrii date despre pacienți sau informații medicale.",
+    "messages": "Mesaje",
+    "empty": "Încă nu există mesaje",
+    "emptyHint": "Scrie primul mesaj echipei tale.",
+    "placeholder": "Mesaj către {{unit}}",
+    "messageLabel": "Mesaj",
+    "send": "Trimite",
+    "save": "Salvează",
+    "actions": "Mesaj",
+    "edit": "Editează",
+    "editing": "Editezi mesajul",
+    "cancelEdit": "Anulează editarea",
+    "delete": "Șterge",
+    "deleteHint": "Textul este eliminat definitiv.",
+    "deleted": "Mesaj șters",
+    "hide": "Ascunde",
+    "hideHint": "Ca șef: textul este eliminat pentru toți.",
+    "hidden": "Mesaj ascuns",
+    "sentAt": "Trimis {{when}}",
+    "today": "Azi",
+    "newMessages": "Mesaje noi",
+    "formerMember": "Fost membru",
+    "messageActions": "Mesaj de la {{name}}, {{time}}",
+    "you": "Tu",
+    "removedByAuthor": "Mesaj șters",
+    "removedByLead": "Ascuns de șeful secției",
+    "edited": "editat",
+    "unread_one": "{{count}} mesaj nou",
+    "unread_few": "{{count}} mesaje noi",
+    "unread_other": "{{count}} de mesaje noi"
   }
 }

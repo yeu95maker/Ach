@@ -294,8 +294,8 @@
         "body": "{{title}}"
       },
       "message": {
-        "title": "Neue Nachricht",
-        "body": "{{title}}"
+        "title": "Neue Nachrichten im Stationschat",
+        "body": "{{unit}}"
       },
       "wish_plan_opened": {
         "title": "Wunschplan geöffnet",
@@ -391,7 +391,8 @@
     "auth": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
     "unknown": "Bitte versuche es gleich noch einmal.",
     "notFoundTitle": "Seite nicht gefunden",
-    "notFoundText": "Diese Seite gibt es nicht (mehr)."
+    "notFoundText": "Diese Seite gibt es nicht (mehr).",
+    "rate_limited": "Du schreibst gerade sehr schnell. Bitte warte einen Moment."
   },
   "wishType": {
     "free": "Wunschfrei",
@@ -990,5 +991,42 @@
       "noCodeMappings": "Noch keine – Kürzel wie F, S, N werden direkt erkannt.",
       "removeMapping": "Zuordnung entfernen"
     }
+  },
+  "chat": {
+    "title": "Stationschat",
+    "ward": "Station",
+    "noWard": "Kein Stationschat",
+    "noWardHint": "Den Chat gibt es für jede Station. Du bist noch keiner Station zugeordnet.",
+    "moderatorOnly": "Du bist nicht Mitglied dieser Station und liest als Leitung mit.",
+    "loadOlder": "Ältere Nachrichten laden",
+    "intro": "Hier schreibt das Team von {{unit}}. Alle Mitglieder der Station und die Leitung lesen mit. Bitte keine Patientendaten und keine Gesundheitsangaben.",
+    "messages": "Nachrichten",
+    "empty": "Noch keine Nachrichten",
+    "emptyHint": "Schreib die erste Nachricht an dein Team.",
+    "placeholder": "Nachricht an {{unit}}",
+    "messageLabel": "Nachricht",
+    "send": "Senden",
+    "save": "Speichern",
+    "actions": "Nachricht",
+    "edit": "Bearbeiten",
+    "editing": "Nachricht bearbeiten",
+    "cancelEdit": "Bearbeiten abbrechen",
+    "delete": "Löschen",
+    "deleteHint": "Der Text wird endgültig entfernt.",
+    "deleted": "Nachricht gelöscht",
+    "hide": "Ausblenden",
+    "hideHint": "Als Leitung: Der Text wird für alle entfernt.",
+    "hidden": "Nachricht ausgeblendet",
+    "sentAt": "Gesendet {{when}}",
+    "today": "Heute",
+    "newMessages": "Neue Nachrichten",
+    "formerMember": "Ehemaliges Mitglied",
+    "messageActions": "Nachricht von {{name}}, {{time}}",
+    "you": "Du",
+    "removedByAuthor": "Nachricht gelöscht",
+    "removedByLead": "Von der Leitung ausgeblendet",
+    "edited": "bearbeitet",
+    "unread_one": "{{count}} neue Nachricht",
+    "unread_other": "{{count}} neue Nachrichten"
   }
 }

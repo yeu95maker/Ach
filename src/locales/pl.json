@@ -306,8 +306,8 @@
         "body": "{{title}}"
       },
       "message": {
-        "title": "Nowa wiadomość",
-        "body": "{{title}}"
+        "title": "Nowe wiadomości na czacie oddziału",
+        "body": "{{unit}}"
       },
       "wish_plan_opened": {
         "title": "Plan życzeń otwarty",
@@ -403,7 +403,8 @@
     "auth": "Sesja wygasła. Zaloguj się ponownie.",
     "unknown": "Spróbuj ponownie za chwilę.",
     "notFoundTitle": "Nie znaleziono strony",
-    "notFoundText": "Ta strona nie istnieje (już)."
+    "notFoundText": "Ta strona nie istnieje (już).",
+    "rate_limited": "Piszesz bardzo szybko. Poczekaj chwilę."
   },
   "wishType": {
     "free": "Życzenie wolnego",
@@ -1052,5 +1053,44 @@
       "noCodeMappings": "Jeszcze brak – kody jak F, S, N są rozpoznawane bezpośrednio.",
       "removeMapping": "Usuń przypisanie"
     }
+  },
+  "chat": {
+    "title": "Czat oddziału",
+    "ward": "Oddział",
+    "noWard": "Brak czatu oddziału",
+    "noWardHint": "Każdy oddział ma swój czat. Nie jesteś jeszcze przypisany do oddziału.",
+    "moderatorOnly": "Nie jesteś członkiem tego oddziału i czytasz jako przełożona.",
+    "loadOlder": "Wczytaj starsze wiadomości",
+    "intro": "Tutaj pisze zespół {{unit}}. Wszyscy członkowie oddziału i oddziałowa mogą czytać. Nie podawaj danych pacjentów ani informacji o zdrowiu.",
+    "messages": "Wiadomości",
+    "empty": "Brak wiadomości",
+    "emptyHint": "Napisz pierwszą wiadomość do zespołu.",
+    "placeholder": "Wiadomość do {{unit}}",
+    "messageLabel": "Wiadomość",
+    "send": "Wyślij",
+    "save": "Zapisz",
+    "actions": "Wiadomość",
+    "edit": "Edytuj",
+    "editing": "Edytujesz wiadomość",
+    "cancelEdit": "Anuluj edycję",
+    "delete": "Usuń",
+    "deleteHint": "Tekst zostanie trwale usunięty.",
+    "deleted": "Wiadomość usunięta",
+    "hide": "Ukryj",
+    "hideHint": "Jako przełożona: tekst zostanie usunięty dla wszystkich.",
+    "hidden": "Wiadomość ukryta",
+    "sentAt": "Wysłano {{when}}",
+    "today": "Dzisiaj",
+    "newMessages": "Nowe wiadomości",
+    "formerMember": "Były członek",
+    "messageActions": "Wiadomość od {{name}}, {{time}}",
+    "you": "Ty",
+    "removedByAuthor": "Wiadomość usunięta",
+    "removedByLead": "Ukryte przez oddziałową",
+    "edited": "edytowano",
+    "unread_one": "{{count}} nowa wiadomość",
+    "unread_few": "{{count}} nowe wiadomości",
+    "unread_many": "{{count}} nowych wiadomości",
+    "unread_other": "{{count}} nowej wiadomości"
   }
 }

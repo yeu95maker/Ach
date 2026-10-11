@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { PersonAvatar } from '@/components/PersonAvatar'
 import { countUnreadNotifications } from '@/data/notificationRepository'
+import { useChatUnread } from '@/features/chat/useChat'
 import { refreshPushRegistration } from '@/features/notifications/push'
 import { useRealtimeNotifications } from '@/features/notifications/useRealtimeNotifications'
 import { queryKeys } from '@/features/queryKeys'
@@ -33,6 +34,8 @@ export function AppShell() {
   const user = useCurrentUser()
   const employment = useEmployment()
   const unread = useUnreadCount()
+  const chatUnread = useChatUnread()
+  const badges = { unread, chat: chatUnread }
   const location = useLocation()
   useRealtimeNotifications()
   useEffect(() => refreshPushRegistration(), [user.id])
@@ -71,10 +74,10 @@ export function AppShell() {
             >
               <span className="relative">
                 <item.icon className="size-[22px]" strokeWidth={1.9} aria-hidden />
-                {item.badge === 'unread' && <CountBadge count={unread} className="absolute -top-2 -right-2.5 lg:hidden" />}
+                {item.badge && <CountBadge count={badges[item.badge]} className="absolute -top-2 -right-2.5 lg:hidden" />}
               </span>
               <span>{t(item.labelKey)}</span>
-              {item.badge === 'unread' && <CountBadge count={unread} className="ml-auto hidden lg:inline-flex" />}
+              {item.badge && <CountBadge count={badges[item.badge]} className="ml-auto hidden lg:inline-flex" />}
             </NavLink>
           ))}
         </nav>
@@ -144,7 +147,7 @@ export function AppShell() {
                         aria-hidden
                       />
                       <item.icon className="relative size-[22px]" strokeWidth={isActive ? 2.2 : 1.9} aria-hidden />
-                      {item.badge === 'unread' && <CountBadge count={unread} className="absolute -top-1.5 -right-3" />}
+                      {item.badge && <CountBadge count={badges[item.badge]} className="absolute -top-1.5 -right-3" />}
                     </span>
                     <span className="max-w-full truncate px-1">{t(item.labelKey)}</span>
                   </>

@@ -40,6 +40,10 @@ export function useRealtimeNotifications() {
         void queryClient.invalidateQueries({ queryKey: ['wish-periods'] })
         void queryClient.invalidateQueries({ queryKey: ['wish-submission'] })
       }
+      if (n.type === 'message') {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.chats(user.id) })
+        if (typeof n.payload.unit_id === 'string') void queryClient.invalidateQueries({ queryKey: queryKeys.chat(n.payload.unit_id) })
+      }
       if (n.type.startsWith('sick')) {
         void queryClient.invalidateQueries({ queryKey: queryKeys.teamSick(employment.hospital.id) })
         void queryClient.invalidateQueries({ queryKey: queryKeys.mySick(employment.employeeId) })
@@ -48,6 +52,8 @@ export function useRealtimeNotifications() {
 
     return notificationRepository.subscribe(user.id, (n) => {
       invalidate(n)
+      // Already looking at the chat: the message shows up there, no extra toast.
+      if (n.type === 'message' && window.location.pathname.endsWith('/team/chat') && document.visibilityState === 'visible') return
       const { title, body } = renderRef.current(n)
       if (document.visibilityState === 'hidden' && 'Notification' in window && Notification.permission === 'granted') {
         new Notification(title, { body, icon: '/favicon.svg', tag: n.id })

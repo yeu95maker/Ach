@@ -2,7 +2,7 @@
  * Normalised application errors. The data layer converts Supabase/PostgREST
  * errors into AppError so UI code never parses SQLSTATE codes itself.
  */
-export type AppErrorKind = 'forbidden' | 'conflict' | 'validation' | 'not_found' | 'network' | 'auth' | 'unknown'
+export type AppErrorKind = 'forbidden' | 'conflict' | 'validation' | 'not_found' | 'rate_limited' | 'network' | 'auth' | 'unknown'
 
 export class AppError extends Error {
   readonly kind: AppErrorKind
@@ -43,6 +43,8 @@ export function toAppError(error: unknown): AppError {
       return new AppError('validation', message, code)
     case 'PGRST116':
       return new AppError('not_found', message, code)
+    case 'P0429': // custom: flood protection (e.g. send_unit_message)
+      return new AppError('rate_limited', message, code)
   }
   if (e.status === 401) return new AppError('auth', message, code)
   if (error instanceof TypeError && /fetch/i.test(message)) return new AppError('network', message)
