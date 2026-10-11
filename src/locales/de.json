@@ -324,6 +324,30 @@
       "roster_sync": {
         "title": "Neuer Dienstplanstand aus {{source}}",
         "body": "{{unit}} · {{period}} · {{count}} Änderungen – bitte prüfen und übernehmen"
+      },
+      "swap_requested": {
+        "title": "{{requester}} möchte mit dir tauschen",
+        "title_handover": "{{requester}} fragt, ob du einen Dienst übernimmst",
+        "body": "Dein Dienst {{partnerShift}} gegen den Dienst am {{date}}, {{time}} · {{unit}}",
+        "body_handover": "Dienst am {{date}}, {{time}} · {{unit}}"
+      },
+      "swap_pending": {
+        "title": "Diensttausch wartet auf deine Genehmigung",
+        "body": "{{requester}} ↔ {{partner}}: {{date}} gegen {{partnerShift}}",
+        "body_handover": "{{partner}} übernimmt von {{requester}}: {{date}}, {{time}}"
+      },
+      "swap_declined": {
+        "title": "{{partner}} kann nicht tauschen",
+        "body": "Dein Dienst am {{date}}, {{time}} bleibt bei dir."
+      },
+      "swap_approved": {
+        "title": "Diensttausch genehmigt",
+        "body": "{{requester}} ↔ {{partner}}: Der Dienstplan ist aktualisiert.",
+        "body_handover": "{{partner}} übernimmt den Dienst am {{date}}, {{time}}."
+      },
+      "swap_rejected": {
+        "title": "Diensttausch abgelehnt",
+        "body": "Der Dienst am {{date}} bleibt wie geplant. {{note}}"
       }
     }
   },
@@ -1077,5 +1101,65 @@
     "leave": "Urlaub",
     "openShifts": "Offene Dienste",
     "toOpenShifts": "Offene Dienste ansehen"
+  },
+  "swaps": {
+    "title": "Diensttausch",
+    "subtitle": "Dienste mit Kolleg:innen tauschen oder abgeben – die Leitung genehmigt",
+    "empty": "Keine Tauschanfragen",
+    "emptyHint": "Öffne im Dienstplan einen deiner Dienste und tippe auf „Dienst tauschen“.",
+    "needsYou": "Wartet auf dich",
+    "open": "Offen",
+    "done": "Erledigt (30 Tage)",
+    "howItWorks": "So geht’s: Du fragst eine Kollegin oder einen Kollegen, sie oder er sagt zu, die Stationsleitung genehmigt. Erst dann ändert sich der Dienstplan.",
+    "offer": "Dienst tauschen",
+    "offerTitle": "Dienst tauschen",
+    "offerHint": "Wähle, mit wem du tauschen möchtest – gegen einen ihrer Dienste oder nur zum Abgeben. Angezeigt werden nur Kolleg:innen, die an dem Tag frei und nicht abwesend sind.",
+    "note": "Nachricht",
+    "notePlaceholder": "z. B. Familienfeier",
+    "sendTo": "Anfrage an {{name}} senden",
+    "pickFirst": "Erst eine Möglichkeit wählen",
+    "sent": "Anfrage gesendet",
+    "sentHint": "{{name}} wird gefragt. Danach entscheidet die Stationsleitung.",
+    "noOptions": "Gerade keine Tauschmöglichkeit",
+    "noOptionsHint": "Alle Kolleg:innen arbeiten zu dieser Zeit oder sind abwesend.",
+    "swapFor": "Tauschen gegen {{shift}}",
+    "handoverOnly": "Nur abgeben",
+    "handoverHint": "{{name}} übernimmt, du bekommst keinen Dienst zurück",
+    "conflict": "Der Tausch überschneidet sich mit einem anderen Dienst oder einer Abwesenheit – oder es gibt schon eine offene Anfrage.",
+    "noLongerPossible": "Der Dienstplan hat sich geändert, der Tausch ist so nicht mehr möglich.",
+    "nothingInReturn": "Kein Dienst zurück",
+    "handoverTitle": "{{from}} gibt an {{to}} ab",
+    "swapTitle": "{{a}} ↔ {{b}}",
+    "gives": "{{name}} gibt ab",
+    "leadNote": "Leitung: {{note}}",
+    "reason": "Begründung",
+    "reasonPlaceholder": "Begründung (optional)",
+    "decline": "Ablehnen",
+    "accept": "Zusagen",
+    "approve": "Genehmigen",
+    "reject": "Ablehnen",
+    "cancel": "Zurückziehen",
+    "declinedToast": "Abgelehnt",
+    "acceptedToast": "Zugesagt",
+    "acceptedHint": "Jetzt entscheidet die Stationsleitung.",
+    "rejectedToast": "Tausch abgelehnt",
+    "approvedToast": "Tausch genehmigt",
+    "approvedHint": "Der Dienstplan ist aktualisiert, beide werden benachrichtigt.",
+    "cancelledToast": "Anfrage zurückgezogen",
+    "status": {
+      "pending_partner": "Wartet auf Zusage",
+      "pending_lead": "Wartet auf Leitung",
+      "approved": "Genehmigt",
+      "declined": "Abgelehnt",
+      "rejected": "Von Leitung abgelehnt",
+      "cancelled": "Zurückgezogen",
+      "expired": "Abgelaufen"
+    },
+    "warn": {
+      "rest": "Unter 11 h Ruhezeit für {{name}}",
+      "restYou": "Unter 11 h Ruhezeit für dich",
+      "wish": "{{name}}: Wunsch „nicht verfügbar“",
+      "wishYou": "Dein Wunsch: „nicht verfügbar“"
+    }
   }
 }

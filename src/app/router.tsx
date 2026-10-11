@@ -22,6 +22,7 @@ const WishPlanPage = named(() => import('@/features/wishes/WishPlanPage'), 'Wish
 const WishManagementPage = named(() => import('@/features/wishes/WishManagementPage'), 'WishManagementPage')
 const RosterEditorPage = named(() => import('@/features/roster-editor/RosterEditorPage'), 'RosterEditorPage')
 const OpenShiftsPage = named(() => import('@/features/staffing/OpenShiftsPage'), 'OpenShiftsPage')
+const SwapsPage = named(() => import('@/features/swaps/SwapsPage'), 'SwapsPage')
 const HistoryPage = named(() => import('@/features/schedule/HistoryPage'), 'HistoryPage')
 const AdminPage = named(() => import('@/features/admin/AdminPage'), 'AdminPage')
 const ImportPage = named(() => import('@/features/import/ImportPage'), 'ImportPage')
@@ -69,6 +70,7 @@ export const router = createBrowserRouter([
           { path: 'notifications', element: <NotificationsPage /> },
           { path: 'news', element: <NewsPage /> },
           { path: 'schedule/open', element: <OpenShiftsPage /> },
+          { path: 'schedule/swaps', element: <SwapsPage /> },
           { path: 'schedule/history', element: <HistoryPage /> },
           {
             path: 'schedule/import',

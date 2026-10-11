@@ -336,6 +336,30 @@
       "roster_sync": {
         "title": "Nowa wersja grafiku z {{source}}",
         "body": "{{unit}} · {{period}} · zmiany: {{count}} – sprawdź i zastosuj"
+      },
+      "swap_requested": {
+        "title": "{{requester}} chce zamienić się z tobą dyżurem",
+        "title_handover": "{{requester}} pyta, czy przejmiesz dyżur",
+        "body": "Twój dyżur {{partnerShift}} za dyżur {{date}}, {{time}} · {{unit}}",
+        "body_handover": "Dyżur {{date}}, {{time}} · {{unit}}"
+      },
+      "swap_pending": {
+        "title": "Zamiana dyżurów czeka na twoją zgodę",
+        "body": "{{requester}} ↔ {{partner}}: {{date}} za {{partnerShift}}",
+        "body_handover": "{{partner}} przejmuje od {{requester}}: {{date}}, {{time}}"
+      },
+      "swap_declined": {
+        "title": "{{partner}} nie może się zamienić",
+        "body": "Twój dyżur {{date}}, {{time}} zostaje u ciebie."
+      },
+      "swap_approved": {
+        "title": "Zamiana dyżurów zatwierdzona",
+        "body": "{{requester}} ↔ {{partner}}: grafik został zaktualizowany.",
+        "body_handover": "{{partner}} przejmuje dyżur {{date}}, {{time}}."
+      },
+      "swap_rejected": {
+        "title": "Zamiana dyżurów odrzucona",
+        "body": "Dyżur {{date}} zostaje bez zmian. {{note}}"
       }
     }
   },
@@ -1147,5 +1171,65 @@
     "leave": "Urlop",
     "openShifts": "Wolne dyżury",
     "toOpenShifts": "Zobacz wolne dyżury"
+  },
+  "swaps": {
+    "title": "Zamiana dyżurów",
+    "subtitle": "Zamieniaj lub oddawaj dyżury współpracownikom – oddziałowa zatwierdza",
+    "empty": "Brak próśb o zamianę",
+    "emptyHint": "Otwórz w grafiku jeden ze swoich dyżurów i dotknij „Zamień dyżur”.",
+    "needsYou": "Czeka na ciebie",
+    "open": "Otwarte",
+    "done": "Zakończone (30 dni)",
+    "howItWorks": "Jak to działa: pytasz współpracownika, on się zgadza, oddziałowa zatwierdza. Dopiero wtedy zmienia się grafik.",
+    "offer": "Zamień dyżur",
+    "offerTitle": "Zamień dyżur",
+    "offerHint": "Wybierz, z kim chcesz się zamienić – za jeden z jego dyżurów albo tylko oddać. Widoczni są tylko współpracownicy wolni i obecni tego dnia.",
+    "note": "Wiadomość",
+    "notePlaceholder": "np. uroczystość rodzinna",
+    "sendTo": "Wyślij prośbę do: {{name}}",
+    "pickFirst": "Najpierw wybierz opcję",
+    "sent": "Prośba wysłana",
+    "sentHint": "{{name}} zostanie zapytany(-a). Potem decyduje oddziałowa.",
+    "noOptions": "Obecnie brak możliwości zamiany",
+    "noOptionsHint": "Wszyscy współpracownicy pracują w tym czasie lub są nieobecni.",
+    "swapFor": "Zamiana za {{shift}}",
+    "handoverOnly": "Tylko oddaj",
+    "handoverHint": "{{name}} przejmuje, nie dostajesz dyżuru w zamian",
+    "conflict": "Zamiana koliduje z innym dyżurem lub nieobecnością – albo istnieje już otwarta prośba.",
+    "noLongerPossible": "Grafik się zmienił, ta zamiana nie jest już możliwa.",
+    "nothingInReturn": "Bez dyżuru w zamian",
+    "handoverTitle": "{{from}} oddaje: {{to}}",
+    "swapTitle": "{{a}} ↔ {{b}}",
+    "gives": "{{name}} oddaje",
+    "leadNote": "Oddziałowa: {{note}}",
+    "reason": "Uzasadnienie",
+    "reasonPlaceholder": "Uzasadnienie (opcjonalnie)",
+    "decline": "Odmów",
+    "accept": "Zgódź się",
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "cancel": "Wycofaj",
+    "declinedToast": "Odmówiono",
+    "acceptedToast": "Zgoda wysłana",
+    "acceptedHint": "Teraz decyduje oddziałowa.",
+    "rejectedToast": "Zamiana odrzucona",
+    "approvedToast": "Zamiana zatwierdzona",
+    "approvedHint": "Grafik jest zaktualizowany, obie osoby dostały powiadomienie.",
+    "cancelledToast": "Prośba wycofana",
+    "status": {
+      "pending_partner": "Czeka na współpracownika",
+      "pending_lead": "Czeka na oddziałową",
+      "approved": "Zatwierdzona",
+      "declined": "Odmówiona",
+      "rejected": "Odrzucona przez oddziałową",
+      "cancelled": "Wycofana",
+      "expired": "Wygasła"
+    },
+    "warn": {
+      "rest": "Mniej niż 11 h odpoczynku: {{name}}",
+      "restYou": "Mniej niż 11 h odpoczynku dla ciebie",
+      "wish": "{{name}}: życzenie „niedostępny”",
+      "wishYou": "Twoje życzenie: „niedostępny”"
+    }
   }
 }

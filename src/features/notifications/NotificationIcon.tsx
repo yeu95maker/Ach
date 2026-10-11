@@ -1,4 +1,4 @@
-import { Bell, CalendarCheck2, CalendarClock, CalendarHeart, CalendarPlus, CalendarX2, CheckCircle2, ClipboardCheck, Hand, HeartPulse, Hourglass, Megaphone, MessageCircle, Palmtree, RefreshCw, XCircle, type LucideIcon } from 'lucide-react'
+import { ArrowLeftRight, Bell, CalendarCheck2, CalendarClock, CalendarHeart, CalendarPlus, CalendarX2, CheckCircle2, ClipboardCheck, Hand, HeartPulse, Hourglass, Megaphone, MessageCircle, Palmtree, RefreshCw, XCircle, type LucideIcon } from 'lucide-react'
 import { notificationMeta, type NotificationTone } from '@/domain/notifications'
 import type { AppNotification, NotificationType } from '@/domain/types'
 import { cn } from '@/ui'
@@ -21,6 +21,11 @@ const ICONS: Record<NotificationType, LucideIcon> = {
   wish_plan_reviewed: ClipboardCheck,
   open_shift_interest: Hand,
   roster_sync: RefreshCw,
+  swap_requested: ArrowLeftRight,
+  swap_pending: ArrowLeftRight,
+  swap_declined: XCircle,
+  swap_approved: CheckCircle2,
+  swap_rejected: XCircle,
 }
 
 const TONES: Record<NotificationTone, string> = {

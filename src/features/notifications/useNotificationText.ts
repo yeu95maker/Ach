@@ -19,6 +19,10 @@ export function useNotificationText() {
       const period = p('period_start') && p('period_end') ? fmt.dateRange(p('period_start'), p('period_end')) : ''
       const date = p('entry_date') ? fmt.dateShort(p('entry_date')) : ''
       const time = p('starts_at') && p('ends_at') ? fmt.timeRange(new Date(p('starts_at')), new Date(p('ends_at'))) : ''
+      const partnerShift =
+        p('partner_entry_date') && p('partner_starts_at') && p('partner_ends_at')
+          ? `${fmt.dateShort(p('partner_entry_date'))}, ${fmt.timeRange(new Date(p('partner_starts_at')), new Date(p('partner_ends_at')))}`
+          : ''
       const vars = {
         unit: p('unit_name'),
         source: p('source_name'),
@@ -30,7 +34,11 @@ export function useNotificationText() {
         period,
         date,
         time,
-        note: p('decision_note'),
+        note: p('decision_note') || (n.type.startsWith('swap') ? p('note') : ''),
+        requester: p('requester_name'),
+        partner: p('partner_name'),
+        partnerShift,
+        context: n.type.startsWith('swap') && n.payload.handover === true ? 'handover' : undefined,
         status: p('status') && n.type === 'sick_leave_updated' ? t(`sickStatus.${p('status')}`) : '',
         wishStatus: p('status') && n.type === 'wish_plan_reviewed' ? t(`wishStatus.${p('status')}`) : '',
         deadline: p('deadline_at') ? `${fmt.dateShort(isoDateInTimeZone(new Date(p('deadline_at')), timeZone))}, ${fmt.time(new Date(p('deadline_at')))}` : '',

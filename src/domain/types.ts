@@ -37,6 +37,11 @@ export type NotificationType =
   | 'wish_plan_reviewed'
   | 'open_shift_interest'
   | 'roster_sync'
+  | 'swap_requested'
+  | 'swap_pending'
+  | 'swap_declined'
+  | 'swap_approved'
+  | 'swap_rejected'
 
 export interface Hospital {
   id: string

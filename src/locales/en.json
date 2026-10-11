@@ -324,6 +324,30 @@
       "roster_sync": {
         "title": "New roster version from {{source}}",
         "body": "{{unit}} · {{period}} · {{count}} changes – please review and apply"
+      },
+      "swap_requested": {
+        "title": "{{requester}} would like to swap with you",
+        "title_handover": "{{requester}} asks if you can take a shift",
+        "body": "Your shift {{partnerShift}} for the shift on {{date}}, {{time}} · {{unit}}",
+        "body_handover": "Shift on {{date}}, {{time}} · {{unit}}"
+      },
+      "swap_pending": {
+        "title": "Shift swap awaiting your approval",
+        "body": "{{requester}} ↔ {{partner}}: {{date}} for {{partnerShift}}",
+        "body_handover": "{{partner}} takes over from {{requester}}: {{date}}, {{time}}"
+      },
+      "swap_declined": {
+        "title": "{{partner}} can’t swap",
+        "body": "Your shift on {{date}}, {{time}} stays with you."
+      },
+      "swap_approved": {
+        "title": "Shift swap approved",
+        "body": "{{requester}} ↔ {{partner}}: the roster has been updated.",
+        "body_handover": "{{partner}} takes the shift on {{date}}, {{time}}."
+      },
+      "swap_rejected": {
+        "title": "Shift swap rejected",
+        "body": "The shift on {{date}} stays as planned. {{note}}"
       }
     }
   },
@@ -1077,5 +1101,65 @@
     "leave": "Leave",
     "openShifts": "Open shifts",
     "toOpenShifts": "View open shifts"
+  },
+  "swaps": {
+    "title": "Shift swap",
+    "subtitle": "Swap or hand over shifts with colleagues – the ward lead approves",
+    "empty": "No swap requests",
+    "emptyHint": "Open one of your shifts in the roster and tap “Swap shift”.",
+    "needsYou": "Waiting for you",
+    "open": "Open",
+    "done": "Done (30 days)",
+    "howItWorks": "How it works: you ask a colleague, they agree, the ward lead approves. Only then does the roster change.",
+    "offer": "Swap shift",
+    "offerTitle": "Swap shift",
+    "offerHint": "Choose who to swap with – for one of their shifts or just to hand it over. Only colleagues who are free and not absent that day are shown.",
+    "note": "Message",
+    "notePlaceholder": "e.g. family celebration",
+    "sendTo": "Send request to {{name}}",
+    "pickFirst": "Choose an option first",
+    "sent": "Request sent",
+    "sentHint": "{{name}} will be asked. Then the ward lead decides.",
+    "noOptions": "No swap possible right now",
+    "noOptionsHint": "All colleagues are working at that time or are absent.",
+    "swapFor": "Swap for {{shift}}",
+    "handoverOnly": "Hand over only",
+    "handoverHint": "{{name}} takes it, you get no shift back",
+    "conflict": "The swap clashes with another shift or an absence – or there is already an open request.",
+    "noLongerPossible": "The roster has changed, this swap is no longer possible.",
+    "nothingInReturn": "No shift in return",
+    "handoverTitle": "{{from}} hands over to {{to}}",
+    "swapTitle": "{{a}} ↔ {{b}}",
+    "gives": "{{name}} gives",
+    "leadNote": "Ward lead: {{note}}",
+    "reason": "Reason",
+    "reasonPlaceholder": "Reason (optional)",
+    "decline": "Decline",
+    "accept": "Agree",
+    "approve": "Approve",
+    "reject": "Reject",
+    "cancel": "Withdraw",
+    "declinedToast": "Declined",
+    "acceptedToast": "Agreed",
+    "acceptedHint": "Now the ward lead decides.",
+    "rejectedToast": "Swap rejected",
+    "approvedToast": "Swap approved",
+    "approvedHint": "The roster is updated and both are notified.",
+    "cancelledToast": "Request withdrawn",
+    "status": {
+      "pending_partner": "Waiting for colleague",
+      "pending_lead": "Waiting for ward lead",
+      "approved": "Approved",
+      "declined": "Declined",
+      "rejected": "Rejected by ward lead",
+      "cancelled": "Withdrawn",
+      "expired": "Expired"
+    },
+    "warn": {
+      "rest": "Less than 11 h rest for {{name}}",
+      "restYou": "Less than 11 h rest for you",
+      "wish": "{{name}}: wish “not available”",
+      "wishYou": "Your wish: “not available”"
+    }
   }
 }

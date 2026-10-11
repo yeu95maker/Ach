@@ -324,6 +324,30 @@
       "roster_sync": {
         "title": "{{source}} kaynağından yeni plan sürümü",
         "body": "{{unit}} · {{period}} · {{count}} değişiklik – lütfen kontrol edip uygula"
+      },
+      "swap_requested": {
+        "title": "{{requester}} seninle vardiya değiştirmek istiyor",
+        "title_handover": "{{requester}} bir vardiyayı devralıp alamayacağını soruyor",
+        "body": "Senin {{partnerShift}} vardiyan, {{date}}, {{time}} vardiyası karşılığında · {{unit}}",
+        "body_handover": "{{date}}, {{time}} vardiyası · {{unit}}"
+      },
+      "swap_pending": {
+        "title": "Vardiya değişimi onayını bekliyor",
+        "body": "{{requester}} ↔ {{partner}}: {{date}} karşılığında {{partnerShift}}",
+        "body_handover": "{{partner}}, {{requester}} adına devralıyor: {{date}}, {{time}}"
+      },
+      "swap_declined": {
+        "title": "{{partner}} değişim yapamıyor",
+        "body": "{{date}}, {{time}} vardiyan sende kalıyor."
+      },
+      "swap_approved": {
+        "title": "Vardiya değişimi onaylandı",
+        "body": "{{requester}} ↔ {{partner}}: Vardiya planı güncellendi.",
+        "body_handover": "{{partner}}, {{date}}, {{time}} vardiyasını devralıyor."
+      },
+      "swap_rejected": {
+        "title": "Vardiya değişimi reddedildi",
+        "body": "{{date}} vardiyası planlandığı gibi kalıyor. {{note}}"
       }
     }
   },
@@ -1077,5 +1101,65 @@
     "leave": "İzin",
     "openShifts": "Açık vardiyalar",
     "toOpenShifts": "Açık vardiyaları gör"
+  },
+  "swaps": {
+    "title": "Vardiya değişimi",
+    "subtitle": "Meslektaşlarla vardiya değiştir veya devret – servis sorumlusu onaylar",
+    "empty": "Değişim talebi yok",
+    "emptyHint": "Vardiya planında kendi vardiyalarından birini aç ve „Vardiya değiştir“e dokun.",
+    "needsYou": "Seni bekliyor",
+    "open": "Açık",
+    "done": "Tamamlanan (30 gün)",
+    "howItWorks": "Nasıl çalışır: Bir meslektaşına sorarsın, kabul eder, servis sorumlusu onaylar. Vardiya planı ancak o zaman değişir.",
+    "offer": "Vardiya değiştir",
+    "offerTitle": "Vardiya değiştir",
+    "offerHint": "Kiminle değiştirmek istediğini seç – onun bir vardiyası karşılığında veya sadece devretmek için. Yalnızca o gün boş ve izinli olmayan meslektaşlar gösterilir.",
+    "note": "Mesaj",
+    "notePlaceholder": "örn. aile kutlaması",
+    "sendTo": "Talebi {{name}} kişisine gönder",
+    "pickFirst": "Önce bir seçenek seç",
+    "sent": "Talep gönderildi",
+    "sentHint": "{{name}} kişisine sorulacak. Ardından servis sorumlusu karar verir.",
+    "noOptions": "Şu anda değişim mümkün değil",
+    "noOptionsHint": "Tüm meslektaşlar o saatte çalışıyor veya izinli.",
+    "swapFor": "{{shift}} ile değiştir",
+    "handoverOnly": "Sadece devret",
+    "handoverHint": "{{name}} devralır, sana vardiya geri gelmez",
+    "conflict": "Değişim başka bir vardiya veya izinle çakışıyor – ya da zaten açık bir talep var.",
+    "noLongerPossible": "Vardiya planı değişti, bu değişim artık mümkün değil.",
+    "nothingInReturn": "Karşılığında vardiya yok",
+    "handoverTitle": "{{from}}, {{to}} kişisine devrediyor",
+    "swapTitle": "{{a}} ↔ {{b}}",
+    "gives": "{{name}} veriyor",
+    "leadNote": "Sorumlu: {{note}}",
+    "reason": "Gerekçe",
+    "reasonPlaceholder": "Gerekçe (isteğe bağlı)",
+    "decline": "Reddet",
+    "accept": "Kabul et",
+    "approve": "Onayla",
+    "reject": "Reddet",
+    "cancel": "Geri çek",
+    "declinedToast": "Reddedildi",
+    "acceptedToast": "Kabul edildi",
+    "acceptedHint": "Şimdi servis sorumlusu karar verecek.",
+    "rejectedToast": "Değişim reddedildi",
+    "approvedToast": "Değişim onaylandı",
+    "approvedHint": "Vardiya planı güncellendi, iki kişiye de bildirim gitti.",
+    "cancelledToast": "Talep geri çekildi",
+    "status": {
+      "pending_partner": "Meslektaş bekleniyor",
+      "pending_lead": "Sorumlu bekleniyor",
+      "approved": "Onaylandı",
+      "declined": "Reddedildi",
+      "rejected": "Sorumlu reddetti",
+      "cancelled": "Geri çekildi",
+      "expired": "Süresi doldu"
+    },
+    "warn": {
+      "rest": "{{name}} için 11 saatten az dinlenme",
+      "restYou": "Senin için 11 saatten az dinlenme",
+      "wish": "{{name}}: „müsait değil“ isteği",
+      "wishYou": "İsteğin: „müsait değil“"
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { CalendarCog, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, ClipboardList, FileUp, History } from 'lucide-react'
+import { ArrowLeftRight, CalendarCog, CalendarHeart, CalendarPlus, ChevronLeft, ChevronRight, ClipboardList, FileUp, History } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LEGEND_KINDS } from '@/components/dayKindStyles'
@@ -67,6 +67,9 @@ export function SchedulePage() {
         )}
         <ButtonLink to="/schedule/open" variant="secondary" size="sm" icon={<CalendarPlus className="size-4" />}>
           {t('openShifts.title')}
+        </ButtonLink>
+        <ButtonLink to="/schedule/swaps" variant="secondary" size="sm" icon={<ArrowLeftRight className="size-4" />}>
+          {t('swaps.title')}
         </ButtonLink>
         <ButtonLink to="/schedule/history" variant="secondary" size="sm" icon={<History className="size-4" />}>
           {t('history.title')}

@@ -6,6 +6,7 @@ import { NavLink, Outlet, useLocation } from 'react-router'
 import { PersonAvatar } from '@/components/PersonAvatar'
 import { countUnreadNotifications } from '@/data/notificationRepository'
 import { useChatUnread } from '@/features/chat/useChat'
+import { useSwapsNeedingMe } from '@/features/swaps/useSwaps'
 import { refreshPushRegistration } from '@/features/notifications/push'
 import { useRealtimeNotifications } from '@/features/notifications/useRealtimeNotifications'
 import { queryKeys } from '@/features/queryKeys'
@@ -35,7 +36,8 @@ export function AppShell() {
   const employment = useEmployment()
   const unread = useUnreadCount()
   const chatUnread = useChatUnread()
-  const badges = { unread, chat: chatUnread }
+  const swaps = useSwapsNeedingMe()
+  const badges = { unread, chat: chatUnread, swaps }
   const location = useLocation()
   useRealtimeNotifications()
   useEffect(() => refreshPushRegistration(), [user.id])

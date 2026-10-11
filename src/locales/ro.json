@@ -330,6 +330,30 @@
       "roster_sync": {
         "title": "Versiune nouă a programului din {{source}}",
         "body": "{{unit}} · {{period}} · {{count}} modificări – te rugăm să verifici și să aplici"
+      },
+      "swap_requested": {
+        "title": "{{requester}} ar vrea să facă schimb cu tine",
+        "title_handover": "{{requester}} întreabă dacă poți prelua o tură",
+        "body": "Tura ta {{partnerShift}} pentru tura din {{date}}, {{time}} · {{unit}}",
+        "body_handover": "Tura din {{date}}, {{time}} · {{unit}}"
+      },
+      "swap_pending": {
+        "title": "Un schimb de ture așteaptă aprobarea ta",
+        "body": "{{requester}} ↔ {{partner}}: {{date}} pentru {{partnerShift}}",
+        "body_handover": "{{partner}} preia de la {{requester}}: {{date}}, {{time}}"
+      },
+      "swap_declined": {
+        "title": "{{partner}} nu poate face schimb",
+        "body": "Tura ta din {{date}}, {{time}} rămâne la tine."
+      },
+      "swap_approved": {
+        "title": "Schimb de ture aprobat",
+        "body": "{{requester}} ↔ {{partner}}: planificarea a fost actualizată.",
+        "body_handover": "{{partner}} preia tura din {{date}}, {{time}}."
+      },
+      "swap_rejected": {
+        "title": "Schimb de ture respins",
+        "body": "Tura din {{date}} rămâne cum a fost planificată. {{note}}"
       }
     }
   },
@@ -1112,5 +1136,65 @@
     "leave": "Concediu",
     "openShifts": "Ture libere",
     "toOpenShifts": "Vezi turele libere"
+  },
+  "swaps": {
+    "title": "Schimb de ture",
+    "subtitle": "Schimbă sau cedează ture colegilor – șefa de secție aprobă",
+    "empty": "Nicio cerere de schimb",
+    "emptyHint": "Deschide în planificare una dintre turele tale și atinge „Schimbă tura”.",
+    "needsYou": "Te așteaptă",
+    "open": "Deschise",
+    "done": "Finalizate (30 de zile)",
+    "howItWorks": "Cum funcționează: întrebi un coleg, acesta acceptă, șefa de secție aprobă. Abia apoi se schimbă planificarea.",
+    "offer": "Schimbă tura",
+    "offerTitle": "Schimbă tura",
+    "offerHint": "Alege cu cine vrei să faci schimb – pentru una dintre turele lor sau doar pentru a ceda. Sunt afișați doar colegii liberi și neabsenți în acea zi.",
+    "note": "Mesaj",
+    "notePlaceholder": "de ex. petrecere în familie",
+    "sendTo": "Trimite cererea către {{name}}",
+    "pickFirst": "Alege mai întâi o variantă",
+    "sent": "Cerere trimisă",
+    "sentHint": "{{name}} va fi întrebat(ă). Apoi decide șefa de secție.",
+    "noOptions": "Momentan niciun schimb posibil",
+    "noOptionsHint": "Toți colegii lucrează la acea oră sau sunt absenți.",
+    "swapFor": "Schimb pentru {{shift}}",
+    "handoverOnly": "Doar cedez",
+    "handoverHint": "{{name}} preia, tu nu primești o tură înapoi",
+    "conflict": "Schimbul se suprapune cu altă tură sau o absență – sau există deja o cerere deschisă.",
+    "noLongerPossible": "Planificarea s-a schimbat, schimbul nu mai este posibil.",
+    "nothingInReturn": "Nicio tură în schimb",
+    "handoverTitle": "{{from}} cedează către {{to}}",
+    "swapTitle": "{{a}} ↔ {{b}}",
+    "gives": "{{name}} cedează",
+    "leadNote": "Șefa de secție: {{note}}",
+    "reason": "Motiv",
+    "reasonPlaceholder": "Motiv (opțional)",
+    "decline": "Refuz",
+    "accept": "Accept",
+    "approve": "Aprobă",
+    "reject": "Respinge",
+    "cancel": "Retrage",
+    "declinedToast": "Refuzat",
+    "acceptedToast": "Acceptat",
+    "acceptedHint": "Acum decide șefa de secție.",
+    "rejectedToast": "Schimb respins",
+    "approvedToast": "Schimb aprobat",
+    "approvedHint": "Planificarea este actualizată, ambii sunt anunțați.",
+    "cancelledToast": "Cerere retrasă",
+    "status": {
+      "pending_partner": "Așteaptă colegul",
+      "pending_lead": "Așteaptă șefa de secție",
+      "approved": "Aprobat",
+      "declined": "Refuzat",
+      "rejected": "Respins de șefa de secție",
+      "cancelled": "Retras",
+      "expired": "Expirat"
+    },
+    "warn": {
+      "rest": "Sub 11 h de odihnă pentru {{name}}",
+      "restYou": "Sub 11 h de odihnă pentru tine",
+      "wish": "{{name}}: dorință „indisponibil”",
+      "wishYou": "Dorința ta: „indisponibil”"
+    }
   }
 }

@@ -7,6 +7,12 @@ const ROSTER_COLUMNS =
   'entry_id, hospital_id, schedule_id, schedule_status, unit_id, unit_name, employee_id, kind, entry_date, starts_at, ends_at, note, shift_type_id, shift_code, shift_name, shift_category, shift_color, first_name, last_name, avatar_path, job_title, qualifications, updated_at, imported_at'
 
 export const scheduleRepository = {
+  /** One roster entry the caller may see (own shifts, colleagues on the same ward). */
+  async fetchEntry(entryId: string): Promise<RosterEntry | null> {
+    const row = unwrap<ShiftRosterRow | null>(await db().from('shift_roster').select(ROSTER_COLUMNS).eq('entry_id', entryId).maybeSingle())
+    return row ? mapRoster(row) : null
+  },
+
   /** Own roster entries in a date range (published rosters and the archived history). */
   async fetchMyRoster(employeeId: string, from: ISODate, to: ISODate): Promise<RosterEntry[]> {
     const rows = unwrapList<ShiftRosterRow>(

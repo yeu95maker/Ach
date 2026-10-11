@@ -1,4 +1,4 @@
-import { CalendarDays, Clock3, MapPin, StickyNote } from 'lucide-react'
+import { ArrowLeftRight, CalendarDays, Clock3, MapPin, StickyNote } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { dayKindStyles } from '@/components/dayKindStyles'
@@ -6,8 +6,9 @@ import { ShiftIcon } from '@/components/ShiftIcon'
 import { durationMinutes } from '@/domain/schedule'
 import type { DayAgenda } from '@/domain/schedule'
 import type { RosterEntry } from '@/domain/types'
+import { useEmployment } from '@/features/tenant/TenantProvider'
 import { useHospitalFormatter } from '@/features/tenant/useHospitalFormatter'
-import { EmptyState, cn } from '@/ui'
+import { ButtonLink, EmptyState, cn } from '@/ui'
 import { ShiftColleagues } from './ShiftColleagues'
 
 function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: ReactNode }) {
@@ -22,9 +23,15 @@ function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: R
   )
 }
 
+/** Own, published, upcoming shift – can be offered for a swap. */
+function canOfferSwap(entry: RosterEntry, employeeId: string) {
+  return entry.kind === 'shift' && entry.scheduleStatus === 'published' && entry.employeeId === employeeId && !!entry.startsAt && entry.startsAt > new Date()
+}
+
 function ShiftBlock({ entry }: { entry: RosterEntry }) {
   const { t } = useTranslation()
   const fmt = useHospitalFormatter()
+  const employment = useEmployment()
   const kind = entry.kind === 'off' ? 'off' : (entry.shiftType?.category ?? 'other')
   const s = dayKindStyles[kind]
 
@@ -50,6 +57,12 @@ function ShiftBlock({ entry }: { entry: RosterEntry }) {
         )}
         {entry.note && <Fact icon={<StickyNote />} label={t('schedule.note')} value={entry.note} />}
       </div>
+
+      {canOfferSwap(entry, employment.employeeId) && (
+        <ButtonLink to={`/schedule/swaps?offer=${entry.id}`} variant="secondary" size="sm" icon={<ArrowLeftRight className="size-4" />}>
+          {t('swaps.offer')}
+        </ButtonLink>
+      )}
 
       {entry.kind === 'shift' && (
         <div>

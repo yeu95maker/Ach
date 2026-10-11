@@ -379,6 +379,55 @@ for (const run of runs) {
   await lead.context.close()
 }
 
+// Diensttausch: Anna offers a shift to Jonas, Jonas agrees, the ward lead approves
+{
+  const nurse = await session('swap-nurse', { email: 'anna.becker@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+  const p = nurse.page
+  let offered = false
+  for (let d = 2; d <= 20 && !offered; d++) {
+    const day = new Date(Date.now() + d * 86_400_000)
+    const iso = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`
+    await p.goto(`${BASE}/schedule?date=${iso}&view=day`)
+    await p.waitForSelector('main h2')
+    const offer = p.getByRole('link', { name: 'Dienst tauschen' })
+    if (!(await offer.count())) continue
+    await offer.first().click()
+    await p.waitForSelector('dialog[open] >> text=Wähle, mit wem du tauschen möchtest')
+    await p.locator('dialog[open] [aria-busy]').waitFor({ state: 'detached' }).catch(() => {})
+    await p.waitForTimeout(400)
+    const jonas = p.locator('dialog[open] section', { hasText: 'Jonas Weber' })
+    if (!(await jonas.count())) {
+      await p.keyboard.press('Escape')
+      continue
+    }
+    await jonas.getByRole('radio').first().click()
+    await p.fill('#swap-note', 'Familienfeier')
+    await shot(p, 'swap', '90-offer', { full: false })
+    await p.locator('dialog[open]').getByRole('button', { name: 'Anfrage an Jonas senden' }).click()
+    await p.waitForSelector('text=Anfrage gesendet')
+    offered = true
+  }
+  if (!offered) problems.push('[swap] no shift of Anna could be offered to Jonas')
+  await nurse.context.close()
+
+  if (offered) {
+    const colleague = await session('swap-colleague', { email: 'jonas.weber@shiftcare.dev', viewport: { width: 390, height: 844 }, theme: 'light' })
+    await colleague.page.goto(`${BASE}/schedule/swaps`)
+    const card = colleague.page.locator('[data-testid=swap-card]', { hasText: 'Familienfeier' })
+    await card.getByRole('button', { name: 'Zusagen' }).click()
+    await colleague.page.waitForSelector('text=Jetzt entscheidet die Stationsleitung.')
+    await colleague.context.close()
+
+    const lead = await session('swap-lead', { email: 'mira.schulz@shiftcare.dev', viewport: { width: 1280, height: 900 }, theme: 'light' })
+    await lead.page.goto(`${BASE}/schedule/swaps`)
+    await lead.page.waitForSelector('text=Wartet auf dich')
+    await shot(lead.page, 'swap', '91-lead')
+    await lead.page.locator('[data-testid=swap-card]', { hasText: 'Familienfeier' }).getByRole('button', { name: 'Genehmigen' }).click()
+    await lead.page.waitForSelector('text=Tausch genehmigt')
+    await lead.context.close()
+  }
+}
+
 await browser.close()
 if (problems.length) {
   console.error(problems.join('\n'))

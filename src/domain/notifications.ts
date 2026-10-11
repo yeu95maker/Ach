@@ -26,6 +26,11 @@ const META: Record<NotificationType, NotificationMeta> = {
   wish_plan_reviewed: { tone: 'primary', route: '/schedule/wishes' },
   open_shift_interest: { tone: 'accent', route: '/schedule/open' },
   roster_sync: { tone: 'warning', route: '/schedule/import?tab=history' },
+  swap_requested: { tone: 'accent', route: '/schedule/swaps' },
+  swap_pending: { tone: 'primary', route: '/schedule/swaps' },
+  swap_declined: { tone: 'neutral', route: '/schedule/swaps' },
+  swap_approved: { tone: 'success', route: '/schedule/swaps' },
+  swap_rejected: { tone: 'danger', route: '/schedule/swaps' },
 }
 
 export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): NotificationMeta {

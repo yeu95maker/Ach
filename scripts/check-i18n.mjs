@@ -78,9 +78,11 @@ const dynamic = {
   'integration.preview.count': ['added', 'changed', 'removed', 'unchanged'],
   'integration.preview.change': ['added', 'changed', 'removed'],
   'integration.adapter': ['csv', 'xlsx'],
+  'swaps.status': ['pending_partner', 'pending_lead', 'approved', 'declined', 'rejected', 'cancelled', 'expired'],
+  'swaps.warn': ['rest', 'restYou', 'wish', 'wishYou'],
 }
 for (const [prefix, values] of Object.entries(dynamic)) for (const v of values) if (!hasKey(ref, `${prefix}.${v}`)) errors.push(`[de] missing ${prefix}.${v}`)
-for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest', 'roster_sync'])
+for (const type of ['schedule_published', 'schedule_changed', 'open_shift', 'leave_requested', 'leave_approved', 'leave_rejected', 'sick_leave_reported', 'sick_leave_updated', 'announcement', 'message', 'wish_plan_opened', 'wish_plan_deadline', 'wish_plan_submitted', 'wish_plan_locked', 'wish_plan_reviewed', 'open_shift_interest', 'roster_sync', 'swap_requested', 'swap_pending', 'swap_declined', 'swap_approved', 'swap_rejected'])
   for (const part of ['title', 'body']) if (!hasKey(ref, `notifications.types.${type}.${part}`)) errors.push(`[de] missing notifications.types.${type}.${part}`)
 
 if (errors.length) {
