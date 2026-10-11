@@ -16,11 +16,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:db": "./scripts/db-test.sh",
-    "check": "npm run typecheck && npm run lint && npm run test && node scripts/check-i18n.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && node scripts/check-i18n.mjs && node scripts/store/check-listings.mjs",
     "test:i18n": "node scripts/check-i18n.mjs",
     "e2e:gateway": "node scripts/e2e/gateway.mjs",
     "e2e:smoke": "node scripts/e2e/smoke.mjs screenshots",
-    "build:native": "BASE_PATH=/ npm run build && cap sync"
+    "build:native": "BASE_PATH=/ npm run build && cap sync",
+    "test:store": "node scripts/store/check-listings.mjs",
+    "store:screenshots": "node scripts/store/screenshots.mjs"
   },
   "dependencies": {
     "@aparajita/capacitor-secure-storage": "8.0.1",

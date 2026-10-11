@@ -34,10 +34,10 @@ const LOCALES = { de: ['de-DE', 'de-DE'], en: ['en-US', 'en-US'], tr: ['tr', 'tr
  * The app image is scaled into the frame below the headline.
  */
 const DEVICES = {
-  iphone: { dir: (l) => `ios/screenshots/${l[0]}`, canvas: [1320, 2868], viewport: [430, 860], scale: 3, kind: 'phone' },
-  ipad: { dir: (l) => `ios/screenshots-ipad/${l[0]}`, canvas: [2064, 2752], viewport: [1024, 1180], scale: 2, kind: 'tablet' },
-  androidPhone: { dir: (l) => `android/screenshots/phone/${l[1]}`, canvas: [1080, 2400], viewport: [384, 748], scale: 3, kind: 'phone' },
-  androidTablet: { dir: (l) => `android/screenshots/tablet/${l[1]}`, canvas: [1600, 2560], viewport: [800, 1100], scale: 2, kind: 'tablet' },
+  iphone: { dir: (l) => `ios/screenshots/${l[0]}`, canvas: [1320, 2868], viewport: [430, 900], scale: 3, kind: 'phone' },
+  ipad: { dir: (l) => `ios/screenshots-ipad/${l[0]}`, canvas: [2064, 2752], viewport: [834, 1040], scale: 2, kind: 'tablet' },
+  androidPhone: { dir: (l) => `android/screenshots/phone/${l[1]}`, canvas: [1080, 2400], viewport: [384, 820], scale: 3, kind: 'phone' },
+  androidTablet: { dir: (l) => `android/screenshots/tablet/${l[1]}`, canvas: [1600, 2560], viewport: [760, 1150], scale: 2, kind: 'tablet' },
 }
 
 /** Headlines per screen and language: [title, subtitle]. */
@@ -121,7 +121,7 @@ const SCREENS = {
   tablet: [
     { id: 'editor', user: LEAD, path: '/schedule/plan' },
     { id: 'cover', user: LEAD, path: '/team?tab=sick', action: 'cover' },
-    { id: 'wishesManage', user: LEAD, path: '/schedule/wishes/manage' },
+    { id: 'schedule', user: NURSE, path: '/schedule' },
     { id: 'home', user: NURSE, path: '/' },
     { id: 'news', user: NURSE, path: '/news' },
   ],
@@ -169,30 +169,25 @@ async function compose(file, device, lang, captionId, shot) {
   const [W, H] = device.canvas
   const [vw, vh] = device.viewport
   const [title, subtitle] = CAPTIONS[captionId][lang]
+  const phone = device.kind === 'phone'
   const pad = Math.round(W * 0.07)
-  const headH = Math.round(H * (device.kind === 'phone' ? 0.2 : 0.16))
-  // Fit the app image into the remaining area, keep its aspect ratio.
-  const maxW = W - 2 * pad
-  const maxH = H - headH - pad
-  const s = Math.min(maxW / vw, maxH / vh)
-  const iw = Math.round(vw * s)
-  const ih = Math.round(vh * s)
-  const radius = Math.round(iw * (device.kind === 'phone' ? 0.085 : 0.035))
+  const radius = Math.round(W * (phone ? 0.075 : 0.03))
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })
   const src = `data:image/png;base64,${shot.toString('base64')}`
+  // Flex layout: the headline takes the height it needs (1–2 lines), the app image fills the rest.
   await page.setContent(`<!doctype html><html><head><style>
     @font-face { font-family: Inter; src: url('file://${ROOT}node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
-    body { margin: 0; width: ${W}px; height: ${H}px; overflow: hidden; font-family: Inter, system-ui, sans-serif;
+    body { margin: 0; width: ${W}px; height: ${H}px; overflow: hidden; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column;
       background: radial-gradient(120% 70% at 50% 0%, #1b56c4 0%, #0f3d91 55%, #0a2c6b 100%); color: #fff; }
-    header { height: ${headH}px; box-sizing: border-box; padding: ${Math.round(pad * 0.9)}px ${pad}px 0; text-align: center; }
-    h1 { margin: 0; font-size: ${Math.round(W * (device.kind === 'phone' ? 0.066 : 0.05))}px; line-height: 1.12; font-weight: 750; letter-spacing: -0.01em; }
-    p { margin: ${Math.round(W * 0.018)}px 0 0; font-size: ${Math.round(W * (device.kind === 'phone' ? 0.034 : 0.026))}px; line-height: 1.3; color: #bfe9e6; font-weight: 500; }
-    .shot { position: absolute; left: ${(W - iw) / 2}px; top: ${headH}px; width: ${iw}px; height: ${ih}px; border-radius: ${radius}px; overflow: hidden;
+    header { flex: none; padding: ${Math.round(pad * 0.9)}px ${pad}px ${Math.round(pad * 0.6)}px; text-align: center; }
+    h1 { margin: 0; font-size: ${Math.round(W * (phone ? 0.066 : 0.048))}px; line-height: 1.12; font-weight: 750; letter-spacing: -0.01em; }
+    p { margin: ${Math.round(W * 0.016)}px 0 0; font-size: ${Math.round(W * (phone ? 0.034 : 0.025))}px; line-height: 1.3; color: #bfe9e6; font-weight: 500; }
+    .stage { flex: 1; min-height: 0; display: flex; justify-content: center; align-items: flex-start; padding: 0 ${pad}px ${pad}px; }
+    .stage img { display: block; max-width: 100%; max-height: 100%; aspect-ratio: ${vw} / ${vh}; border-radius: ${radius}px;
       box-shadow: 0 ${Math.round(W * 0.02)}px ${Math.round(W * 0.06)}px rgba(3, 12, 36, 0.45), 0 0 0 ${Math.max(4, Math.round(W * 0.006))}px rgba(255,255,255,0.14); }
-    .shot img { width: 100%; height: 100%; display: block; }
   </style></head><body>
     <header><h1>${title}</h1><p>${subtitle}</p></header>
-    <div class="shot"><img src="${src}"></div>
+    <div class="stage"><img src="${src}"></div>
   </body></html>`)
   await page.evaluate(() => document.fonts.ready)
   const tmp = join(TMP, 'frame.png')
