@@ -1,1 +1,1 @@
-tură,asistent,asistentă,spital,secție,concediu,planificare,clinică,personal,orar,medical
+tură,asistent,asistentă,spital,secție,concediu,planificare,clinică,personal,orar,schimb,instruire

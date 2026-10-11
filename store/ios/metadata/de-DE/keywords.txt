@@ -1,1 +1,1 @@
-Krankenhaus,Schichtplan,Klinik,Station,Urlaub,Schicht,Pflegekraft,Wunschplan,Krankmeldung,Pflegeheim
+Krankenhaus,Schichtplan,Klinik,Station,Urlaub,Diensttausch,Pflegekraft,Wunschplan,Fortbildung,SOP

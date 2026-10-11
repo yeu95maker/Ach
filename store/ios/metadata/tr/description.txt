@@ -1,37 +1,39 @@
-Pulshift, hastaneler ve bakım kurumları için nöbet planı uygulamasıdır. Hemşireler planlarını görür, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve hızla yedek bulur.
+Pulshift; hastaneler, rehabilitasyon klinikleri ve bakım kurumları için vardiya planı uygulamasıdır. Hemşireler planlarını görür, vardiya değiştirir, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve servisin doluluk durumunu tek bakışta görür.
 
 Önemli: Pulshift'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
 
 HEMŞİRELER İÇİN
-• Aylık ve liste görünümünde nöbet planı, nöbet saatleri ve son güncelleme zamanı
+• Aylık, haftalık ve günlük görünümde vardiya planı, saatler ve son değişiklik zamanı
+• Vardiya değişimi: bir meslektaşınla vardiya değiştir veya devret – meslektaşın kabul eder, sorumlu onaylar
+• Açık vardiyalar: yalnızca boş olan ve dinlenme süresine uyan meslektaşlara sorulur
 • Görevdeki meslektaşlar: bugün kiminle çalıştığını gör
-• Servis sohbeti: tüm servis ekibiyle yazış, örneğin nöbet değişimi için
-• İstek planı: bir sonraki plan için istediğin nöbetleri ve izin günlerini gir
-• Açık nöbetleri gör ve ilgini bildir
-• İzin talep et ve durumunu takip et
-• Birkaç adımda hastalık bildirimi
-• Güncel: duyurular, eğitimler, ekip toplantıları ve atölyeler
-• Geçmiş yıllara uzanan nöbet geçmişi
-• Yeni plan, değişiklikler ve kararlar için bildirimler
+• Tüm servis ekibiyle servis sohbeti
+• İstek planı: bir sonraki plan için istediğin vardiyaları ve izin günlerini gir
+• İzin talebi, birkaç adımda hastalık bildirimi
+• Belgeleri ve SOP'leri oku, „Okudum ve anladım“ ile onayla
+• Zorunlu eğitimler: durumunu gör, katılımını bildir, zamanında hatırlatılsın
+• Haberler: duyurular, eğitimler, ekip toplantıları ve atölyeler
+• Yeni plan, değişiklik ve kararlarda bildirim
 
 SERVİS SORUMLULARI İÇİN
-• Tüm ekip için plan editörü; istekler ve dinlenme süreleriyle ilgili uyarılar
-• İstek planlarını değerlendir
-• İzin taleplerini onayla, hastalık bildirimlerini teyit et
-• Yedek bul: kim boş, dinlenme süresine uyuyor ve ilgi bildirmiş
-• Açık nöbet ilan et ve ata
-• Ekibine duyuru gönder
-• Hazır planı CSV veya Excel (XLSX) dosyasından aktar – yayından önce kontrol ve önizleme ile
+• Servis durumu: vardiya başına planlanan ve hedef, hastalık, izin ve açık vardiyalar
+• Tüm ekip için plan editörü, istek ve dinlenme süresi uyarılarıyla
+• Yedek bul ve gönüllüleri tek dokunuşla onayla
+• Vardiya değişimlerini incele ve onayla – dinlenme süresi ve istek uyarılarıyla
+• SOP ve yönergeleri yayınla, okuma onaylarını takip et, eksiklere hatırlat
+• Zorunlu eğitimleri belirle, ekibin durumunu tek bir özette gör
+• İzinleri onayla, hastalık bildirimlerini onayla, duyuru gönder
+• Hazır planı CSV veya Excel (XLSX) dosyasından aktar – kontrol ve önizlemeyle
 
-YÖNETİM İÇİN
+YÖNETİM VE BT İÇİN
 • Çalışanları davet et, rol ve servis ata
-• Nöbet türlerini ve organizasyonu yönet
-• Role göre yetkiler; birden fazla kurum kesinlikle ayrı kalır
+• BT ekibinizin yayınlanan planları otomatik gönderebileceği bir arayüz; değişiklikler ancak sorumlu onaylayınca geçerli olur
+• Rol bazlı yetkiler; birden fazla kurum kesin olarak ayrı tutulur
 
 GİZLİLİK
-• Reklam yok, takip yok
-• Meslektaşlar hastalık bildiriminde yalnızca süreyi görür, nedeni asla görmez
-• Hastalık bildirimi notları ayrıca şifrelenir
-• Oturumun cihazının korumalı alanında saklanır
+• Reklam yok, izleme yok
+• Meslektaşlar hastalık bildiriminde yalnızca tarih aralığını görür, nedenini asla
+• Eğitim belgelerini yalnızca sen ve sorumlun görür
+• Oturum bilgin cihazının korumalı alanında saklanır
 
-Pulshift Almanca, İngilizce, Türkçe, Rumence ve Lehçe olarak, açık ve koyu temayla kullanılabilir.
+Pulshift Almanca, İngilizce, Türkçe, Rumence ve Lehçe dillerinde, açık ve koyu tasarımla kullanılabilir.

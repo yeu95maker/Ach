@@ -46,6 +46,7 @@ export type NotificationType =
   | 'document_reminder'
   | 'training_assigned'
   | 'training_due'
+  | 'account_deletion_requested'
 
 export interface Hospital {
   id: string

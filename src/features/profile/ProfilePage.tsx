@@ -16,6 +16,7 @@ import {
   Phone,
   Settings2,
   ShieldCheck,
+  UserX,
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,6 +25,7 @@ import { config } from '@/core/config'
 import { errorMessageKey } from '@/core/errors'
 import { changeLanguage, UI_LANGUAGES, type UiLanguage } from '@/core/i18n'
 import { useTheme } from '@/core/theme'
+import { accountRepository } from '@/data/accountRepository'
 import { authRepository } from '@/data/authRepository'
 import { profileRepository } from '@/data/profileRepository'
 import { teamRepository } from '@/data/teamRepository'
@@ -36,6 +38,7 @@ import { isNative } from '@/native/platform'
 import { useCurrentUser, useEmployment, useTenant } from '@/features/tenant/TenantProvider'
 import { Badge, Button, Card, IconButton, ListGroup, ListRow, PageHeader, SectionTitle, SegmentedControl, Select, Spinner, useToast } from '@/ui'
 import { ChangePasswordSheet } from './ChangePasswordSheet'
+import { DeleteAccountSheet } from './DeleteAccountSheet'
 import { EditProfileSheet } from './EditProfileSheet'
 import { LanguagesSheet } from './LanguagesSheet'
 import { resizeImage } from './resizeImage'
@@ -51,7 +54,12 @@ export function ProfilePage() {
   const toast = useToast()
   const queryClient = useQueryClient()
   const fileInput = useRef<HTMLInputElement>(null)
-  const [sheet, setSheet] = useState<'edit' | 'languages' | 'password' | null>(null)
+  const [sheet, setSheet] = useState<'edit' | 'languages' | 'password' | 'delete' | null>(null)
+  const deletion = useQuery({ queryKey: ['account-deletion', user.id], queryFn: () => accountRepository.fetchMyRequest(user.id) })
+  const deletionMutation = useMutation({
+    mutationFn: (run: () => Promise<void>) => run(),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['account-deletion', user.id] }),
+  })
   const [pushState, setPushState] = useState<PushState>(currentPushState)
   useEffect(() => {
     void loadPushState().then(setPushState)
@@ -271,6 +279,13 @@ export function ProfilePage() {
               <ListRow icon={<MonitorSmartphone />} title={t('profile.signOutOthers')} subtitle={t('profile.signOutOthersHint')} onClick={signOutOthers} />
               <ListRow icon={<ShieldCheck />} title={t('profile.privacy')} subtitle={t('profile.privacyHint')} onClick={() => config && openExternal(config.privacyUrl)} />
               <ListRow icon={<LifeBuoy />} title={t('profile.support')} subtitle={t('profile.supportHint')} onClick={() => config && openExternal(config.supportUrl)} />
+              <ListRow
+                icon={<UserX />}
+                tone="danger"
+                title={t('account.deleteTitle')}
+                subtitle={deletion.data ? t('account.requestedShort') : t('account.deleteRowHint')}
+                onClick={() => setSheet('delete')}
+              />
             </ListGroup>
           </section>
 
@@ -285,6 +300,14 @@ export function ProfilePage() {
       {sheet === 'edit' && <EditProfileSheet user={user} open onClose={() => setSheet(null)} />}
       {sheet === 'languages' && <LanguagesSheet userId={user.id} current={spoken} open onClose={() => setSheet(null)} />}
       <ChangePasswordSheet email={user.email} open={sheet === 'password'} onClose={() => setSheet(null)} />
+      <DeleteAccountSheet
+        open={sheet === 'delete'}
+        onClose={() => setSheet(null)}
+        pending={deletion.data ?? null}
+        busy={deletionMutation.isPending}
+        onRequest={(note) => deletionMutation.mutateAsync(() => accountRepository.request(note))}
+        onWithdraw={() => deletionMutation.mutateAsync(() => accountRepository.withdraw())}
+      />
     </>
   )
 }

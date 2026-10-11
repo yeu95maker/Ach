@@ -1,37 +1,39 @@
-Pulshift este aplicația de planificare a turelor pentru spitale și centre de îngrijire. Asistenții își văd programul, își trec dorințele și cer concediu. Asistenții șefi planifică, aprobă și găsesc rapid un înlocuitor.
+Pulshift este aplicația de planificare a turelor pentru spitale, clinici de recuperare și centre de îngrijire. Asistenții își văd programul, schimbă ture, își trec dorințele și cer concediu. Șefii de secție planifică, aprobă și văd dintr-o privire cum este acoperită secția.
 
 Important: pentru Pulshift ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
 
 PENTRU ASISTENȚI
-• Programul în vizualizare lunară și listă, cu orele turelor și data ultimei actualizări
+• Programul pe lună, săptămână și zi, cu orele turelor și data ultimei modificări
+• Schimb de ture: schimbă sau cedează o tură unui coleg – colegul acceptă, șefa de secție aprobă
+• Ture libere: sunt întrebați doar colegii liberi care respectă timpul de odihnă
 • Colegi în tură: cine lucrează azi cu tine
-• Chatul secției: scrie întregii echipe, de exemplu pentru schimburi de ture
+• Chatul secției cu toată echipa
 • Plan de dorințe: ture dorite și zile libere pentru următorul program
-• Vezi turele libere și anunță-ți interesul
-• Cere concediu și urmărește statusul
-• Concediu medical în câțiva pași
-• Noutăți: anunțuri, cursuri, ședințe de echipă și workshopuri
-• Istoricul programului pe ultimii ani
-• Notificări pentru program nou, modificări și decizii
+• Cerere de concediu, anunțarea bolii în câțiva pași
+• Citește documente și SOP-uri și confirmă cu „Citit și înțeles”
+• Instruiri obligatorii: vezi starea, anunță participarea, primești mementouri la timp
+• Noutăți: anunțuri, instruiri, ședințe de echipă și workshopuri
+• Notificări la program nou, modificări și decizii
 
-PENTRU ASISTENȚII ȘEFI
-• Editor de program pentru toată echipa, cu indicații despre dorințe și perioadele de odihnă
-• Evaluează planurile de dorințe
-• Aprobă concediile, confirmă concediile medicale
-• Găsește un înlocuitor: cine e liber, respectă perioada de odihnă și și-a anunțat interesul
-• Publică și atribuie ture libere
-• Trimite anunțuri echipei
-• Preia un program finalizat din fișiere CSV sau Excel (XLSX) – verificat și previzualizat înainte de publicare
+PENTRU ȘEFII DE SECȚIE
+• Starea secției: planificat față de necesar pe tură, concedii medicale, concedii și ture libere
+• Editor de program pentru toată echipa, cu indicații despre dorințe și timp de odihnă
+• Găsește înlocuitori și confirmă voluntarii dintr-o atingere
+• Verifică și aprobă schimburile de ture – cu indicații despre odihnă și dorințe
+• Publică SOP-uri și ghiduri, urmărește confirmările de citire, amintește celor care lipsesc
+• Stabilește instruirile obligatorii și vezi stadiul echipei într-o singură privire de ansamblu
+• Aprobă concedii, confirmă concediile medicale, trimite anunțuri
+• Preia un program gata făcut din CSV sau Excel (XLSX) – cu verificare și previzualizare
 
-PENTRU ADMINISTRAȚIE
+PENTRU ADMINISTRAȚIE ȘI IT
 • Invită angajați, atribuie roluri și secții
-• Gestionează tipurile de ture și organizarea
-• Drepturi pe rol; mai multe instituții rămân strict separate
+• O interfață prin care IT-ul vostru poate trimite automat programele publicate; modificările se aplică doar după confirmarea șefei de secție
+• Drepturi pe roluri; mai multe instituții rămân strict separate
 
 CONFIDENȚIALITATE
 • Fără reclame, fără urmărire
-• Colegii văd la un concediu medical doar perioada, niciodată motivul
-• Comentariile la concediile medicale sunt criptate suplimentar
-• Autentificarea ta rămâne în memoria protejată a dispozitivului
+• Colegii văd la concediul medical doar perioada, niciodată motivul
+• Dovezile de instruire le vezi doar tu și șefa de secție
+• Autentificarea ta este păstrată în spațiul protejat al dispozitivului
 
 Pulshift este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.

@@ -364,6 +364,10 @@
       "training_due": {
         "title": "Fortbildung: {{title}}",
         "body": "Status: {{trainingStatus}}"
+      },
+      "account_deletion_requested": {
+        "title": "Konto-Löschung beantragt",
+        "body": "{{name}} möchte das Konto löschen lassen – bitte unter Verwaltung → Personen abschließen."
       }
     }
   },
@@ -1302,5 +1306,25 @@
     "archive": "Nicht mehr verlangen",
     "archiveConfirm": "„{{title}}“ nicht mehr verlangen? Bisherige Nachweise bleiben gespeichert.",
     "archived": "Pflichtfortbildung beendet"
+  },
+  "account": {
+    "deleteTitle": "Konto löschen",
+    "deleteRowHint": "Löschung deines Kontos beantragen",
+    "deleteHint": "Dein Konto gehört zu deiner Beschäftigung. So läuft die Löschung ab:",
+    "deleteStep1": "Die Verwaltung deiner Einrichtung wird sofort benachrichtigt und sperrt deinen Zugang.",
+    "deleteStep2": "Anmeldekonto, Profil, Profilbild, Geräte und Einstellungen werden innerhalb von 30 Tagen gelöscht.",
+    "deleteStep3": "Dienstpläne und Abwesenheiten, die deine Einrichtung arbeitsrechtlich aufbewahren muss, bleiben dort bis zum Ende der Frist.",
+    "note": "Nachricht an die Verwaltung",
+    "request": "Löschung beantragen",
+    "requested": "Löschung beantragt",
+    "requestedHint": "Die Verwaltung wurde benachrichtigt.",
+    "requestedOn": "Beantragt {{when}}. Die Verwaltung schließt den Antrag ab.",
+    "requestedShort": "Beantragt – wird bearbeitet",
+    "withdraw": "Antrag zurückziehen",
+    "adminTitle": "Beantragte Konto-Löschungen",
+    "adminHint": "Abschließen sperrt den Zugang sofort; das Konto wird danach gelöscht.",
+    "adminComplete": "Zugang sperren und abschließen",
+    "adminConfirm": "Zugang von {{name}} jetzt sperren und den Antrag abschließen?",
+    "adminDone": "Zugang gesperrt"
   }
 }

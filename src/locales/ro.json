@@ -370,6 +370,10 @@
       "training_due": {
         "title": "Instruire: {{title}}",
         "body": "Stare: {{trainingStatus}}"
+      },
+      "account_deletion_requested": {
+        "title": "Ștergere de cont solicitată",
+        "body": "{{name}} dorește ștergerea contului – finalizează la Administrare → Persoane."
       }
     }
   },
@@ -1344,5 +1348,25 @@
     "archive": "Nu mai cere",
     "archiveConfirm": "Nu mai ceri „{{title}}”? Înregistrările existente se păstrează.",
     "archived": "Instruire obligatorie încheiată"
+  },
+  "account": {
+    "deleteTitle": "Șterge contul",
+    "deleteRowHint": "Solicită ștergerea contului tău",
+    "deleteHint": "Contul tău ține de angajarea ta. Ștergerea decurge astfel:",
+    "deleteStep1": "Administrația instituției este anunțată imediat și îți blochează accesul.",
+    "deleteStep2": "Contul de autentificare, profilul, fotografia, dispozitivele și setările sunt șterse în 30 de zile.",
+    "deleteStep3": "Programele și absențele pe care instituția trebuie să le păstreze conform legislației muncii rămân acolo până la expirarea termenului.",
+    "note": "Mesaj pentru administrație",
+    "request": "Solicită ștergerea",
+    "requested": "Ștergere solicitată",
+    "requestedHint": "Administrația a fost anunțată.",
+    "requestedOn": "Solicitată {{when}}. Administrația finalizează cererea.",
+    "requestedShort": "Solicitată – în lucru",
+    "withdraw": "Retrage cererea",
+    "adminTitle": "Ștergeri de cont solicitate",
+    "adminHint": "Finalizarea blochează accesul imediat; contul este apoi șters.",
+    "adminComplete": "Blochează accesul și finalizează",
+    "adminConfirm": "Blochezi acum accesul pentru {{name}} și finalizezi cererea?",
+    "adminDone": "Acces blocat"
   }
 }

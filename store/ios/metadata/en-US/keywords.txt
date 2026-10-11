@@ -1,1 +1,1 @@
-roster,rota,nursing,hospital,shift,schedule,ward,leave,care,staff,planner,sick note,healthcare
+roster,rota,nursing,hospital,shift,schedule,ward,leave,swap,staff,training,sick note,healthcare

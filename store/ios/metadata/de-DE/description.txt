@@ -1,37 +1,39 @@
-Pulshift ist die Dienstplan-App für Krankenhäuser und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und finden schnell eine Vertretung.
+Pulshift ist die Dienstplan-App für Krankenhäuser, Reha-Kliniken und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tauschen Dienste, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und sehen auf einen Blick, wie die Station besetzt ist.
 
 Wichtig: Für Pulshift brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
 
 FÜR PFLEGEKRÄFTE
-• Dienstplan im Monats- und Listenblick, mit Dienstzeiten und Stand der letzten Änderung
+• Dienstplan im Monats-, Wochen- und Tagesblick, mit Dienstzeiten und Stand der letzten Änderung
+• Diensttausch: einen Dienst mit Kolleg:innen tauschen oder abgeben – die Kollegin sagt zu, die Leitung genehmigt
+• Einspringen: Bei offenen Diensten werden nur Kolleg:innen gefragt, die frei sind und die Ruhezeit einhalten
 • Kollegen im Dienst: wer heute mit dir arbeitet
-• Stationschat: mit dem ganzen Team der Station schreiben, z. B. für Diensttausch
+• Stationschat mit dem ganzen Team der Station
 • Wunschplan: Wunschdienste und freie Tage für den nächsten Plan eintragen
-• Offene Dienste ansehen und Interesse melden
-• Urlaub beantragen und den Status verfolgen
-• Krankmeldung in wenigen Schritten
+• Urlaub beantragen, Krankmeldung in wenigen Schritten
+• Dokumente & SOPs lesen und mit „Gelesen und verstanden“ bestätigen
+• Pflichtfortbildungen: Status sehen, Teilnahme melden, rechtzeitig erinnert werden
 • Aktuelles: Mitteilungen, Fortbildungen, Teamsitzungen und Workshops
-• Dienstplan-Verlauf über die vergangenen Jahre
 • Benachrichtigungen bei neuem Plan, Änderungen und Entscheidungen
 
 FÜR STATIONSLEITUNGEN
+• Stationsstatus: geplant gegenüber Soll je Dienst, Krankmeldungen, Urlaub und offene Dienste
 • Dienstplan-Editor für das ganze Team, mit Hinweisen zu Wünschen und Ruhezeiten
-• Wunschpläne auswerten
-• Urlaubsanträge genehmigen, Krankmeldungen bestätigen
-• Vertretung finden: wer frei ist, die Ruhezeit einhält und Interesse gemeldet hat
-• Offene Dienste ausschreiben und zuweisen
-• Mitteilungen an das Team senden
-• Fertigen Dienstplan aus CSV- oder Excel-Dateien (XLSX) übernehmen – mit Prüfung und Vorschau vor der Veröffentlichung
+• Vertretung finden und gemeldete Kolleg:innen mit einem Tipp bestätigen
+• Diensttausch prüfen und genehmigen – mit Hinweisen zu Ruhezeiten und Wünschen
+• SOPs und Richtlinien veröffentlichen, Lesebestätigungen verfolgen, Fehlende erinnern
+• Pflichtfortbildungen festlegen und den Stand des Teams in einer Übersicht sehen
+• Urlaubsanträge genehmigen, Krankmeldungen bestätigen, Mitteilungen senden
+• Dienstplan aus CSV- oder Excel-Dateien (XLSX) übernehmen – mit Prüfung und Vorschau
 
-FÜR DIE VERWALTUNG
+FÜR VERWALTUNG UND IT
 • Mitarbeitende einladen, Rollen und Stationen vergeben
-• Diensttypen und Organisation pflegen
+• Schnittstelle, über die eure IT veröffentlichte Dienstpläne automatisch übermitteln kann; Änderungen übernimmt die Leitung erst nach Bestätigung
 • Rechte je Rolle; mehrere Einrichtungen bleiben streng getrennt
 
 DATENSCHUTZ
 • Keine Werbung, kein Tracking
 • Kolleginnen und Kollegen sehen bei Krankmeldungen nur den Zeitraum, nie den Grund
-• Kommentare zu Krankmeldungen werden zusätzlich verschlüsselt
+• Fortbildungsnachweise sehen nur du und deine Leitung
 • Deine Anmeldung liegt im geschützten Speicher deines Geräts
 
 Pulshift gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.

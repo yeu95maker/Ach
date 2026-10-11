@@ -376,6 +376,10 @@
       "training_due": {
         "title": "Szkolenie: {{title}}",
         "body": "Status: {{trainingStatus}}"
+      },
+      "account_deletion_requested": {
+        "title": "Wniosek o usunięcie konta",
+        "body": "{{name}} chce usunąć konto – dokończ w Administracja → Osoby."
       }
     }
   },
@@ -1386,5 +1390,25 @@
     "archive": "Nie wymagaj więcej",
     "archiveConfirm": "Przestać wymagać „{{title}}”? Dotychczasowe wpisy zostaną zachowane.",
     "archived": "Szkolenie obowiązkowe zakończone"
+  },
+  "account": {
+    "deleteTitle": "Usuń konto",
+    "deleteRowHint": "Złóż wniosek o usunięcie konta",
+    "deleteHint": "Twoje konto jest związane z zatrudnieniem. Usunięcie wygląda tak:",
+    "deleteStep1": "Administracja placówki otrzyma natychmiast powiadomienie i zablokuje dostęp.",
+    "deleteStep2": "Konto logowania, profil, zdjęcie, urządzenia i ustawienia zostaną usunięte w ciągu 30 dni.",
+    "deleteStep3": "Grafiki i nieobecności, które placówka musi przechowywać zgodnie z prawem pracy, pozostają tam do końca okresu przechowywania.",
+    "note": "Wiadomość do administracji",
+    "request": "Złóż wniosek o usunięcie",
+    "requested": "Wniosek złożony",
+    "requestedHint": "Administracja otrzymała powiadomienie.",
+    "requestedOn": "Złożono {{when}}. Administracja zamknie wniosek.",
+    "requestedShort": "Złożono – w trakcie",
+    "withdraw": "Wycofaj wniosek",
+    "adminTitle": "Wnioski o usunięcie konta",
+    "adminHint": "Zamknięcie natychmiast blokuje dostęp; konto zostanie potem usunięte.",
+    "adminComplete": "Zablokuj dostęp i zamknij",
+    "adminConfirm": "Zablokować teraz dostęp dla {{name}} i zamknąć wniosek?",
+    "adminDone": "Dostęp zablokowany"
   }
 }

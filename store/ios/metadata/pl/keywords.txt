@@ -1,1 +1,1 @@
-dyżur,pielęgniarka,szpital,oddział,urlop,zmiana,klinika,personel,harmonogram,opieka,L4
+dyżur,pielęgniarka,szpital,oddział,urlop,zmiana,klinika,personel,harmonogram,zamiana,szkolenie,L4

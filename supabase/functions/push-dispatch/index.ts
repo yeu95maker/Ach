@@ -44,6 +44,7 @@ const TITLES: Record<string, string> = {
   document_reminder: 'Bitte Dokument bestätigen',
   training_assigned: 'Neue Pflichtfortbildung',
   training_due: 'Pflichtfortbildung fällig',
+  account_deletion_requested: 'Konto-Löschung beantragt',
 }
 
 // deno-lint-ignore no-explicit-any

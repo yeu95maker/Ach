@@ -7,6 +7,7 @@ import type { AdminEmployee } from '@/data/adminRepository'
 import { can } from '@/domain/permissions'
 import { useEmployment } from '@/features/tenant/TenantProvider'
 import { Badge, Button, Card, EmptyState, Input, SegmentedControl, SkeletonCard } from '@/ui'
+import { DeletionRequests } from './DeletionRequests'
 import { EmployeeSheet } from './EmployeeSheet'
 import { InviteSheet } from './InviteSheet'
 import { useAdminEmployees } from './useAdmin'
@@ -34,6 +35,7 @@ export function EmployeesTab() {
 
   return (
     <div className="space-y-5">
+      {can(employment, 'employees.manage') && <DeletionRequests />}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute top-1/2 left-4 size-[18px] -translate-y-1/2 text-text-3" aria-hidden />

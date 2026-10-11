@@ -1,1 +1,1 @@
-Twój grafik zawsze pod ręką: dyżury, koledzy na dyżurze, życzenia i urlop. Dla oddziałowych: edytor grafiku, szukanie zastępstwa i import z CSV lub Excela.
+Nowość: zamiana dyżurów z akceptacją, przejmowanie wolnych dyżurów jednym dotknięciem, SOP z potwierdzeniem zapoznania i szkolenia z przypomnieniami.

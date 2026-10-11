@@ -1,1 +1,1 @@
-vardiya,hemşire,hastane,servis,izin,bakım,klinik,personel,çizelge,sağlık,rapor
+vardiya,hemşire,hastane,servis,izin,bakım,klinik,personel,çizelge,değişim,eğitim,sağlık

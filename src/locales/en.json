@@ -364,6 +364,10 @@
       "training_due": {
         "title": "Training: {{title}}",
         "body": "Status: {{trainingStatus}}"
+      },
+      "account_deletion_requested": {
+        "title": "Account deletion requested",
+        "body": "{{name}} wants their account deleted – please complete it under Administration → People."
       }
     }
   },
@@ -1302,5 +1306,25 @@
     "archive": "No longer require",
     "archiveConfirm": "Stop requiring “{{title}}”? Existing records are kept.",
     "archived": "Mandatory training ended"
+  },
+  "account": {
+    "deleteTitle": "Delete account",
+    "deleteRowHint": "Request deletion of your account",
+    "deleteHint": "Your account belongs to your employment. This is how deletion works:",
+    "deleteStep1": "Your facility's administration is notified right away and blocks your access.",
+    "deleteStep2": "Sign-in account, profile, profile photo, devices and settings are deleted within 30 days.",
+    "deleteStep3": "Rosters and absences your facility must keep under employment law stay there until the retention period ends.",
+    "note": "Message to the administration",
+    "request": "Request deletion",
+    "requested": "Deletion requested",
+    "requestedHint": "The administration has been notified.",
+    "requestedOn": "Requested {{when}}. The administration completes the request.",
+    "requestedShort": "Requested – in progress",
+    "withdraw": "Withdraw request",
+    "adminTitle": "Requested account deletions",
+    "adminHint": "Completing blocks access immediately; the account is deleted afterwards.",
+    "adminComplete": "Block access and complete",
+    "adminConfirm": "Block access for {{name}} now and complete the request?",
+    "adminDone": "Access blocked"
   }
 }

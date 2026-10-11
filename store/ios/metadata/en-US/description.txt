@@ -1,37 +1,39 @@
-Pulshift is the rostering app for hospitals and care facilities. Nurses see their roster, enter shift wishes and request leave. Ward leads plan, approve and quickly find cover.
+Pulshift is the rostering app for hospitals, rehab clinics and care homes. Nurses see their roster, swap shifts, enter wishes and request leave. Ward leads plan, approve and see at a glance how the ward is staffed.
 
-Please note: you need an account from your facility to use Pulshift. Your facility invites you; there is no public sign-up.
+Please note: Pulshift requires an account from your employer. Your organisation invites you; there is no public sign-up.
 
 FOR NURSES
-• Your roster in month and list view, with shift times and when it was last updated
-• Who's on duty: see who is working with you today
-• Ward chat: message your whole ward team, e.g. to swap shifts
+• Roster by month, week and day, with shift times and the time of the last change
+• Shift swap: swap or hand over a shift with a colleague – they agree, the ward lead approves
+• Open shifts: only colleagues who are free and keep the rest period are asked
+• Who's on duty: who is working with you today
+• Ward chat with the whole team of your ward
 • Wish plan: enter preferred shifts and days off for the next roster
-• See open shifts and register your interest
-• Request leave and follow its status
-• Report sick in a few steps
-• News: announcements, training, team meetings and workshops
-• Roster history going back years
-• Notifications for new rosters, changes and decisions
+• Request leave, report sick in a few steps
+• Read documents & SOPs and confirm with “Read and understood”
+• Mandatory trainings: see your status, report participation, get reminded in time
+• News: announcements, trainings, team meetings and workshops
+• Notifications about new rosters, changes and decisions
 
 FOR WARD LEADS
-• Roster editor for the whole team, with hints about wishes and rest periods
-• Review wish plans
-• Approve leave, acknowledge sick notes
-• Find cover: who is free, keeps the rest period and has shown interest
-• Post and assign open shifts
-• Send announcements to your team
-• Bring in a finished roster from CSV or Excel (XLSX) files – checked and previewed before it is published
+• Ward status: planned vs. target per shift, sick notes, leave and open shifts
+• Roster editor for the whole team, with hints on wishes and rest periods
+• Find cover and confirm volunteers with one tap
+• Review and approve shift swaps – with hints on rest periods and wishes
+• Publish SOPs and guidelines, track read confirmations, remind those missing
+• Define mandatory trainings and see the team's status in one overview
+• Approve leave, acknowledge sick notes, send announcements
+• Import a finished roster from CSV or Excel (XLSX) – with checks and preview
 
-FOR ADMINISTRATORS
+FOR ADMINISTRATION AND IT
 • Invite staff, assign roles and wards
-• Manage shift types and organisation
-• Permissions per role; multiple facilities stay strictly separated
+• An interface your IT can use to send published rosters automatically; changes only apply after the ward lead confirms them
+• Permissions per role; several organisations stay strictly separated
 
 PRIVACY
 • No ads, no tracking
 • Colleagues only see the period of a sick note, never the reason
-• Sick-note comments are additionally encrypted
+• Training certificates are visible only to you and your ward lead
 • Your sign-in is kept in your device's secure storage
 
-Pulshift is available in German, English, Turkish, Romanian and Polish, with light and dark appearance.
+Pulshift is available in German, English, Turkish, Romanian and Polish, with light and dark design.

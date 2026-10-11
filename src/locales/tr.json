@@ -364,6 +364,10 @@
       "training_due": {
         "title": "Eğitim: {{title}}",
         "body": "Durum: {{trainingStatus}}"
+      },
+      "account_deletion_requested": {
+        "title": "Hesap silme talebi",
+        "body": "{{name}} hesabının silinmesini istiyor – lütfen Yönetim → Kişiler altında tamamla."
       }
     }
   },
@@ -1302,5 +1306,25 @@
     "archive": "Artık isteme",
     "archiveConfirm": "„{{title}}“ artık istenmesin mi? Mevcut kayıtlar saklanır.",
     "archived": "Zorunlu eğitim sonlandırıldı"
+  },
+  "account": {
+    "deleteTitle": "Hesabı sil",
+    "deleteRowHint": "Hesabının silinmesini talep et",
+    "deleteHint": "Hesabın işine bağlıdır. Silme şöyle işler:",
+    "deleteStep1": "Kurumunun yönetimine hemen bildirim gider ve erişimin kapatılır.",
+    "deleteStep2": "Giriş hesabı, profil, profil fotoğrafı, cihazlar ve ayarlar 30 gün içinde silinir.",
+    "deleteStep3": "Kurumunun iş hukuku gereği saklaması gereken planlar ve devamsızlıklar süre bitene kadar orada kalır.",
+    "note": "Yönetime mesaj",
+    "request": "Silme talep et",
+    "requested": "Silme talep edildi",
+    "requestedHint": "Yönetime bildirim gönderildi.",
+    "requestedOn": "Talep edildi {{when}}. Yönetim talebi tamamlar.",
+    "requestedShort": "Talep edildi – işleniyor",
+    "withdraw": "Talebi geri çek",
+    "adminTitle": "Talep edilen hesap silmeleri",
+    "adminHint": "Tamamlamak erişimi hemen kapatır; hesap ardından silinir.",
+    "adminComplete": "Erişimi kapat ve tamamla",
+    "adminConfirm": "{{name}} için erişim şimdi kapatılsın ve talep tamamlansın mı?",
+    "adminDone": "Erişim kapatıldı"
   }
 }

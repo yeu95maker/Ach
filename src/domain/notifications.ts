@@ -35,6 +35,7 @@ const META: Record<NotificationType, NotificationMeta> = {
   document_reminder: { tone: 'warning', route: '/documents' },
   training_assigned: { tone: 'accent', route: '/trainings' },
   training_due: { tone: 'warning', route: '/trainings' },
+  account_deletion_requested: { tone: 'danger', route: '/admin' },
 }
 
 export function notificationMeta(n: Pick<AppNotification, 'type' | 'payload'>): NotificationMeta {
