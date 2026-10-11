@@ -35,8 +35,8 @@ function MyTrainingCard({ item, onReport }: { item: MyTraining; onReport: () => 
       {item.description && <p className="mt-2 text-sm text-text-2">{item.description}</p>}
       {item.completedOn && (
         <p className="mt-3 rounded-2xl bg-surface-2/70 px-4 py-2.5 text-sm text-text-2">
-          {t('trainings.lastOn', { date: fmt.dateShort(item.completedOn) })}
-          {item.validUntil && ` · ${t('trainings.validUntil', { date: fmt.dateShort(item.validUntil) })}`}
+          {t('trainings.lastOn', { date: fmt.date(item.completedOn) })}
+          {item.validUntil && ` · ${t('trainings.validUntil', { date: fmt.date(item.validUntil) })}`}
           {' · '}
           {item.verified ? t('trainings.verified') : t('trainings.selfReported')}
         </p>
@@ -94,8 +94,8 @@ function CellSheet({ cell, onClose, onRecord }: { cell: TrainingOverviewRow | nu
           </div>
           {cell.completedOn && (
             <p className="text-sm text-text-2">
-              {t('trainings.lastOn', { date: fmt.dateShort(cell.completedOn) })}
-              {cell.validUntil && ` · ${t('trainings.validUntil', { date: fmt.dateShort(cell.validUntil) })}`}
+              {t('trainings.lastOn', { date: fmt.date(cell.completedOn) })}
+              {cell.validUntil && ` · ${t('trainings.validUntil', { date: fmt.date(cell.validUntil) })}`}
             </p>
           )}
           <div className="flex flex-wrap gap-2">

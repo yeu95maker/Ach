@@ -10,7 +10,9 @@
  *   CHROMIUM_PATH=/opt/pw-browsers/chromium PGHOST=/tmp PGPORT=54329 PGUSER=postgres PGDATABASE=shiftcare_test \
  *     node scripts/store/screenshots.mjs [--only=de,en]
  *
- * Use a freshly seeded database (./scripts/db-test.sh) so the demo data looks tidy.
+ * Use a database with only migrations + seed (no test runs) so the demo data
+ * looks tidy; the script adds scripts/store/fixtures.sql (SOPs, trainings, a
+ * pending shift swap) once.
  */
 import { execFileSync } from 'node:child_process'
 import { mkdirSync, readFileSync, rmSync } from 'node:fs'
@@ -43,32 +45,67 @@ const DEVICES = {
 /** Headlines per screen and language: [title, subtitle]. */
 const CAPTIONS = {
   home: {
-    de: ['Dein Tag auf einen Blick', 'Nächster Dienst, Kollegen im Dienst, Neuigkeiten'],
-    en: ['Your day at a glance', 'Next shift, who is on duty, latest news'],
-    tr: ['Günün tek bakışta', 'Sonraki nöbet, görevdeki meslektaşlar, haberler'],
-    ro: ['Ziua ta dintr-o privire', 'Următoarea tură, colegi în tură, noutăți'],
-    pl: ['Twój dzień w skrócie', 'Następny dyżur, koledzy na dyżurze, aktualności'],
+    de: ['Dein Tag auf einen Blick', 'Nächster Dienst, Stationsstatus, was zu erledigen ist'],
+    en: ['Your day at a glance', 'Next shift, ward status and what is left to do'],
+    tr: ['Günün tek bakışta', 'Sonraki vardiya, servis durumu, yapılacaklar'],
+    ro: ['Ziua ta dintr-o privire', 'Următoarea tură, starea secției, ce e de făcut'],
+    pl: ['Twój dzień w skrócie', 'Następny dyżur, stan oddziału, rzeczy do zrobienia'],
+  },
+  status: {
+    de: ['Die Station auf einen Blick', 'Geplant gegenüber Soll, Krankmeldungen, offene Dienste'],
+    en: ['Your ward at a glance', 'Planned vs. target, sick notes, open shifts'],
+    tr: ['Servis tek bakışta', 'Planlanan ve hedef, hastalık bildirimleri, açık vardiyalar'],
+    ro: ['Secția dintr-o privire', 'Planificat față de necesar, concedii medicale, ture libere'],
+    pl: ['Oddział w jednym spojrzeniu', 'Obsada planowana i wymagana, zwolnienia, wolne dyżury'],
+  },
+  swaps: {
+    de: ['Dienste tauschen – fair geregelt', 'Kollegin sagt zu, die Leitung genehmigt mit einem Tipp'],
+    en: ['Swap shifts the fair way', 'Your colleague agrees, the ward lead approves in one tap'],
+    tr: ['Vardiya değişimi, adil şekilde', 'Meslektaşın kabul eder, sorumlu tek dokunuşla onaylar'],
+    ro: ['Schimbă ture, corect', 'Colegul acceptă, șefa de secție aprobă dintr-o atingere'],
+    pl: ['Zamiana dyżurów bez chaosu', 'Współpracownik się zgadza, oddziałowa zatwierdza jednym dotknięciem'],
+  },
+  documents: {
+    de: ['SOPs immer griffbereit', 'Lesen und mit „Gelesen und verstanden“ bestätigen'],
+    en: ['SOPs always at hand', 'Read and confirm with “Read and understood”'],
+    tr: ['SOP\'ler hep elinin altında', 'Oku ve „Okudum ve anladım“ ile onayla'],
+    ro: ['SOP-urile mereu la îndemână', 'Citește și confirmă cu „Citit și înțeles”'],
+    pl: ['SOP zawsze pod ręką', 'Czytaj i potwierdzaj zapoznanie jednym dotknięciem'],
+  },
+  trainings: {
+    de: ['Pflichtfortbildungen im Blick', 'Status, Teilnahme melden, rechtzeitig erinnert werden'],
+    en: ['Mandatory trainings in view', 'Status, report participation, timely reminders'],
+    tr: ['Zorunlu eğitimler göz önünde', 'Durum, katılım bildirimi, zamanında hatırlatma'],
+    ro: ['Instruirile obligatorii sub control', 'Stare, anunțarea participării, mementouri la timp'],
+    pl: ['Szkolenia obowiązkowe pod kontrolą', 'Status, zgłaszanie udziału, przypomnienia na czas'],
+  },
+  trainingsWard: {
+    de: ['Der Fortbildungsstand des Teams', 'Wer was nachweisen muss – auf einen Blick'],
+    en: ["Your team's training status", 'Who needs to prove what – at a glance'],
+    tr: ['Ekibin eğitim durumu', 'Kimin neyi belgelemesi gerektiği tek bakışta'],
+    ro: ['Stadiul instruirilor echipei', 'Cine ce trebuie să dovedească – dintr-o privire'],
+    pl: ['Stan szkoleń całego zespołu', 'Kto co musi udokumentować – w jednym widoku'],
   },
   schedule: {
     de: ['Dein Dienstplan, immer aktuell', 'Monat oder Liste, mit Stand der letzten Änderung'],
     en: ['Your roster, always up to date', 'Month or list view, with the latest change'],
-    tr: ['Nöbet planın, hep güncel', 'Aylık veya liste, son değişiklik bilgisiyle'],
+    tr: ['Vardiya planın, hep güncel', 'Aylık veya liste, son değişiklik bilgisiyle'],
     ro: ['Programul tău, mereu actual', 'Lunar sau listă, cu ultima modificare'],
     pl: ['Twój grafik, zawsze aktualny', 'Miesiąc lub lista, z datą ostatniej zmiany'],
   },
   wishes: {
     de: ['Wünsche einfach eintragen', 'Wunschdienste und freie Tage für den nächsten Plan'],
     en: ['Enter your wishes easily', 'Preferred shifts and days off for the next roster'],
-    tr: ['İsteklerini kolayca gir', 'Sonraki plan için nöbet ve izin günü istekleri'],
+    tr: ['İsteklerini kolayca gir', 'Sonraki plan için vardiya ve izin günü istekleri'],
     ro: ['Dorințele tale, simplu', 'Ture dorite și zile libere pentru următorul program'],
     pl: ['Życzenia w kilka sekund', 'Wybrane dyżury i dni wolne na kolejny grafik'],
   },
   open: {
-    de: ['Offene Dienste übernehmen', 'Interesse melden mit einem Tipp'],
-    en: ['Pick up open shifts', 'Register your interest with one tap'],
-    tr: ['Açık nöbetleri üstlen', 'Tek dokunuşla ilgini bildir'],
-    ro: ['Preia ture libere', 'Anunță-ți interesul cu o atingere'],
-    pl: ['Bierz wolne dyżury', 'Zgłoś chęć jednym dotknięciem'],
+    de: ['Offene Dienste übernehmen', 'Nur wer passt, wird gefragt – melden mit einem Tipp'],
+    en: ['Pick up open shifts', 'Only colleagues who fit are asked – one tap to volunteer'],
+    tr: ['Açık vardiyaları üstlen', 'Yalnızca uygun olanlara sorulur, tek dokunuşla bildir'],
+    ro: ['Preia ture libere', 'Sunt întrebați doar cei potriviți – o atingere ajunge'],
+    pl: ['Bierz wolne dyżury', 'Pytani są tylko pasujący – zgłoś się jednym dotknięciem'],
   },
   news: {
     de: ['Alles Wichtige im Team', 'Fortbildungen, Teamsitzungen, Mitteilungen'],
@@ -85,16 +122,16 @@ const CAPTIONS = {
     pl: ['Zastępstwo w kilka sekund', 'Kto jest wolny, ma czas odpoczynku i chęć'],
   },
   chat: {
-    de: ['Das ganze Team im Gespräch', 'Stationschat für Tausch, Fragen und Absprachen'],
-    en: ['Your whole ward in one chat', 'Ward chat for swaps, questions and quick updates'],
-    tr: ['Tüm ekip tek sohbette', 'Nöbet değişimi, sorular ve haberler için servis sohbeti'],
-    ro: ['Toată echipa într-un chat', 'Chatul secției pentru schimburi, întrebări și noutăți'],
-    pl: ['Cały zespół w jednym czacie', 'Czat oddziału do zamian, pytań i ustaleń'],
+    de: ['Das ganze Team im Gespräch', 'Stationschat für Fragen und kurze Absprachen'],
+    en: ['Your whole ward in one chat', 'Ward chat for questions and quick updates'],
+    tr: ['Tüm ekip tek sohbette', 'Sorular ve kısa haberler için servis sohbeti'],
+    ro: ['Toată echipa într-un chat', 'Chatul secției pentru întrebări și noutăți'],
+    pl: ['Cały zespół w jednym czacie', 'Czat oddziału do pytań i szybkich ustaleń'],
   },
   editor: {
     de: ['Der ganze Dienstplan in deiner Hand', 'Planen mit Wünschen, Ruhezeiten und offenen Diensten'],
     en: ['The whole roster in your hands', 'Plan with wishes, rest periods and open shifts'],
-    tr: ['Tüm nöbet planı elinde', 'İstekler, dinlenme süreleri ve açık nöbetlerle planla'],
+    tr: ['Tüm vardiya planı elinde', 'İstekler, dinlenme süreleri ve açık vardiyalarla planla'],
     ro: ['Tot programul în mâna ta', 'Planifică cu dorințe, odihnă și ture libere'],
     pl: ['Cały grafik w Twoich rękach', 'Planuj z życzeniami, odpoczynkiem i wolnymi dyżurami'],
   },
@@ -108,31 +145,35 @@ const CAPTIONS = {
 }
 
 const FEATURE = {
-  de: ['Dienstplan für die Pflege', 'Dienste, Wünsche, Urlaub und Team – in einer App'],
-  en: ['Rostering for nursing teams', 'Shifts, wishes, leave and team news in one app'],
-  tr: ['Hemşireler için nöbet planı', 'Nöbetler, istekler, izin ve ekip tek uygulamada'],
-  ro: ['Programul de ture pentru îngrijire', 'Ture, dorințe, concediu și echipă într-o aplicație'],
-  pl: ['Grafik dyżurów dla pielęgniarek', 'Dyżury, życzenia, urlopy i zespół w jednej aplikacji'],
+  de: ['Dienstplan für die Pflege', 'Dienste, Tausch, Urlaub, SOPs und Fortbildungen – in einer App'],
+  en: ['Rostering for nursing teams', 'Shifts, swaps, leave, SOPs and trainings in one app'],
+  tr: ['Hemşireler için vardiya planı', 'Vardiyalar, değişim, izin, SOP ve eğitimler tek uygulamada'],
+  ro: ['Programul de ture pentru îngrijire', 'Ture, schimburi, concediu, SOP-uri și instruiri într-o aplicație'],
+  pl: ['Grafik dyżurów dla pielęgniarek', 'Dyżury, zamiany, urlopy, SOP i szkolenia w jednej aplikacji'],
 }
 
 /** Which screens each device class shows, in order (the first ones matter most in the stores). */
 const SCREENS = {
+  // Google Play allows at most 8 per device class.
   phone: [
     { id: 'home', user: NURSE, path: '/' },
     { id: 'schedule', user: NURSE, path: '/schedule', theme: 'dark' },
+    { id: 'swaps', user: LEAD, path: '/schedule/swaps' },
+    { id: 'open', user: NURSE, path: '/schedule/open' },
+    { id: 'documents', user: NURSE, path: '/documents' },
+    { id: 'trainings', user: NURSE, path: '/trainings' },
     { id: 'chat', user: NURSE, path: '/team/chat' },
     { id: 'wishes', user: NURSE, path: '/schedule/wishes' },
-    { id: 'open', user: NURSE, path: '/schedule/open' },
-    { id: 'cover', user: LEAD, path: '/team?tab=sick', action: 'cover' },
-    { id: 'news', user: NURSE, path: '/news' },
   ],
   tablet: [
     { id: 'editor', user: LEAD, path: '/schedule/plan' },
+    { id: 'status', user: LEAD, path: '/' },
+    { id: 'swaps', user: LEAD, path: '/schedule/swaps' },
+    { id: 'trainingsWard', user: LEAD, path: '/trainings?tab=ward' },
     { id: 'cover', user: LEAD, path: '/team?tab=sick', action: 'cover' },
+    { id: 'documents', user: LEAD, path: '/documents' },
     { id: 'chat', user: LEAD, path: '/team/chat' },
     { id: 'schedule', user: NURSE, path: '/schedule' },
-    { id: 'home', user: NURSE, path: '/' },
-    { id: 'news', user: NURSE, path: '/news' },
   ],
 }
 
@@ -141,6 +182,10 @@ const t = (lang, key) => key.split('.').reduce((o, k) => o?.[k], messages[lang])
 
 const db = new pg.Client()
 await db.connect()
+// Screenshot-only demo content (SOPs, trainings, a pending swap), applied once.
+if (!(await db.query(`select 1 from public.documents where id = '70000000-0000-4000-a000-000000000001'`)).rowCount) {
+  await db.query(readFileSync(join(ROOT, 'scripts/store/fixtures.sql'), 'utf8'))
+}
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH })
 const TMP = join(ROOT, 'node_modules/.tmp/store-shots')
 mkdirSync(TMP, { recursive: true })
