@@ -229,7 +229,32 @@ try {
   await expect(page.getByText('Yes, Saturday 10:00 works.'), 'reply')
   log('provider replies in-app')
 
-  // German UI
+  // 7. Partner link → provider sign-up → referral tracked; founding badge -------------
+  const invited = await browser.newContext(phone)
+  page = await invited.newPage()
+  await page.goto(`${BASE}/properties/e0000000-0000-4000-8000-000000000001`)
+  await expect(page.getByText('Founding Provider'), 'founding badge')
+  await page.goto(`${BASE}/for-providers?ref=hre-tino`)
+  await expect(page.getByText('Invitation code HRE-TINO applied'), 'landing with code')
+  await shot(page, 'for-providers')
+  await page.getByRole('link', { name: 'List your properties for free' }).first().click()
+  await page.getByLabel('Full name').fill('Chiedza Agent')
+  await page.getByLabel('Email').fill(`agent-${Date.now()}@example.com`)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await page.getByRole('button', { name: 'Create free account' }).click()
+  await page.waitForURL(/\/provider\/onboarding/)
+  if ((await page.getByLabel('Referral code (optional)').inputValue()) !== 'HRE-TINO') throw new Error('referral code not prefilled')
+  await page.getByLabel('Public name').fill('Chiedza Realty')
+  await page.getByRole('button', { name: 'Continue' }).click()
+  await expect(page.getByLabel('Full legal name'), 'verification step')
+  log('partner link → provider sign-up with referral code; founding badge shown')
+
+  page = await adminCtx.newPage()
+  await page.goto(`${BASE}/admin?tab=partners`)
+  await expect(page.getByText('Chiedza Realty'), 'provider listed under partner')
+  await shot(page, 'admin-partners')
+  log('admin sees the partner\'s providers and results')
+
   await visitor.addCookies([{ name: 'locale', value: 'de', url: BASE }])
   page = await visitor.newPage()
   await page.goto(BASE)

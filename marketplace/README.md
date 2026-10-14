@@ -34,6 +34,12 @@ The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean list
 - Dashboard: views, inquiries, saves per listing, status, moderation notes, *mark sold*, *remove*, *still available?* prompt after 30 days
 - Public provider profile with all active listings
 
+**Growth (provider acquisition)**
+- `/for-providers` landing page for agents, developers and sellers – the link you share on WhatsApp
+- Partner referral codes: `/for-providers?ref=HRE-TINO` remembers the code and pre-fills it when the provider profile is created; the code is fixed after sign-up
+- Admin → *Partners*: create codes, copy each partner's link, see signed-up / verified / **qualified** providers (verified with ≥ 5 active listings – the basis for paying field partners)
+- *Founding Provider* badge (set by admins) on listings, property pages and provider profiles
+
 **Admin** (`/admin`, `profiles.is_admin`)
 - Overview with the MVP success metrics (supply, demand, marketplace, trust, revenue)
 - Provider verification (with signed links to documents), suspend / reinstate

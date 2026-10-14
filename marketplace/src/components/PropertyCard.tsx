@@ -7,6 +7,7 @@ import { useI18n } from '@/lib/i18n/client'
 import { imageUrl } from '@/lib/images'
 import type { PropertyCard as Card } from '@/lib/types'
 import { CategoryIcon } from './CategoryIcon'
+import { FoundingBadge } from './FoundingBadge'
 import { SaveButton } from './SaveButton'
 
 export function PropertyCard({ property: p, compact = false }: { property: Card; compact?: boolean }) {
@@ -51,7 +52,7 @@ export function PropertyCard({ property: p, compact = false }: { property: Card;
               {p.locked ? (
                 <span className="text-sm font-bold text-gold-700">{t('premium.unlock')} →</span>
               ) : p.provider?.verified ? (
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700"><BadgeCheck className="size-4" />{t('provider.verified')}</span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700"><BadgeCheck className="size-4" />{t('provider.verified')}{p.provider.founding && <FoundingBadge />}</span>
               ) : <span />}
               <span className="text-sm font-semibold text-brand-700">{t('card.view')}</span>
             </div>

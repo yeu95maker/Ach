@@ -1,5 +1,7 @@
 import { BadgeCheck, Clock } from 'lucide-react'
 import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { REFERRAL_COOKIE } from '@/lib/referral'
 import { OnboardingShell, ProviderProfileForm, VerificationForm, type OwnProvider } from '@/components/ProviderOnboarding'
 import { Alert, LinkButton, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
@@ -27,7 +29,7 @@ export default async function OnboardingPage() {
           <>
             <h2 className="mb-1 text-lg font-bold">{t('onboarding.step1')}</h2>
             <p className="mb-4 text-sm text-gray-600">{t('onboarding.step1Text')}</p>
-            <ProviderProfileForm provider={null} userId={account.id} />
+            <ProviderProfileForm provider={null} userId={account.id} referralCode={(await cookies()).get(REFERRAL_COOKIE)?.value ?? ''} />
           </>
         )}
         {provider && (provider.status === 'unverified' || provider.status === 'rejected') && (

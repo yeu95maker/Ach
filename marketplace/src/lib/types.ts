@@ -22,6 +22,7 @@ export interface ProviderRef {
   name: string
   type: ProviderType
   verified: boolean
+  founding?: boolean
 }
 
 /** Card shape returned by search_properties / list_favorites. Locked → no title, price, provider. */
@@ -102,6 +103,7 @@ export interface ProviderProfile {
   name: string
   type: ProviderType
   verified: boolean
+  founding: boolean
   city: string
   country: string
   about: string

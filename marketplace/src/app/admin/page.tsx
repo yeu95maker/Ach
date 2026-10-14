@@ -2,7 +2,8 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PropertyModeration, ProviderReview, ReportResolution, UserActions } from '@/components/AdminActions'
+import { FoundingToggle, PartnerForm, PropertyModeration, ProviderReview, ReportResolution, UserActions } from '@/components/AdminActions'
+import { CopyLink } from '@/components/CopyLink'
 import { Badge, Card, EmptyState, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
 import { formatDate, formatPrice } from '@/lib/format'
@@ -14,12 +15,13 @@ import type { PropertyCard, PropertyStatus, ProviderStatus, ProviderType } from 
 
 export const metadata: Metadata = { title: 'Admin', robots: { index: false } }
 
-const TABS = ['overview', 'providers', 'properties', 'reports', 'users'] as const
+const TABS = ['overview', 'providers', 'properties', 'reports', 'partners', 'users'] as const
 type Tab = (typeof TABS)[number]
 
 interface AdminProvider {
   id: string; display_name: string; provider_type: ProviderType; status: ProviderStatus; status_note: string | null
   city: string; country: string; created_at: string; owner_email: string; active_count: number
+  is_founding: boolean; referral_code: string | null
   verification: null | {
     legal_name: string; contact_phone: string; contact_email: string; id_document_type: string; id_document_number: string
     business_name: string | null; business_registration_number: string | null; agent_license_number: string | null
@@ -45,6 +47,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
     providers: `${t('admin.tab.providers')}${Number(s.providers_pending) ? ` (${s.providers_pending})` : ''}`,
     properties: `${t('admin.tab.properties')}${Number(s.properties_pending) ? ` (${s.properties_pending})` : ''}`,
     reports: `${t('admin.tab.reports')}${Number(s.reports_open) ? ` (${s.reports_open})` : ''}`,
+    partners: t('admin.tab.partners'),
     users: t('admin.tab.users'),
   }
 
@@ -64,6 +67,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
       {tab === 'providers' && <Providers status={params.status as ProviderStatus | undefined} t={t} locale={locale} />}
       {tab === 'properties' && <Properties status={(params.status as PropertyStatus | undefined) ?? 'pending'} t={t} locale={locale} />}
       {tab === 'reports' && <Reports t={t} locale={locale} />}
+      {tab === 'partners' && <Partners t={t} locale={locale} />}
       {tab === 'users' && <Users q={typeof params.q === 'string' ? params.q : ''} t={t} locale={locale} />}
     </div>
   )
@@ -90,6 +94,7 @@ async function Providers({ status, t, locale }: { status?: ProviderStatus } & Ct
             <div>
               <Link href={`/providers/${p.id}`} className="text-lg font-bold hover:underline">{p.display_name}</Link>
               <p className="text-sm text-gray-600">{t(`providerType.${p.provider_type}`)} · {p.city}, {p.country} · {p.owner_email}</p>
+              {p.referral_code && <p className="text-xs text-gray-500">{t('referral.via', { code: p.referral_code })}</p>}
               <p className="text-xs text-gray-500">{formatDate(p.created_at, locale)} · {t('provider.activeCount', { n: p.active_count })}</p>
             </div>
             <Badge tone={p.status === 'verified' ? 'green' : p.status === 'pending' ? 'gold' : p.status === 'suspended' || p.status === 'rejected' ? 'red' : 'gray'}>{t(`providerStatus.${p.status}`)}</Badge>
@@ -115,7 +120,7 @@ async function Providers({ status, t, locale }: { status?: ProviderStatus } & Ct
               </div>
             </dl>
           )}
-          <div className="mt-3"><ProviderReview id={p.id} status={p.status} /></div>
+          <div className="mt-3 space-y-2"><ProviderReview id={p.id} status={p.status} /><FoundingToggle id={p.id} founding={p.is_founding} /></div>
         </Card>
       ))}
     </div>
@@ -215,6 +220,58 @@ async function Users({ q, t }: { q: string } & Ctx) {
   )
 }
 
+
+interface AdminPartner {
+  id: string; code: string; name: string; contact: string | null; active: boolean; created_at: string
+  providers: number; verified: number; qualified: number; active_listings: number
+  provider_list: { id: string; name: string; status: ProviderStatus; active_listings: number; created_at: string }[]
+}
+
+const QUALIFY_LISTINGS = 5
+
+async function Partners({ t }: Ctx) {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_list_partners', { p_min_listings: QUALIFY_LISTINGS })
+  const items = (data as AdminPartner[] | null) ?? []
+  const base = process.env.APP_URL ?? ''
+  return (
+    <div className="space-y-4">
+      <Card className="p-4">
+        <h2 className="mb-1 font-bold">{t('partners.add')}</h2>
+        <p className="mb-3 text-sm text-gray-600">{t('partners.explain', { n: QUALIFY_LISTINGS })}</p>
+        <PartnerForm />
+      </Card>
+      {items.length === 0 && <EmptyState title={t('admin.nothing')} />}
+      {items.map((p) => (
+        <Card key={p.id} className="p-4">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p className="text-lg font-bold">{p.name} <span className="font-mono text-sm text-gray-500">{p.code}</span></p>
+              {p.contact && <p className="text-sm text-gray-600">{p.contact}</p>}
+            </div>
+            {!p.active && <Badge tone="gray">{t('partners.inactive')}</Badge>}
+          </div>
+          <dl className="mt-3 grid grid-cols-4 gap-2 text-center">
+            {([['partners.signedUp', p.providers], ['partners.verified', p.verified], ['partners.qualified', p.qualified], ['partners.listings', p.active_listings]] as [MessageKey, number][]).map(([k, v]) => (
+              <div key={k} className="rounded-xl bg-gray-50 p-2"><dd className="text-xl font-extrabold">{v}</dd><dt className="text-xs text-gray-500">{t(k)}</dt></div>
+            ))}
+          </dl>
+          <div className="mt-3"><CopyLink url={`${base}/for-providers?ref=${p.code}`} /></div>
+          {p.provider_list.length > 0 && (
+            <ul className="mt-3 divide-y divide-gray-100 text-sm">
+              {p.provider_list.map((pr) => (
+                <li key={pr.id} className="flex justify-between gap-2 py-1.5">
+                  <Link href={`/providers/${pr.id}`} className="font-medium hover:underline">{pr.name}</Link>
+                  <span className="text-gray-500">{t(`providerStatus.${pr.status}`)} · {t('partners.listingsN', { n: pr.active_listings })}{pr.status === 'verified' && pr.active_listings >= QUALIFY_LISTINGS ? ' ✓' : ''}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      ))}
+    </div>
+  )
+}
 
 function Filters<T extends string>({ base, current, options, label }: { base: string; current?: T; options: T[]; label: (v: T) => string }) {
   return (

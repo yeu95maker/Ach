@@ -79,7 +79,7 @@ export default async function HomePage() {
             <h2 className="text-xl font-bold text-gray-900">{t('home.sellTitle')}</h2>
             <p className="mt-1 text-gray-600">{t('home.sellText')}</p>
           </div>
-          <LinkButton href={account ? '/provider/onboarding' : '/signup?intent=provider'}>{t('home.sellCta')}</LinkButton>
+          <LinkButton href="/for-providers">{t('home.sellCta')}</LinkButton>
         </section>
       )}
     </div>

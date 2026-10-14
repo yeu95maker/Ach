@@ -177,3 +177,8 @@ insert into public.reports (property_id, reporter_id, reason, details) values
    'The listing says water is available but neighbours say there is no connection yet.');
 
 drop table seed_props;
+
+-- Growth: founding providers and a field partner in Harare
+update public.providers set is_founding = true where id in ('d0000000-0000-4000-8000-000000000001', 'd0000000-0000-4000-8000-000000000003');
+insert into public.partners (code, name, contact) values ('HRE-TINO', 'Tinotenda (field partner)', '+263 77 000 0099');
+update public.providers set referral_code = 'HRE-TINO' where id in ('d0000000-0000-4000-8000-000000000002', 'd0000000-0000-4000-8000-000000000004');

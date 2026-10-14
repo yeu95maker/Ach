@@ -28,6 +28,12 @@ Offer for founding providers: listing is free anyway; add e.g. *"Founding
 Provider"* status, free featured placement at launch, and **free Premium for
 their team** (Admin → Users → *Grant Premium*).
 
+## Tools in the app for this
+
+- Send providers to **`/for-providers`** (the landing page explains the offer).
+- Give each field partner a code (Admin → Partners → *Add partner*) and let them share their own link, e.g. `https://your-domain/for-providers?ref=HRE-TINO`. Admin → Partners shows how many providers each partner brought and how many *qualified* (verified, ≥ 5 active listings) – pay partners per qualified provider.
+- Mark your first providers as **Founding Provider** (Admin → Providers) – the badge shows on all their listings.
+
 ## 2. Onboard them in one visit
 
 1. Provider creates an account → *List your property* → profile → verification

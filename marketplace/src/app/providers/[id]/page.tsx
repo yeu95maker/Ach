@@ -2,6 +2,7 @@ import { BadgeCheck, MapPin } from 'lucide-react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { FoundingBadge } from '@/components/FoundingBadge'
 import { PropertyCard } from '@/components/PropertyCard'
 import { Card, EmptyState } from '@/components/ui'
 import { formatDate } from '@/lib/format'
@@ -40,6 +41,7 @@ export default async function ProviderPage({ params }: PageProps<'/providers/[id
           <div className="min-w-0">
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">{provider.name}</h1>
             {provider.verified && <p className="inline-flex items-center gap-1 font-semibold text-brand-700"><BadgeCheck className="size-5" />{t('provider.verified')}</p>}
+            {provider.founding && <div className="my-1"><FoundingBadge size="md" /></div>}
             <p className="text-gray-600">{t(`providerType.${provider.type}`)}</p>
             <p className="mt-1 inline-flex items-center gap-1 text-sm text-gray-500"><MapPin className="size-4" />{provider.city}, {provider.country}</p>
           </div>

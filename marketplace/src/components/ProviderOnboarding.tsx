@@ -20,7 +20,7 @@ export interface OwnProvider {
   status_note: string | null
 }
 
-export function ProviderProfileForm({ provider, userId }: { provider: OwnProvider | null; userId: string }) {
+export function ProviderProfileForm({ provider, userId, referralCode = '' }: { provider: OwnProvider | null; userId: string; referralCode?: string }) {
   const { t } = useI18n()
   const router = useRouter()
   const [f, setF] = useState({
@@ -30,6 +30,7 @@ export function ProviderProfileForm({ provider, userId }: { provider: OwnProvide
     city: provider?.city ?? 'Harare',
     about: provider?.about ?? '',
   })
+  const [referral, setReferral] = useState(referralCode)
   const [busy, setBusy] = useState(false)
 
   async function save(e: React.FormEvent) {
@@ -38,7 +39,7 @@ export function ProviderProfileForm({ provider, userId }: { provider: OwnProvide
     const supabase = supabaseBrowser()
     const { error } = provider
       ? await supabase.from('providers').update(f).eq('id', provider.id)
-      : await supabase.from('providers').insert({ ...f, owner_id: userId })
+      : await supabase.from('providers').insert({ ...f, owner_id: userId, referral_code: referral.trim() || null })
     setBusy(false)
     if (error) return toast({ text: t(errorKey(error)), tone: 'error' })
     toast({ text: t('common.saved'), tone: 'success' })
@@ -62,6 +63,11 @@ export function ProviderProfileForm({ provider, userId }: { provider: OwnProvide
       <Field label={t('provider.about')}>
         <Textarea value={f.about} onChange={(e) => setF({ ...f, about: e.target.value })} maxLength={2000} rows={3} />
       </Field>
+      {!provider && (
+        <Field label={t('referral.label')} hint={t('referral.hint')}>
+          <Input value={referral} onChange={(e) => setReferral(e.target.value.toUpperCase())} maxLength={20} autoCapitalize="characters" />
+        </Field>
+      )}
       <Button type="submit" disabled={busy}>{provider ? t('common.save') : t('onboarding.createProfile')}</Button>
     </form>
   )

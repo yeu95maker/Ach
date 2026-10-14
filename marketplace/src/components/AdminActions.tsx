@@ -107,3 +107,32 @@ export function UserActions({ id, suspended, isPremium }: { id: string; suspende
     </div>
   )
 }
+
+export function FoundingToggle({ id, founding }: { id: string; founding: boolean }) {
+  const { call, busy, t } = useRpc()
+  return (
+    <Button size="sm" variant={founding ? 'secondary' : 'ghost'} disabled={busy} onClick={() => call('admin_set_founding', { p_provider_id: id, p_founding: !founding })}>
+      🏅 {t(founding ? 'founding.remove' : 'founding.make')}
+    </Button>
+  )
+}
+
+export function PartnerForm() {
+  const { call, busy, t } = useRpc()
+  const [code, setCode] = useState('')
+  const [name, setName] = useState('')
+  const [contact, setContact] = useState('')
+  const valid = /^[A-Z0-9-]{3,20}$/.test(code) && name.trim().length >= 2
+  return (
+    <form className="grid gap-2 sm:grid-cols-[8rem_1fr_1fr_auto]" onSubmit={async (e) => {
+      e.preventDefault()
+      await call('admin_save_partner', { p_code: code, p_name: name, p_contact: contact || null, p_active: true })
+      setCode(''); setName(''); setContact('')
+    }}>
+      <Input value={code} onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, ''))} placeholder="HRE-TINO" aria-label={t('partners.code')} maxLength={20} />
+      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={t('partners.name')} aria-label={t('partners.name')} />
+      <Input value={contact} onChange={(e) => setContact(e.target.value)} placeholder={t('partners.contact')} aria-label={t('partners.contact')} />
+      <Button type="submit" disabled={busy || !valid}>{t('partners.save')}</Button>
+    </form>
+  )
+}

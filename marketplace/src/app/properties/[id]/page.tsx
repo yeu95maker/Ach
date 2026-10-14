@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { FoundingBadge } from '@/components/FoundingBadge'
 import { Gallery } from '@/components/Gallery'
 import { LocationMap } from '@/components/map/LocationMap'
 import { MessageProviderButton, ReportButton, ViewTracker } from '@/components/PropertyActions'
@@ -161,6 +162,7 @@ export default async function PropertyPage({ params }: PageProps<'/properties/[i
               <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase">{t('provider.offeredBy')}</p>
               <Link href={`/providers/${p.provider.id}`} className="mt-1 block text-lg font-bold text-gray-900 hover:underline">{p.provider.name}</Link>
               {p.provider.verified && <p className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700"><BadgeCheck className="size-4" />{t('provider.verified')}</p>}
+              {p.provider.founding && <div className="mt-1"><FoundingBadge /></div>}
               <p className="mt-1 text-sm text-gray-600">{t(`providerType.${p.provider.type}`)}</p>
               <p className="text-sm text-gray-600">{t('provider.memberSince', { date: formatDate(p.provider.member_since, locale) })} · {t('provider.activeCount', { n: p.provider.active_count })}</p>
               <div className="mt-4 space-y-2">
