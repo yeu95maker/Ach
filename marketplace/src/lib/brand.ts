@@ -1,2 +1,2 @@
-/** Product name shown in the UI ("imba" = house in Shona). Change here only. */
-export const BRAND = 'Imba'
+/** Product name shown in the UI. Change here only. */
+export const BRAND = 'Property Finder'

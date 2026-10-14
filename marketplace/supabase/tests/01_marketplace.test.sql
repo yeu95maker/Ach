@@ -190,6 +190,12 @@ begin
   r := public.get_property('e0000000-0000-4000-8000-000000000005');
   assert not (r ->> 'locked')::boolean and (r ->> 'price')::numeric = 320000, 'members-only unlocked';
   assert (public.search_properties('{"features":["pool"]}') ->> 'total')::int = 2, 'advanced filters unlocked';
+end $$;
+-- Auto-renewing memberships (card-on-file providers) can be cancelled at period end and resumed
+reset role;
+update public.memberships set auto_renew = true where user_id = :'tariro';
+select pg_temp.act_as(:'tariro');
+do $$ begin
   perform public.cancel_membership();
   assert (public.my_account() -> 'membership' ->> 'cancel_at_period_end')::boolean, 'cancel at period end';
   assert (public.my_account() ->> 'is_premium')::boolean, 'still premium until period end';

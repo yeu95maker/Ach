@@ -39,6 +39,12 @@ function verifyJwt(token) {
   return claims.exp * 1000 > Date.now() ? claims : null
 }
 
+// `node gateway.mjs --print-service-key` → SUPABASE_SERVICE_ROLE_KEY for the app under test
+if (process.argv[2] === '--print-service-key') {
+  console.log(signJwt({ role: 'service_role', iat: 0, exp: 4102444800 }))
+  process.exit(0)
+}
+
 async function sessionFor(userId) {
   const { rows } = await pool.query('select id, email, raw_user_meta_data, created_at from auth.users where id = $1', [userId])
   const u = rows[0]
@@ -95,7 +101,7 @@ async function asUser(claims, fn) {
   const client = await pool.connect()
   try {
     await client.query('begin')
-    await client.query(`set local role ${claims ? 'authenticated' : 'anon'}`)
+    await client.query(`set local role ${claims?.role === 'service_role' ? 'service_role' : claims ? 'authenticated' : 'anon'}`)
     if (claims) await client.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify(claims)])
     const result = await fn(client)
     await client.query('commit')

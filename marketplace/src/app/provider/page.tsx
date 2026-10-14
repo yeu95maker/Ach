@@ -1,4 +1,4 @@
-import { Eye, Heart, MessageCircle, Plus } from 'lucide-react'
+import { Eye, FileSpreadsheet, Heart, MessageCircle, Plus } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -33,7 +33,12 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-5">
       <PageHeader title={t('dashboard.title')} subtitle={account.provider.display_name}
-        action={verified ? <LinkButton href="/provider/properties/new"><Plus className="size-4" />{t('nav.addProperty')}</LinkButton> : undefined} />
+        action={account.provider.status !== 'suspended' ? (
+          <div className="flex flex-wrap justify-end gap-2">
+            <LinkButton href="/provider/import" variant="secondary"><FileSpreadsheet className="size-4" />{t('import.cta')}</LinkButton>
+            {verified && <LinkButton href="/provider/properties/new"><Plus className="size-4" />{t('nav.addProperty')}</LinkButton>}
+          </div>
+        ) : undefined} />
 
       {!verified && (
         <Alert tone={account.provider.status === 'suspended' || account.provider.status === 'rejected' ? 'error' : 'warning'}>
@@ -84,6 +89,7 @@ export default async function DashboardPage() {
                       {p.is_premium && <Badge tone="dark" className="mt-1">🔒 {t('premium.membersOnly')}</Badge>}
                     </div>
                   </div>
+                  {p.status === 'draft' && <Alert tone="info" className="mt-3">{t('dashboard.draftHint')}</Alert>}
                   {p.status === 'rejected' && p.moderation_note && <Alert tone="error" className="mt-3">{t('dashboard.rejectedReason')} {p.moderation_note}</Alert>}
                   {p.status === 'active' && stale && <Alert tone="warning" className="mt-3">{t('dashboard.stalePrompt', { n: daysAgo(p.last_confirmed_at!) })}</Alert>}
                   <div className="mt-3"><DashboardActions p={p} stale={stale} /></div>

@@ -33,7 +33,7 @@ export default async function ProfilePage() {
   const { data: { user } } = await supabase.auth.getUser()
   const m = account.membership
   const membershipText = account.is_premium && m
-    ? t(m.cancel_at_period_end ? 'membership.endsOn' : 'membership.renewsOn', { date: formatDate(m.current_period_end, locale) })
+    ? t(!m.auto_renew ? 'membership.validUntil' : m.cancel_at_period_end ? 'membership.endsOn' : 'membership.renewsOn', { date: formatDate(m.current_period_end, locale) })
     : t('membership.freePlan')
 
   return (

@@ -1,17 +1,17 @@
-# Imba – Property Marketplace (MVP)
+# Property Finder (MVP)
 
 A mobile-first property marketplace: **Wohnungen / apartments, Häuser / houses, Grundstücke / land and Gewerbe / commercial** from **verified providers only**. Launch market: Harare, Zimbabwe. Freemium + Premium membership.
 
 > **Discover · Trust · Connect.** Open app → choose type → where → price → browse (list or map) → open property → save or message a verified provider.
 
-The product name "Imba" ("house" in Shona) is a placeholder and can be changed in `src/lib/brand.ts`.
+The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean listings into the app:** see [docs/REAL-LISTINGS.md](docs/REAL-LISTINGS.md).
 
 | Area | Technology |
 | --- | --- |
 | Frontend | Next.js 16 (App Router, Server Components), TypeScript strict, Tailwind CSS 4 |
 | Backend | Supabase: Postgres + Row Level Security, Auth, Storage, Realtime |
 | Maps | MapLibre GL rendering **Mapbox** tiles (`NEXT_PUBLIC_MAPBOX_TOKEN`); OpenStreetMap fallback for development |
-| Payments | Provider-agnostic billing layer + demo checkout (see below) |
+| Payments | Paynow – EcoCash, OneMoney, Visa/Mastercard, ZimSwitch (see below) |
 | i18n | English (default) and German; compile-time key parity |
 
 ## What is in the MVP
@@ -27,6 +27,7 @@ The product name "Imba" ("house" in Shona) is a placeholder and can be changed i
 - Membership page with the plan comparison; locked "members only" and "early access" teasers
 
 **Providers (Anbieter)**
+- **Bulk import** of existing stock from a spreadsheet (CSV → drafts, then photos + pin + submit)
 - Onboarding: public profile → verification (legal name, phone, email, ID type/number, business registration, agent licence, document upload to a private bucket) → admin review
 - Unverified providers can prepare drafts but **cannot publish**
 - 9-step listing wizard: type → location (map pin, exact/approximate) → price → size → details & features → photos (client-side downscaling, reorder, cover) → description & nearby places → preview → submit for moderation
@@ -49,19 +50,26 @@ The product name "Imba" ("house" in Shona) is a placeholder and can be changed i
 - "Verified Provider" is explained on every listing: it means the provider passed verification – **not** a guarantee of ownership or title.
 - Rate-limited view counting (one per viewer per day), one open report per user and listing, free-tier favourites limit, suspended accounts cannot message or list.
 
-## Billing
+## Payments (Paynow)
 
-The database owns the lifecycle *Free → Premium → Renewal → Cancellation → Expiration* (`memberships`, `payments`):
+Premium is paid through **[Paynow](https://www.paynow.co.zw)**, Zimbabwe's main payment gateway:
+**EcoCash** and **OneMoney** (PIN prompt on the customer's phone, no redirect) and **Visa / Mastercard / ZimSwitch** and other wallets via the Paynow checkout page. Prices come from `app_settings` (default USD 9 / month, USD 90 / year).
 
-| Function | Caller |
-| --- | --- |
-| `billing_record_payment` (idempotent per provider reference) | payment webhook, service role |
-| `billing_mark_status` (past_due / expired) | payment webhook, service role |
-| `cancel_membership` / `resume_membership` | user (cancel at period end) |
-| `expire_memberships`, `request_availability_confirmations` | cron, service role |
-| `billing_demo_checkout` | user, only if `app_settings.demo_billing = true` |
+How it works:
 
-`BILLING_PROVIDER=demo` activates Premium without payment (development/staging). To launch, implement the `PaymentAdapter` interface in `src/lib/billing/index.ts` (hosted checkout + verified webhook → `/api/billing/webhook`). **Which provider is an open decision** – for Zimbabwe customers typically pay with EcoCash / OneMoney / ZimSwitch or USD cards, so a local gateway (e.g. Paynow) is likely needed; Stripe fits other markets. Keep `demo_billing` **off** in production.
+1. `POST /api/billing/checkout` (signed-in user) books a *pending* payment (amount taken from the database, never from the browser) and starts the Paynow transaction.
+2. Paynow posts the result to `/api/billing/paynow/result`; the customer's return page also polls `/api/billing/status`. Both only trust Paynow's **signed poll URL** that the server stored itself, check the SHA-512 hash and that the paid amount matches.
+3. `billing_record_payment` settles the payment idempotently and extends Premium by one month/year. A declined or cancelled payment is marked failed; nothing is activated.
+
+Paynow has no stored-card subscriptions, so Premium is **prepaid**: it is valid until the end date and the member extends it themselves ("Extend Premium"; a new payment adds a period on top). The schema also supports auto-renewing providers (`memberships.auto_renew`, cancel/resume) if a card provider is added for other markets.
+
+**Go live with Paynow:**
+1. Create a Paynow merchant account → *Receive Payments* → new integration (USD).
+2. Set `BILLING_PROVIDER=paynow`, `PAYNOW_INTEGRATION_ID`, `PAYNOW_INTEGRATION_KEY`, `SUPABASE_SERVICE_ROLE_KEY` and `APP_URL` (public HTTPS URL), and run `update public.app_settings set demo_billing = false;`.
+3. Test in Paynow test mode (set `PAYNOW_TEST_AUTH_EMAIL` to your merchant email; test numbers 0771111111 = success, 0773333333 = cancelled), then ask Paynow to set the integration live and remove `PAYNOW_TEST_AUTH_EMAIL`.
+4. Daily cron: `select public.billing_expire_pending(24);` (closes abandoned payments).
+
+`BILLING_PROVIDER=demo` activates Premium without payment (development only).
 
 ## Getting started
 
@@ -86,7 +94,9 @@ Demo accounts (password `Marketplace!2026`):
 | `sunrise@demo.property` | Verified developer |
 | `newagent@demo.property` | Provider with pending verification |
 
-Cron jobs to schedule in production (e.g. `pg_cron`, daily): `select public.expire_memberships();` and `select public.request_availability_confirmations(30);`.
+Cron jobs to schedule in production (e.g. `pg_cron`, daily): `select public.expire_memberships();`, `select public.request_availability_confirmations(30);` and `select public.billing_expire_pending(24);`.
+
+**Production:** `supabase/seed.sql` is demo data only – never load it into the production database (`supabase db push` applies migrations only). Create the first admin by setting `profiles.is_admin = true` for your account in the SQL editor.
 
 ## Quality checks
 
@@ -106,9 +116,11 @@ npm run build && npx next start -p 3000 &
 node scripts/e2e/journeys.mjs screenshots
 ```
 
+Payments end to end: start `PAYNOW_INTEGRATION_KEY=test-key node scripts/e2e/paynow-mock.mjs`, run the app with `BILLING_PROVIDER=paynow PAYNOW_INTEGRATION_ID=1201 PAYNOW_INTEGRATION_KEY=test-key PAYNOW_BASE_URL=http://localhost:4010 SUPABASE_SERVICE_ROLE_KEY=$(node scripts/e2e/gateway.mjs --print-service-key) APP_URL=http://localhost:3000` and the journeys with `PAYNOW_E2E=1` (EcoCash success, card redirect, declined payment).
+
 ## Open points / next steps
 
-- Choose and integrate the payment provider for the launch market (adapter + webhook are prepared).
+- Paynow merchant account + live integration keys (code is complete and tested against a protocol-compatible mock).
 - Mapbox token (URL-restricted) for production; optionally Mapbox geocoding for the "Where?" field.
 - Email/push delivery of notifications (currently in-app).
 - Property/document verification as a separate, explicit badge (not part of the MVP by design).

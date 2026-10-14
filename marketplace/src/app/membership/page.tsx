@@ -48,7 +48,7 @@ export default async function MembershipPage({ searchParams }: PageProps<'/membe
       {account?.is_premium && m && (
         <Alert tone="success">
           {t('membership.current', { plan: t('premium.name') })}{' '}
-          {t(m.cancel_at_period_end ? 'membership.endsOn' : 'membership.renewsOn', { date: formatDate(m.current_period_end, locale) })}
+          {t(!m.auto_renew ? 'membership.validUntil' : m.cancel_at_period_end ? 'membership.endsOn' : 'membership.renewsOn', { date: formatDate(m.current_period_end, locale) })}
         </Alert>
       )}
 
@@ -63,7 +63,7 @@ export default async function MembershipPage({ searchParams }: PageProps<'/membe
           <p className="mt-1 text-3xl font-extrabold">{formatPrice(s.premium_price_month, s.currency, locale)} <span className="text-base font-medium text-gray-400">/ {t('membership.month')}</span></p>
           <p className="mt-2 mb-4 text-sm text-gray-300">{t('membership.premiumText', { n: s.early_access_hours })}</p>
           <div className="rounded-2xl bg-white p-3 text-gray-900">
-            <MembershipActions mode={billingMode()} signedIn={!!account} isPremium={!!account?.is_premium} cancelAtPeriodEnd={!!m?.cancel_at_period_end}
+            <MembershipActions mode={billingMode()} signedIn={!!account} isPremium={!!account?.is_premium} autoRenew={!!m?.auto_renew} cancelAtPeriodEnd={!!m?.cancel_at_period_end}
               prices={{ month: s.premium_price_month, year: s.premium_price_year, currency: s.currency }} next={next} />
           </div>
         </Card>

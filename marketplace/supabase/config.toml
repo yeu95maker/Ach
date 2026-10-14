@@ -1,5 +1,5 @@
-# Property marketplace – Supabase project configuration (local development via `supabase start`).
-project_id = "property-marketplace"
+# Property Finder – Supabase project configuration (local development via `supabase start`).
+project_id = "property-finder"
 
 [api]
 enabled = true

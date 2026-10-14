@@ -88,6 +88,7 @@ export interface Account {
     billing_interval: 'month' | 'year'
     current_period_end: string
     cancel_at_period_end: boolean
+    auto_renew: boolean
     payment_provider: string
   } | null
   provider: { id: string; display_name: string; status: ProviderStatus; provider_type: ProviderType; status_note: string | null } | null

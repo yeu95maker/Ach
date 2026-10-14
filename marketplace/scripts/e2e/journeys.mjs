@@ -105,11 +105,49 @@ try {
   // 3. Premium ------------------------------------------------------------------
   await page.goto(`${BASE}/membership?next=/properties/e0000000-0000-4000-8000-000000000005`)
   await shot(page, 'membership')
-  await page.getByRole('button', { name: 'Become a member' }).click()
-  await page.waitForURL(/\/properties\/e0000000-0000-4000-8000-000000000005/)
-  await expect(page.getByText('$320,000'), 'unlocked price')
+  if (process.env.PAYNOW_E2E) {
+    // EcoCash express checkout: prompt on the phone, app waits for Paynow's confirmation
+    await page.getByLabel('EcoCash number').fill('077 111 1111')
+    await shot(page, 'membership-ecocash')
+    await page.getByRole('button', { name: /^Pay \$9/ }).click()
+    await expect(page.getByText('Check your phone and enter your PIN'), 'approve on phone')
+    await shot(page, 'payment-waiting')
+    await page.waitForURL(/\/properties\/e0000000-0000-4000-8000-000000000005/, { timeout: 30000 })
+    await expect(page.getByText('$320,000'), 'unlocked price')
+    log('Paynow EcoCash payment → premium listing unlocked')
+
+    // Card via the Paynow checkout page, second customer
+    const cardCtx = await browser.newContext(phone)
+    const cardPage = await cardCtx.newPage()
+    await login(cardPage, 'tariro@demo.property')
+    await cardPage.goto(`${BASE}/membership`)
+    await cardPage.getByRole('radio', { name: /Yearly/ }).click()
+    await cardPage.getByRole('button', { name: 'Card / other' }).click()
+    await cardPage.getByRole('button', { name: /^Pay \$90/ }).click()
+    await cardPage.waitForURL(/\/pay\//)
+    await cardPage.locator('#pay').click()
+    await cardPage.waitForURL(/\/membership/, { timeout: 30000 })
+    await expect(cardPage.getByText('You are a Premium member.'), 'premium after card payment')
+    await shot(cardPage, 'membership-active')
+    log('Paynow card payment (redirect + return) → Premium for a year')
+
+    // Declined EcoCash payment leaves the account free
+    const failCtx = await browser.newContext(phone)
+    const failPage = await failCtx.newPage()
+    await login(failPage, 'lena@demo.property')
+    await failPage.goto(`${BASE}/membership`)
+    await failPage.getByRole('button', { name: 'Extend Premium' }).click().catch(() => {})
+    await failPage.getByLabel('EcoCash number').fill('0773333333')
+    await failPage.getByRole('button', { name: /^Pay / }).click()
+    await expect(failPage.getByText('cancelled or declined'), 'declined message')
+    log('declined EcoCash payment is reported, nothing activated')
+  } else {
+    await page.getByRole('button', { name: 'Become a member' }).click()
+    await page.waitForURL(/\/properties\/e0000000-0000-4000-8000-000000000005/)
+    await expect(page.getByText('$320,000'), 'unlocked price')
+    log('demo checkout → premium listing unlocked')
+  }
   await shot(page, 'property-unlocked')
-  log('demo checkout → premium listing unlocked')
 
   // 4. Provider adds a listing ---------------------------------------------------
   const providerCtx = await browser.newContext(phone)
@@ -146,6 +184,19 @@ try {
   await page.waitForURL(`${BASE}/provider`)
   await expect(page.getByText('Serviced Stand near Borrowdale Brooke'), 'new listing on dashboard')
   log('provider listing wizard (9 steps, photo upload) → in review')
+
+  await page.goto(`${BASE}/provider/import`)
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'stock.csv', mimeType: 'text/csv',
+    buffer: Buffer.from('type,title,price_usd,city,area,land_size_m2,living_area_m2,bedrooms,features\nstand,Stand in Greendale,18000,Harare,Greendale,450,,,water;road access\ncluster,Cluster in Avondale,82000,Harare,Avondale,,110,3,garden\nboat,Not a property,1,Harare,Avondale,1,,,\n'),
+  })
+  await expect(page.getByText('2 of 3 rows are ready to import'), 'import preview')
+  await shot(page, 'import-preview')
+  await page.getByRole('button', { name: 'Import 2 as drafts' }).click()
+  await expect(page.getByText('2 drafts created.'), 'import done')
+  await page.goto(`${BASE}/provider`)
+  await expect(page.getByText('Cluster in Avondale'), 'imported draft on dashboard')
+  log('CSV import → 2 drafts, invalid row reported')
 
   // 5. Admin approves -------------------------------------------------------------
   const adminCtx = await browser.newContext({ viewport: { width: 1280, height: 900 } })
