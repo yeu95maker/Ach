@@ -11,6 +11,10 @@ const KNOWN: Record<string, MessageKey> = {
   AUTH_REQUIRED: 'error.authRequired',
   DEMO_BILLING_DISABLED: 'error.billingDisabled',
   NOT_FOUND: 'error.notFound',
+  TEAM_ADMIN_ONLY: 'error.teamAdminOnly',
+  INVITE_INVALID: 'error.inviteInvalid',
+  INVITE_OTHER_EMAIL: 'error.inviteOtherEmail',
+  ALREADY_MEMBER: 'error.alreadyMember',
   'Invalid login credentials': 'error.invalidLogin',
   'User already registered': 'error.userExists',
 }

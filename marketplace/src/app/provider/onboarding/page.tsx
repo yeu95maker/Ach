@@ -1,6 +1,7 @@
 import { BadgeCheck, Clock } from 'lucide-react'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { REFERRAL_COOKIE } from '@/lib/referral'
 import { OnboardingShell, ProviderProfileForm, VerificationForm, type OwnProvider } from '@/components/ProviderOnboarding'
 import { Alert, LinkButton, PageHeader } from '@/components/ui'
@@ -14,6 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function OnboardingPage() {
   const account = await requireAccount('/provider/onboarding')
+  // Team members (agents/admins) work for someone else's provider account – verification is the owner's job.
+  if (account.provider && account.provider.role !== 'owner') redirect('/provider')
   const { t } = await getT()
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

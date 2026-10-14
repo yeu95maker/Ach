@@ -47,6 +47,11 @@ The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean list
 - GDPR self-service in Profile: download all personal data (JSON), delete the account (payment records are kept anonymised for accounting)
 - Providers can pause/resume live listings and duplicate a listing into a new draft
 
+**Agency teams & email**
+- Providers invite agents/admins by email (*My properties → Team*); members share the agency's listings, photos and inbox; only the owner manages profile and verification; the invite link works only for the invited address (14 days)
+- Email notifications for new inquiries, new messages (max. one per conversation every 30 min), saved-search matches, price drops, listing decisions and team invites – in the recipient's language, switchable in Profile
+- Emails are queued in `email_outbox` and sent by `/api/cron/emails` (Vercel cron every 5 min via `vercel.json`, or any scheduler with `Authorization: Bearer $CRON_SECRET`); failures are retried up to 3 times
+
 **Growth (provider acquisition)**
 - `/for-providers` landing page for agents, developers and sellers – the link you share on WhatsApp
 - Partner referral codes: `/for-providers?ref=HRE-TINO` remembers the code and pre-fills it when the provider profile is created; the code is fixed after sign-up
@@ -89,6 +94,13 @@ Paynow has no stored-card subscriptions, so Premium is **prepaid**: it is valid 
 4. Daily cron: `select public.billing_expire_pending(24);` (closes abandoned payments).
 
 `BILLING_PROVIDER=demo` activates Premium without payment (development only).
+
+## Email setup
+
+1. Create a [Resend](https://resend.com) account and verify your sending domain.
+2. Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="Property Finder <hello@your-domain>"`, `CRON_SECRET` (a long random string) and `SUPABASE_SERVICE_ROLE_KEY`.
+3. On Vercel the cron in `vercel.json` calls the worker every 5 minutes. Elsewhere, call `GET /api/cron/emails` with `Authorization: Bearer $CRON_SECRET`.
+Without `EMAIL_PROVIDER` emails simply stay queued; `EMAIL_PROVIDER=log` prints them (development).
 
 ## Getting started
 

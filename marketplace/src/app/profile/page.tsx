@@ -56,7 +56,7 @@ export default async function ProfilePage() {
 
       <Card className="p-5">
         <h2 className="mb-4 font-bold text-gray-900">{t('profile.settings')}</h2>
-        <ProfileForm userId={account.id} fullName={account.full_name} />
+        <ProfileForm userId={account.id} fullName={account.full_name} emailNotifications={account.email_notifications} />
       </Card>
 
       <Card className="p-5">

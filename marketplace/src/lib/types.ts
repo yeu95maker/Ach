@@ -110,7 +110,8 @@ export interface Account {
     auto_renew: boolean
     payment_provider: string
   } | null
-  provider: { id: string; display_name: string; status: ProviderStatus; provider_type: ProviderType; status_note: string | null } | null
+  provider: { id: string; display_name: string; status: ProviderStatus; provider_type: ProviderType; status_note: string | null; role: 'owner' | 'admin' | 'agent' } | null
+  email_notifications: boolean
   favorites_count: number
   unread_notifications: number
   unread_messages: number

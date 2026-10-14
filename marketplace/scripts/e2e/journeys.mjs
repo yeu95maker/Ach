@@ -350,6 +350,38 @@ try {
   await expect(page.getByText('Email or password is incorrect.'), 'account gone')
   log('privacy: data export and account deletion')
 
+  // 11. Agency team + email worker ---------------------------------------------------
+  page = await abc.newPage()
+  await page.goto(`${BASE}/provider/team`)
+  const agentEmail = `agent-${Date.now()}@example.com`
+  await page.getByLabel('Email').fill(agentEmail)
+  await page.getByRole('button', { name: 'Send invitation' }).click()
+  await expect(page.getByText(`Invitation sent to ${agentEmail}.`), 'invite sent')
+  const joinLink = (await page.locator('button', { hasText: '/provider/join?token=' }).first().innerText()).trim()
+  await shot(page, 'team')
+  const agentCtx = await browser.newContext(phone)
+  page = await agentCtx.newPage()
+  await page.goto(`${BASE}/signup?next=${encodeURIComponent(joinLink)}`)
+  await page.getByLabel('Full name').fill('Joe Agent')
+  await page.getByLabel('Email').fill(agentEmail)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await page.getByRole('button', { name: 'Create free account' }).click()
+  await page.waitForURL(/\/provider\/join/)
+  await page.getByRole('button', { name: 'Join the team' }).click()
+  await page.waitForURL(`${BASE}/provider`)
+  await expect(page.getByText('Modern Family House'), 'agent sees agency listings')
+  await page.goto(`${BASE}/messages`)
+  await expect(page.getByText('Chipo Test').first(), 'agent sees agency inbox')
+  log('agency team: invite → sign up → join → shared listings and inbox')
+
+  if (process.env.CRON_SECRET) {
+    const res = await fetch(`${BASE}/api/cron/emails`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET}` } })
+    const body = await res.json()
+    if (!res.ok || !(body.sent > 0) || body.failed) throw new Error(`email worker: ${JSON.stringify(body)}`)
+    if ((await fetch(`${BASE}/api/cron/emails`)).status !== 401) throw new Error('email worker must require the secret')
+    log(`email worker sent ${body.sent} queued emails (inquiries, messages, approvals, invite)`)
+  }
+
   // German UI
   await visitor.addCookies([{ name: 'locale', value: 'de', url: BASE }])
   page = await visitor.newPage()

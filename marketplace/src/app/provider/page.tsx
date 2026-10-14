@@ -1,4 +1,4 @@
-import { Eye, FileSpreadsheet, Heart, MessageCircle, Plus } from 'lucide-react'
+import { Eye, FileSpreadsheet, Heart, MessageCircle, Plus, Users } from 'lucide-react'
 import { PriceText } from '@/components/PriceText'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -36,6 +36,7 @@ export default async function DashboardPage() {
       <PageHeader title={t('dashboard.title')} subtitle={account.provider.display_name}
         action={account.provider.status !== 'suspended' ? (
           <div className="flex flex-wrap justify-end gap-2">
+            <LinkButton href="/provider/team" variant="secondary"><Users className="size-4" />{t('team.title')}</LinkButton>
             <LinkButton href="/provider/import" variant="secondary"><FileSpreadsheet className="size-4" />{t('import.cta')}</LinkButton>
             {verified && <LinkButton href="/provider/properties/new"><Plus className="size-4" />{t('nav.addProperty')}</LinkButton>}
           </div>

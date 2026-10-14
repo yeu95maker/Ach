@@ -219,3 +219,6 @@ insert into public.property_images (property_id, storage_path, position) values
   ('e0000000-0000-4000-8000-000000000103', '/demo/interior-3.svg', 0), ('e0000000-0000-4000-8000-000000000103', '/demo/house-4.svg', 1),
   ('e0000000-0000-4000-8000-000000000104', '/demo/apartment-2.svg', 0), ('e0000000-0000-4000-8000-000000000104', '/demo/interior-1.svg', 1),
   ('e0000000-0000-4000-8000-000000000105', '/demo/commercial-1.svg', 0), ('e0000000-0000-4000-8000-000000000105', '/demo/interior-2.svg', 1);
+
+-- Demo data must not send emails.
+delete from public.email_outbox;
