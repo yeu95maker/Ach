@@ -1,11 +1,12 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
+import { RECIPE_PHOTOS } from '@/data/recipePhotos';
 import { CONDITIONS, DIETS, GOALS, labelOf } from '@/domain/catalog';
 import { recipeConditions, recipeDiets, recipeGoals } from '@/domain/classify';
 import type { Recipe } from '@/domain/types';
 
-/** Photo when the recipe has one, otherwise a large emoji on the recipe's tint. */
+/** Photo when the recipe has one (remote `imageUrl` or a bundled photo), otherwise a large emoji on the recipe's tint. */
 export function RecipeHero({
   recipe,
   emojiSize = 96,
@@ -15,10 +16,11 @@ export function RecipeHero({
   emojiSize?: number;
   style?: StyleProp<ViewStyle>;
 }) {
-  if (recipe.imageUrl) {
+  const source = recipe.imageUrl ? { uri: recipe.imageUrl } : RECIPE_PHOTOS[recipe.id];
+  if (source) {
     return (
-      <View style={[s.hero, style]}>
-        <Image source={{ uri: recipe.imageUrl }} style={StyleSheet.absoluteFill} resizeMode="cover" accessibilityIgnoresInvertColors />
+      <View style={[s.hero, { backgroundColor: recipe.tint }, style]}>
+        <Image source={source} style={s.photo} resizeMode="cover" accessibilityIgnoresInvertColors />
       </View>
     );
   }
@@ -48,4 +50,5 @@ export function conditionTags(recipe: Recipe): string[] {
 
 const s = StyleSheet.create({
   hero: { alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  photo: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' },
 });
