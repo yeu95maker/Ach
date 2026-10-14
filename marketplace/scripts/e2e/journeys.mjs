@@ -73,6 +73,34 @@ try {
   await shot(page, 'property-locked')
   log('members-only property is locked for visitors')
 
+  // Rentals, radius search, map clusters ------------------------------------------
+  await page.goto(BASE)
+  await page.getByRole('button', { name: 'Rent', exact: true }).click()
+  await page.getByRole('button', { name: /Apartments/ }).click()
+  await page.getByRole('button', { name: 'Search', exact: true }).click()
+  await page.waitForURL(/transaction=rent/)
+  await expect(page.getByText('Furnished 2-Bed Flat'), 'rental result')
+  await expect(page.getByText('/ month'), 'monthly price')
+  await shot(page, 'rent-results')
+  await page.getByText('Furnished 2-Bed Flat').first().click()
+  await expect(page.getByText('Deposit'), 'rent details')
+  await expect(page.getByText('Year built'), 'building details')
+  await page.getByText('Main information').scrollIntoViewIfNeeded()
+  await shot(page, 'rent-details')
+  log('rentals: Buy/Rent toggle, monthly prices, deposit and building details')
+
+  await page.goto(`${BASE}/search?transaction=rent&near=-17.8,31.037&radius_km=2&place=Avondale`)
+  await expect(page.getByText('Furnished 2-Bed Flat'), 'inside radius')
+  if (await page.getByText('Family House to Let').count()) throw new Error('Borrowdale house should be outside 2 km')
+  log('radius search: 2 km around Avondale')
+
+  await page.goto(`${BASE}/search?city=Harare&view=map`)
+  await expect(page.locator('[data-cluster]'), 'map clusters at city zoom')
+  await shot(page, 'map-clusters')
+  await page.locator('[data-cluster]').first().click()
+  await page.waitForTimeout(900)
+  log('map clusters expand on tap')
+
   // 2. Sign-up, save, message -------------------------------------------------
   const customer = await browser.newContext(phone)
   page = await customer.newPage()

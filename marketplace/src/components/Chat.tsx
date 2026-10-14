@@ -1,10 +1,11 @@
 'use client'
+import { PriceText } from './PriceText'
 import { ArrowLeft, BadgeCheck, SendHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { errorKey } from '@/lib/errors'
-import { formatDate, formatPrice, formatTime } from '@/lib/format'
+import { formatDate, formatTime } from '@/lib/format'
 import { useI18n } from '@/lib/i18n/client'
 import { imageUrl } from '@/lib/images'
 import { supabaseBrowser } from '@/lib/supabase/client'
@@ -92,7 +93,7 @@ export function Chat({ conversation: c, initial, userId }: { conversation: Conve
           <div className="size-11 shrink-0 overflow-hidden rounded-lg bg-gray-200">{cover && <img src={cover} alt="" className="h-full w-full object-cover" />}</div>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-gray-900">🏠 {c.property.title}</p>
-            <p className="text-sm font-bold text-gray-700">{formatPrice(c.property.price, c.property.currency, locale)}</p>
+            <p className="text-sm font-bold text-gray-700"><PriceText amount={c.property.price} currency={c.property.currency} transaction={c.property.transaction} /></p>
           </div>
         </Link>
       </header>

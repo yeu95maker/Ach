@@ -8,7 +8,7 @@ import { useI18n } from '@/lib/i18n/client'
 import { locate, whereLabel } from '@/lib/locations'
 import { supabaseBrowser } from '@/lib/supabase/client'
 import type { PropertyCard as Card, SearchResult } from '@/lib/types'
-import { CATEGORIES } from '@/lib/types'
+import { CATEGORIES, TRANSACTIONS } from '@/lib/types'
 import { FilterSheet } from './FilterSheet'
 import { PropertyMap, type BBox } from './map'
 import { PropertyCard } from './PropertyCard'
@@ -90,7 +90,16 @@ export function SearchView({ filters, initial, view, isPremium, isSignedIn, page
         </div>
 
         <div className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4">
-          {[undefined, ...CATEGORIES].map((c) => (
+          <div role="group" aria-label={t('filters.transaction')} className="flex h-9 shrink-0 rounded-full bg-gray-200/70 p-0.5">
+            {TRANSACTIONS.map((tx) => (
+              <button key={tx} type="button" aria-pressed={filters.transaction === tx}
+                onClick={() => navigate({ ...filters, transaction: filters.transaction === tx ? undefined : tx, category: tx === 'sale' && filters.category === 'room' ? undefined : filters.category, min_price: undefined, max_price: undefined })}
+                className={clsx('rounded-full px-3.5 text-sm font-bold', filters.transaction === tx ? 'bg-brand-600 text-white' : 'text-gray-700')}>
+                {t(`transaction.${tx}`)}
+              </button>
+            ))}
+          </div>
+          {[undefined, ...CATEGORIES.filter((c) => c !== 'room' || filters.transaction !== 'sale')].map((c) => (
             <button key={c ?? 'all'} type="button" aria-pressed={filters.category === c} onClick={() => navigate({ ...filters, category: c })}
               className={clsx('h-9 shrink-0 rounded-full px-3.5 text-sm font-semibold ring-1', filters.category === c ? 'bg-gray-900 text-white ring-gray-900' : 'bg-white text-gray-700 ring-gray-300')}>
               {c ? t(`categoryPlural.${c}`) : t('filters.all')}
@@ -162,7 +171,9 @@ function MapResults({ filters, onSearchArea }: { filters: Filters; onSearchArea:
   const [moved, setMoved] = useState(false)
   const loads = useRef(0)
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  const start = useMemo(() => locate(filters), [filters])
+  const start = useMemo(() => (filters.near
+    ? { lat: filters.near[0], lng: filters.near[1], zoom: (filters.radius_km ?? 5) > 5 ? 11 : 13 }
+    : locate(filters)), [filters])
 
   const load = useCallback(
     (box: BBox) => {

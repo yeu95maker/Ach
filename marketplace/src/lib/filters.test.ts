@@ -40,7 +40,20 @@ describe('premium filters', () => {
     expect(countActiveFilters({ city: 'Harare', min_price: 1, max_price: 2, features: ['pool', 'garage'] })).toBe(3)
   })
   it('offers only meaningful features per category', () => {
-    expect(featuresFor('land')).toEqual(['electricity', 'water', 'road_access'])
+    expect(featuresFor('land')).toEqual(['electricity', 'water', 'borehole', 'road_access'])
+    expect(featuresFor('room')).toContain('furnished')
     expect(featuresFor('house')).toContain('garage')
+  })
+})
+
+describe('rentals and radius', () => {
+  it('parses transaction, move-in date and radius', () => {
+    expect(parseFilters({ transaction: 'rent', available_by: '2026-12-01', near: '-17.8,31.04', radius_km: '5', place: 'Avondale' }))
+      .toEqual({ transaction: 'rent', available_by: '2026-12-01', near: [-17.8, 31.04], radius_km: 5, place: 'Avondale' })
+    expect(parseFilters({ transaction: 'lease', available_by: 'soon', near: '1,2', radius_km: '500' })).toEqual({})
+  })
+  it('round-trips radius filters', () => {
+    const f = parseFilters({ transaction: 'rent', near: '-17.80000,31.04000', radius_km: '3', place: 'Avondale' })
+    expect(parseFilters(new URLSearchParams(filtersToQuery(f)))).toEqual(f)
   })
 })

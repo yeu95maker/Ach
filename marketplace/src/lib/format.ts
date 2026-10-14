@@ -44,6 +44,11 @@ export function hoursUntil(iso: string, now: Date = new Date()): number {
   return Math.max(0, Math.ceil((new Date(iso).getTime() - now.getTime()) / 3_600_000))
 }
 
+/** Map marker: "$25K" for sales, "$650" for monthly rents. */
+export function markerPrice(amount: number, currency: string, transaction: 'sale' | 'rent'): string {
+  return transaction === 'rent' && amount < 10_000 ? `${currency === 'USD' ? '$' : `${currency} `}${Math.round(amount)}` : formatPriceShort(amount, currency)
+}
+
 /** Size shown on cards: plot size, or living area where there is no plot. */
 export function primarySize(p: { land_size_m2: number | null; living_area_m2: number | null }): number | null {
   return p.land_size_m2 ?? p.living_area_m2 ?? null

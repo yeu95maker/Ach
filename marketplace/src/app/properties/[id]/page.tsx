@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import { FoundingBadge } from '@/components/FoundingBadge'
 import { Gallery } from '@/components/Gallery'
+import { PriceText } from '@/components/PriceText'
 import { LocationMap } from '@/components/map/LocationMap'
 import { MessageProviderButton, ReportButton, ViewTracker } from '@/components/PropertyActions'
 import { SaveButton } from '@/components/SaveButton'
@@ -50,13 +51,20 @@ export default async function PropertyPage({ params }: PageProps<'/properties/[i
   const title = p.locked ? t('locked.title') : p.title
   const relevantFeatures = featuresFor(p.category)
   const details: [string, React.ReactNode][] = [
-    [t('detail.type'), t(`category.${p.category}`)],
-    [t('detail.price'), p.price !== null ? formatPrice(p.price, p.currency, locale) : <span className="inline-flex items-center gap-1 text-gray-400"><Lock className="size-4" />{t('locked.price')}</span>],
+    [t('detail.type'), `${t(`category.${p.category}`)} · ${t(p.transaction === 'rent' ? 'transaction.forRent' : 'transaction.forSale')}`],
+    [t(p.transaction === 'rent' ? 'price.monthly' : 'detail.price'), p.price !== null ? <PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /> : <span className="inline-flex items-center gap-1 text-gray-400"><Lock className="size-4" />{t('locked.price')}</span>],
     ...(p.land_size_m2 ? [[t('detail.landSize'), formatArea(p.land_size_m2, locale)] as [string, string]] : []),
     ...(p.living_area_m2 ? [[t('detail.livingArea'), formatArea(p.living_area_m2, locale)] as [string, string]] : []),
     ...(hasRooms(p.category) && p.bedrooms !== null ? [[t('detail.bedrooms'), p.bedrooms] as [string, number]] : []),
     ...(hasRooms(p.category) && p.bathrooms !== null ? [[t('detail.bathrooms'), p.bathrooms] as [string, number]] : []),
     ...(p.parking_spaces !== null ? [[t('detail.parking'), p.parking_spaces] as [string, number]] : []),
+    ...(p.transaction === 'rent' && p.additional_costs != null ? [[t('detail.additionalCosts'), <PriceText key="ac" amount={p.additional_costs} currency={p.currency} transaction="rent" />] as [string, React.ReactNode]] : []),
+    ...(p.transaction === 'rent' && p.deposit !== null ? [[t('detail.deposit'), formatPrice(p.deposit, p.currency, locale)] as [string, string]] : []),
+    ...(p.transaction === 'rent' ? [[t('detail.availableFrom'), !p.available_from || new Date(p.available_from) <= new Date() ? t('detail.availableNow') : formatDate(p.available_from, locale)] as [string, string]] : []),
+    ...(p.floor !== null ? [[t('detail.floor'), p.floor === 0 ? t('detail.groundFloor') : p.floor] as [string, string | number]] : []),
+    ...(p.year_built !== null ? [[t('detail.yearBuilt'), p.year_built] as [string, number]] : []),
+    ...(p.condition ? [[t('detail.condition'), t(`condition.${p.condition}`)] as [string, string]] : []),
+    ...(p.street_address ? [[t('detail.address'), p.street_address] as [string, string]] : []),
   ]
 
   return (
@@ -79,7 +87,7 @@ export default async function PropertyPage({ params }: PageProps<'/properties/[i
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 md:text-3xl">{title}</h1>
             <p className="mt-1 inline-flex items-center gap-1 text-gray-600"><MapPin className="size-4" />{p.area}, {p.city}</p>
             <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900">
-              {p.price !== null ? formatPrice(p.price, p.currency, locale) : <span className="inline-flex items-center gap-2 text-gray-400"><Lock className="size-6" />{t('locked.price')}</span>}
+              {p.price !== null ? <PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /> : <span className="inline-flex items-center gap-2 text-gray-400"><Lock className="size-6" />{t('locked.price')}</span>}
             </p>
             <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[15px] text-gray-700">
               {p.bedrooms !== null && <li className="inline-flex items-center gap-1.5"><BedDouble className="size-5" />{t('card.bedrooms', { n: p.bedrooms })}</li>}

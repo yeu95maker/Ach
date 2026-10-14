@@ -1,24 +1,34 @@
 import { featuresFor, hasRooms } from './filters'
 import type { MessageKey } from './i18n'
-import type { Category, Feature, NearbyPlace, PropertyStatus } from './types'
+import type { Category, Condition, Feature, NearbyPlace, PropertyStatus, Transaction } from './types'
 
 /** Listing wizard state (exact coordinates included – only the owner ever sees them). */
 export interface ListingDraft {
   id: string
   status: PropertyStatus | null
+  transaction: Transaction
   category: Category | null
   country: string
   city: string
   area: string
+  /** Private unless show_exact_location */
+  street_address: string
   latitude: number | null
   longitude: number | null
   show_exact_location: boolean
   price: number | null
+  /** Rentals */
+  additional_costs: number | null
+  deposit: number | null
+  available_from: string | null
   land_size_m2: number | null
   living_area_m2: number | null
   bedrooms: number | null
   bathrooms: number | null
   parking_spaces: number | null
+  floor: number | null
+  year_built: number | null
+  condition: Condition | null
   features: Feature[]
   images: string[]
   title: string
@@ -32,9 +42,10 @@ export const MAX_IMAGES = 30
 
 export function emptyDraft(id: string): ListingDraft {
   return {
-    id, status: null, category: null, country: 'Zimbabwe', city: 'Harare', area: '', latitude: null, longitude: null,
-    show_exact_location: false, price: null, land_size_m2: null, living_area_m2: null, bedrooms: null, bathrooms: null,
-    parking_spaces: null, features: [], images: [], title: '', description: '', nearby: [],
+    id, status: null, transaction: 'sale', category: null, country: 'Zimbabwe', city: 'Harare', area: '', street_address: '',
+    latitude: null, longitude: null, show_exact_location: false, price: null, additional_costs: null, deposit: null, available_from: null,
+    land_size_m2: null, living_area_m2: null, bedrooms: null, bathrooms: null, parking_spaces: null, floor: null, year_built: null,
+    condition: null, features: [], images: [], title: '', description: '', nearby: [],
   }
 }
 
@@ -44,6 +55,14 @@ export function draftFromRow(row: Record<string, unknown>): ListingDraft {
   return {
     id: String(row.id),
     status: row.status as PropertyStatus,
+    transaction: (row.transaction as Transaction) ?? 'sale',
+    street_address: String(row.street_address ?? ''),
+    additional_costs: n(row.additional_costs),
+    deposit: n(row.deposit),
+    available_from: (row.available_from as string | null) ?? null,
+    floor: n(row.floor),
+    year_built: n(row.year_built),
+    condition: (row.condition as Condition | null) ?? null,
     category: row.category as Category,
     country: String(row.country ?? ''),
     city: String(row.city ?? ''),
@@ -75,15 +94,19 @@ export function validateStep(step: WizardStep, d: ListingDraft): MessageKey | nu
       if (d.latitude === null || d.longitude === null) return 'wizard.error.pin'
       return null
     case 'price':
-      return d.price !== null && d.price > 0 ? null : 'wizard.error.price'
+      if (!(d.price !== null && d.price > 0)) return 'wizard.error.price'
+      for (const v of [d.additional_costs, d.deposit]) if (v !== null && v < 0) return 'wizard.error.price'
+      return null
     case 'size':
       if (d.category === 'land' && !(d.land_size_m2 && d.land_size_m2 > 0)) return 'wizard.error.landSize'
-      if (d.category === 'apartment' && !(d.living_area_m2 && d.living_area_m2 > 0)) return 'wizard.error.livingArea'
+      if ((d.category === 'apartment' || d.category === 'room') && !(d.living_area_m2 && d.living_area_m2 > 0)) return 'wizard.error.livingArea'
       if (!(d.land_size_m2 && d.land_size_m2 > 0) && !(d.living_area_m2 && d.living_area_m2 > 0)) return 'wizard.error.size'
       return null
     case 'details':
       for (const v of [d.bedrooms, d.bathrooms]) if (v !== null && (v < 0 || v > 50)) return 'wizard.error.rooms'
       if (d.parking_spaces !== null && (d.parking_spaces < 0 || d.parking_spaces > 500)) return 'wizard.error.rooms'
+      if (d.floor !== null && (d.floor < -5 || d.floor > 200)) return 'wizard.error.rooms'
+      if (d.year_built !== null && (d.year_built < 1850 || d.year_built > 2100)) return 'wizard.error.rooms'
       return null
     case 'photos':
       return d.images.length > 0 ? null : 'wizard.error.photos'
@@ -113,17 +136,25 @@ export function toSavePayload(d: ListingDraft, submit: boolean) {
     p_property: {
       id: d.id,
       category: d.category,
+      transaction: d.transaction,
       title: d.title.trim(),
       description: d.description.trim(),
       country: d.country.trim(),
       city: d.city.trim(),
       area: d.area.trim(),
+      street_address: d.street_address.trim(),
       latitude: d.latitude,
       longitude: d.longitude,
       show_exact_location: d.show_exact_location,
       price: d.price,
       currency: 'USD',
-      land_size_m2: d.category === 'apartment' ? null : d.land_size_m2,
+      additional_costs: d.transaction === 'rent' ? d.additional_costs : null,
+      deposit: d.transaction === 'rent' ? d.deposit : null,
+      available_from: d.transaction === 'rent' ? d.available_from : null,
+      floor: d.category === 'land' ? null : d.floor,
+      year_built: d.category === 'land' ? null : d.year_built,
+      condition: d.category === 'land' ? null : d.condition,
+      land_size_m2: d.category === 'apartment' || d.category === 'room' ? null : d.land_size_m2,
       living_area_m2: d.category === 'land' ? null : d.living_area_m2,
       bedrooms: rooms ? d.bedrooms : null,
       bathrooms: d.category === 'land' ? null : d.bathrooms,

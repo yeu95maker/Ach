@@ -66,6 +66,7 @@ export function parseWhere(input: string): { city?: string; area?: string } {
   return { area: only }
 }
 
-export function whereLabel(f: { city?: string; area?: string }): string {
+export function whereLabel(f: { city?: string; area?: string; place?: string; radius_km?: number }): string {
+  if (f.radius_km && f.place) return `${f.place} +${f.radius_km} km`
   return [f.area, f.city].filter(Boolean).join(', ')
 }

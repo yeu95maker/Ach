@@ -17,6 +17,8 @@ The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean list
 ## What is in the MVP
 
 **Customers**
+- **Buy or rent**: houses, apartments, land, commercial – and rooms to let; monthly rent, additional costs, deposit, move-in date
+- **Radius search** ("within 3 km of Avondale" or near my location) and map clustering at city zoom
 - Home: category tiles, "Where?" (suburb suggestions), price range, *Search* / *Search on map*
 - Search results with list ↔ map toggle, category chips, sort, "load more"
 - Filters: type, country/city/area, price, size, bedrooms, bathrooms; **Premium**: features (garage, garden, pool…), living area, parking, "listed within"
@@ -30,7 +32,7 @@ The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean list
 - **Bulk import** of existing stock from a spreadsheet (CSV → drafts, then photos + pin + submit)
 - Onboarding: public profile → verification (legal name, phone, email, ID type/number, business registration, agent licence, document upload to a private bucket) → admin review
 - Unverified providers can prepare drafts but **cannot publish**
-- 9-step listing wizard: type → location (map pin, exact/approximate) → price → size → details & features → photos (client-side downscaling, reorder, cover) → description & nearby places → preview → submit for moderation
+- 9-step listing wizard: sale or rent + type → location (street address, *Find on map* geocoding, map pin, exact/approximate) → price → size → details & features → photos (client-side downscaling, reorder, cover) → description & nearby places → preview → submit for moderation
 - Dashboard: views, inquiries, saves per listing, status, moderation notes, *mark sold*, *remove*, *still available?* prompt after 30 days
 - Public provider profile with all active listings
 

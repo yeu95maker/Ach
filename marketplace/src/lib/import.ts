@@ -1,7 +1,7 @@
 import type { MessageKey } from './i18n'
 import { emptyDraft, validateStep, type ListingDraft } from './listing'
 import { AREAS, CITIES, locate } from './locations'
-import { FEATURES, type Category, type Feature } from './types'
+import { FEATURES, type Category, type Feature, type Transaction } from './types'
 
 /**
  * Bulk import for providers: a spreadsheet (CSV) of their existing stock becomes
@@ -9,14 +9,16 @@ import { FEATURES, type Category, type Feature } from './types'
  * so every listing is still reviewed before it goes live.
  */
 export const IMPORT_COLUMNS = [
-  'type', 'title', 'price_usd', 'city', 'area', 'land_size_m2', 'living_area_m2',
-  'bedrooms', 'bathrooms', 'parking_spaces', 'features', 'description', 'latitude', 'longitude', 'country',
+  'transaction', 'type', 'title', 'price_usd', 'city', 'area', 'street_address', 'land_size_m2', 'living_area_m2',
+  'bedrooms', 'bathrooms', 'parking_spaces', 'floor', 'year_built', 'features', 'description',
+  'deposit_usd', 'additional_costs_usd', 'available_from', 'latitude', 'longitude', 'country',
 ] as const
 
 export const IMPORT_TEMPLATE = [
   IMPORT_COLUMNS.join(','),
-  'stand,Residential Stand,25000,Harare,Borrowdale,500,,,,,water;electricity;road access,"Serviced stand, title deeds available.",,,Zimbabwe',
-  'house,Family Home,155000,Harare,Mount Pleasant,1400,210,4,2,2,garage;garden;water,"Close to the university.",-17.772,31.045,Zimbabwe',
+  'sale,stand,Residential Stand,25000,Harare,Borrowdale,,500,,,,,,,water;electricity;road access,"Serviced stand, title deeds available.",,,,,,Zimbabwe',
+  'sale,house,Family Home,155000,Harare,Mount Pleasant,,1400,210,4,2,2,,1998,garage;garden;borehole,"Close to the university.",,,,-17.772,31.045,Zimbabwe',
+  'rent,flat,Furnished 2-Bed Flat,650,Harare,Avondale,12 King George Rd,,90,2,1,1,2,2012,furnished;backup power;security,"Walk to Avondale shops.",650,40,2026-12-01,,,Zimbabwe',
 ].join('\n')
 
 export const MAX_IMPORT_ROWS = 200
@@ -62,6 +64,12 @@ const CATEGORY_WORDS: Record<string, Category> = {
   house: 'house', home: 'house', townhouse: 'house', cottage: 'house', haus: 'house',
   land: 'land', stand: 'land', plot: 'land', farm: 'land', grundstück: 'land', grundstueck: 'land',
   commercial: 'commercial', office: 'commercial', shop: 'commercial', warehouse: 'commercial', industrial: 'commercial', gewerbe: 'commercial',
+  room: 'room', lodging: 'room', bedsitter: 'room', zimmer: 'room',
+}
+
+/** "rent", "to let", "lease", "Miete" → rent; anything else is a sale. */
+export function parseTransaction(value: string): Transaction {
+  return /rent|let|lease|miet/i.test(value) ? 'rent' : 'sale'
 }
 
 export function parseCategory(value: string): Category | null {
@@ -105,6 +113,8 @@ export function rowsToDrafts(rows: string[][], newId: () => string): { rows: Imp
     const num = (name: string) => parseAmount(get(name))
     const errors: MessageKey[] = []
     const category = parseCategory(get('type'))
+    const transaction = parseTransaction(`${get('transaction')} ${get('type')}`)
+    const availableFrom = /^\d{4}-\d{2}-\d{2}$/.test(get('available_from')) ? get('available_from') : null
     if (!category) errors.push('import.error.type')
 
     const city = get('city') || 'Harare'
@@ -128,6 +138,13 @@ export function rowsToDrafts(rows: string[][], newId: () => string): { rows: Imp
       country: get('country') || knownCity?.country || 'Zimbabwe',
       city: knownCity?.city ?? city,
       area: knownArea?.area ?? area,
+      transaction,
+      street_address: get('street_address'),
+      deposit: transaction === 'rent' ? num('deposit_usd') ?? num('deposit') : null,
+      additional_costs: transaction === 'rent' ? num('additional_costs_usd') ?? num('additional_costs') : null,
+      available_from: transaction === 'rent' ? availableFrom : null,
+      floor: get('floor') && Number.isFinite(Number(get('floor'))) ? Number(get('floor')) : null,
+      year_built: num('year_built'),
       latitude: lat,
       longitude: lng,
       price: num('price_usd') ?? num('price'),
@@ -137,7 +154,7 @@ export function rowsToDrafts(rows: string[][], newId: () => string): { rows: Imp
       bathrooms: num('bathrooms'),
       parking_spaces: num('parking_spaces'),
       features: parseFeatures(get('features')),
-      title: get('title') || (category && area ? `${category[0].toUpperCase()}${category.slice(1)} – ${area}` : ''),
+      title: get('title') || (category && area ? `${category[0].toUpperCase()}${category.slice(1)}${transaction === 'rent' ? ' to let' : ''} – ${area}` : ''),
       description: get('description'),
     }
     for (const step of ['location', 'price', 'size', 'details', 'description'] as const) {

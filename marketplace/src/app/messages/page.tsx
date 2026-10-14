@@ -1,9 +1,10 @@
 import { BadgeCheck, MessageCircle } from 'lucide-react'
+import { PriceText } from '@/components/PriceText'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { EmptyState, LinkButton, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
-import { formatDate, formatPrice, formatTime } from '@/lib/format'
+import { formatDate, formatTime } from '@/lib/format'
 import { getT } from '@/lib/i18n/server'
 import { imageUrl } from '@/lib/images'
 import { createClient } from '@/lib/supabase/server'
@@ -44,7 +45,7 @@ export default async function MessagesPage() {
                       </p>
                       <span className="shrink-0 text-xs text-gray-500">{new Date(when).toDateString() === today ? formatTime(when, locale) : formatDate(when, locale)}</span>
                     </div>
-                    <p className="truncate text-xs font-medium text-brand-700">{c.property.title} · {formatPrice(c.property.price, c.property.currency, locale)}</p>
+                    <p className="truncate text-xs font-medium text-brand-700">{c.property.title} · <PriceText amount={c.property.price} currency={c.property.currency} transaction={c.property.transaction} /></p>
                     <p className={`truncate text-sm ${c.unread ? 'font-semibold text-gray-900' : 'text-gray-500'}`}>
                       {c.last_message ? `${c.last_message.mine ? `${t('messages.you')}: ` : ''}${c.last_message.body}` : t('messages.noMessages')}
                     </p>

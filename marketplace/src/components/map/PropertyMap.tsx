@@ -3,7 +3,8 @@ import * as maplibregl from 'maplibre-gl'
 import type { LngLatBoundsLike, Map as MapLibreMap, Marker } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useRef } from 'react'
-import { formatPriceShort } from '@/lib/format'
+import { clusterByDistance } from '@/lib/cluster'
+import { markerPrice } from '@/lib/format'
 import type { PropertyCard } from '@/lib/types'
 import { baseStyle, circlePolygon } from './style'
 
@@ -30,7 +31,7 @@ const bboxOf = (map: MapLibreMap): BBox => {
 }
 
 function markerLabel(p: PropertyCard) {
-  return p.locked || p.price === null ? '🔒' : formatPriceShort(p.price, p.currency)
+  return p.locked || p.price === null ? '🔒' : markerPrice(p.price, p.currency, p.transaction)
 }
 
 export default function PropertyMap({
@@ -91,42 +92,74 @@ export default function PropertyMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [center[0], center[1], zoom, bounds?.join(',')])
 
-  // Price markers.
+  // Price markers; at lower zoom levels nearby markers merge into count bubbles.
+  const latest = useRef({ properties, selectedId })
+  const renderMarkers = useRef<() => void>(() => {})
+  useEffect(() => {
+    latest.current = { properties, selectedId }
+    renderMarkers.current = () => {
+      const map = mapRef.current
+      if (!map) return
+      const { properties: items, selectedId: selected } = latest.current
+      const groups = items.length > 12 && map.getZoom() < 15
+        ? clusterByDistance(items, (p) => map.project([p.lng, p.lat]), 52)
+        : items.map((p) => ({ items: [p], x: 0, y: 0 }))
+      const seen = new Set<string>()
+      for (const g of groups) {
+        const single = g.items.length === 1
+        const p = g.items[0]
+        const key = single ? p.id : `cluster:${g.items.map((x) => x.id).sort().join(',')}`
+        seen.add(key)
+        let entry = markers.current.get(key)
+        if (!entry) {
+          const el = document.createElement('button')
+          el.type = 'button'
+          el.dataset.marker = key
+          const lngLat = single ? ([p.lng, p.lat] as [number, number]) : map.unproject([g.x, g.y]).toArray() as [number, number]
+          el.addEventListener('click', (e) => {
+            e.stopPropagation()
+            if (single) callbacks.current.onSelect?.(p.id)
+            else map.easeTo({ center: lngLat, zoom: Math.min(map.getZoom() + 2, 16), duration: 500 })
+          })
+          const marker = new maplibregl.Marker({ element: el, anchor: single ? 'bottom' : 'center' }).setLngLat(lngLat).addTo(map)
+          entry = { marker, el }
+          markers.current.set(key, entry)
+        }
+        if (single) {
+          const isSelected = p.id === selected
+          entry.el.textContent = markerLabel(p)
+          entry.el.setAttribute('aria-label', `${p.area}: ${markerLabel(p)}`)
+          entry.el.className = [
+            'rounded-full px-2.5 py-1 text-[13px] font-bold shadow-md ring-1 transition-transform',
+            isSelected ? 'z-10 scale-110 bg-gray-900 text-white ring-gray-900' : p.locked ? 'bg-gold-100 text-gold-700 ring-gold-500/40' : p.transaction === 'rent' ? 'bg-white text-brand-800 ring-brand-500 hover:bg-brand-50' : 'bg-white text-gray-900 ring-gray-300 hover:bg-brand-50',
+          ].join(' ')
+          entry.marker.getElement().style.zIndex = isSelected ? '10' : '1'
+        } else {
+          entry.el.textContent = String(g.items.length)
+          entry.el.setAttribute('aria-label', `${g.items.length}`)
+          entry.el.dataset.cluster = 'true'
+          entry.el.className = 'flex size-10 items-center justify-center rounded-full bg-brand-600 text-sm font-extrabold text-white shadow-lg ring-4 ring-brand-600/25'
+        }
+      }
+      for (const [key, entry] of markers.current) {
+        if (!seen.has(key)) {
+          entry.marker.remove()
+          markers.current.delete(key)
+        }
+      }
+    }
+    renderMarkers.current()
+  }, [properties, selectedId])
+
   useEffect(() => {
     const map = mapRef.current
     if (!map) return
-    const seen = new Set<string>()
-    for (const p of properties) {
-      seen.add(p.id)
-      let entry = markers.current.get(p.id)
-      if (!entry) {
-        const el = document.createElement('button')
-        el.type = 'button'
-        el.dataset.marker = p.id
-        el.addEventListener('click', (e) => {
-          e.stopPropagation()
-          callbacks.current.onSelect?.(p.id)
-        })
-        const marker = new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(map)
-        entry = { marker, el }
-        markers.current.set(p.id, entry)
-      }
-      const selected = p.id === selectedId
-      entry.el.textContent = markerLabel(p)
-      entry.el.setAttribute('aria-label', `${p.area}: ${markerLabel(p)}`)
-      entry.el.className = [
-        'rounded-full px-2.5 py-1 text-[13px] font-bold shadow-md ring-1 transition-transform',
-        selected ? 'z-10 scale-110 bg-gray-900 text-white ring-gray-900' : p.locked ? 'bg-gold-100 text-gold-700 ring-gold-500/40' : 'bg-white text-gray-900 ring-gray-300 hover:bg-brand-50',
-      ].join(' ')
-      entry.marker.getElement().style.zIndex = selected ? '10' : '1'
+    const rerender = () => renderMarkers.current()
+    map.on('zoomend', rerender)
+    return () => {
+      map.off('zoomend', rerender)
     }
-    for (const [id, entry] of markers.current) {
-      if (!seen.has(id)) {
-        entry.marker.remove()
-        markers.current.delete(id)
-      }
-    }
-  }, [properties, selectedId])
+  }, [])
 
   // Approximate area circle (property page).
   useEffect(() => {

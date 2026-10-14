@@ -1,11 +1,12 @@
 import { Eye, FileSpreadsheet, Heart, MessageCircle, Plus } from 'lucide-react'
+import { PriceText } from '@/components/PriceText'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { DashboardActions } from '@/components/DashboardActions'
 import { Alert, Badge, Card, EmptyState, LinkButton, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
-import { daysAgo, formatPrice } from '@/lib/format'
+import { daysAgo } from '@/lib/format'
 import { getT } from '@/lib/i18n/server'
 import { imageUrl } from '@/lib/images'
 import { createClient } from '@/lib/supabase/server'
@@ -82,7 +83,7 @@ export default async function DashboardPage() {
                         <Link href={`/properties/${p.id}`} className="truncate font-bold text-gray-900 hover:underline">{p.title}</Link>
                         <Badge tone={STATUS_TONE[p.status]}>{t(`status.${p.status}`)}</Badge>
                       </div>
-                      <p className="text-lg font-extrabold">{formatPrice(p.price, p.currency, locale)}</p>
+                      <p className="text-lg font-extrabold"><PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /></p>
                       <p className="text-sm text-gray-600">
                         {t('dashboard.viewsN', { n: p.views.toLocaleString(locale) })} · {t('dashboard.inquiriesN', { n: p.inquiries })} · {t('dashboard.savesN', { n: p.favorites })}
                       </p>

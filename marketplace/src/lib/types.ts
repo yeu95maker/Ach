@@ -1,8 +1,17 @@
-export const CATEGORIES = ['apartment', 'house', 'land', 'commercial'] as const
+export const CATEGORIES = ['apartment', 'house', 'land', 'commercial', 'room'] as const
 export type Category = (typeof CATEGORIES)[number]
 
-export const FEATURES = ['garage', 'garden', 'parking', 'balcony', 'terrace', 'pool', 'electricity', 'water', 'road_access'] as const
+export const FEATURES = [
+  'garage', 'garden', 'parking', 'balcony', 'terrace', 'pool', 'electricity', 'water', 'road_access',
+  'furnished', 'lift', 'pets_allowed', 'accessible', 'borehole', 'solar', 'backup_power', 'security', 'staff_quarters',
+] as const
 export type Feature = (typeof FEATURES)[number]
+
+export const TRANSACTIONS = ['sale', 'rent'] as const
+export type Transaction = (typeof TRANSACTIONS)[number]
+
+export const CONDITIONS = ['new', 'renovated', 'good', 'needs_renovation'] as const
+export type Condition = (typeof CONDITIONS)[number]
 
 export const NEARBY_KINDS = ['school', 'shopping', 'hospital', 'main_road', 'transport', 'other'] as const
 export type NearbyKind = (typeof NEARBY_KINDS)[number]
@@ -29,6 +38,10 @@ export interface ProviderRef {
 export interface PropertyCard {
   id: string
   category: Category
+  transaction: Transaction
+  /** Monthly extra costs (rentals) */
+  additional_costs?: number | null
+  available_from?: string | null
   title: string | null
   country: string
   city: string
@@ -62,6 +75,11 @@ export interface NearbyPlace {
 
 export interface PropertyDetail extends PropertyCard {
   status: PropertyStatus
+  street_address: string | null
+  deposit: number | null
+  floor: number | null
+  year_built: number | null
+  condition: Condition | null
   description: string | null
   images: string[]
   nearby: NearbyPlace[]
@@ -115,7 +133,7 @@ export interface ProviderProfile {
 export interface ConversationSummary {
   id: string
   role: 'customer' | 'provider'
-  property: { id: string; title: string; price: number; currency: string; area: string; city: string; category: Category; status: PropertyStatus; cover_image: string | null }
+  property: { id: string; title: string; price: number; currency: string; transaction: Transaction; area: string; city: string; category: Category; status: PropertyStatus; cover_image: string | null }
   provider: { id: string; name: string; verified: boolean }
   customer_name: string
   last_message: { body: string; created_at: string; mine: boolean } | null
@@ -135,6 +153,7 @@ export interface DashboardProperty {
   id: string
   title: string
   category: Category
+  transaction: Transaction
   area: string
   city: string
   price: number

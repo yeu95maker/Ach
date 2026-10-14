@@ -54,7 +54,7 @@ begin
   assert (select count(*) from public.providers) = 3, 'anon sees only the 3 verified providers';
 
   r := public.search_properties('{}');
-  assert (r ->> 'total')::int = 16, 'all active listings are discoverable (incl. locked teasers)';
+  assert (r ->> 'total')::int = 21, 'all active listings are discoverable (incl. locked teasers)';
   assert not exists (select 1 from jsonb_array_elements(r -> 'items') i
                      where (i ->> 'locked')::boolean and (i -> 'price' <> 'null'::jsonb or i -> 'title' <> 'null'::jsonb or i -> 'provider' <> 'null'::jsonb)),
          'locked teasers carry no price, title or provider';
@@ -66,9 +66,9 @@ begin
 
   -- Price filters drop locked listings (no price probing).
   r := public.search_properties('{"min_price":1}');
-  assert (r ->> 'total')::int = 13, 'price filter excludes locked listings';
+  assert (r ->> 'total')::int = 18, 'price filter excludes locked listings';
   r := public.search_properties('{"sort":"price_asc"}');
-  assert ((r -> 'items' -> 15) ->> 'locked')::boolean, 'locked listings come last when sorting by price';
+  assert ((r -> 'items' -> 20) ->> 'locked')::boolean, 'locked listings come last when sorting by price';
 
   perform pg_temp.expect_error($q$select public.search_properties('{"features":["pool"]}')$q$, 'PREMIUM_REQUIRED');
   perform pg_temp.expect_error($q$select public.search_properties('{"max_age_days":7}')$q$, 'PREMIUM_REQUIRED');
@@ -79,7 +79,7 @@ begin
   r := public.search_properties('{"category":"house","min_bedrooms":4,"min_price":100000,"max_price":250000}');
   assert (r ->> 'total')::int = 2, 'houses 100k–250k with ≥4 bedrooms';
   r := public.search_properties('{"bbox":[31.08,-17.76,31.11,-17.73]}');
-  assert (r ->> 'total')::int between 2 and 4, 'bounding box search around Borrowdale';
+  assert (r ->> 'total')::int between 2 and 5, 'bounding box search around Borrowdale';
 
   -- Property page
   locked := public.get_property('e0000000-0000-4000-8000-000000000005');
@@ -230,7 +230,7 @@ declare r jsonb;
 begin
   r := public.search_properties('{}');
   assert not exists (select 1 from jsonb_array_elements(r -> 'items') i where (i ->> 'locked')::boolean), 'premium sees everything';
-  assert (public.search_properties('{"min_price":1}') ->> 'total')::int = 16, 'price filter includes premium listings';
+  assert (public.search_properties('{"min_price":1}') ->> 'total')::int = 21, 'price filter includes premium listings';
   assert public.get_property('e0000000-0000-4000-8000-000000000012') ->> 'locked' = 'false', 'early access for premium';
   insert into public.saved_searches (user_id, name, filters) values (auth.uid(), 'Houses with pool', '{"category":"house","features":["pool"]}');
   assert (select count(*) from public.saved_searches) = 2, 'saved searches for premium';
@@ -322,7 +322,7 @@ do $$
 declare s jsonb;
 begin
   s := public.admin_stats();
-  assert (s ->> 'properties_active')::int = 16 and (s ->> 'providers_pending')::int = 1 and (s ->> 'reports_open')::int = 1, 'stats';
+  assert (s ->> 'properties_active')::int = 21 and (s ->> 'providers_pending')::int = 1 and (s ->> 'reports_open')::int = 1, 'stats';
   assert (s ->> 'premium_members')::int = 2, 'premium members';
   assert jsonb_array_length(public.admin_list_providers('pending')) = 1, 'pending providers';
   assert jsonb_array_length(public.admin_list_properties('pending')) = 1, 'pending listings';

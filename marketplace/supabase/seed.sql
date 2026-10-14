@@ -182,3 +182,40 @@ drop table seed_props;
 update public.providers set is_founding = true where id in ('d0000000-0000-4000-8000-000000000001', 'd0000000-0000-4000-8000-000000000003');
 insert into public.partners (code, name, contact) values ('HRE-TINO', 'Tinotenda (field partner)', '+263 77 000 0099');
 update public.providers set referral_code = 'HRE-TINO' where id in ('d0000000-0000-4000-8000-000000000002', 'd0000000-0000-4000-8000-000000000004');
+
+-- Rentals ------------------------------------------------------------------------
+insert into public.properties (id, provider_id, category, transaction, title, description, city, area, latitude, longitude, street_address,
+                               price, additional_costs, deposit, available_from, land_size_m2, living_area_m2, bedrooms, bathrooms,
+                               parking_spaces, floor, year_built, condition, status, submitted_at, published_at, created_at)
+values
+  ('e0000000-0000-4000-8000-000000000101', 'd0000000-0000-4000-8000-000000000001', 'apartment', 'rent', 'Furnished 2-Bed Flat',
+   'Furnished flat with backup power and borehole water, walking distance to Avondale shops.', 'Harare', 'Avondale', -17.7985, 31.0391, '12 King George Rd',
+   650, 40, 650, current_date + 14, null, 90, 2, 1, 1, 2, 2012, 'renovated', 'active', now() - interval '2 days', now() - interval '2 days', now() - interval '3 days'),
+  ('e0000000-0000-4000-8000-000000000102', 'd0000000-0000-4000-8000-000000000001', 'house', 'rent', 'Family House to Let',
+   'Four-bedroom house with garden, solar geyser, borehole and staff quarters.', 'Harare', 'Borrowdale', -17.7502, 31.0988, null,
+   1800, null, 1800, current_date + 30, 2000, 280, 4, 3, 2, null, 2005, 'good', 'active', now() - interval '5 days', now() - interval '5 days', now() - interval '6 days'),
+  ('e0000000-0000-4000-8000-000000000103', 'd0000000-0000-4000-8000-000000000002', 'room', 'rent', 'Room in Shared House',
+   'Furnished room in a quiet shared house, Wi-Fi and water included. Suits a student or young professional.', 'Harare', 'Mount Pleasant', -17.7701, 31.0478, null,
+   180, 20, 180, current_date, null, 16, 1, 1, null, null, null, 'good', 'active', now() - interval '1 day', now() - interval '1 day', now() - interval '2 days'),
+  ('e0000000-0000-4000-8000-000000000104', 'd0000000-0000-4000-8000-000000000003', 'apartment', 'rent', 'New Garden Flat to Let',
+   'Brand-new ground-floor flat in a secure complex with backup power.', 'Harare', 'Greendale', -17.8149, 31.1201, null,
+   750, 50, 1500, current_date + 7, null, 95, 2, 2, 1, 0, 2026, 'new', 'active', now() - interval '3 days', now() - interval '3 days', now() - interval '4 days'),
+  ('e0000000-0000-4000-8000-000000000105', 'd0000000-0000-4000-8000-000000000001', 'commercial', 'rent', 'Office Space to Let',
+   'Open-plan office floor with generator and parking.', 'Harare', 'Eastlea', -17.8261, 31.0712, null,
+   1200, 150, 2400, current_date, null, 220, null, 2, 6, 1, 1998, 'good', 'active', now() - interval '8 days', now() - interval '8 days', now() - interval '9 days');
+
+insert into public.property_features (property_id, feature) values
+  ('e0000000-0000-4000-8000-000000000101', 'furnished'), ('e0000000-0000-4000-8000-000000000101', 'backup_power'), ('e0000000-0000-4000-8000-000000000101', 'borehole'),
+  ('e0000000-0000-4000-8000-000000000101', 'parking'), ('e0000000-0000-4000-8000-000000000101', 'security'),
+  ('e0000000-0000-4000-8000-000000000102', 'garden'), ('e0000000-0000-4000-8000-000000000102', 'solar'), ('e0000000-0000-4000-8000-000000000102', 'borehole'),
+  ('e0000000-0000-4000-8000-000000000102', 'staff_quarters'), ('e0000000-0000-4000-8000-000000000102', 'garage'), ('e0000000-0000-4000-8000-000000000102', 'pets_allowed'),
+  ('e0000000-0000-4000-8000-000000000103', 'furnished'), ('e0000000-0000-4000-8000-000000000103', 'water'), ('e0000000-0000-4000-8000-000000000103', 'electricity'),
+  ('e0000000-0000-4000-8000-000000000104', 'backup_power'), ('e0000000-0000-4000-8000-000000000104', 'security'), ('e0000000-0000-4000-8000-000000000104', 'garden'),
+  ('e0000000-0000-4000-8000-000000000105', 'backup_power'), ('e0000000-0000-4000-8000-000000000105', 'parking'), ('e0000000-0000-4000-8000-000000000105', 'lift');
+
+insert into public.property_images (property_id, storage_path, position) values
+  ('e0000000-0000-4000-8000-000000000101', '/demo/apartment-1.svg', 0), ('e0000000-0000-4000-8000-000000000101', '/demo/interior-1.svg', 1),
+  ('e0000000-0000-4000-8000-000000000102', '/demo/house-3.svg', 0), ('e0000000-0000-4000-8000-000000000102', '/demo/interior-2.svg', 1),
+  ('e0000000-0000-4000-8000-000000000103', '/demo/interior-3.svg', 0), ('e0000000-0000-4000-8000-000000000103', '/demo/house-4.svg', 1),
+  ('e0000000-0000-4000-8000-000000000104', '/demo/apartment-2.svg', 0), ('e0000000-0000-4000-8000-000000000104', '/demo/interior-1.svg', 1),
+  ('e0000000-0000-4000-8000-000000000105', '/demo/commercial-1.svg', 0), ('e0000000-0000-4000-8000-000000000105', '/demo/interior-2.svg', 1);

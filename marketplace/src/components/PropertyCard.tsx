@@ -2,11 +2,12 @@
 import clsx from 'clsx'
 import { Bath, BadgeCheck, BedDouble, Car, Clock, Lock, MapPin, Ruler, Trees } from 'lucide-react'
 import Link from 'next/link'
-import { formatArea, formatPrice, hoursUntil, primarySize } from '@/lib/format'
+import { formatArea, hoursUntil, primarySize } from '@/lib/format'
 import { useI18n } from '@/lib/i18n/client'
 import { imageUrl } from '@/lib/images'
 import type { PropertyCard as Card } from '@/lib/types'
 import { CategoryIcon } from './CategoryIcon'
+import { PriceText } from './PriceText'
 import { FoundingBadge } from './FoundingBadge'
 import { SaveButton } from './SaveButton'
 
@@ -15,7 +16,8 @@ export function PropertyCard({ property: p, compact = false }: { property: Card;
   const size = primarySize(p)
   const cover = imageUrl(p.cover_image)
   const early = p.early_access_until && hoursUntil(p.early_access_until) > 0
-  const title = p.locked ? t('locked.title') : `${t(`category.${p.category}`)} – ${p.area}`
+  const kind = `${t(`category.${p.category}`)}${p.transaction === 'rent' ? ` · ${t('transaction.forRent')}` : ''}`
+  const title = p.locked ? t('locked.title') : `${kind} – ${p.area}`
 
   return (
     <article className={clsx('group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200/70', compact && 'flex')}>
@@ -28,6 +30,7 @@ export function PropertyCard({ property: p, compact = false }: { property: Card;
           )}
           {!compact && (
             <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5">
+              {p.transaction === 'rent' && <span className="rounded-full bg-brand-600 px-2 py-0.5 text-xs font-bold text-white">{t('transaction.forRent')}</span>}
               {p.is_premium && <span className="rounded-full bg-gray-900/85 px-2 py-0.5 text-xs font-bold text-gold-100">🔒 {t('premium.membersOnly')}</span>}
               {early && <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2 py-0.5 text-xs font-bold text-white"><Clock className="size-3" />{t('premium.earlyAccess')}</span>}
             </div>
@@ -37,7 +40,7 @@ export function PropertyCard({ property: p, compact = false }: { property: Card;
           <p className="truncate text-[15px] font-semibold text-gray-900">{p.locked ? title : p.title}</p>
           {!p.locked && <p className="truncate text-xs text-gray-500">{title}</p>}
           <p className={clsx('mt-1 text-xl font-extrabold tracking-tight', p.locked ? 'text-gray-400' : 'text-gray-900')}>
-            {p.price !== null ? formatPrice(p.price, p.currency, locale) : <span className="inline-flex items-center gap-1 text-base"><Lock className="size-4" /> {t('locked.price')}</span>}
+            {p.price !== null ? <PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /> : <span className="inline-flex items-center gap-1 text-base"><Lock className="size-4" /> {t('locked.price')}</span>}
           </p>
           <ul className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-600">
             {p.bedrooms !== null && <li className="inline-flex items-center gap-1"><BedDouble className="size-4" />{t('card.bedrooms', { n: p.bedrooms })}</li>}
@@ -52,7 +55,7 @@ export function PropertyCard({ property: p, compact = false }: { property: Card;
               {p.locked ? (
                 <span className="text-sm font-bold text-gold-700">{t('premium.unlock')} →</span>
               ) : p.provider?.verified ? (
-                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700"><BadgeCheck className="size-4" />{t('provider.verified')}{p.provider.founding && <FoundingBadge />}</span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700"><BadgeCheck className="size-4" />{t('provider.verified')}{p.provider.founding && <FoundingBadge compact />}</span>
               ) : <span />}
               <span className="text-sm font-semibold text-brand-700">{t('card.view')}</span>
             </div>

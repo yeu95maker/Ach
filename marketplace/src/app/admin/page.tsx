@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { PriceText } from '@/components/PriceText'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -149,7 +150,7 @@ async function Properties({ status, t, locale }: { status: PropertyStatus } & Ct
                     {p.open_reports > 0 && <Badge tone="red">{t('admin.reportsN', { n: p.open_reports })}</Badge>}
                   </div>
                 </div>
-                <p className="text-sm text-gray-600">{t(`category.${p.category}`)} · {p.area}, {p.city} · {p.price !== null ? formatPrice(p.price, p.currency, locale) : ''}</p>
+                <p className="text-sm text-gray-600">{t(`category.${p.category}`)} · {p.area}, {p.city} · {p.price !== null ? <PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /> : ''}</p>
                 <p className="text-sm text-gray-600">{p.provider?.name} {p.provider_status !== 'verified' && <Badge tone="red">{t(`providerStatus.${p.provider_status}`)}</Badge>}</p>
                 <p className="text-xs text-gray-500">{p.submitted_at && t('admin.submitted', { date: formatDate(p.submitted_at, locale) })} · {p.image_count} 📷 · {t('dashboard.viewsN', { n: p.views })}</p>
               </div>
