@@ -4,7 +4,7 @@ import { filterRecipes } from '@/domain/filter';
 import { rankRecipes, type ScoredRecipe } from '@/domain/recommend';
 import type { Recipe } from '@/domain/types';
 import { authService, type AuthUser } from '@/services/auth';
-import { recipeRepository } from '@/services/recipeRepository';
+import { recipeRepository, type SourceStatus } from '@/services/recipeRepository';
 import { DEFAULT_USER_DATA, type UserData } from '@/domain/userData';
 import { userDataStore } from '@/services/userDataStore';
 
@@ -22,6 +22,8 @@ interface AppStore {
   matchingCount: number;
   getRecipe(id: string): Recipe | undefined;
   isSaved(id: string): boolean;
+  /** Recipe library sync state (bundled + downloaded providers). */
+  library: { status: SourceStatus[]; refreshing: boolean; refresh: () => void };
 }
 
 const Ctx = createContext<AppStore | null>(null);
@@ -31,6 +33,20 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [ready, setReady] = useState(false);
+  const [libraryStatus, setLibraryStatus] = useState<SourceStatus[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refreshLibrary = React.useCallback((force = false) => {
+    setRefreshing(true);
+    recipeRepository
+      .refresh({ force })
+      .then(({ recipes: next, status }) => {
+        setRecipes(next);
+        setLibraryStatus(status);
+      })
+      .catch(() => {})
+      .finally(() => setRefreshing(false));
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -42,11 +58,14 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       setRecipes(list);
       dispatch({ type: 'hydrate', data: stored });
       setReady(true);
+      recipeRepository.status().then(setLibraryStatus).catch(() => {});
+      // Download / update provider recipes in the background; the app is usable meanwhile.
+      refreshLibrary();
     })();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refreshLibrary]);
 
   // Persist after every change (debounced) once hydrated.
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -80,8 +99,9 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       matchingCount: matching.length,
       getRecipe: (id) => byId.get(id),
       isSaved: (id) => savedSet.has(id),
+      library: { status: libraryStatus, refreshing, refresh: () => refreshLibrary(true) },
     };
-  }, [ready, user, recipes, data]);
+  }, [ready, user, recipes, data, libraryStatus, refreshing, refreshLibrary]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

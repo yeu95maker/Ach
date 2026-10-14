@@ -1,55 +1,143 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { config } from '@/config';
 import { SAMPLE_RECIPES } from '@/data/sampleRecipes';
-import type { Recipe } from '@/domain/types';
+import type { Nutrition, Recipe } from '@/domain/types';
+
+import { SpoonacularSource } from './sources/spoonacular';
+import { TheMealDbSource } from './sources/themealdb';
+import type { RecipeSource } from './sources/types';
 
 /**
- * Source of recipes. The app only talks to this interface, so swapping the
- * bundled sample data for a real recipe API (Spoonacular, Edamam, your own
- * backend…) means writing one new class – no screen changes.
- *
- * An API adapter is responsible for mapping the provider's format into our
- * `Recipe` model, in particular filling `ingredients[].flags` and
- * `nutrition`, because every diet / allergy / condition tag is derived from them.
+ * Where recipes come from. The app only talks to this interface: the bundled
+ * sample recipes are always available, and external providers (see
+ * services/sources) are downloaded in the background and cached on the device
+ * so the library also works offline.
  */
 export interface RecipeRepository {
+  /** Bundled recipes plus whatever is cached – fast, no network. */
   list(): Promise<Recipe[]>;
-  getById(id: string): Promise<Recipe | undefined>;
+  /** Downloads from providers whose cache is older than `maxAgeHours` (or all, when `force`). */
+  refresh(opts?: { force?: boolean }): Promise<{ recipes: Recipe[]; status: SourceStatus[] }>;
+  status(): Promise<SourceStatus[]>;
 }
 
-export class SampleRecipeRepository implements RecipeRepository {
-  constructor(private readonly recipes: Recipe[] = SAMPLE_RECIPES) {}
-
-  async list(): Promise<Recipe[]> {
-    return this.recipes;
-  }
-
-  async getById(id: string): Promise<Recipe | undefined> {
-    return this.recipes.find((r) => r.id === id);
-  }
+export interface SourceStatus {
+  id: string;
+  name: string;
+  url: string;
+  count: number;
+  fetchedAt?: number;
+  error?: string;
 }
 
-/**
- * Skeleton for a remote source. Fill in `mapRecipe` for the chosen provider and
- * switch `recipeRepository` below to `new ApiRecipeRepository(url)`.
- */
-export class ApiRecipeRepository implements RecipeRepository {
+interface CacheEntry {
+  fetchedAt: number;
+  recipes: Recipe[];
+}
+
+const cacheKey = (sourceId: string) => `mealmatch:recipes:${sourceId}:v1`;
+const NUTRITION_KEYS: (keyof Nutrition)[] = [
+  'calories',
+  'proteinG',
+  'carbsG',
+  'fatG',
+  'saturatedFatG',
+  'fiberG',
+  'sugarG',
+  'sodiumMg',
+  'potassiumMg',
+  'phosphorusMg',
+];
+
+/** JSON turns NaN ("unknown") into null; turn it back so unknown values never pass a health threshold. */
+export function reviveRecipe(r: Recipe): Recipe {
+  if (!r.nutrition) return r;
+  const n = { ...r.nutrition };
+  for (const k of NUTRITION_KEYS) if (n[k] == null) n[k] = NaN;
+  return { ...r, nutrition: n };
+}
+
+export class LibraryRecipeRepository implements RecipeRepository {
+  private errors = new Map<string, string>();
+
   constructor(
-    private readonly baseUrl: string,
-    private readonly mapRecipe: (raw: unknown) => Recipe,
+    private readonly local: Recipe[],
+    private readonly sources: RecipeSource[],
+    private readonly maxAgeHours = config.recipeCacheHours,
   ) {}
 
-  async list(): Promise<Recipe[]> {
-    const res = await fetch(`${this.baseUrl}/recipes`);
-    if (!res.ok) throw new Error(`Recipe API error ${res.status}`);
-    const raw = (await res.json()) as unknown[];
-    return raw.map(this.mapRecipe);
+  private async readCache(id: string): Promise<CacheEntry | null> {
+    try {
+      const raw = await AsyncStorage.getItem(cacheKey(id));
+      if (!raw) return null;
+      const entry = JSON.parse(raw) as CacheEntry;
+      return { ...entry, recipes: entry.recipes.map(reviveRecipe) };
+    } catch {
+      return null;
+    }
   }
 
-  async getById(id: string): Promise<Recipe | undefined> {
-    const res = await fetch(`${this.baseUrl}/recipes/${encodeURIComponent(id)}`);
-    if (res.status === 404) return undefined;
-    if (!res.ok) throw new Error(`Recipe API error ${res.status}`);
-    return this.mapRecipe(await res.json());
+  private merge(remote: Recipe[][]): Recipe[] {
+    const byId = new Map<string, Recipe>();
+    for (const r of [...this.local, ...remote.flat()]) if (!byId.has(r.id)) byId.set(r.id, r);
+    return [...byId.values()];
+  }
+
+  async list(): Promise<Recipe[]> {
+    const caches = await Promise.all(this.sources.map((s) => this.readCache(s.id)));
+    return this.merge(caches.map((c) => c?.recipes ?? []));
+  }
+
+  async refresh({ force = false } = {}): Promise<{ recipes: Recipe[]; status: SourceStatus[] }> {
+    const now = Date.now();
+    const lists = await Promise.all(
+      this.sources.map(async (source) => {
+        const cached = await this.readCache(source.id);
+        const fresh = cached && now - cached.fetchedAt < this.maxAgeHours * 3600_000;
+        if (fresh && !force) return cached.recipes;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 45_000);
+        try {
+          const recipes = await source.fetchAll(controller.signal);
+          if (recipes.length) {
+            await AsyncStorage.setItem(cacheKey(source.id), JSON.stringify({ fetchedAt: now, recipes })).catch(() => {});
+          }
+          this.errors.delete(source.id);
+          return recipes.length ? recipes : (cached?.recipes ?? []);
+        } catch (e) {
+          // Offline or provider down: keep using whatever we had.
+          this.errors.set(source.id, e instanceof Error ? e.message : String(e));
+          return cached?.recipes ?? [];
+        } finally {
+          clearTimeout(timer);
+        }
+      }),
+    );
+    return { recipes: this.merge(lists), status: await this.status() };
+  }
+
+  async status(): Promise<SourceStatus[]> {
+    const caches = await Promise.all(this.sources.map((s) => this.readCache(s.id)));
+    return [
+      { id: 'mealmatch', name: 'MealMatch originals', url: '', count: this.local.length },
+      ...this.sources.map((s, i) => ({
+        id: s.id,
+        name: s.name,
+        url: s.url,
+        count: caches[i]?.recipes.length ?? 0,
+        fetchedAt: caches[i]?.fetchedAt,
+        error: this.errors.get(s.id),
+      })),
+    ];
   }
 }
 
-export const recipeRepository: RecipeRepository = new SampleRecipeRepository();
+export function configuredSources(): RecipeSource[] {
+  const sources: RecipeSource[] = [];
+  if (config.spoonacularApiKey) sources.push(new SpoonacularSource());
+  if (config.mealDbEnabled) sources.push(new TheMealDbSource());
+  return sources;
+}
+
+export const recipeRepository: RecipeRepository = new LibraryRecipeRepository(SAMPLE_RECIPES, configuredSources());

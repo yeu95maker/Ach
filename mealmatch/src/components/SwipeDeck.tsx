@@ -166,9 +166,10 @@ function CardFace({ item }: { item: ScoredRecipe }) {
           {recipe.subtitle}
         </Text>
         <View style={s.metaRow}>
-          <Meta icon="time-outline" label={`${totalMinutes(recipe)} min`} />
-          <Meta icon="speedometer-outline" label={recipe.difficulty} />
-          <Meta icon="flame-outline" label={`${recipe.nutrition.calories} kcal`} />
+          {totalMinutes(recipe) != null && <Meta icon="time-outline" label={`${totalMinutes(recipe)} min`} />}
+          {recipe.difficulty && <Meta icon="speedometer-outline" label={recipe.difficulty} />}
+          {recipe.nutrition && <Meta icon="flame-outline" label={`${recipe.nutrition.calories} kcal`} />}
+          {!recipe.nutrition && <Meta icon="globe-outline" label={recipe.cuisine} />}
         </View>
         <View style={s.tags}>
           {tags.slice(1).map((t) => (

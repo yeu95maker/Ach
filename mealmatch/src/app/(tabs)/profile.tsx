@@ -27,7 +27,7 @@ function confirm(title: string, message: string, onOk: () => void) {
 }
 
 export default function Profile() {
-  const { data, dispatch, user } = useAppStore();
+  const { data, dispatch, user, recipes, library } = useAppStore();
   const [editingName, setEditingName] = useState(false);
   const p = data.preferences;
   const saves = data.history.filter((h) => h.action === 'save').length;
@@ -99,6 +99,37 @@ export default function Profile() {
             onPress={() => router.push('/preferences?section=conditions')}
             last
           />
+        </View>
+
+        <View style={s.card}>
+          <View style={s.libHead}>
+            <Ionicons name="library-outline" size={22} color={colors.text} />
+            <View style={{ flex: 1 }}>
+              <Text style={s.rowTitle}>Recipe library</Text>
+              <Text style={s.rowDetail}>{recipes.length} recipes available</Text>
+            </View>
+            <Pressable
+              onPress={library.refresh}
+              disabled={library.refreshing}
+              style={[s.libBtn, library.refreshing && { opacity: 0.5 }]}
+              accessibilityRole="button"
+              accessibilityLabel="Update recipe library"
+            >
+              <Ionicons name="refresh" size={15} color={colors.green} />
+              <Text style={s.libBtnText}>{library.refreshing ? 'Updating…' : 'Update'}</Text>
+            </Pressable>
+          </View>
+          {library.status.map((src) => (
+            <View key={src.id} style={s.libRow}>
+              <Text style={s.libName}>{src.name}</Text>
+              <Text style={s.libMeta}>
+                {src.count} recipes
+                {src.fetchedAt ? ` · updated ${new Date(src.fetchedAt).toLocaleDateString()}` : ''}
+                {src.error ? ' · offline, using saved copy' : ''}
+                {!src.fetchedAt && src.id !== 'mealmatch' && !src.error ? (library.refreshing ? ' · downloading…' : ' · not downloaded yet') : ''}
+              </Text>
+            </View>
+          ))}
         </View>
 
         <View style={s.card}>
@@ -223,6 +254,20 @@ const s = StyleSheet.create({
     borderColor: colors.border,
   },
   row: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14 },
+  libHead: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingTop: 14, paddingBottom: 8 },
+  libBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: radius.pill,
+    backgroundColor: colors.greenSoft,
+  },
+  libBtnText: { color: colors.greenText, fontWeight: '700', fontSize: 13 },
+  libRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, paddingVertical: 6, paddingLeft: 36 },
+  libName: { fontSize: 13, color: colors.text, fontWeight: '600' },
+  libMeta: { fontSize: 12.5, color: colors.textMuted, flexShrink: 1, textAlign: 'right' },
   rowBorder: { borderBottomWidth: 1, borderBottomColor: colors.border },
   rowTitle: { fontSize: 15, fontWeight: '600', color: colors.text },
   rowDetail: { fontSize: 12.5, color: colors.textMuted, marginTop: 2 },

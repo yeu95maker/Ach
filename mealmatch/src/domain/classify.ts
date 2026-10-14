@@ -1,4 +1,5 @@
 import type {
+  Nutrition,
   AllergenId,
   ConditionId,
   DietId,
@@ -17,10 +18,21 @@ import type {
 export function recipeFlags(recipe: Recipe): Set<IngredientFlag> {
   const flags = new Set<IngredientFlag>();
   for (const ing of recipe.ingredients) for (const f of ing.flags ?? []) flags.add(f);
+  for (const f of recipe.flags ?? []) flags.add(f);
   return flags;
 }
 
-export const totalMinutes = (r: Recipe) => r.prepMinutes + r.cookMinutes;
+/** Total time in minutes, or undefined when the source doesn't say. */
+export const totalMinutes = (r: Recipe): number | undefined =>
+  r.prepMinutes == null && r.cookMinutes == null
+    ? r.readyInMinutes
+    : (r.prepMinutes ?? 0) + (r.cookMinutes ?? 0);
+
+/** Wraps a nutrition rule so recipes without nutrition data never match it. */
+const withNutrition =
+  (test: (n: Nutrition) => boolean) =>
+  (r: Recipe): boolean =>
+    r.nutrition != null && test(r.nutrition);
 
 const ANIMAL_FLESH: IngredientFlag[] = ['meat', 'pork', 'poultry', 'fish', 'shellfish'];
 
@@ -55,19 +67,24 @@ export function needsCertifiedMeat(recipe: Recipe): boolean {
 }
 
 const GOAL_RULES: Record<GoalId, (r: Recipe) => boolean> = {
-  balanced: ({ nutrition: n }) =>
-    n.calories >= 250 &&
-    n.calories <= 700 &&
-    n.proteinG >= 12 &&
-    n.fiberG >= 4 &&
-    n.saturatedFatG <= 7 &&
-    n.sodiumMg <= 900 &&
-    n.sugarG <= 20,
-  'weight-loss': ({ nutrition: n }) => n.calories <= 500 && n.proteinG >= 15 && n.fiberG >= 4,
-  'high-protein': ({ nutrition: n }) => n.proteinG >= 25,
-  quick: (r) => totalMinutes(r) <= 20,
-  'low-carb': ({ nutrition: n }) => n.carbsG <= 25,
-  'high-fiber': ({ nutrition: n }) => n.fiberG >= 8,
+  balanced: withNutrition(
+    (n) =>
+      n.calories >= 250 &&
+      n.calories <= 700 &&
+      n.proteinG >= 12 &&
+      n.fiberG >= 4 &&
+      n.saturatedFatG <= 7 &&
+      n.sodiumMg <= 900 &&
+      n.sugarG <= 20,
+  ),
+  'weight-loss': withNutrition((n) => n.calories <= 500 && n.proteinG >= 15 && n.fiberG >= 4),
+  'high-protein': withNutrition((n) => n.proteinG >= 25),
+  quick: (r) => {
+    const t = totalMinutes(r);
+    return t != null && t <= 20;
+  },
+  'low-carb': withNutrition((n) => n.carbsG <= 25),
+  'high-fiber': withNutrition((n) => n.fiberG >= 8),
 };
 
 export function matchesGoal(recipe: Recipe, goal: GoalId): boolean {
@@ -87,24 +104,23 @@ export function recipeGoals(recipe: Recipe): GoalId[] {
 export const CONDITION_CRITERIA: Record<ConditionId, { summary: string; test: (r: Recipe) => boolean }> = {
   heart: {
     summary: 'Sodium ≤ 600 mg and saturated fat ≤ 5 g per serving.',
-    test: ({ nutrition: n }) => n.sodiumMg <= 600 && n.saturatedFatG <= 5,
+    test: withNutrition((n) => n.sodiumMg <= 600 && n.saturatedFatG <= 5),
   },
   kidney: {
     summary: 'Sodium ≤ 600 mg, potassium ≤ 700 mg and phosphorus ≤ 300 mg per serving.',
-    test: ({ nutrition: n }) => n.sodiumMg <= 600 && n.potassiumMg <= 700 && n.phosphorusMg <= 300,
+    test: withNutrition((n) => n.sodiumMg <= 600 && n.potassiumMg <= 700 && n.phosphorusMg <= 300),
   },
   liver: {
     summary: 'No alcohol, sodium ≤ 600 mg and saturated fat ≤ 5 g per serving.',
-    test: (r) =>
-      !recipeFlags(r).has('alcohol') && r.nutrition.sodiumMg <= 600 && r.nutrition.saturatedFatG <= 5,
+    test: (r) => !recipeFlags(r).has('alcohol') && withNutrition((n) => n.sodiumMg <= 600 && n.saturatedFatG <= 5)(r),
   },
   diabetes: {
     summary: 'Sugar ≤ 10 g, carbohydrate ≤ 50 g and fibre ≥ 5 g per serving.',
-    test: ({ nutrition: n }) => n.sugarG <= 10 && n.carbsG <= 50 && n.fiberG >= 5,
+    test: withNutrition((n) => n.sugarG <= 10 && n.carbsG <= 50 && n.fiberG >= 5),
   },
   digestive: {
     summary: 'Fibre ≥ 6 g and total fat ≤ 20 g per serving.',
-    test: ({ nutrition: n }) => n.fiberG >= 6 && n.fatG <= 20,
+    test: withNutrition((n) => n.fiberG >= 6 && n.fatG <= 20),
   },
 };
 

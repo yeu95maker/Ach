@@ -109,9 +109,9 @@ describe('profile filtering', () => {
     const list = filterRecipes(SAMPLE_RECIPES, prefs({ conditions: ['kidney'] }), EMPTY_FILTERS);
     expect(list.length).toBeGreaterThan(0);
     for (const r of list) {
-      expect(r.nutrition.sodiumMg).toBeLessThanOrEqual(600);
-      expect(r.nutrition.potassiumMg).toBeLessThanOrEqual(700);
-      expect(r.nutrition.phosphorusMg).toBeLessThanOrEqual(300);
+      expect(r.nutrition!.sodiumMg).toBeLessThanOrEqual(600);
+      expect(r.nutrition!.potassiumMg).toBeLessThanOrEqual(700);
+      expect(r.nutrition!.phosphorusMg).toBeLessThanOrEqual(300);
     }
   });
 
@@ -138,7 +138,7 @@ describe('search filters', () => {
     expect(list.length).toBeGreaterThan(0);
     for (const r of list) {
       expect(r.mealTypes).toContain('breakfast');
-      expect(r.prepMinutes + r.cookMinutes).toBeLessThanOrEqual(15);
+      expect(r.prepMinutes! + r.cookMinutes!).toBeLessThanOrEqual(15);
     }
   });
 });

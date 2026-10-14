@@ -2,11 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { totalMinutes } from '@/domain/classify';
 import type { Recipe } from '@/domain/types';
 import { colors, radius } from '@/theme';
 
-import { displayTags, RecipeHero } from './RecipeVisual';
+import { displayTags, RecipeHero, recipeMetaLine } from './RecipeVisual';
 import { Tag } from './ui';
 
 export function RecipeRow({
@@ -33,7 +32,7 @@ export function RecipeRow({
           ))}
         </View>
         <Text style={s.meta}>
-          {totalMinutes(recipe)} min · {recipe.difficulty} · {recipe.nutrition.calories} kcal
+          {recipeMetaLine(recipe) || recipe.cuisine}
         </Text>
       </View>
       <Pressable

@@ -57,13 +57,17 @@ export interface Recipe {
   tint: string;
   cuisine: string;
   mealTypes: MealType[];
-  prepMinutes: number;
-  cookMinutes: number;
-  servings: number;
-  difficulty: Difficulty;
+  /** Unknown for some API sources – the UI hides missing values and filters treat them as "doesn't match". */
+  prepMinutes?: number;
+  cookMinutes?: number;
+  /** Total time when the source only gives one number (no prep/cook split). */
+  readyInMinutes?: number;
+  servings?: number;
+  difficulty?: Difficulty;
   ingredients: Ingredient[];
   steps: string[];
-  nutrition: Nutrition;
+  /** Missing for sources without nutrition data; such recipes never pass goal or condition filters. */
+  nutrition?: Nutrition;
   /** Short practical tips shown below the steps. */
   tips?: string[];
   /** Cheap everyday ingredients. */
@@ -72,6 +76,10 @@ export interface Recipe {
   weather?: Weather[];
   /** Where the recipe came from – 'sample' for the bundled MVP data. */
   source: 'sample' | 'api' | 'user';
+  /** Credit shown on the recipe page for recipes from external providers. */
+  attribution?: { provider: string; providerUrl?: string; originalUrl?: string };
+  /** Recipe-level flags a provider asserts (e.g. "not gluten-free") on top of what the ingredients reveal. */
+  flags?: IngredientFlag[];
 }
 
 export type Weather = 'cold' | 'warm';

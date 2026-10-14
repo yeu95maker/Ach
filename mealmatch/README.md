@@ -39,7 +39,32 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 - **Search & filters**: text search across names, ingredients and cuisines; meal type, diet, condition, goal and
   "under 30 min" filters with a live result count.
 - **Profile**: preferences, goals, allergies, conditions, stats, About page, reset.
-- **31 sample recipes** bundled, so everything works offline before a real recipe API is connected.
+- **820+ recipes**: 31 hand-written MealMatch originals (with nutrition) plus TheMealDB's ~790 recipes with photos,
+  downloaded in the background and cached for offline use. Add a Spoonacular key for hundreds more with full nutrition.
+
+## Recipe sources
+
+| Source | Enabled | Nutrition | Notes |
+| --- | --- | --- | --- |
+| MealMatch originals (`src/data/sampleRecipes.ts`) | always | approx. per serving | Bundled, work offline |
+| [TheMealDB](https://www.themealdb.com) | by default (free test key `1`) | – | ~790 recipes with photos. Use a supporter key for a public release. |
+| [Spoonacular](https://spoonacular.com/food-api) | when `EXPO_PUBLIC_SPOONACULAR_API_KEY` is set | yes | Paid plans for real traffic; free tier ≈ 50 points/day |
+
+Configure them in `mealmatch/.env.local` (see `.env.example`). Downloads happen in the background on launch and from
+**Profile → Recipe library → Update**, and are cached on the device (`EXPO_PUBLIC_RECIPE_CACHE_HOURS`, default 72).
+Every external recipe is credited on its page with a link to the original.
+
+How imported recipes stay safe for the filters:
+
+- Ingredient names are classified by `src/domain/ingredientFlags.ts` (dairy, gluten, pork, alcohol, …). Ambiguous
+  names take the restrictive reading ("sausages" → pork, plain "stock" → meat), and provider data such as TheMealDB's
+  category or Spoonacular's `glutenFree: false` can only add restrictions, never remove them.
+- Recipes without nutrition data never match nutrition goals or health-condition filters, and recipes without a time
+  never match "Under 30 min".
+- `EXPO_PUBLIC_*` values are bundled into the app. Before a public release, move paid keys behind your own backend.
+
+To add another provider, implement `RecipeSource` (`src/services/sources/types.ts`) and add it in
+`configuredSources()` in `src/services/recipeRepository.ts`.
 
 ## How the app is structured
 
@@ -64,7 +89,8 @@ src/
     userData.ts             Persisted user data model + migrations
   data/sampleRecipes.ts     Bundled sample database
   services/                 Swappable boundaries
-    recipeRepository.ts     RecipeRepository → SampleRecipeRepository (+ ApiRecipeRepository skeleton)
+    recipeRepository.ts     Bundled recipes + downloaded providers, cached on device
+    sources/                TheMealDB and Spoonacular adapters (map provider JSON → Recipe)
     userDataStore.ts        UserDataStore → LocalUserDataStore (AsyncStorage)
     auth.ts                 AuthService → GuestAuthService
   state/                    Reducer (pure) + React context that wires services together
@@ -88,8 +114,7 @@ users get the same treatment automatically.
 
 The UI only talks to three interfaces, so each upgrade is a single new class:
 
-1. **Real recipes** – implement `RecipeRepository` (see `ApiRecipeRepository`) and map the provider's data into
-   `Recipe`, filling `ingredients[].flags` and `nutrition`. Switch the `recipeRepository` export.
+1. **More recipe providers** – implement `RecipeSource` and register it in `configuredSources()`.
 2. **Accounts** – implement `AuthService` (Supabase Auth, Firebase Auth, Sign in with Apple/Google). The rest of the app
    already keys data by `user.id`.
 3. **Cloud sync** – implement `UserDataStore` against your backend. `UserData` is versioned and stamped with

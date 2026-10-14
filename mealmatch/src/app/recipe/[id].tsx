@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { conditionTags, RecipeHero, recipeChips } from '@/components/RecipeVisual';
@@ -41,7 +41,8 @@ export default function RecipeScreen() {
 
   const saved = isSaved(recipe.id);
   const toggleSave = () => dispatch({ type: 'toggleSaved', recipeId: recipe.id });
-  const factor = servings / recipe.servings;
+  // Scaling only makes sense when the source says how many servings the amounts are for.
+  const factor = recipe.servings ? servings / recipe.servings : 1;
   const diets = recipeDiets(recipe);
   const allergens = recipeAllergens(recipe);
   const conditions = conditionTags(recipe);
@@ -49,7 +50,8 @@ export default function RecipeScreen() {
   const fitStyle = FIT_COLORS[fit.status];
   const rating = data.ratings[recipe.id] ?? 0;
   const n = recipe.nutrition;
-  const saltG = (n.sodiumMg * 2.5) / 1000;
+  const saltG = n ? (n.sodiumMg * 2.5) / 1000 : 0;
+  const total = totalMinutes(recipe);
 
   const back = () => (router.canGoBack() ? router.back() : router.replace('/discover'));
   const share = () =>
@@ -108,9 +110,9 @@ export default function RecipeScreen() {
           <Text style={s.subtitle}>{recipe.subtitle}</Text>
 
           <View style={s.stats}>
-            <Stat icon="time-outline" value={`${totalMinutes(recipe)} min`} label="Total time" />
-            <Stat icon="speedometer-outline" value={recipe.difficulty} label="Difficulty" />
-            <Stat icon="flame-outline" value={`${n.calories}`} label="kcal / serving" />
+            <Stat icon="time-outline" value={total != null ? `${total} min` : '–'} label="Total time" />
+            <Stat icon="speedometer-outline" value={recipe.difficulty ?? '–'} label="Difficulty" />
+            <Stat icon="flame-outline" value={n ? `${n.calories}` : '–'} label="kcal / serving" />
             <Stat icon="globe-outline" value={recipe.cuisine} label="Cuisine" />
           </View>
 
@@ -123,36 +125,62 @@ export default function RecipeScreen() {
             ))}
           </View>
 
-          <Text style={s.desc}>{recipe.description}</Text>
-          <Text style={s.prep}>
-            Prep {recipe.prepMinutes} min{recipe.cookMinutes ? ` · Cook ${recipe.cookMinutes} min` : ''}
-          </Text>
+          {recipe.description ? <Text style={s.desc}>{recipe.description}</Text> : null}
+          {recipe.prepMinutes != null && (
+            <Text style={s.prep}>
+              Prep {recipe.prepMinutes} min{recipe.cookMinutes ? ` · Cook ${recipe.cookMinutes} min` : ''}
+            </Text>
+          )}
+          {recipe.attribution && (
+            <View style={s.credit}>
+              <Ionicons name="globe-outline" size={14} color={colors.textMuted} />
+              <Text style={s.creditText}>
+                Recipe from{' '}
+                <Text
+                  style={s.creditLink}
+                  onPress={() => recipe.attribution?.providerUrl && Linking.openURL(recipe.attribution.providerUrl)}
+                >
+                  {recipe.attribution.provider}
+                </Text>
+                {recipe.attribution.originalUrl ? (
+                  <>
+                    {' · '}
+                    <Text style={s.creditLink} onPress={() => Linking.openURL(recipe.attribution!.originalUrl!)}>
+                      original recipe
+                    </Text>
+                  </>
+                ) : null}
+              </Text>
+            </View>
+          )}
 
           {/* Ingredients */}
           <View style={s.card}>
             <View style={s.cardHead}>
               <Text style={s.cardTitle}>Ingredients</Text>
-              <View style={s.stepper}>
-                <Pressable
-                  onPress={() => setServings((v) => Math.max(1, v - 1))}
-                  style={s.stepBtn}
-                  accessibilityLabel="Fewer servings"
-                  hitSlop={6}
-                >
-                  <Ionicons name="remove" size={16} color={colors.green} />
-                </Pressable>
-                <Text style={s.stepText}>
-                  {servings} serving{servings === 1 ? '' : 's'}
-                </Text>
-                <Pressable
-                  onPress={() => setServings((v) => Math.min(12, v + 1))}
-                  style={s.stepBtn}
-                  accessibilityLabel="More servings"
-                  hitSlop={6}
-                >
-                  <Ionicons name="add" size={16} color={colors.green} />
-                </Pressable>
-              </View>
+              {recipe.servings ? (
+                <View style={s.stepper}>
+                  <Pressable
+                    onPress={() => setServings((v) => Math.max(1, v - 1))}
+                    style={s.stepBtn}
+                    accessibilityLabel="Fewer servings"
+                    hitSlop={6}
+                  >
+                    <Ionicons name="remove" size={16} color={colors.green} />
+                  </Pressable>
+                  <Text style={s.stepText}>
+                    {servings} serving{servings === 1 ? '' : 's'}
+                  </Text>
+                  <Pressable
+                    onPress={() => setServings((v) => Math.min(12, v + 1))}
+                    style={s.stepBtn}
+                    accessibilityLabel="More servings"
+                    hitSlop={6}
+                  >
+                    <Ionicons name="add" size={16} color={colors.green} />
+                  </Pressable>
+                </View>
+              ) : null}
             </View>
             {recipe.ingredients.map((ing, idx) => (
               <View key={idx} style={[s.ingRow, idx > 0 && s.ingBorder]}>
@@ -190,7 +218,11 @@ export default function RecipeScreen() {
               >
                 <View style={s.stepRail}>
                   <View style={[s.stepNum, on && { backgroundColor: colors.green }]}>
-                    {on ? <Ionicons name="checkmark" size={16} color="#fff" /> : <Text style={s.stepNumText}>{idx + 1}</Text>}
+                    {on ? (
+                      <Ionicons name="checkmark" size={16} color="#fff" />
+                    ) : (
+                      <Text style={s.stepNumText}>{idx + 1}</Text>
+                    )}
                   </View>
                   {!last && <View style={s.stepLine} />}
                 </View>
@@ -218,17 +250,26 @@ export default function RecipeScreen() {
           <View style={s.card}>
             <View style={s.cardHead}>
               <Text style={s.cardTitle}>Nutrition per serving</Text>
-              <Text style={s.muted}>approx.</Text>
+              {n ? <Text style={s.muted}>approx.</Text> : null}
             </View>
-            <MacroBar protein={n.proteinG} carbs={n.carbsG} fat={n.fatG} />
-            <NutriRow label="Calories" value={`${n.calories} kcal`} strong />
-            <NutriRow label="Carbohydrates" value={`${n.carbsG} g`} dot="#E9A23B" />
-            <NutriRow label="  of which sugar" value={`${n.sugarG} g`} sub />
-            <NutriRow label="Fat" value={`${n.fatG} g`} dot="#6C63C7" />
-            <NutriRow label="  of which saturates" value={`${n.saturatedFatG} g`} sub />
-            <NutriRow label="Protein" value={`${n.proteinG} g`} dot={colors.green} />
-            <NutriRow label="Fibre" value={`${n.fiberG} g`} />
-            <NutriRow label="Salt" value={`${saltG.toFixed(1)} g`} />
+            {n ? (
+              <>
+                <MacroBar protein={n.proteinG} carbs={n.carbsG} fat={n.fatG} />
+                <NutriRow label="Calories" value={fmt(n.calories, 'kcal')} strong />
+                <NutriRow label="Carbohydrates" value={fmt(n.carbsG, 'g')} dot="#E9A23B" />
+                <NutriRow label="  of which sugar" value={fmt(n.sugarG, 'g')} sub />
+                <NutriRow label="Fat" value={fmt(n.fatG, 'g')} dot="#6C63C7" />
+                <NutriRow label="  of which saturates" value={fmt(n.saturatedFatG, 'g')} sub />
+                <NutriRow label="Protein" value={fmt(n.proteinG, 'g')} dot={colors.green} />
+                <NutriRow label="Fibre" value={fmt(n.fiberG, 'g')} />
+                <NutriRow label="Salt" value={fmt(Math.round(saltG * 10) / 10, 'g')} />
+              </>
+            ) : (
+              <Text style={[s.muted, { marginTop: 6 }]}>
+                Nutrition information isn't available for this recipe, so it won't appear under health-condition or
+                nutrition-goal filters.
+              </Text>
+            )}
           </View>
 
           {/* Diet & allergens */}
@@ -283,7 +324,9 @@ export default function RecipeScreen() {
               ))}
             </View>
             <Text style={s.muted}>
-              {rating ? `You rated this ${rating} / 5 – tap again to change.` : 'Your rating helps us recommend recipes.'}
+              {rating
+                ? `You rated this ${rating} / 5 – tap again to change.`
+                : 'Your rating helps us recommend recipes.'}
             </Text>
           </View>
         </View>
@@ -354,7 +397,22 @@ function MacroBar({ protein, carbs, fat }: { protein: number; carbs: number; fat
   );
 }
 
-function NutriRow({ label, value, strong, sub, dot }: { label: string; value: string; strong?: boolean; sub?: boolean; dot?: string }) {
+/** Formats a nutrient value; unknown (NaN) values show as a dash. */
+const fmt = (v: number, unit: string) => (Number.isFinite(v) ? `${v} ${unit}` : '–');
+
+function NutriRow({
+  label,
+  value,
+  strong,
+  sub,
+  dot,
+}: {
+  label: string;
+  value: string;
+  strong?: boolean;
+  sub?: boolean;
+  dot?: string;
+}) {
   return (
     <View style={s.nRow}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
@@ -395,7 +453,14 @@ const s = StyleSheet.create({
     borderRadius: radius.pill,
   },
   fitPillText: { fontWeight: '700', fontSize: 13.5 },
-  fitPanel: { marginTop: 10, padding: 14, borderRadius: radius.md, borderWidth: 2, backgroundColor: colors.surface, gap: 8 },
+  fitPanel: {
+    marginTop: 10,
+    padding: 14,
+    borderRadius: radius.md,
+    borderWidth: 2,
+    backgroundColor: colors.surface,
+    gap: 8,
+  },
   fitHeadline: { fontWeight: '800', fontSize: 15 },
   fitRow: { flexDirection: 'row', gap: 8, alignItems: 'flex-start' },
   fitText: { flex: 1, fontSize: 13.5, color: colors.text, lineHeight: 19 },
@@ -431,6 +496,9 @@ const s = StyleSheet.create({
   chipText: { fontSize: 12.5, fontWeight: '600', color: colors.text },
   desc: { fontSize: 15, lineHeight: 22, color: colors.text, marginTop: 16 },
   prep: { fontSize: 13, color: colors.textMuted, marginTop: 8, fontWeight: '600' },
+  credit: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 },
+  creditText: { fontSize: 12.5, color: colors.textMuted, flex: 1 },
+  creditLink: { color: colors.green, fontWeight: '700', textDecorationLine: 'underline' },
   card: {
     marginTop: 20,
     backgroundColor: colors.surface,
@@ -441,7 +509,13 @@ const s = StyleSheet.create({
   },
   cardHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 },
   cardTitle: { fontSize: 18, fontWeight: '800', color: colors.text },
-  sectionHead: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 24, marginBottom: 8 },
+  sectionHead: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    marginTop: 24,
+    marginBottom: 8,
+  },
   stepper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -451,7 +525,14 @@ const s = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 4,
   },
-  stepBtn: { width: 26, height: 26, borderRadius: 13, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
+  stepBtn: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   stepText: { fontSize: 13, fontWeight: '700', color: colors.greenText },
   ingRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10 },
   ingBorder: { borderTopWidth: 1, borderTopColor: colors.border, borderStyle: 'dashed' },
@@ -472,12 +553,26 @@ const s = StyleSheet.create({
   stepLine: { flex: 1, width: 2, backgroundColor: colors.border, marginVertical: 4 },
   stepText2: { flex: 1, fontSize: 15, lineHeight: 22, color: colors.text, paddingTop: 4, paddingBottom: 16 },
   stepDone: { color: colors.textMuted, textDecorationLine: 'line-through' },
-  tips: { marginTop: 8, backgroundColor: '#FFF6E0', borderRadius: radius.lg, padding: 16, borderLeftWidth: 4, borderLeftColor: '#E9A23B', gap: 8 },
+  tips: {
+    marginTop: 8,
+    backgroundColor: '#FFF6E0',
+    borderRadius: radius.lg,
+    padding: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: '#E9A23B',
+    gap: 8,
+  },
   tipsHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   tipsTitle: { fontSize: 17, fontWeight: '800', color: '#7A520C' },
   tipText: { fontSize: 14.5, lineHeight: 21, color: '#5C4510' },
   macroBar: { flexDirection: 'row', height: 10, borderRadius: 5, overflow: 'hidden' },
-  nRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 7, borderTopWidth: 1, borderTopColor: colors.border },
+  nRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 7,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
   nDot: { width: 8, height: 8, borderRadius: 4 },
   nLabel: { fontSize: 14.5, color: colors.text },
   nValue: { fontSize: 14.5, color: colors.text, fontWeight: '600' },

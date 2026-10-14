@@ -57,9 +57,15 @@ export default function About() {
         <View style={{ marginTop: 14 }}>
           <Notice title="Please note:">{MEDICAL_DISCLAIMER}</Notice>
         </View>
-        <Text style={[s.p, { marginTop: 18 }]}>
-          Sample recipes and nutrition values are included for demonstration. Your data is stored only on this device.
+        <SectionTitle>Recipe sources</SectionTitle>
+        <Text style={s.p}>
+          MealMatch originals are written for this app; their nutrition values are approximate. Additional recipes and
+          photos come from TheMealDB (themealdb.com) and, when enabled, Spoonacular (spoonacular.com), and are credited on
+          each recipe page with a link to the original. Diet and allergen labels for those recipes are worked out from
+          their ingredient lists; recipes without nutrition data are never shown under health-condition or nutrition
+          filters.
         </Text>
+        <Text style={[s.p, { marginTop: 12 }]}>Your preferences and saved recipes are stored only on this device.</Text>
       </ScrollView>
     </SafeAreaView>
   );

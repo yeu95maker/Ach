@@ -60,7 +60,10 @@ export function passesFilters(recipe: Recipe, f: RecipeFilters): boolean {
   if (!f.diets.every((d) => matchesDiet(recipe, d))) return false;
   if (!f.goals.every((g) => matchesGoal(recipe, g))) return false;
   if (!f.conditions.every((c) => matchesCondition(recipe, c))) return false;
-  if (f.maxTotalMinutes != null && totalMinutes(recipe) > f.maxTotalMinutes) return false;
+  if (f.maxTotalMinutes != null) {
+    const t = totalMinutes(recipe);
+    if (t == null || t > f.maxTotalMinutes) return false;
+  }
   return true;
 }
 

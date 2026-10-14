@@ -70,7 +70,7 @@ const MEAL_CHIP: Record<string, RecipeChip> = {
 /** Icon chips summarising a recipe: when to eat it, diet, goals, budget and season. */
 export function recipeChips(recipe: Recipe): RecipeChip[] {
   const chips: RecipeChip[] = recipe.mealTypes.map((m) => MEAL_CHIP[m]);
-  if ((recipe.mealTypes.includes('lunch') || recipe.mealTypes.includes('dinner')) && recipe.cookMinutes > 0) {
+  if ((recipe.mealTypes.includes('lunch') || recipe.mealTypes.includes('dinner')) && (recipe.cookMinutes ?? 0) > 0) {
     chips.push({ label: 'Warm main meal', icon: 'restaurant', color: '#E0603A' });
   }
   const diets = recipeDiets(recipe);
@@ -93,9 +93,17 @@ export function recipeChips(recipe: Recipe): RecipeChip[] {
   if (goals.includes('high-protein')) chips.push({ label: 'High protein', icon: 'barbell', color: '#D9534F' });
   if (goals.includes('high-fiber')) chips.push({ label: 'High fibre', icon: 'flower', color: '#7A9A2E' });
   if (goals.includes('low-carb')) chips.push({ label: 'Low carb', icon: 'nutrition', color: '#4A9A8A' });
-  if (totalMinutes(recipe) <= 20) chips.push({ label: 'Quick', icon: 'flash', color: '#E9A23B' });
+  if ((totalMinutes(recipe) ?? Infinity) <= 20) chips.push({ label: 'Quick', icon: 'flash', color: '#E9A23B' });
   if (recipe.budgetFriendly) chips.push({ label: 'Budget-friendly', icon: 'wallet', color: '#22885F' });
   if (recipe.weather?.includes('cold')) chips.push({ label: 'Cold days', icon: 'snow', color: '#4A90C9' });
   if (recipe.weather?.includes('warm')) chips.push({ label: 'Warm days', icon: 'thermometer', color: '#E0603A' });
   return chips;
+}
+
+/** "25 min · Easy · 430 kcal", skipping whatever the source doesn't provide. */
+export function recipeMetaLine(recipe: Recipe): string {
+  const t = totalMinutes(recipe);
+  return [t != null ? `${t} min` : null, recipe.difficulty, recipe.nutrition ? `${recipe.nutrition.calories} kcal` : null]
+    .filter(Boolean)
+    .join(' · ');
 }

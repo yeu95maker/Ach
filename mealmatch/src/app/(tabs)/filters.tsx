@@ -12,6 +12,9 @@ import type { RecipeFilters } from '@/domain/types';
 import { useAppStore } from '@/state/AppStore';
 import { colors, radius } from '@/theme';
 
+/** Long lists are capped for speed – narrow the search to see the rest. */
+const SHOW_MAX = 60;
+
 function toggle<T>(list: T[], item: T): T[] {
   return list.includes(item) ? list.filter((x) => x !== item) : [...list, item];
 }
@@ -100,7 +103,7 @@ export default function Filters() {
           {results.length} matching recipe{results.length === 1 ? '' : 's'}
         </SectionTitle>
         {results.length === 0 && <Text style={s.none}>Nothing matches – try removing a filter.</Text>}
-        {results.map((r) => (
+        {results.slice(0, SHOW_MAX).map((r) => (
           <RecipeRow
             key={r.id}
             recipe={r}
@@ -109,6 +112,11 @@ export default function Filters() {
             onToggleSave={() => dispatch({ type: 'toggleSaved', recipeId: r.id })}
           />
         ))}
+        {results.length > SHOW_MAX && (
+          <Text style={[s.none, { textAlign: 'center', marginTop: 14 }]}>
+            Showing {SHOW_MAX} of {results.length}. Search or add filters to narrow it down.
+          </Text>
+        )}
       </ScrollView>
       <View style={s.footer}>
         <Button
