@@ -64,9 +64,17 @@ export interface Recipe {
   ingredients: Ingredient[];
   steps: string[];
   nutrition: Nutrition;
+  /** Short practical tips shown below the steps. */
+  tips?: string[];
+  /** Cheap everyday ingredients. */
+  budgetFriendly?: boolean;
+  /** Seasons the dish suits, e.g. a warming stew for cold weather. */
+  weather?: Weather[];
   /** Where the recipe came from – 'sample' for the bundled MVP data. */
   source: 'sample' | 'api' | 'user';
 }
+
+export type Weather = 'cold' | 'warm';
 
 /** Dietary needs the user can require. All are derived from ingredient flags. */
 export type DietId =

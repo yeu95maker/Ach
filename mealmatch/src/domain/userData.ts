@@ -16,6 +16,8 @@ export interface UserData {
   saved: string[];
   /** Every swipe, oldest first. Drives the deck, undo and recommendations. */
   history: SwipeEvent[];
+  /** Star ratings (1–5) by recipe id. */
+  ratings: Record<string, number>;
   updatedAt: number;
 }
 
@@ -27,6 +29,7 @@ export const DEFAULT_USER_DATA: UserData = {
   filters: EMPTY_FILTERS,
   saved: [],
   history: [],
+  ratings: {},
   updatedAt: 0,
 };
 

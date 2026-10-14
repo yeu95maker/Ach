@@ -12,6 +12,7 @@ export type Action =
   | { type: 'swipe'; recipeId: string; action: SwipeAction; at: number }
   | { type: 'undo' }
   | { type: 'toggleSaved'; recipeId: string }
+  | { type: 'rate'; recipeId: string; stars: number }
   | { type: 'resetSkipped' }
   | { type: 'resetAll' };
 
@@ -61,6 +62,13 @@ function apply(state: UserData, action: Action): UserData {
           h.recipeId === action.recipeId && h.action === 'save' ? { ...h, action: 'skip' as const } : h,
         ),
       };
+    }
+    case 'rate': {
+      const ratings = { ...state.ratings };
+      // Tapping the current rating again clears it.
+      if (ratings[action.recipeId] === action.stars || action.stars < 1) delete ratings[action.recipeId];
+      else ratings[action.recipeId] = Math.min(5, Math.round(action.stars));
+      return { ...state, ratings };
     }
     case 'resetSkipped':
       return { ...state, history: state.history.filter((h) => h.action === 'save') };

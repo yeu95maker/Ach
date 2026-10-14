@@ -67,6 +67,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       data.preferences,
       data.history,
       recipes,
+      data.ratings,
     );
     const savedSet = new Set(data.saved);
     return {

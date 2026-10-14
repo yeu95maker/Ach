@@ -25,8 +25,10 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 ## Features
 
 - **Swipe deck**: drag a card right to save ❤️ or left to skip ✕, or use the buttons. ↩ undo brings the last card back.
-- **Full recipe pages**: ingredients with amounts, step-by-step instructions you can tick off, nutrition per
-  serving, diet and allergen info, sharing.
+- **Full recipe pages**: icon chips (meal time, diet, goals, budget, season), quick stats, ingredient list that
+  rescales with a servings stepper, step-by-step method you can tick off, tips, nutrition per serving (incl. salt
+  and a macro split), diet & allergen info, a 5-star rating that feeds recommendations, and a
+  "How does this fit me?" check against your profile.
 - **Saved recipes**: searchable list with category chips (High Protein, Vegan, …).
 - **Healthy discovery**: goals (Healthy & Balanced, Weight Loss, High Protein, Quick & Easy, Low Carb, High Fibre)
   drive the ranking.
@@ -37,7 +39,7 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 - **Search & filters**: text search across names, ingredients and cuisines; meal type, diet, condition, goal and
   "under 30 min" filters with a live result count.
 - **Profile**: preferences, goals, allergies, conditions, stats, About page, reset.
-- **29 sample recipes** bundled, so everything works offline before a real recipe API is connected.
+- **31 sample recipes** bundled, so everything works offline before a real recipe API is connected.
 
 ## How the app is structured
 

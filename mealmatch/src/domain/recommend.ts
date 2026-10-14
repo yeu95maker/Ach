@@ -12,7 +12,7 @@ export interface ScoredRecipe {
 /**
  * Local, explainable recommender. It ranks recipes by
  *  1. how many of the user's goals they meet, and
- *  2. similarity to recipes the user saved (cuisine, meal type, goals),
+ *  2. similarity to recipes the user saved or rated highly (cuisine, meal type, goals),
  *     minus a little for cuisines they keep skipping.
  *
  * It is intentionally a pure function of (candidates, preferences, history) so
@@ -23,10 +23,20 @@ export function rankRecipes(
   prefs: UserPreferences,
   history: SwipeEvent[],
   allRecipes: Recipe[],
+  ratings: Record<string, number> = {},
 ): ScoredRecipe[] {
   const byId = new Map(allRecipes.map((r) => [r.id, r]));
-  const liked = history.filter((h) => h.action === 'save').map((h) => byId.get(h.recipeId)).filter(Boolean) as Recipe[];
-  const skipped = history.filter((h) => h.action === 'skip').map((h) => byId.get(h.recipeId)).filter(Boolean) as Recipe[];
+  // Star ratings count as strong signals: 4–5 stars like a save, 1–2 stars like a skip.
+  const likedIds = [
+    ...history.filter((h) => h.action === 'save').map((h) => h.recipeId),
+    ...Object.keys(ratings).filter((id) => ratings[id] >= 4),
+  ];
+  const skippedIds = [
+    ...history.filter((h) => h.action === 'skip').map((h) => h.recipeId),
+    ...Object.keys(ratings).filter((id) => ratings[id] <= 2),
+  ];
+  const liked = likedIds.map((id) => byId.get(id)).filter(Boolean) as Recipe[];
+  const skipped = skippedIds.map((id) => byId.get(id)).filter(Boolean) as Recipe[];
 
   const cuisineLikes = countBy(liked.map((r) => r.cuisine));
   const cuisineSkips = countBy(skipped.map((r) => r.cuisine));
