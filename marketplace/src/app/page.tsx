@@ -6,6 +6,7 @@ import { Card, LinkButton } from '@/components/ui'
 import { getAccount } from '@/lib/account'
 import { getT } from '@/lib/i18n/server'
 import { AREAS } from '@/lib/locations'
+import { landingPath, popularLandings } from '@/lib/seo'
 import { createClient } from '@/lib/supabase/server'
 import type { SearchResult } from '@/lib/types'
 
@@ -62,6 +63,22 @@ export default async function HomePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((p) => <PropertyCard key={p.id} property={p} />)}
         </div>
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-xl font-bold text-gray-900">{t('seo.popular')}</h2>
+        <ul className="flex flex-wrap gap-2">
+          {popularLandings().filter((l) => l.place === 'Harare' || l.category === null).slice(0, 18).map((l) => {
+            const type = l.category ? t(`categoryPlural.${l.category}`) : t('seo.properties')
+            return (
+              <li key={`${l.tx}-${l.category}-${l.place}`}>
+                <Link href={landingPath(l.tx, l.category, l.place)} className="inline-block rounded-full bg-white px-3 py-1.5 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-brand-50">
+                  {t(l.tx === 'rent' ? 'seo.h1Rent' : 'seo.h1Buy', { type, place: l.place })}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
       </section>
 
       {!account?.is_premium && (

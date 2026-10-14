@@ -36,6 +36,17 @@ The product name is set in `src/lib/brand.ts`. **How to get real Zimbabwean list
 - Dashboard: views, inquiries, saves per listing, status, moderation notes, *mark sold*, *remove*, *still available?* prompt after 30 days
 - Public provider profile with all active listings
 
+**SEO & sharing**
+- Server-rendered property pages with canonical URL, Open Graph/Twitter previews and schema.org `RealEstateListing` data; members-only teasers and non-public pages are `noindex`
+- Indexable landing pages `/buy|rent/<type>/<place>` (e.g. `/rent/apartments/harare`, `/buy/land/borrowdale`) with nearby-area links; unknown combinations 404, empty ones are `noindex`
+- `sitemap.xml` (home, landing pages, every public listing) and `robots.txt` (private areas excluded) – set `APP_URL` to the public domain
+
+**Trust & privacy**
+- Risk flags on listings in moderation (copied description, same title/area as another provider, price far below similar listings, brand-new provider, open reports, few photos, earlier removals); the review queue is sorted by risk
+- Immutable audit log of every administrator change (who, what, before → after, IP) – Admin → *Audit log*
+- GDPR self-service in Profile: download all personal data (JSON), delete the account (payment records are kept anonymised for accounting)
+- Providers can pause/resume live listings and duplicate a listing into a new draft
+
 **Growth (provider acquisition)**
 - `/for-providers` landing page for agents, developers and sellers – the link you share on WhatsApp
 - Partner referral codes: `/for-providers?ref=HRE-TINO` remembers the code and pre-fills it when the provider profile is created; the code is fixed after sign-up

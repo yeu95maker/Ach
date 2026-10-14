@@ -1,6 +1,7 @@
 import { Bell, Building2, ChevronRight, Crown, Shield } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { PrivacyActions } from '@/components/PrivacyActions'
 import { ProfileForm, SignOutButton } from '@/components/ProfileForms'
 import { Badge, Card, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
@@ -56,6 +57,11 @@ export default async function ProfilePage() {
       <Card className="p-5">
         <h2 className="mb-4 font-bold text-gray-900">{t('profile.settings')}</h2>
         <ProfileForm userId={account.id} fullName={account.full_name} />
+      </Card>
+
+      <Card className="p-5">
+        <h2 className="mb-3 font-bold text-gray-900">{t('privacy.title')}</h2>
+        <PrivacyActions />
       </Card>
 
       <SignOutButton />

@@ -16,7 +16,7 @@ import type { PropertyCard, PropertyStatus, ProviderStatus, ProviderType } from 
 
 export const metadata: Metadata = { title: 'Admin', robots: { index: false } }
 
-const TABS = ['overview', 'providers', 'properties', 'reports', 'partners', 'users'] as const
+const TABS = ['overview', 'providers', 'properties', 'reports', 'partners', 'users', 'audit'] as const
 type Tab = (typeof TABS)[number]
 
 interface AdminProvider {
@@ -29,7 +29,8 @@ interface AdminProvider {
     document_paths: string[]; status: string; created_at: string
   }
 }
-type AdminProperty = PropertyCard & { status: PropertyStatus; submitted_at: string | null; moderation_note: string | null; description: string; views: number; provider_status: ProviderStatus; open_reports: number }
+type Risk = { score: number; level: 'low' | 'medium' | 'high'; flags: string[] }
+type AdminProperty = PropertyCard & { risk: Risk; status: PropertyStatus; submitted_at: string | null; moderation_note: string | null; description: string; views: number; provider_status: ProviderStatus; open_reports: number }
 interface AdminReport { id: string; reason: string; details: string; status: string; created_at: string; reporter_email: string; property: { id: string; title: string; status: PropertyStatus; area: string; city: string; provider_id: string; provider_name: string } }
 interface AdminUser { id: string; email: string; full_name: string; is_admin: boolean; is_suspended: boolean; created_at: string; is_premium: boolean; provider: { display_name: string; status: ProviderStatus } | null }
 
@@ -50,6 +51,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
     reports: `${t('admin.tab.reports')}${Number(s.reports_open) ? ` (${s.reports_open})` : ''}`,
     partners: t('admin.tab.partners'),
     users: t('admin.tab.users'),
+    audit: t('admin.tab.audit'),
   }
 
   return (
@@ -69,6 +71,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
       {tab === 'properties' && <Properties status={(params.status as PropertyStatus | undefined) ?? 'pending'} t={t} locale={locale} />}
       {tab === 'reports' && <Reports t={t} locale={locale} />}
       {tab === 'partners' && <Partners t={t} locale={locale} />}
+      {tab === 'audit' && <Audit t={t} locale={locale} />}
       {tab === 'users' && <Users q={typeof params.q === 'string' ? params.q : ''} t={t} locale={locale} />}
     </div>
   )
@@ -134,7 +137,7 @@ async function Properties({ status, t, locale }: { status: PropertyStatus } & Ct
   const items = (data as AdminProperty[] | null) ?? []
   return (
     <div className="space-y-3">
-      <Filters base="/admin?tab=properties" current={status} options={['pending', 'active', 'rejected', 'removed', 'sold']} label={(v) => t(`status.${v}` as MessageKey)} />
+      <Filters base="/admin?tab=properties" current={status} options={['pending', 'active', 'paused', 'rejected', 'removed', 'sold']} label={(v) => t(`status.${v}` as MessageKey)} />
       {items.length === 0 && <EmptyState title={t('admin.nothing')} />}
       {items.map((p) => {
         const cover = imageUrl(p.cover_image)
@@ -148,6 +151,7 @@ async function Properties({ status, t, locale }: { status: PropertyStatus } & Ct
                   <div className="flex gap-1">
                     {p.is_premium && <Badge tone="dark">🔒 {t('premium.membersOnly')}</Badge>}
                     {p.open_reports > 0 && <Badge tone="red">{t('admin.reportsN', { n: p.open_reports })}</Badge>}
+                    {p.risk && p.risk.level !== 'low' && <Badge tone={p.risk.level === 'high' ? 'red' : 'gold'}>{t(`risk.${p.risk.level}`)}</Badge>}
                   </div>
                 </div>
                 <p className="text-sm text-gray-600">{t(`category.${p.category}`)} · {p.area}, {p.city} · {p.price !== null ? <PriceText amount={p.price} currency={p.currency} transaction={p.transaction} /> : ''}</p>
@@ -155,6 +159,11 @@ async function Properties({ status, t, locale }: { status: PropertyStatus } & Ct
                 <p className="text-xs text-gray-500">{p.submitted_at && t('admin.submitted', { date: formatDate(p.submitted_at, locale) })} · {p.image_count} 📷 · {t('dashboard.viewsN', { n: p.views })}</p>
               </div>
             </div>
+            {p.risk?.flags.length > 0 && (
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {p.risk.flags.map((f) => <li key={f} className="rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-800">⚠ {t(`risk.flag.${f}` as MessageKey)}</li>)}
+              </ul>
+            )}
             {p.description && <p className="mt-2 line-clamp-3 text-sm text-gray-700">{p.description}</p>}
             {p.moderation_note && <p className="mt-2 text-sm text-red-700">{t('admin.note')}: {p.moderation_note}</p>}
             <div className="mt-3"><PropertyModeration id={p.id} status={p.status} isPremium={p.is_premium} /></div>
@@ -270,6 +279,36 @@ async function Partners({ t }: Ctx) {
           )}
         </Card>
       ))}
+    </div>
+  )
+}
+
+interface AuditEntry { id: number; action: string; entity_type: string; entity_id: string | null; created_at: string; ip: string | null; actor_email: string | null; changes: Record<string, { from: unknown; to: unknown }> }
+
+async function Audit({ t, locale }: Ctx) {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_list_audit', { p_limit: 150 })
+  const items = (data as AuditEntry[] | null) ?? []
+  const show = (v: unknown) => (v === null || v === undefined ? '–' : typeof v === 'object' ? JSON.stringify(v).slice(0, 60) : String(v).slice(0, 60))
+  return (
+    <div className="space-y-3">
+      <p className="text-sm text-gray-600">{t('audit.explain')}</p>
+      {items.length === 0 && <EmptyState title={t('admin.nothing')} />}
+      <ul className="divide-y divide-gray-100 rounded-2xl bg-white ring-1 ring-gray-200/70">
+        {items.map((a) => (
+          <li key={a.id} className="px-4 py-3 text-sm">
+            <p className="flex flex-wrap justify-between gap-2">
+              <span className="font-semibold">{a.actor_email ?? '–'} · {a.action} {a.entity_type} <span className="font-mono text-xs text-gray-500">{a.entity_id?.slice(0, 8)}</span></span>
+              <span className="text-xs text-gray-500">{formatDate(a.created_at, locale)} {new Date(a.created_at).toLocaleTimeString(locale)}{a.ip ? ` · ${a.ip}` : ''}</span>
+            </p>
+            <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
+              {Object.entries(a.changes).slice(0, 8).map(([k, v]) => (
+                <li key={k}><span className="font-mono">{k}</span>: {show(v.from)} → <span className="font-semibold text-gray-900">{show(v.to)}</span></li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

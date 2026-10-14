@@ -342,6 +342,12 @@ async function handleAuth(req, res, url, claims) {
     )
     return send(res, 200, await sessionFor(id))
   }
+  const adminUser = route.match(/^\/admin\/users\/([0-9a-f-]{36})$/)
+  if (adminUser && req.method === 'DELETE') {
+    if (claims?.role !== 'service_role') return send(res, 403, { msg: 'service role required' })
+    await pool.query('delete from auth.users where id = $1', [adminUser[1]])
+    return send(res, 200, {})
+  }
   if (route === '/logout') return send(res, 204, undefined)
   if (route === '/recover') return send(res, 200, {})
   return send(res, 404, { msg: `auth route ${route} not implemented in test gateway` })

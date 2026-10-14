@@ -22,7 +22,7 @@ export type ProviderType = (typeof PROVIDER_TYPES)[number]
 export const REPORT_REASONS = ['scam', 'incorrect_information', 'not_available', 'duplicate', 'suspicious_provider', 'other'] as const
 export type ReportReason = (typeof REPORT_REASONS)[number]
 
-export type PropertyStatus = 'draft' | 'pending' | 'active' | 'rejected' | 'removed' | 'sold'
+export type PropertyStatus = 'draft' | 'pending' | 'active' | 'paused' | 'rejected' | 'removed' | 'sold'
 export type ProviderStatus = 'unverified' | 'pending' | 'verified' | 'rejected' | 'suspended'
 export type LockReason = 'members_only' | 'early_access'
 

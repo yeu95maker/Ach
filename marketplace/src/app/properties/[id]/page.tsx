@@ -14,6 +14,7 @@ import { featuresFor, hasRooms } from '@/lib/filters'
 import { daysAgo, formatArea, formatDate, formatDistance, formatPrice, hoursUntil } from '@/lib/format'
 import { getT } from '@/lib/i18n/server'
 import { imageUrl } from '@/lib/images'
+import { SITE_URL } from '@/lib/seo'
 import { createClient } from '@/lib/supabase/server'
 import type { PropertyDetail } from '@/lib/types'
 
@@ -28,14 +29,54 @@ const load = cache(async (id: string): Promise<PropertyDetail | null> => {
 
 export async function generateMetadata({ params }: PageProps<'/properties/[id]'>): Promise<Metadata> {
   const p = await load((await params).id)
-  const { t } = await getT()
-  if (!p) return { title: t('error.notFound') }
-  const title = p.locked ? `${t('locked.title')} – ${p.area}` : `${p.title} – ${p.area}`
+  const { t, locale } = await getT()
+  if (!p) return { title: t('error.notFound'), robots: { index: false } }
+  const kind = `${t(`category.${p.category}`)} · ${t(p.transaction === 'rent' ? 'transaction.forRent' : 'transaction.forSale')}`
+  const title = p.locked ? `${t('locked.title')} – ${p.area}` : `${p.title} – ${p.area}, ${p.city}`
+  const price = p.price !== null ? `${formatPrice(p.price, p.currency, locale)}${p.transaction === 'rent' ? ` ${t('price.perMonth')}` : ''}` : ''
+  const description = p.locked ? t('locked.text') : [price, kind, p.description?.slice(0, 140)].filter(Boolean).join(' · ')
   const cover = imageUrl(p.cover_image)
+  const path = `/properties/${p.id}`
   return {
     title,
-    description: p.locked ? t('locked.text') : p.description?.slice(0, 160),
-    openGraph: { title, images: cover && !cover.startsWith('/') ? [cover] : undefined },
+    description,
+    alternates: { canonical: path },
+    openGraph: { title, description, url: path, type: 'website', images: cover ? [{ url: cover, alt: title }] : undefined },
+    twitter: { card: cover ? 'summary_large_image' : 'summary', title, description, images: cover ? [cover] : undefined },
+    // Locked teasers and non-public previews are not useful search results.
+    robots: p.locked || p.status !== 'active' ? { index: false, follow: true } : undefined,
+  }
+}
+
+/** schema.org structured data so search engines understand price, type and place. */
+function listingJsonLd(p: PropertyDetail) {
+  if (p.locked || p.status !== 'active' || p.price === null) return null
+  const url = `${SITE_URL}/properties/${p.id}`
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: p.title,
+    url,
+    description: p.description ?? undefined,
+    datePosted: p.published_at ?? undefined,
+    image: p.images.map((i) => imageUrl(i)).filter(Boolean).map((i) => (i!.startsWith('/') ? `${SITE_URL}${i}` : i)),
+    offers: {
+      '@type': 'Offer',
+      price: p.price,
+      priceCurrency: p.currency,
+      businessFunction: p.transaction === 'rent' ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell',
+      ...(p.transaction === 'rent' ? { priceSpecification: { '@type': 'UnitPriceSpecification', price: p.price, priceCurrency: p.currency, unitCode: 'MON' } } : {}),
+      availability: 'https://schema.org/InStock',
+      seller: p.provider ? { '@type': 'RealEstateAgent', name: p.provider.name, url: `${SITE_URL}/providers/${p.provider.id}` } : undefined,
+    },
+    about: {
+      '@type': p.category === 'land' ? 'Landform' : p.category === 'apartment' || p.category === 'room' ? 'Apartment' : p.category === 'house' ? 'House' : 'Place',
+      address: { '@type': 'PostalAddress', addressLocality: p.area, addressRegion: p.city, addressCountry: 'ZW' },
+      geo: { '@type': 'GeoCoordinates', latitude: p.lat, longitude: p.lng },
+      ...(p.living_area_m2 ? { floorSize: { '@type': 'QuantitativeValue', value: p.living_area_m2, unitCode: 'MTK' } } : {}),
+      ...(p.bedrooms !== null ? { numberOfBedrooms: p.bedrooms } : {}),
+      ...(p.bathrooms !== null ? { numberOfBathroomsTotal: p.bathrooms } : {}),
+    },
   }
 }
 
@@ -69,6 +110,9 @@ export default async function PropertyPage({ params }: PageProps<'/properties/[i
 
   return (
     <div className="mx-auto max-w-4xl">
+      {listingJsonLd(p) && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listingJsonLd(p)).replace(/</g, '\\u003c') }} />
+      )}
       {p.status === 'active' && <ViewTracker propertyId={p.id} />}
       {p.status !== 'active' && (
         <Alert tone="warning" className="mb-4">{t('detail.previewNotice', { status: t(`status.${p.status}`) })}</Alert>

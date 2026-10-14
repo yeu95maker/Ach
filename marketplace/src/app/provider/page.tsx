@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const STATUS_TONE: Record<PropertyStatus, 'green' | 'gold' | 'gray' | 'red' | 'blue' | 'dark'> = {
-  active: 'green', pending: 'gold', draft: 'gray', rejected: 'red', removed: 'red', sold: 'blue',
+  active: 'green', paused: 'gray', pending: 'gold', draft: 'gray', rejected: 'red', removed: 'red', sold: 'blue',
 }
 const STALE_DAYS = 30
 

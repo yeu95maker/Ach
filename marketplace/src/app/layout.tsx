@@ -4,6 +4,7 @@ import { BottomNav, TopNav } from '@/components/Nav'
 import { Toaster } from '@/components/Toaster'
 import { getAccount } from '@/lib/account'
 import { BRAND } from '@/lib/brand'
+import { SITE_URL } from '@/lib/seo'
 import { I18nProvider } from '@/lib/i18n/client'
 import { getT } from '@/lib/i18n/server'
 import './globals.css'
@@ -11,9 +12,11 @@ import './globals.css'
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getT()
   return {
+    metadataBase: new URL(SITE_URL),
     title: { default: `${BRAND} – ${t('meta.tagline')}`, template: `%s · ${BRAND}` },
     description: t('meta.description'),
     applicationName: BRAND,
+    openGraph: { siteName: BRAND, type: 'website' },
   }
 }
 
