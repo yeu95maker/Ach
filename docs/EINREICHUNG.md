@@ -28,9 +28,12 @@ Noch selbst zu erledigen:
 - Später besser eine eigene geschäftliche E-Mail-Adresse und Domain verwenden (z. B. support@dienstwerk.app).
 
 ### 2. Entwicklerkonten
-- **Apple Developer Program**, 99 USD pro Jahr. Für eine Business-App am besten **als Organisation** (dafür braucht es eine D-U-N-S-Nummer, kostenlos über Apple).
-- **Google Play Console**, 25 USD einmalig. Auch hier am besten **als Organisation**.
-  > ⚠️ Für **private** Google-Konten (ab Nov. 2023) verlangt Google vor der ersten Veröffentlichung einen **geschlossenen Test mit mindestens 12 Testern über 14 Tage**. Organisationskonten sind davon ausgenommen.
+Ohne Firma (GmbH, UG …) gilt:
+- **Apple Developer Program** als **Einzelperson** („Individual“), 99 USD pro Jahr. Als Verkäufer steht dein Name im Store. Auch Einzelunternehmer melden sich bei Apple als Einzelperson an. Ein späterer Wechsel zur Organisation ist über den Apple-Support möglich, die App bleibt dabei erhalten.
+- **Google Play Console** als **privates Konto** („Personal“), 25 USD einmalig.
+  > ⚠️ Private Konten brauchen vor der ersten Veröffentlichung einen **geschlossenen Test mit mindestens 12 Testern über 14 Tage** (z. B. Kolleginnen und Kollegen mit einem Google-Konto). Den Test kannst du sofort nach dem ersten Upload starten. Ein Organisationskonto (Gewerbe + D-U-N-S-Nummer) würde das ersparen, dauert aber Wochen.
+- **Händlerstatus in der EU (DSA):** Beide Stores fragen, ob du **Händler** („Trader“) bist. Wer die App beruflich anbietet, z. B. später an Kliniken verkauft, ist Händler. Dann zeigen die Stores in der EU **Name, Adresse, Telefon und E-Mail öffentlich** an. Wenn du deine Privatadresse nicht zeigen willst: eine Geschäftsadresse (z. B. Büro- oder Postservice) und eine eigene geschäftliche Telefonnummer verwenden.
+- Wer die App gewerblich anbietet, braucht in Deutschland eine **Gewerbeanmeldung** (Einzelunternehmen, beim Gewerbeamt, ca. 20–60 €). Das ändert nichts an der Kontoart bei Apple.
 
 ### 3. Backend für echte Kunden – und für die Prüfung
 Die Store-Builds zeigen im Moment auf das **Demo-Projekt**. Für die Einreichung gibt es zwei Wege:
