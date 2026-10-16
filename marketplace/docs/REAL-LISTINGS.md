@@ -1,4 +1,4 @@
-# Getting real Zimbabwean properties into Property Finder
+# Getting real Zimbabwean properties into StandFinder
 
 The app only shows properties from **verified providers**, and every listing is
 reviewed before it goes live. Real inventory therefore has to come from real

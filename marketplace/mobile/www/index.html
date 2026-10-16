@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Property Finder</title>
+  <title>StandFinder</title>
   <style>
     :root { color-scheme: light; }
     body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #fff;
@@ -18,14 +18,14 @@
   <main>
     <div class="logo" aria-hidden="true">⌂</div>
     <h1 id="title">You are offline</h1>
-    <p id="text">Property Finder needs an internet connection. Check your connection and try again.</p>
+    <p id="text">StandFinder needs an internet connection. Check your connection and try again.</p>
     <button id="retry" type="button">Try again</button>
   </main>
   <script>
     if ((navigator.language || '').toLowerCase().startsWith('de')) {
       document.documentElement.lang = 'de'
       document.getElementById('title').textContent = 'Keine Verbindung'
-      document.getElementById('text').textContent = 'Property Finder braucht eine Internetverbindung. Bitte prüfen Sie die Verbindung und versuchen Sie es erneut.'
+      document.getElementById('text').textContent = 'StandFinder braucht eine Internetverbindung. Bitte prüfen Sie die Verbindung und versuchen Sie es erneut.'
       document.getElementById('retry').textContent = 'Erneut versuchen'
     }
     document.getElementById('retry').addEventListener('click', function () { window.location.reload() })

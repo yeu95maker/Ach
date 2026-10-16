@@ -2,7 +2,7 @@ import type { en } from './en'
 
 /** Deutsch – the compiler enforces exactly the same keys as `en`. */
 export const de: Record<keyof typeof en, string> = {
-  'meta.tagline': 'Immobilien von verifizierten Anbietern',
+  'meta.tagline': 'Grundstücke, Häuser und Mieten von verifizierten Anbietern',
   'meta.description': 'Wohnungen, Häuser, Grundstücke und Gewerbeimmobilien in Harare – von verifizierten Anbietern. Suchen, auf der Karte vergleichen und Anbieter direkt anschreiben.',
 
   'nav.main': 'Hauptnavigation',
@@ -478,7 +478,7 @@ export const de: Record<keyof typeof en, string> = {
   'import.error.type': 'Unbekannte Immobilienart.',
   'dashboard.draftHint': 'Entwurf – Fotos hinzufügen, Kartenposition prüfen und zur Prüfung absenden.',
   'founding.badge': 'Gründungsanbieter',
-  'founding.meaning': 'Einer der ersten verifizierten Anbieter auf Property Finder',
+  'founding.meaning': 'Einer der ersten verifizierten Anbieter auf StandFinder',
   'founding.make': 'Als Gründungsanbieter markieren',
   'founding.remove': 'Gründungs-Abzeichen entfernen',
   'referral.label': 'Empfehlungscode (optional)',
@@ -642,7 +642,7 @@ export const de: Record<keyof typeof en, string> = {
   'team.linkHint': 'Die Einladung geht per E-Mail raus; Sie können den Link auch per WhatsApp schicken. Er gilt nur für diese E-Mail-Adresse und 14 Tage.',
   'team.join': 'Team beitreten',
   'team.joinTitle': 'Team-Einladung',
-  'team.joinText': 'Sie wurden eingeladen, Inserate und Nachrichten einer Agentur auf Property Finder zu verwalten.',
+  'team.joinText': 'Sie wurden eingeladen, Inserate und Nachrichten einer Agentur auf StandFinder zu verwalten.',
   'team.joined': 'Willkommen im Team!',
   'team.alreadyProvider': 'Sie gehören bereits zu {name}. Ein Konto kann nur zu einem Anbieter gehören.',
   'profile.emails': 'E-Mail-Benachrichtigungen',

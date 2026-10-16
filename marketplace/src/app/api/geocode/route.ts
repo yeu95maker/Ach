@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       return point ? NextResponse.json(point) : NextResponse.json({ error: 'not_found' }, { status: 404 })
     }
     const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=zw&q=${encodeURIComponent(q)}`
-    const res = await fetch(url, { headers: { 'user-agent': 'PropertyFinder/1.0 (listing geocoding)' }, signal: AbortSignal.timeout(8000) })
+    const res = await fetch(url, { headers: { 'user-agent': 'StandFinder/1.0 (listing geocoding)' }, signal: AbortSignal.timeout(8000) })
     const point = parseNominatim(await res.json())
     return point ? NextResponse.json(point) : NextResponse.json({ error: 'not_found' }, { status: 404 })
   } catch {

@@ -1,4 +1,4 @@
-# Property Finder (MVP)
+# StandFinder (MVP)
 
 A mobile-first property marketplace: **Wohnungen / apartments, Häuser / houses, Grundstücke / land and Gewerbe / commercial** from **verified providers only**. Launch market: Harare, Zimbabwe. Freemium + Premium membership.
 
@@ -98,7 +98,7 @@ Paynow has no stored-card subscriptions, so Premium is **prepaid**: it is valid 
 ## Email setup
 
 1. Create a [Resend](https://resend.com) account and verify your sending domain.
-2. Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="Property Finder <hello@your-domain>"`, `CRON_SECRET` (a long random string) and `SUPABASE_SERVICE_ROLE_KEY`.
+2. Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="StandFinder <hello@your-domain>"`, `CRON_SECRET` (a long random string) and `SUPABASE_SERVICE_ROLE_KEY`.
 3. On Vercel the cron in `vercel.json` calls the worker every 5 minutes. Elsewhere, call `GET /api/cron/emails` with `Authorization: Bearer $CRON_SECRET`.
 Without `EMAIL_PROVIDER` emails simply stay queued; `EMAIL_PROVIDER=log` prints them (development).
 

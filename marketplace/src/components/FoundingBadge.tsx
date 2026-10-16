@@ -2,7 +2,7 @@
 import { Award } from 'lucide-react'
 import { useI18n } from '@/lib/i18n/client'
 
-/** Shown for the providers who joined Property Finder at launch. */
+/** Shown for the providers who joined StandFinder at launch. */
 export function FoundingBadge({ size = 'sm', compact = false }: { size?: 'sm' | 'md'; compact?: boolean }) {
   const { t } = useI18n()
   if (compact) {

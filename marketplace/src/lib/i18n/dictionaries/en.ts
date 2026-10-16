@@ -1,6 +1,6 @@
 /** English (default for the Harare launch). Keys are checked at compile time; `de` must have the same keys. */
 export const en = {
-  'meta.tagline': 'Find property from verified providers',
+  'meta.tagline': 'Stands, homes and rentals from verified providers',
   'meta.description': 'Apartments, houses, land and commercial property in Harare – from verified providers. Search, compare on the map and message providers directly.',
 
   'nav.main': 'Main navigation',
@@ -476,7 +476,7 @@ export const en = {
   'import.error.type': 'Unknown property type.',
   'dashboard.draftHint': 'Draft – add photos, check the map pin and submit it for review.',
   'founding.badge': 'Founding Provider',
-  'founding.meaning': 'One of the first verified providers on Property Finder',
+  'founding.meaning': 'One of the first verified providers on StandFinder',
   'founding.make': 'Mark as Founding Provider',
   'founding.remove': 'Remove Founding badge',
   'referral.label': 'Referral code (optional)',
@@ -640,7 +640,7 @@ export const en = {
   'team.linkHint': 'The invitation is emailed; you can also send the link via WhatsApp. It only works for that email address and expires after 14 days.',
   'team.join': 'Join the team',
   'team.joinTitle': 'Team invitation',
-  'team.joinText': 'You have been invited to manage listings and messages for an agency on Property Finder.',
+  'team.joinText': 'You have been invited to manage listings and messages for an agency on StandFinder.',
   'team.joined': 'Welcome to the team!',
   'team.alreadyProvider': 'You already belong to {name}. One account can only be part of one provider.',
   'profile.emails': 'Email notifications',

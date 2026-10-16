@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 /**
- * iOS and Android apps for Property Finder (store guide: docs/APP-STORES.md).
+ * iOS and Android apps for StandFinder (store guide: docs/APP-STORES.md).
  *
  * The apps load the live website (server-rendered Next.js) from APP_URL and add
  * native features on top (src/components/NativeBridge.tsx, src/lib/native):
@@ -16,10 +16,10 @@ import type { CapacitorConfig } from '@capacitor/cli'
 const appUrl = (process.env.APP_URL || 'https://property-finder-drab-omega.vercel.app').replace(/\/$/, '')
 
 const config: CapacitorConfig = {
-  appId: 'app.propertyfinder.zw',
-  appName: 'Property Finder',
+  appId: 'app.standfinder.zw',
+  appName: 'StandFinder',
   webDir: 'mobile/www',
-  appendUserAgent: 'PropertyFinderApp', // = NATIVE_UA_MARKER in src/lib/native/index.ts
+  appendUserAgent: 'StandFinderApp', // = NATIVE_UA_MARKER in src/lib/native/index.ts
   backgroundColor: '#ffffff',
   server: {
     url: appUrl,

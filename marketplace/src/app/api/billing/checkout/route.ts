@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
   const result = await initiate({
     reference,
     amount: Number((started as { amount: number }).amount),
-    description: `Property Finder Premium (${interval === 'year' ? '1 year' : '1 month'})`,
+    description: `StandFinder Premium (${interval === 'year' ? '1 year' : '1 month'})`,
     email: user.email,
     returnUrl: `${origin}/membership/return?reference=${reference}&next=${encodeURIComponent(next)}`,
     resultUrl: `${origin}/api/billing/paynow/result`,

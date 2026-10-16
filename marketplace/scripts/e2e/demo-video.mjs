@@ -73,7 +73,7 @@ async function login(email) {
 try {
   // Buyer -------------------------------------------------------------------
   await page.goto(BASE)
-  await caption('Property Finder – find property from verified providers in Harare', 3200)
+  await caption('StandFinder – find property from verified providers in Harare', 3200)
   await caption('1. What are you looking for? → Houses')
   await page.getByRole('button', { name: /Houses/ }).click()
   await wait(600)
@@ -160,7 +160,7 @@ try {
   await page.goto(`${BASE}/for-providers?ref=HRE-TINO`)
   await caption('The link your partners send to agents and developers', 3200)
   await slowScroll(800)
-  await caption('Property Finder – Discover · Trust · Connect', 3000)
+  await caption('StandFinder – Discover · Trust · Connect', 3000)
 } finally {
   await cdp.send('Page.stopScreencast').catch(() => {})
   await ctx.close()

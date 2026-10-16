@@ -1,4 +1,4 @@
-# Property Finder – Supabase project configuration (local development via `supabase start`).
+# StandFinder – Supabase project configuration (local development via `supabase start`).
 project_id = "property-finder"
 
 [api]

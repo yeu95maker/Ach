@@ -1,4 +1,4 @@
-# Property Finder in the App Store and Google Play
+# StandFinder in the App Store and Google Play
 
 The iOS and Android apps are thin native shells (Capacitor, `capacitor.config.ts`)
 around the live website. They load `APP_URL` and add native features on top:
@@ -16,22 +16,22 @@ Because the apps load the website, **every website deploy updates the apps too**
 a new store build is only needed when native code, icons or permissions change.
 
 Builds run on GitHub Actions – **no Mac needed**:
-`.github/workflows/property-finder-release.yml` (iOS → TestFlight, Android → signed AAB / Play internal track).
+`.github/workflows/standfinder-release.yml` (iOS → TestFlight, Android → signed AAB / Play internal track).
 
 ---
 
 ## Before the first upload – decisions
 
-1. **App name.** “Property Finder” is the brand of a large real-estate portal in the
-   Middle East that already has apps with this name, and App Store names must be unique.
-   Use a distinct store name, e.g. **“Property Finder Zimbabwe”** or your own brand –
-   the home-screen name can stay short. A trademark conflict is a common rejection
-   reason (Apple 5.2.1, Google “Impersonation”), so check before you register a domain.
-2. **App ID** `app.propertyfinder.zw` (in `capacitor.config.ts`, the native projects and
+1. **App name: StandFinder.** No property app with this name turned up in a web search (October 2026).
+   Before the first upload, check that “StandFinder” is still free in App Store Connect
+   (the name is reserved when you create the app record) and in the Play Console, and register
+   the domain (e.g. `standfinder.co.zw`) and social handles. If the exact name is taken, use
+   **“StandFinder Zimbabwe”** as the store name – the home-screen name stays “StandFinder”.
+2. **App ID** `app.standfinder.zw` (in `capacitor.config.ts`, the native projects and
    `NATIVE_APP_ID` in `src/lib/native/index.ts`). It is permanent once uploaded. To change it,
    replace the string in those places and in `android/app/build.gradle` (`namespace`,
    `applicationId`), `ios/App/App.xcodeproj/project.pbxproj` (`PRODUCT_BUNDLE_IDENTIFIER`)
-   and `.github/workflows/property-finder-release.yml` (`packageName`).
+   and `.github/workflows/standfinder-release.yml` (`packageName`).
 3. **Premium inside the apps.** Apple (3.1.1) and Google Play only allow selling digital
    memberships in apps via their own in-app purchase. The apps therefore **do not sell
    Premium**: the membership page shows “Premium is not available for purchase in the app”,
@@ -48,7 +48,7 @@ Builds run on GitHub Actions – **no Mac needed**:
    **Root Directory** `marketplace`, **Production Branch** = the branch you release from.
 2. In Vercel → **Settings → Environment Variables** add:
    - `SUPABASE_SERVICE_ROLE_KEY` (Supabase → Project Settings → API keys → `service_role`/secret)
-   - `APP_URL` = your final https URL (custom domain recommended, e.g. `https://propertyfinder.co.zw`)
+   - `APP_URL` = your final https URL (custom domain recommended, e.g. `https://standfinder.co.zw`)
    - `LEGAL_NAME`, `LEGAL_ADDRESS`, `SUPPORT_EMAIL` (shown on /privacy, /terms, /imprint, /support)
    - for payments: `BILLING_PROVIDER=paynow`, `PAYNOW_INTEGRATION_ID`, `PAYNOW_INTEGRATION_KEY`
    - for emails: `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM`
@@ -69,7 +69,7 @@ Builds run on GitHub Actions – **no Mac needed**:
 
 | Name | Type | Value |
 | --- | --- | --- |
-| `PF_APP_URL` | **Variable** | live https URL of the website (= `APP_URL`) |
+| `SF_APP_URL` | **Variable** | live https URL of the website (= `APP_URL`) |
 | `APP_STORE_CONNECT_KEY_ID` | Secret | App Store Connect → Users and Access → Integrations → App Store Connect API → key (role *App Manager*) |
 | `APP_STORE_CONNECT_ISSUER_ID` | Secret | Issuer ID on the same page |
 | `APP_STORE_CONNECT_KEY` | Secret | full content of the downloaded `.p8` file |
@@ -81,8 +81,8 @@ Builds run on GitHub Actions – **no Mac needed**:
 
 1. Create a fine-grained GitHub token for this repository with **Secrets: Read and write** and
    store it as secret `GH_SECRETS_TOKEN`.
-2. Actions → **“Property Finder – create Android upload key”** → Run. It stores
-   `PF_ANDROID_KEYSTORE_BASE64`, `PF_ANDROID_KEYSTORE_PASSWORD`, `PF_ANDROID_KEY_ALIAS`.
+2. Actions → **“StandFinder – create Android upload key”** → Run. It stores
+   `SF_ANDROID_KEYSTORE_BASE64`, `SF_ANDROID_KEYSTORE_PASSWORD`, `SF_ANDROID_KEY_ALIAS`.
 3. Optional: a Google Cloud service account with Play Console access as
    `PLAY_SERVICE_ACCOUNT_JSON` → builds are uploaded automatically to internal testing.
    The very first AAB must be uploaded by hand in the Play Console.
@@ -92,7 +92,7 @@ Builds run on GitHub Actions – **no Mac needed**:
 
 ## Step 5 – build and link
 
-1. Actions → **“Property Finder – store release”** → Run (version `1.0.0`). It checks that the
+1. Actions → **“StandFinder – store release”** → Run (version `1.0.0`). It checks that the
    website is live, runs the tests, then builds both apps.
 2. iOS: the build appears in TestFlight after 10–30 minutes.
    Android: AAB under *Artifacts* (or already in internal testing).
@@ -104,8 +104,8 @@ Builds run on GitHub Actions – **no Mac needed**:
 
 ### Texts – English
 
-- **Name:** Property Finder Zimbabwe *(see decision 1)*
-- **Subtitle (iOS, 30):** Verified homes, land & rentals
+- **Name:** StandFinder *(or “StandFinder Zimbabwe”, see decision 1)*
+- **Subtitle (iOS, 30):** Stands, homes & rentals in Zim
 - **Short description (Play, 80):** Buy or rent verified homes, stands and offices in Zimbabwe. Chat in-app.
 - **Keywords (iOS, 100):** property,house,rent,stand,land,Harare,Bulawayo,apartment,real estate,Zimbabwe,flat,office
 - **Description:**
@@ -120,7 +120,7 @@ Builds run on GitHub Actions – **no Mac needed**:
   • Save favourites and get alerts for new matches
   • Share listings with family via WhatsApp, SMS or email
 
-  Property Finder is free to use. Premium members get members-only listings, early access to
+  StandFinder is free to use. Premium members get members-only listings, early access to
   new properties and advanced filters.
 
 ### Texts – Deutsch
@@ -173,7 +173,7 @@ Create two accounts in production first and paste them:
 Customer: review@<your domain> / <password>
 Verified provider: review-provider@<your domain> / <password>  (verify it in /admin)
 
-Property Finder is a marketplace for verified property providers in Zimbabwe.
+StandFinder is a marketplace for verified property providers in Zimbabwe.
 - Browse and search without an account; sign in to save properties and message providers.
 - Native features: share sheet, "Near me" location search, universal links,
   camera/photo library for listing photos (provider account → Add property).
@@ -188,7 +188,7 @@ Property Finder is a marketplace for verified property providers in Zimbabwe.
 - [ ] Website live with real, approved listings; `/support`, `/privacy`, `/terms`, `/imprint` filled with operator details
 - [ ] `SUPABASE_SERVICE_ROLE_KEY`, email and (optionally) Paynow configured
 - [ ] Supabase Auth site URL / redirects set to `APP_URL`
-- [ ] Apple: app record, bundle ID with Associated Domains, API key secrets, `PF_APP_URL` variable
+- [ ] Apple: app record, bundle ID with Associated Domains, API key secrets, `SF_APP_URL` variable
 - [ ] Google: Play app, upload key workflow run, closed test (12 testers × 14 days for new accounts)
 - [ ] Release workflow run, TestFlight / internal test checked on real devices
 - [ ] `APPLE_TEAM_ID`, `ANDROID_CERT_SHA256` set → universal / app links verified

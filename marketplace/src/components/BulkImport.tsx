@@ -56,7 +56,7 @@ export function BulkImport() {
         <h2 className="font-bold text-gray-900">{t('import.step1')}</h2>
         <p className="text-sm text-gray-600">{t('import.step1Text', { max: MAX_IMPORT_ROWS })}</p>
         <p className="rounded-lg bg-gray-50 p-2 font-mono text-xs break-words text-gray-700">{IMPORT_COLUMNS.join(', ')}</p>
-        <a href={templateHref} download="property-finder-import.csv" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
+        <a href={templateHref} download="standfinder-import.csv" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
           <Download className="size-4" /> {t('import.template')}
         </a>
       </Card>

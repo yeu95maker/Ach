@@ -20,7 +20,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Your photo library is used to choose photos of your property or verification documents.</string>
 	<key>CFBundleDisplayName</key>
-	<string>Property Finder</string>
+	<string>StandFinder</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

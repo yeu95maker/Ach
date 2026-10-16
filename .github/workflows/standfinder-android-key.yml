@@ -1,8 +1,8 @@
-# One-time: creates the Property Finder Android upload key and stores it as
-# repository secrets (PF_ANDROID_*) – no computer needed. The key never appears
+# One-time: creates the StandFinder Android upload key and stores it as
+# repository secrets (SF_ANDROID_*) – no computer needed. The key never appears
 # in logs or artifacts. Needs a fine-grained token with "Secrets: Read and write"
 # on this repository in the secret GH_SECRETS_TOKEN (marketplace/docs/APP-STORES.md, step 4).
-name: Property Finder – create Android upload key
+name: StandFinder – create Android upload key
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
-      HAS_KEY: ${{ secrets.PF_ANDROID_KEYSTORE_BASE64 != '' }}
+      HAS_KEY: ${{ secrets.SF_ANDROID_KEYSTORE_BASE64 != '' }}
     steps:
       - name: Checks
         run: |
@@ -39,15 +39,15 @@ jobs:
           echo "::add-mask::$pw"
           keytool -genkeypair -noprompt -keystore "$dir/upload.jks" -storetype PKCS12 -alias upload \
             -keyalg RSA -keysize 4096 -validity 10000 -storepass "$pw" -keypass "$pw" \
-            -dname "CN=Property Finder Upload Key" > /dev/null 2>&1
-          base64 -w0 "$dir/upload.jks" | gh secret set PF_ANDROID_KEYSTORE_BASE64 --repo "$GITHUB_REPOSITORY"
-          printf '%s' "$pw" | gh secret set PF_ANDROID_KEYSTORE_PASSWORD --repo "$GITHUB_REPOSITORY"
-          printf 'upload' | gh secret set PF_ANDROID_KEY_ALIAS --repo "$GITHUB_REPOSITORY"
+            -dname "CN=StandFinder Upload Key" > /dev/null 2>&1
+          base64 -w0 "$dir/upload.jks" | gh secret set SF_ANDROID_KEYSTORE_BASE64 --repo "$GITHUB_REPOSITORY"
+          printf '%s' "$pw" | gh secret set SF_ANDROID_KEYSTORE_PASSWORD --repo "$GITHUB_REPOSITORY"
+          printf 'upload' | gh secret set SF_ANDROID_KEY_ALIAS --repo "$GITHUB_REPOSITORY"
           fp="$(keytool -list -keystore "$dir/upload.jks" -storepass "$pw" -alias upload | grep -o 'SHA-256.*' || true)"
           rm -rf "$dir"
           {
-            echo "### Property Finder Android upload key stored"
-            echo "Secrets PF_ANDROID_KEYSTORE_BASE64, PF_ANDROID_KEYSTORE_PASSWORD and PF_ANDROID_KEY_ALIAS are set."
+            echo "### StandFinder Android upload key stored"
+            echo "Secrets SF_ANDROID_KEYSTORE_BASE64, SF_ANDROID_KEYSTORE_PASSWORD and SF_ANDROID_KEY_ALIAS are set."
             echo ""
             echo "Upload key fingerprint (public, to compare in the Play Console): \`$fp\`"
           } >> "$GITHUB_STEP_SUMMARY"

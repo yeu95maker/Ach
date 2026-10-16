@@ -1,4 +1,4 @@
-package app.propertyfinder.zw;
+package app.standfinder.zw;
 
 import com.getcapacitor.BridgeActivity;
 

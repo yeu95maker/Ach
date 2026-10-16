@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "app.propertyfinder.zw"
+    namespace = "app.standfinder.zw"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "app.propertyfinder.zw"
+        applicationId "app.standfinder.zw"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        // Release builds set these from CI (.github/workflows/property-finder-release.yml); local builds use the defaults.
+        // Release builds set these from CI (.github/workflows/standfinder-release.yml); local builds use the defaults.
         versionCode((System.getenv("VERSION_CODE") ?: "1").toInteger())
         versionName(System.getenv("VERSION_NAME") ?: "1.0.0")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

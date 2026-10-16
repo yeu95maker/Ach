@@ -3,7 +3,7 @@ import type { RenderedEmail } from './render'
 
 /**
  * EMAIL_PROVIDER:
- *   resend – https://resend.com (RESEND_API_KEY, EMAIL_FROM e.g. "Property Finder <hello@your-domain>")
+ *   resend – https://resend.com (RESEND_API_KEY, EMAIL_FROM e.g. "StandFinder <hello@your-domain>")
  *   log    – development: print instead of sending (counts as sent)
  *   unset  – emails stay queued in email_outbox until a provider is configured
  */
