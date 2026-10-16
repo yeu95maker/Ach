@@ -1,6 +1,7 @@
 import type { Recipe } from '@/domain/types';
 
 import { WEIGHT_LOSS_BOWLS } from './bowlRecipes';
+import { EXTRA_RECIPES } from './extra';
 import { GERMAN_RECIPES } from './germanRecipes';
 import { MORE_RECIPES } from './moreRecipes';
 import { i, n, type Draft } from './recipeBuilder';
@@ -1022,4 +1023,4 @@ const drafts: Draft[] = [
   },
 ];
 
-export const SAMPLE_RECIPES: Recipe[] = [...drafts, ...MORE_RECIPES, ...GERMAN_RECIPES, ...WEIGHT_LOSS_BOWLS].map((d) => ({ ...d, source: 'sample' as const }));
+export const SAMPLE_RECIPES: Recipe[] = [...drafts, ...MORE_RECIPES, ...GERMAN_RECIPES, ...WEIGHT_LOSS_BOWLS, ...EXTRA_RECIPES].map((d) => ({ ...d, source: 'sample' as const }));
