@@ -80,5 +80,8 @@ policy = "per_worker"
 [functions.push-dispatch]
 verify_jwt = false   # invoked by a database webhook / cron with the service-role secret
 
+[functions.roster-sync]
+verify_jwt = false   # planning systems authenticate with an integration API key (hashed, rate-limited)
+
 [functions.invite-employee]
 verify_jwt = true

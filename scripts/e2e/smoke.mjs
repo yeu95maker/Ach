@@ -22,7 +22,9 @@ async function session(name, { email, viewport, theme, locale = 'de' }) {
   }, [theme, locale])
   const page = await context.newPage()
   page.on('console', (m) => {
-    if (m.type() === 'error' && !/realtime|websocket|WebSocket|signedURL|storage/i.test(m.text())) problems.push(`[${name}] console: ${m.text()}`)
+    // CSP violations always count (production builds ship a Content-Security-Policy).
+    if (/Content Security Policy/i.test(m.text()) || (m.type() === 'error' && !/realtime|websocket|WebSocket|signedURL|storage/i.test(m.text())))
+      problems.push(`[${name}] console: ${m.text()}`)
   })
   page.on('pageerror', (e) => problems.push(`[${name}] pageerror: ${e.message}`))
 
@@ -308,7 +310,8 @@ for (const run of runs) {
   await a.locator('dialog[open]').getByRole('button', { name: 'Speichern' }).click()
   await a.waitForSelector('text=Adresse der Schnittstelle')
   // the DB suite may leave other interface profiles behind – use the one just created
-  await a.locator('div.rounded-\\[var\\(--radius-card\\)\\]', { hasText: 'Schnittstelle Dienstplanprogramm' })
+  // (innermost matching card = last in document order)
+  await a.locator('div.rounded-\\[var\\(--radius-card\\)\\]', { hasText: 'Schnittstelle Dienstplanprogramm' }).last()
     .getByRole('button', { name: 'Neuer Schlüssel' }).click()
   await a.fill('#api-key-label', 'Smoke-Test')
   await a.locator('dialog[open]').getByRole('button', { name: 'Schlüssel erzeugen' }).click()

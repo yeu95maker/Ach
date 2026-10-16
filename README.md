@@ -25,6 +25,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/DESIGN.md](docs/DESIGN.md): Designsystem, Navigation, UX-Regeln
 - [docs/DIENSTPLAN-EDITOR.md](docs/DIENSTPLAN-EDITOR.md): Dienstplan-Editor (Bedienung, Hinweise, Technik)
 - [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
+- [docs/SICHERHEIT.md](docs/SICHERHEIT.md): Sicherheits-Check vor der Einreichung (Geheimnisse, RLS, CSP, Rate Limits)
 - [docs/SCHNITTSTELLE.md](docs/SCHNITTSTELLE.md): Dienstwerk-Schnittstelle – Dienstplan automatisch aus dem Krankenhaus-System übernehmen (Format, Schlüssel, Antworten)
 - [docs/INTEGRATION-HUB.md](docs/INTEGRATION-HUB.md): Dienstplan-Import (CSV/XLSX), Adapter-Architektur, Dienstplanmodell, was funktioniert und was nicht
 - [docs/LEITUNG-UND-VERWALTUNG.md](docs/LEITUNG-UND-VERWALTUNG.md): Aktuelles, Vertretung bei Krankheit, offene Dienste, Verlauf, Verwaltung
