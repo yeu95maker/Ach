@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { WEIGHT_LOSS_BOWLS } from '@/data/bowlRecipes';
 import { SAMPLE_RECIPES } from '@/data/sampleRecipes';
 import {
   excludedIngredientHits,
@@ -166,5 +167,13 @@ describe('recommendations', () => {
     const a = rankRecipes(SAMPLE_RECIPES, EMPTY_PREFERENCES, [], SAMPLE_RECIPES).map((x) => x.recipe.id);
     const b = rankRecipes([...SAMPLE_RECIPES].reverse(), EMPTY_PREFERENCES, [], SAMPLE_RECIPES).map((x) => x.recipe.id);
     expect(a).toEqual(b);
+  });
+});
+
+describe('weight-loss bowls', () => {
+  it('every bowl meets the weight-loss goal', () => {
+    for (const d of WEIGHT_LOSS_BOWLS) {
+      expect(matchesGoal({ ...d, source: 'sample' }, 'weight-loss'), d.id).toBe(true);
+    }
   });
 });
