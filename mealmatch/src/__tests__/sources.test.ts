@@ -12,7 +12,8 @@ vi.mock('@react-native-async-storage/async-storage', () => {
 });
 
 import { SAMPLE_RECIPES } from '@/data/sampleRecipes';
-import { matchesCondition, matchesDiet, matchesGoal, recipeAllergens, totalMinutes } from '@/domain/classify';
+import { mapWikibooksRecord, WIKIBOOKS_RECIPES, type WikibooksRecord } from '@/data/wikibooksRecipes';
+import { matchesCondition, matchesDiet, matchesGoal, recipeAllergens, recipeDiets, totalMinutes } from '@/domain/classify';
 import { EMPTY_FILTERS, EMPTY_PREFERENCES, filterRecipes } from '@/domain/filter';
 import { inferIngredientFlags } from '@/domain/ingredientFlags';
 import type { Recipe } from '@/domain/types';
@@ -207,5 +208,46 @@ describe('LibraryRecipeRepository', () => {
     const revived = reviveRecipe(JSON.parse(JSON.stringify(r)));
     expect(Number.isNaN(revived.nutrition!.potassiumMg)).toBe(true);
     expect(matchesCondition(revived, 'kidney')).toBe(false);
+  });
+});
+
+describe('Wikibooks Cookbook mapping', () => {
+  const rec: WikibooksRecord = {
+    t: 'Chicken Paprikash',
+    u: 'https://en.wikibooks.org/wiki/Cookbook:Chicken_Paprikash',
+    c: 'Chicken recipes',
+    cu: 'Hungarian',
+    m: ['dinner'],
+    s: 4,
+    r: 60,
+    d: 'Medium',
+    i: [
+      ['1 kg', 'chicken thighs'],
+      ['2 tbsp', 'butter'],
+      ['200 ml', 'sour cream'],
+      [null, 'salt to taste'],
+    ],
+    p: ['Brown the chicken in butter.', 'Add paprika and stock and simmer.', 'Stir in the sour cream.'],
+    k: [],
+  };
+
+  it('maps to a recipe with inferred flags, credit and licence', () => {
+    const r = mapWikibooksRecord(rec);
+    expect(r.id).toBe('wikibooks-chicken-paprikash');
+    expect(r.subtitle).toBe('Hungarian · Chicken');
+    expect(r.readyInMinutes).toBe(60);
+    expect(r.nutrition).toBeUndefined();
+    expect(r.tips).toBeUndefined();
+    expect(r.attribution?.license?.name).toBe('CC BY-SA 4.0');
+    expect(r.attribution?.originalUrl).toBe(rec.u);
+    const diets = recipeDiets(r);
+    expect(diets).not.toContain('vegetarian');
+    expect(diets).not.toContain('dairy-free');
+    expect(matchesGoal(r, 'weight-loss')).toBe(false);
+  });
+
+  it('bundled Wikibooks recipes have unique ids that do not clash with other recipes', () => {
+    const ids = [...SAMPLE_RECIPES, ...WIKIBOOKS_RECIPES].map((r) => r.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });

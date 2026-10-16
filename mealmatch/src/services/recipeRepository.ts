@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { config } from '@/config';
 import { SAMPLE_RECIPES } from '@/data/sampleRecipes';
+import { WIKIBOOKS_RECIPES } from '@/data/wikibooksRecipes';
 import type { Nutrition, Recipe } from '@/domain/types';
 
 import { SpoonacularSource } from './sources/spoonacular';
@@ -140,4 +141,7 @@ export function configuredSources(): RecipeSource[] {
   return sources;
 }
 
-export const recipeRepository: RecipeRepository = new LibraryRecipeRepository(SAMPLE_RECIPES, configuredSources());
+export const recipeRepository: RecipeRepository = new LibraryRecipeRepository(
+  [...SAMPLE_RECIPES, ...WIKIBOOKS_RECIPES],
+  configuredSources(),
+);

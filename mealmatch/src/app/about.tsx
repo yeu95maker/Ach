@@ -61,7 +61,9 @@ export default function About() {
         <Text style={s.p}>
           MealMatch originals are written for this app; their nutrition values are approximate. Additional recipes and
           photos come from TheMealDB (themealdb.com) and, when enabled, Spoonacular (spoonacular.com), and are credited on
-          each recipe page with a link to the original. Diet and allergen labels for those recipes are worked out from
+          each recipe page with a link to the original. Recipes marked "Wikibooks Cookbook" are by Wikibooks contributors
+          (en.wikibooks.org), shared under CC BY-SA 4.0; their ingredients and steps were extracted and reformatted, and
+          each links to the original page. Diet and allergen labels for those recipes are worked out from
           their ingredient lists; recipes without nutrition data are never shown under health-condition or nutrition
           filters.
         </Text>

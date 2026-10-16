@@ -30,7 +30,7 @@ const RULES: Rule[] = [
   {
     flag: 'meat',
     match: w(
-      'beef|steak|steaks|brisket|mince|minced|veal|lamb|mutton|goat|oxtail|venison|corned beef|doner|shredded meat|meat|kidneys?|chuck|sirloin|tenderloin|fillet of steak|suet|bone broth|beef stock|lamb stock|gravy|stock|stock cubes?|bouillon|frogs? legs|rabbit|cutlet|shank|shanks|mincemeat',
+      'beef|steak|steaks|brisket|mince|minced|veal|lamb|mutton|goat|oxtail|venison|corned beef|doner|shredded meat|meat|kidneys?|chuck|sirloin|tenderloin|fillet of steak|suet|bone broth|beef stock|lamb stock|gravy|stock|stock cubes?|seasoning cubes?|maggi|bouillon|frogs? legs|rabbit|cutlet|shank|shanks|mincemeat',
     ),
     unless: w(
       'kidney beans?|vegetable stock|veg stock|vegetable bouillon|vegan|vegetarian|plant[- ]based|veggie|chicken stock|chicken bouillon|fish stock|seafood stock|shrimp stock|mushroom stock|minced garlic|minced ginger|minced onion|pork tenderloin|beef tomatoes?|coconut meat|stock ?pot',
@@ -54,7 +54,7 @@ const RULES: Rule[] = [
   {
     flag: 'shellfish',
     match: w(
-      'prawns?|shrimps?|crabs?|crab meat|crab meay|lobsters?|mussels?|clams?|oysters?|oyster sauce|squid|calamari|scallops?|conchs?|langoustines?|crayfish|seafood|shrimp paste|cockles?|octopus',
+      'prawns?|shrimps?|crabs?|crab meat|crab meay|lobsters?|mussels?|clams?|oysters?|oyster sauce|squid|calamari|scallops?|conchs?|langoustines?|crayfish|seafood|shrimp paste|terasi|trassi|belacan|bagoong|cockles?|octopus',
     ),
     unless: w('oyster mushrooms?|vegan|vegetarian|plant[- ]based'),
   },
@@ -62,7 +62,7 @@ const RULES: Rule[] = [
   {
     flag: 'dairy',
     match: w(
-      'milk|butter|buttermilk|cream|creams|cheese|cheeses|yogh?urts?|cr[eè]me fra[iî]che|ghee|mascarpone|ricotta|paneer|quark|feta|parmesan|parmigiano(?:-reggiano)?|mozzarella|cheddar|gruy[eè]re|brie|stilton|gouda|pecorino|manchego|emmentaler?|bryndza|halloumi|camembert|fromage frais|curds?|custard|condensed milk|evaporated milk|malai|whey|dulce de leche|milk chocolate|white chocolate|ice cream|queso fresco|panquehue|v[äa]sterbottensost|kefir|labneh|skyr',
+      'milk|butter|buttermilk|cream|creams|cheese|cheeses|yogh?urts?|cr[eè]me fra[iî]che|ghee|mascarpone|ricotta|paneer|quark|feta|parmesan|parmigiano(?:-reggiano)?|mozzarella|cheddar|gruy[eè]re|brie|stilton|gouda|pecorino|manchego|emmentaler?|bryndza|halloumi|camembert|fromage frais|curds?|custard|condensed milk|evaporated milk|malai|whey|dulce de leche|milk chocolate|white chocolate|chocolate chips?|chocolate chunks|ice cream|pancake mix|cake mix|biscuit mix|bisquick|waffle mix|muffin mix|queso fresco|panquehue|v[äa]sterbottensost|kefir|labneh|skyr',
     ),
     unless: w(
       'coconut milk|coconut cream|almond milk|soya milk|soy milk|oat milk|rice milk|vegetable millk|vegetable milk|cashew milk|plant milk|peanut butter|almond butter|cashew butter|nut butter|vegan butter|vegan cheese|cocoa butter|butter beans?|butternut|butternut squash|cream of tartar|coconut yogh?urt|vegan|dairy[- ]free|plant[- ]based|cream crackers|bean curds?',
@@ -71,14 +71,14 @@ const RULES: Rule[] = [
   // ---- Eggs ----
   {
     flag: 'egg',
-    match: w('eggs?|egg yolks?|egg whites?|egg wash|mayonnaise|mayo|meringues?|meringue nests|a[iï]oli|egg noodles|egg roll wrappers|egg rolls'),
+    match: w('eggs?|egg yolks?|egg whites?|egg wash|mayonnaise|mayo|meringues?|meringue nests|a[iï]oli|egg noodles|egg roll wrappers|egg rolls|pancake mix|cake mix|waffle mix|muffin mix'),
     unless: w('eggplants?|egg plants|flax eggs?|vegan|egg[- ]free|chia eggs?'),
   },
   // ---- Gluten (wheat, barley, rye) ----
   {
     flag: 'gluten',
     match: w(
-      'flour|bread|breads|breadcrumbs|bun|buns|rolls|toast|baguette|ciabatta|pita|naan|tortillas?|wraps?|crackers?|biscuits?|cookies|digestive|graham|pretzels?|pastry|filo|phyllo|puff pastry|shortcrust|pasta|spaghetti|macaroni|linguine|fettuccine|lasagne|lasagna|penne|rigatoni|farfalle|paccheri|tagliatelle|vermicelli pasta|bowtie pasta|orzo|noodles|udon|ramen|couscous|bulgur|bulgar|semolina|freekeh|barley|rye|wheat|spelt|seitan|soy sauce|dark soy sauce|teriyaki|hoisin|beer|stout|ale|malt|malt vinegar|wonton|wrappers|dumpling wrappers|muffins|croutons|stuffing|self[- ]raising|mars bar|rice krispies|oreo|maria cookies|grape nut|christmas pudding|khus khus|sevaiiya|knafeh|seasoned flour',
+      'flour|bread|breads|breadcrumbs|bun|buns|rolls|toast|baguette|ciabatta|pita|naan|tortillas?|wraps?|crackers?|biscuits?|cookies|digestive|graham|pretzels?|pastry|filo|phyllo|puff pastry|shortcrust|pasta|spaghetti|macaroni|linguine|fettuccine|lasagne|lasagna|penne|rigatoni|farfalle|paccheri|tagliatelle|vermicelli pasta|bowtie pasta|orzo|noodles|udon|ramen|couscous|bulgur|bulgar|semolina|freekeh|barley|rye|wheat|spelt|seitan|soy sauce|dark soy sauce|teriyaki|hoisin|beer|stout|ale|malt|malt vinegar|wonton|wrappers|dumpling wrappers|muffins|croutons|stuffing|self[- ]raising|mars bar|rice krispies|oreo|maria cookies|grape nut|christmas pudding|khus khus|sevaiiya|knafeh|seasoned flour|pancake mix|cake mix|biscuit mix|bisquick|waffle mix|muffin mix',
     ),
     unless: w(
       'gluten[- ]free|rice flour|cassava flour|chickpea flour|gram flour|almond flour|coconut flour|potato flour|buckwheat flour|corn flour|cornflour|tapioca flour|sorghum flour|teff flour|rice noodles|rice stick noodles|rice vermicelli|vermicelli rice noodles|brown rice noodles?|flat rice noodles|glass noodles|soba noodles 100|corn tortillas?|rice paper|tamari|banana bread|sweet potato noodles|rice flour pancakes|bread fruit|breadfruit|ginger beer|root beer|cabbage rolls',

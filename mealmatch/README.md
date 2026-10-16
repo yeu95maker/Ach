@@ -39,8 +39,15 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 - **Search & filters**: text search across names, ingredients and cuisines; meal type, diet, condition, goal and
   "under 30 min" filters with a live result count.
 - **Profile**: preferences, goals, allergies, conditions, stats, About page, reset.
-- **~905 recipes**: 116 hand-written MealMatch originals with nutrition (incl. 30 German home-cooking recipes and 15 weight-loss bowls) plus TheMealDB's ~790 recipes with photos,
-  downloaded in the background and cached for offline use. Add a Spoonacular key for hundreds more with full nutrition.
+- **~2,000 recipes**:
+  - 695 hand-written MealMatch originals with nutrition (German, weight-loss bowls, quick dinners, breakfasts,
+    vegetarian/vegan, Asian, Mediterranean, African/Caribbean/Latin American, soups, snacks and desserts) –
+    `src/data/*Recipes.ts` and `src/data/extra/`.
+  - 516 recipes from the [Wikibooks Cookbook](https://en.wikibooks.org/wiki/Cookbook:Table_of_Contents)
+    (CC BY-SA 4.0, credited and linked on each recipe page), bundled in `src/data/wikibooks.json`. No nutrition data,
+    so they don't appear under nutrition-goal or health-condition filters.
+  - TheMealDB's ~790 recipes with photos, downloaded in the background and cached for offline use.
+  - Add a Spoonacular key for hundreds more with full nutrition.
 
 ## Recipe sources
 
