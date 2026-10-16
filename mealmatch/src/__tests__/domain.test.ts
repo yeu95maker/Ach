@@ -125,7 +125,8 @@ describe('search filters', () => {
     const q = (query: string) => filterRecipes(SAMPLE_RECIPES, EMPTY_PREFERENCES, { ...EMPTY_FILTERS, query });
     expect(q('salmon').map((r) => r.id)).toContain('lemon-herb-salmon-bowl');
     expect(q('quinoa').length).toBeGreaterThanOrEqual(2);
-    expect(q('mexican').map((r) => r.id)).toEqual(['black-bean-tacos']);
+    expect(q('mexican').map((r) => r.id)).toContain('black-bean-tacos');
+    expect(q('mexican').every((r) => r.cuisine === 'Mexican')).toBe(true);
     expect(q('zzz')).toEqual([]);
   });
 

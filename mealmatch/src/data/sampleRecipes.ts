@@ -1,4 +1,7 @@
-import type { Ingredient, IngredientFlag, Nutrition, Recipe } from '@/domain/types';
+import type { Recipe } from '@/domain/types';
+
+import { MORE_RECIPES } from './moreRecipes';
+import { i, n, type Draft } from './recipeBuilder';
 
 /**
  * Bundled sample database so the MVP works offline before a real recipe API is
@@ -7,27 +10,6 @@ import type { Ingredient, IngredientFlag, Nutrition, Recipe } from '@/domain/typ
  * they are derived from ingredient flags and nutrition (see domain/classify.ts).
  */
 
-const i = (amount: string, name: string, flags: IngredientFlag[] = [], note?: string): Ingredient => ({
-  amount,
-  name,
-  flags,
-  note,
-});
-
-const n = (
-  calories: number,
-  proteinG: number,
-  carbsG: number,
-  fatG: number,
-  saturatedFatG: number,
-  fiberG: number,
-  sugarG: number,
-  sodiumMg: number,
-  potassiumMg: number,
-  phosphorusMg: number,
-): Nutrition => ({ calories, proteinG, carbsG, fatG, saturatedFatG, fiberG, sugarG, sodiumMg, potassiumMg, phosphorusMg });
-
-type Draft = Omit<Recipe, 'source'>;
 
 const drafts: Draft[] = [
   {
@@ -1038,4 +1020,4 @@ const drafts: Draft[] = [
   },
 ];
 
-export const SAMPLE_RECIPES: Recipe[] = drafts.map((d) => ({ ...d, source: 'sample' as const }));
+export const SAMPLE_RECIPES: Recipe[] = [...drafts, ...MORE_RECIPES].map((d) => ({ ...d, source: 'sample' as const }));

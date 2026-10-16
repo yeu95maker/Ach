@@ -83,7 +83,8 @@ const GOAL_RULES: Record<GoalId, (r: Recipe) => boolean> = {
     const t = totalMinutes(r);
     return t != null && t <= 20;
   },
-  'low-carb': withNutrition((n) => n.carbsG <= 25),
+  // Both conditions, so small sweet snacks (few grams, but mostly sugar) don't count as low-carb.
+  'low-carb': withNutrition((n) => n.carbsG <= 25 && (n.carbsG * 4) / n.calories <= 0.3),
   'high-fiber': withNutrition((n) => n.fiberG >= 8),
 };
 

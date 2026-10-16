@@ -13,7 +13,7 @@ export const GOALS: OptionMeta<GoalId>[] = [
   { id: 'weight-loss', label: 'Weight Loss (healthy)', icon: 'scale-outline', hint: '≤ 500 kcal, protein & fibre rich' },
   { id: 'high-protein', label: 'High Protein', icon: 'barbell-outline', hint: '≥ 25 g protein' },
   { id: 'quick', label: 'Quick & Easy', icon: 'time-outline', hint: '20 min or less' },
-  { id: 'low-carb', label: 'Low Carb', icon: 'nutrition-outline', hint: '≤ 25 g carbs' },
+  { id: 'low-carb', label: 'Low Carb', icon: 'nutrition-outline', hint: '≤ 25 g carbs, under 30% of calories' },
   { id: 'high-fiber', label: 'High Fibre', icon: 'flower-outline', hint: '≥ 8 g fibre' },
 ];
 

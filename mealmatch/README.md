@@ -39,7 +39,7 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 - **Search & filters**: text search across names, ingredients and cuisines; meal type, diet, condition, goal and
   "under 30 min" filters with a live result count.
 - **Profile**: preferences, goals, allergies, conditions, stats, About page, reset.
-- **820+ recipes**: 31 hand-written MealMatch originals (with nutrition) plus TheMealDB's ~790 recipes with photos,
+- **860 recipes**: 71 hand-written MealMatch originals (with nutrition) plus TheMealDB's ~790 recipes with photos,
   downloaded in the background and cached for offline use. Add a Spoonacular key for hundreds more with full nutrition.
 
 ## Recipe sources
