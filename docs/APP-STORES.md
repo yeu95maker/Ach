@@ -8,7 +8,7 @@ Stand: 10.10.2026. Dieses Dokument beschreibt die nativen Apps (iOS, Android), d
 | --- | --- |
 | Native Projekte `ios/` und `android/` (Capacitor 8) | **fertig**, werden im Workflow „Mobile apps“ gebaut (Android: APK + AAB, iOS: Simulator-Build ohne Signatur) |
 | Anmeldung in der App: Sitzung im iOS-Schlüsselbund / Android-Keystore, nur auf diesem Gerät, kein Cloud-Backup | **fertig**, Unit-getestet ist nur die Web-Seite; auf echten Geräten **nicht getestet** |
-| Rücksprung aus E-Mail-Links und Microsoft/Google-Login (`pulshift://auth-callback`) | **fertig**, Parser unit-getestet; der ganze Ablauf auf Geräten **nicht getestet** |
+| Rücksprung aus E-Mail-Links und Microsoft/Google-Login (`dienstwerk://auth-callback`) | **fertig**, Parser unit-getestet; der ganze Ablauf auf Geräten **nicht getestet** |
 | Android-Zurück-Taste (schließt erst Dialoge), Statusleiste passend zum Design, Startbildschirm | **fertig**, auf Geräten **nicht getestet** |
 | Push: Registrierung in der App, Versand über APNs (iOS) und FCM (Android) in `push-dispatch` | **fertig und unit-getestet** (Signaturen werden echt geprüft, Server-Antworten simuliert). **Nicht** gegen echte Apple-/Google-Server getestet, weil dafür deine Zugangsdaten fehlen. In den Builds ausgeschaltet, bis du sie einrichtest (Abschnitt 6) |
 | App-Icons, Startbildschirme, Google-Play-Icon | **fertig** (`resources/icon.svg`, Skript `scripts/native/make-icons.mjs`) |
@@ -19,12 +19,12 @@ Stand: 10.10.2026. Dieses Dokument beschreibt die nativen Apps (iOS, Android), d
 
 ## 2. Vor dem ersten Upload – bitte zuerst klären
 
-1. **Name „Pulshift“** (Entscheidung vom 11.10.2026; vorher „ShiftCare“, das wegen „ShiftCare“/„ShiftCare Pro“ im selben Markt verworfen wurde). Gefunden wurde kein Produkt „Pulshift“; ähnlich klingt die Schicht-App „ShiftPulse“. Vor der Einreichung bitte noch selbst prüfen: Store-Suche und Markenregister (DPMA, EUIPO). Der Name steht an diesen Stellen: `capacitor.config.ts` (`appName`), `store/*/metadata/*/name.txt` bzw. `title.txt`, `ios/App/App/Info.plist` (`CFBundleDisplayName`), `android/app/src/main/res/values/strings.xml`, `public/manifest.webmanifest`, `src/app/layout/Logo.tsx`.
-2. **App-ID** `app.pulshift` (iOS und Android). Sie ist nach dem ersten Upload **nicht mehr änderbar** und passt zur Domain `pulshift.app` – am besten registrieren. Falls du eine andere willst:
+1. **Name „Dienstwerk“** (Entscheidung vom 16.10.2026). Davor hieß die App „ShiftCare“; der Name wurde wegen „ShiftCare“ und „ShiftCare Pro“ im selben Markt verworfen. Danach hieß sie „Pulshift“; auch dieser Name wurde verworfen, weil es im App Store schon eine Klinik-Schicht-App „Pulshift“ mit ähnlichem Logo gibt. Das neue Icon („D“ mit Haken) unterscheidet sich bewusst davon. Vor der Einreichung bitte noch selbst prüfen: Store-Suche und Markenregister (DPMA, EUIPO). Der Name steht an diesen Stellen: `capacitor.config.ts` (`appName`), `store/*/metadata/*/name.txt` bzw. `title.txt`, `ios/App/App/Info.plist` (`CFBundleDisplayName`), `android/app/src/main/res/values/strings.xml`, `public/manifest.webmanifest`, `src/app/layout/Logo.tsx`.
+2. **App-ID** `app.dienstwerk` (iOS und Android). Sie ist nach dem ersten Upload **nicht mehr änderbar** und passt zur Domain `dienstwerk.app` – am besten registrieren. Falls du eine andere willst:
    - `capacitor.config.ts` → `appId`
    - `ios/App/App.xcodeproj/project.pbxproj` → `PRODUCT_BUNDLE_IDENTIFIER` (2×)
    - `android/app/build.gradle` → `namespace` und `applicationId`, `android/app/src/main/res/values/strings.xml` → `package_name`
-   - `android/app/src/main/java/app/pulshift/MainActivity.java` in den passenden Ordner verschieben und `package` anpassen
+   - `android/app/src/main/java/app/dienstwerk/MainActivity.java` in den passenden Ordner verschieben und `package` anpassen
    - danach `npx cap sync`
 3. **Betreiberangaben.** Alles in `[eckigen Klammern]` ausfüllen: `public/privacy/index.html`, `public/support/index.html`, `store/ios/metadata/copyright.txt`, `store/ios/metadata/review_information/*`. Danach den gelben „Entwurf“-Hinweis aus beiden Seiten entfernen und prüfen:
    ```sh
@@ -32,7 +32,7 @@ Stand: 10.10.2026. Dieses Dokument beschreibt die nativen Apps (iOS, Android), d
    ```
    Die Datenschutzerklärung bitte rechtlich prüfen lassen (Auftragsverarbeitung, Rolle der Einrichtungen, Aufbewahrungsfristen).
 4. **Backend.** Die Builds zeigen standardmäßig auf das Demo-Projekt. Für echte Kunden ein eigenes Supabase-Projekt (Region EU) verwenden: Variablen `APP_SUPABASE_URL` / `APP_SUPABASE_ANON_KEY` im Workflow bzw. beim lokalen Build setzen. Für die **App-Prüfung** muss das Demo-Projekt mit den Demo-Konten erreichbar bleiben.
-5. **Supabase → Authentication → URL Configuration → Redirect URLs** ergänzen: `capacitor://localhost`, `https://localhost`, `pulshift://auth-callback`, `pulshift://auth-callback/**`. Sonst funktionieren Passwort-Reset und Microsoft/Google-Login in der App nicht.
+5. **Supabase → Authentication → URL Configuration → Redirect URLs** ergänzen: `capacitor://localhost`, `https://localhost`, `dienstwerk://auth-callback`, `dienstwerk://auth-callback/**`. Sonst funktionieren Passwort-Reset und Microsoft/Google-Login in der App nicht.
 6. **Links zu Datenschutz und Support.** Die App öffnet `VITE_LEGAL_BASE_URL` + `privacy/` bzw. `support/` (Standard: die GitHub-Pages-Demo). Für den Betrieb auf deine Domain umstellen und die URLs in `store/ios/metadata/*/privacy_url.txt` und `support_url.txt` anpassen.
 
 ## 3. Konten
@@ -67,7 +67,7 @@ Versionsnummern pro Release erhöhen: iOS in Xcode (*Version* = `MARKETING_VERSI
 ### Android
 1. Upload-Schlüssel einmalig erzeugen und **sicher aufbewahren** (nicht ins Repository):
    ```sh
-   keytool -genkeypair -v -keystore pulshift-upload.jks -alias upload -keyalg RSA -keysize 4096 -validity 10000
+   keytool -genkeypair -v -keystore dienstwerk-upload.jks -alias upload -keyalg RSA -keysize 4096 -validity 10000
    ```
 2. In `android/app/build.gradle` eine `signingConfigs.release` mit diesem Schlüssel ergänzen (Passwörter aus Umgebungsvariablen lesen) oder das AAB in Android Studio über *Build → Generate Signed Bundle* signieren.
 3. `cd android && ./gradlew bundleRelease` → `app/build/outputs/bundle/release/app-release.aab`.
@@ -85,7 +85,7 @@ Versionsnummern pro Release erhöhen: iOS in Xcode (*Version* = `MARKETING_VERSI
 - **Kontolöschung (5.1.1(v)):** in der App unter Profil → Konto löschen; die Verwaltung schließt den Antrag ab (sperrt sofort), der Betreiber löscht innerhalb von 30 Tagen
 - **App-Datenschutz („Nutrition Label“).** Tracking: **Nein**. Alle Daten: *mit der Identität verknüpft*, Zweck *App-Funktionalität*, nicht für Werbung:
 
-| Datentyp (Apple) | Was in Pulshift |
+| Datentyp (Apple) | Was in Dienstwerk |
 | --- | --- |
 | Kontaktinformationen → Name, E-Mail-Adresse, Telefonnummer | Konto, Profil (Telefon freiwillig) |
 | Gesundheit & Fitness → Gesundheit | optionaler Kommentar zur Krankmeldung |
@@ -158,7 +158,7 @@ Diese Punkte konnten hier nicht geprüft werden, weil es keine Geräte, keinen M
 
 ## 9. Prüfungsrisiken und wie die App damit umgeht
 
-- **Apple 4.2 (Mindestfunktionalität, „nur eine Website“):** Pulshift ist eine vollständige Arbeits-App mit Anmeldung, nativen Push-Benachrichtigungen, sicherer Sitzung im Schlüsselbund und Deep Links. Ein Restrisiko bleibt bei Web-Hüllen immer. Gegenmittel, falls Apple ablehnt: Biometrie-Entsperrung (B2) und Offline-Dienstplan (B9) nachrüsten.
+- **Apple 4.2 (Mindestfunktionalität, „nur eine Website“):** Dienstwerk ist eine vollständige Arbeits-App mit Anmeldung, nativen Push-Benachrichtigungen, sicherer Sitzung im Schlüsselbund und Deep Links. Ein Restrisiko bleibt bei Web-Hüllen immer. Gegenmittel, falls Apple ablehnt: Biometrie-Entsperrung (B2) und Offline-Dienstplan (B9) nachrüsten.
 - **Apple 5.1.1(v) (Konto löschen):** Konten entstehen nur durch Einladung des Arbeitgebers, nicht in der App. Löschung beantragen: Profil → Hilfe & Kontakt → „Konto löschen“, die Einrichtung kann sofort deaktivieren. Falls Apple eine Löschung direkt in der App verlangt, ist das als eigener Punkt nachzurüsten (OPEN_POINTS B17).
 - **Apple 4.8 (Anmeldedienste):** Google/Microsoft-Anmeldung funktioniert nur für Konten, die der Arbeitgeber angelegt hat (Ausnahme für Unternehmenskonten). Im Prüf-Build sind die Knöpfe ausgeblendet (`VITE_OAUTH_PROVIDERS=""`).
 - **Alternative bei B2B-Kunden:** Apple *Custom Apps* (Verteilung über Apple Business Manager nur an bestimmte Organisationen) und Google *Managed Google Play* (private App). Beides vermeidet die öffentliche Listung, die Prüfung bleibt.

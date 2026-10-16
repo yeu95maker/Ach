@@ -18,6 +18,7 @@ begin
   select se.* into e
   from public.schedule_entries se
   join public.schedules s on s.id = se.schedule_id and s.status = 'published' and s.unit_id = '30000000-0000-4000-a000-000000000001'
+  join public.shift_types st on st.id = se.shift_type_id and st.code = 'F'
   where se.employee_id = '40000000-0000-4000-a000-000000000001' and se.kind = 'shift'
     and se.entry_date between current_date + 10 and current_date + 20
   order by se.entry_date limit 1;

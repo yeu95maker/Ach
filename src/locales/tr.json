@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Vardiyan. Ekibin. Tek bakışta.",
-    "brandSubtitle": "Pulshift, nöbet planını, hastalık bildirimini ve izni servis hayatının gerektirdiği kadar kolaylaştırır.",
+    "brandSubtitle": "Dienstwerk, nöbet planını, hastalık bildirimini ve izni servis hayatının gerektirdiği kadar kolaylaştırır.",
     "brandPoint1": "Her zaman güncel nöbet planı – her yerde",
     "brandPoint2": "Bugün seninle kimin görevde olduğunu gör",
     "brandPoint3": "Güvenli ve KVKK/GDPR uyumlu barındırma",
@@ -874,7 +874,7 @@
     "dropTitle": "Dosyayı buraya sürükle veya seç",
     "dropHint": "Vardiya programından CSV veya Excel (XLSX) – liste (vardiya başına bir satır) veya tablo (kişi başına bir satır, gün başına bir sütun) olarak.",
     "chooseFile": "Dosya seç",
-    "privacyHint": "Dosya yalnızca cihazında okunur. Pulshift'e yalnızca tanınan vardiyalar gider; adlar ve orijinal satırlar yayından sonra silinir.",
+    "privacyHint": "Dosya yalnızca cihazında okunur. Dienstwerk'e yalnızca tanınan vardiyalar gider; adlar ve orijinal satırlar yayından sonra silinir.",
     "errors": {
       "format": "Bu biçim desteklenmiyor. Lütfen CSV veya XLSX olarak dışa aktar.",
       "size": "Dosya 15 MB'tan büyük.",
@@ -941,7 +941,7 @@
       "duplicate": "Bu dosya bu servis ve ay için zaten içe aktarıldı. Önizleme bir değişiklik olup olmadığını gösterir.",
       "employees_one": "{{count}} kişiyi eşleştir",
       "employees_other": "{{count}} kişiyi eşleştir",
-      "employeesHint": "Pulshift dosyadaki bu ID'leri henüz tanımıyor. Eşleştirme kaydedilir ve bir sonraki içe aktarmada otomatik kullanılır.",
+      "employeesHint": "Dienstwerk dosyadaki bu ID'leri henüz tanımıyor. Eşleştirme kaydedilir ve bir sonraki içe aktarmada otomatik kullanılır.",
       "idInFile": "Dosyadaki ID: {{id}}",
       "rows_one": "{{count}} vardiya",
       "rows_other": "{{count}} vardiya",
@@ -983,8 +983,8 @@
         "changed": "Değişti",
         "removed": "Kalktı"
       },
-      "manual_one": "Pulshift'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
-      "manual_other": "Pulshift'de elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manual_one": "Dienstwerk'te elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
+      "manual_other": "Dienstwerk'te elle oluşturulan veya değiştirilen {{count}} kayıt dosya ile değiştirilir.",
       "manualBadge": "elle değiştirildi",
       "notifyHint": "İlgili çalışanlar tek bir özet bildirim alır.",
       "more": "… ve {{count}} değişiklik daha",
@@ -1023,11 +1023,11 @@
     },
     "kind": {
       "file": "Dosya içe aktarma (CSV/XLSX)",
-      "api": "Pulshift arayüzü (otomatik)",
+      "api": "Dienstwerk arayüzü (otomatik)",
       "sftp": "Otomatik dosya alma (hazırlanıyor)"
     },
     "admin": {
-      "intro": "Servislerin planı mevcut vardiya programından nasıl alacağını burada belirlersin: dosya (CSV/XLSX) ile veya Pulshift arayüzü üzerinden otomatik. Arayüzde vardiya programınız, BT ekibiniz ya da bir dışa aktarma görevi yayınlanan planı Pulshift'e gönderir; servis sorumlusu değişiklikleri tek dokunuşla onaylar. Tek tek sağlayıcılara (ör. ATOSS, SP-Expert) hazır doğrudan bağlantılar henüz yok.",
+      "intro": "Servislerin planı mevcut vardiya programından nasıl alacağını burada belirlersin: dosya (CSV/XLSX) ile veya Dienstwerk arayüzü üzerinden otomatik. Arayüzde vardiya programınız, BT ekibiniz ya da bir dışa aktarma görevi yayınlanan planı Dienstwerk'e gönderir; servis sorumlusu değişiklikleri tek dokunuşla onaylar. Tek tek sağlayıcılara (ör. ATOSS, SP-Expert) hazır doğrudan bağlantılar henüz yok.",
       "add": "İçe aktarma profili ekle",
       "edit": "İçe aktarma profilini düzenle",
       "empty": "Henüz içe aktarma profili yok",
@@ -1045,7 +1045,7 @@
       "noMappings": "Henüz yok – personel numaraları doğrudan tanınır.",
       "noCodeMappings": "Henüz yok – F, S, N gibi kodlar doğrudan tanınır.",
       "removeMapping": "Eşleştirmeyi kaldır",
-      "kindApiHint": "Vardiya programınız veya BT ekibiniz yayınlanan planı otomatik olarak Pulshift'e gönderir. Kaydettikten sonra burada bir anahtar oluştur."
+      "kindApiHint": "Vardiya programınız veya BT ekibiniz yayınlanan planı otomatik olarak Dienstwerk'e gönderir. Kaydettikten sonra burada bir anahtar oluştur."
     },
     "api": {
       "intro": "Kurumunuzun sistemi yayınlanan planı bu adrese gönderir. Her yeni sürüm onay için servis sorumlusuna gösterilir; değişmeyen gönderimler yok sayılır.",
@@ -1059,7 +1059,7 @@
       "createdTitle": "Anahtar oluşturuldu",
       "onlyOnce": "Anahtarı şimdi kopyala ve BT ekibinize güvenli şekilde ilet. Yalnızca bu kez gösterilir.",
       "key": "API anahtarı",
-      "howTo": "Gönderim: adrese POST, „Authorization: Bearer <anahtar>“ başlığı, „Pulshift Roster Exchange v1“ biçiminde içerik (bkz. docs/SCHNITTSTELLE.md).",
+      "howTo": "Gönderim: adrese POST, „Authorization: Bearer <anahtar>“ başlığı, „Dienstwerk Roster Exchange v1“ biçiminde içerik (bkz. docs/SCHNITTSTELLE.md).",
       "copy": "Kopyala",
       "copied": "Kopyalandı",
       "lastUsed": "son kullanım {{when}}",

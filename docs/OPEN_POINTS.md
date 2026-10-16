@@ -42,7 +42,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | --- | --- | --- |
 | I1 | Ist die importierte Datei immer der **vollständige** Plan der Station für den Monat? | Ja: Was nicht in der Datei steht, entfällt beim Übernehmen. Die Vorschau zeigt das vorher und warnt, wenn mehr als die Hälfte wegfiele. Alternative: nur Personen ersetzen, die in der Datei vorkommen. |
 | I2 | Welche **Dienstplanprogramme** nutzen die ersten Einrichtungen, und welche Exportformate liefern sie? | Unbekannt. Unterstützt werden CSV und XLSX in Listen- oder Rasterform. Für direkte Schnittstellen braucht es pro Anbieter die Klärung aus INTEGRATION-HUB.md (API, Erlaubnis, Authentifizierung). |
-| I3 | ~~Dürfen automatische Synchronisierungen **ohne Freigabe** veröffentlichen?~~ | **Entschieden 11.10.2026: Nein.** Jede neue Version aus der Pulshift-Schnittstelle bestätigt die Leitung (SCHNITTSTELLE.md). |
+| I3 | ~~Dürfen automatische Synchronisierungen **ohne Freigabe** veröffentlichen?~~ | **Entschieden 11.10.2026: Nein.** Jede neue Version aus der Dienstwerk-Schnittstelle bestätigt die Leitung (SCHNITTSTELLE.md). |
 | I4 | Sind **Personalnummern** in allen Häusern eindeutig und dürfen sie als Schlüssel genutzt werden? | Ja, sonst über bestätigte Zuordnung pro Profil. |
 | I5 | Wie lange dürfen **Rohdaten** eines Imports aufbewahrt werden? | Bis zur Veröffentlichung, höchstens 30 Tage. Dateien werden gar nicht gespeichert, nur Name und Prüfsumme. |
 | I6 | Soll ein Import auch **mehrere Stationen** auf einmal enthalten dürfen (Hausexport)? | Nein, ein Import pro Station und Monat. |
@@ -64,7 +64,7 @@ Die Vorgabe lautete: keine stillen Annahmen. Wo eine Entscheidung nötig war, um
 | B11 | Rechtstexte (Impressum, Datenschutzerklärung, AV-Vertrag), Hosting-Region EU (Frankfurt) | Organisatorisch |
 | B12 | ~~Mitteilungen erstellen (UI)~~ | **Umgesetzt** als „Aktuelles“ mit Kategorien, Terminen und Push |
 | B13 | Oberfläche für die Wunschplan-**Hauskonfiguration** (`wish_plan_settings`: Limits, Standardfrist, Erinnerung) | Tabelle und RLS fertig. Frist und „Änderungen erlaubt“ sind pro Zeitraum in der UI einstellbar. |
-| B15 | Direktanbindungen an einzelne Hersteller (ATOSS, SP-Expert, PEP …), automatischer Dateiabruf (SFTP) | Herstellerunabhängige **Pulshift-Schnittstelle ist umgesetzt** (SCHNITTSTELLE.md). **Kein Hersteller ist direkt angebunden.** Pro Hersteller: Schnittstellenbeschreibung + Testzugang (über ein Pilothaus), Adapter, Tests |
+| B15 | Direktanbindungen an einzelne Hersteller (ATOSS, SP-Expert, PEP …), automatischer Dateiabruf (SFTP) | Herstellerunabhängige **Dienstwerk-Schnittstelle ist umgesetzt** (SCHNITTSTELLE.md). **Kein Hersteller ist direkt angebunden.** Pro Hersteller: Schnittstellenbeschreibung + Testzugang (über ein Pilothaus), Adapter, Tests |
 | B16 | Import für alte Excel-Dateien (`.xls`) und ODS | Nicht unterstützt. Export als XLSX/CSV nötig |
 | B17 | Konto-Löschung direkt in der App (Antrag an die Verwaltung + Löschung von Login und Profil) | Heute: Antrag über Support-Seite, Deaktivierung durch die Verwaltung. Nachrüsten, falls Apple es bei der Prüfung verlangt (APP-STORES.md §9) |
 | B14 | Planungsassistent (KI) | Datenbasis (`get_scheduling_context`), Besetzungsvorgaben und Vorschlagstabelle sind vorbereitet, der Assistent selbst nicht |

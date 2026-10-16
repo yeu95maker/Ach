@@ -1,4 +1,4 @@
-# Pulshift – Supabase project configuration (local development via `supabase start`).
+# Dienstwerk – Supabase project configuration (local development via `supabase start`).
 # Production values are set in the Supabase dashboard; keep both in sync.
 project_id = "shiftcare"
 
@@ -28,7 +28,7 @@ file_size_limit = "20MiB"
 [auth]
 enabled = true
 site_url = "http://localhost:5173"
-additional_redirect_urls = ["http://localhost:5173/", "http://localhost:5173/reset-password", "capacitor://localhost", "https://localhost", "pulshift://auth-callback", "pulshift://auth-callback/**"]
+additional_redirect_urls = ["http://localhost:5173/", "http://localhost:5173/reset-password", "capacitor://localhost", "https://localhost", "dienstwerk://auth-callback", "dienstwerk://auth-callback/**"]
 # Short-lived access tokens, rotating refresh tokens (session management).
 jwt_expiry = 3600
 enable_refresh_token_rotation = true

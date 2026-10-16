@@ -1,6 +1,6 @@
 # Einreichung bei Apple und Google – Checkliste
 
-Stand: 11.10.2026. Alles, was sich im Code und im Repository vorbereiten lässt, ist fertig. Offen sind nur Schritte, die der Betreiber selbst erledigen muss: Konten, Rechtliches und Firmendaten.
+Stand: 16.10.2026 (Umbenennung in Dienstwerk). Alles, was sich im Code und im Repository vorbereiten lässt, ist fertig. Offen sind nur Schritte, die der Betreiber selbst erledigen muss: Konten, Rechtliches und Firmendaten.
 
 ## Fertig (im Repository)
 
@@ -11,11 +11,11 @@ Stand: 11.10.2026. Alles, was sich im Code und im Repository vorbereiten lässt,
 | Store-Texte in 5 Sprachen | Name, Untertitel, Beschreibung, Stichwörter, Werbetext, Kurzbeschreibung, Versionshinweise | `store/ios/metadata`, `store/android/metadata` |
 | Screenshots | iPhone 6,9″, iPad 13″, Android Smartphone + Tablet, je 8, in 5 Sprachen; Feature-Grafik | `store/*/screenshots*` |
 | Prüfhinweise für Apple mit Demo-Konten | Leitung + 2 Pflegekräfte, Passwort `ShiftCare!2026` | `store/ios/metadata/review_information/notes.txt` |
-| Datenschutzerklärung + Support-Seite (DE/EN) | inhaltlich vollständig, **Betreiberangaben fehlen** | `public/privacy/`, `public/support/` |
+| Datenschutzerklärung + Support-Seite (DE/EN) | vollständig, mit Betreiberangaben und Impressum | `public/privacy/`, `public/support/` |
 | Kontolöschung in der App (Apple 5.1.1(v), Google) | Profil → Konto löschen; Verwaltung schließt ab | Migration `20261017000200_account_deletion.sql` |
 | Angaben „App-Datenschutz“ (Apple) und „Datensicherheit“ (Google) | Tabellen zum Übertragen | `docs/APP-STORES.md` §5 |
 | Verschlüsselungs-Exportfrage | entfällt (`ITSAppUsesNonExemptEncryption = false`) | `ios/App/App/Info.plist` |
-| Prüfskript | `node scripts/store/check-listings.mjs --strict` (schlägt nur noch wegen der Betreiber-Platzhalter fehl) | |
+| Prüfskript | `node scripts/store/check-listings.mjs --strict` (grün) | |
 
 ## Offen – nur du kannst das
 
@@ -25,7 +25,7 @@ Am 11.10.2026 eingetragen: Betreiber Yeukai A Kamalo (Dossenheim), Kontakt-E-Mai
 Noch selbst zu erledigen:
 - **Telefonnummer für Apples Prüfung** direkt in App Store Connect eintragen (*App-Prüfung → Kontaktinformationen*). Sie steht bewusst nicht im öffentlichen Repository.
 - **Datenschutzerklärung rechtlich prüfen lassen.** Besonders: ob ein Datenschutzbeauftragter benannt werden muss, die Rolle als Auftragsverarbeiter und der AVV mit den Kliniken. Die App verarbeitet Krankmeldungen (Art. 9 DSGVO).
-- Später besser eine eigene geschäftliche E-Mail-Adresse und Domain verwenden (z. B. support@pulshift.app).
+- Später besser eine eigene geschäftliche E-Mail-Adresse und Domain verwenden (z. B. support@dienstwerk.app).
 
 ### 2. Entwicklerkonten
 - **Apple Developer Program**, 99 USD pro Jahr. Für eine Business-App am besten **als Organisation** (dafür braucht es eine D-U-N-S-Nummer, kostenlos über Apple).
@@ -37,18 +37,18 @@ Die Store-Builds zeigen im Moment auf das **Demo-Projekt**. Für die Einreichung
 - **a) Erst einmal mit der Demo einreichen.** Das ist schnell und sicher: Die Prüfer nutzen die Demo-Konten. Für echte Kunden folgt dann ein Update mit dem Produktions-Backend.
 - **b) Gleich mit eigenem Produktions-Projekt (empfohlen, wenn Kunden schon warten).** Du legst ein neues Supabase-Projekt in der Region EU an. Ich spiele alle Migrationen ein und lege dort eine getrennte Demo-Einrichtung mit den Demo-Konten für die Prüfer an; sie ist per RLS von echten Kunden getrennt. Danach setzt du bei GitHub unter *Settings → Variables* `APP_SUPABASE_URL` und `APP_SUPABASE_ANON_KEY`.
 
-✅ Erledigt am 11.10.2026 (Demo-Projekt): In Supabase unter **Authentication → URL Configuration → Redirect URLs** sind `pulshift://auth-callback`, `pulshift://auth-callback/**`, `capacitor://localhost` und `https://localhost` eingetragen. Bei einem eigenen Produktions-Projekt (Weg b) müssen dieselben vier Einträge dort ebenfalls gesetzt werden.
+⚠️ **Nach der Umbenennung neu eintragen** (Demo-Projekt): In Supabase unter **Authentication → URL Configuration → Redirect URLs** werden `dienstwerk://auth-callback` und `dienstwerk://auth-callback/**` gebraucht. `capacitor://localhost` und `https://localhost` bleiben. Die alten `pulshift://…`-Einträge können weg. Bei einem eigenen Produktions-Projekt (Weg b) müssen dieselben vier Einträge dort ebenfalls gesetzt werden.
 
 ### 4. Push-Benachrichtigungen (optional für die erste Version)
 Ohne Einrichtung zeigt die App unter Profil „Noch nicht eingerichtet“. Alles andere funktioniert trotzdem. Zum Einschalten: APNs-Schlüssel und Firebase-Projekt anlegen (`docs/APP-STORES.md` §6), dann die GitHub-Variable `APP_NATIVE_PUSH=true` setzen.
 
 ### 5. Name und Domain
-Store-Suche und Markenregister (DPMA, EUIPO) auf „Pulshift“ prüfen. Die Domain `pulshift.app` sichern. Die App-ID `app.pulshift` lässt sich nach dem ersten Upload nicht mehr ändern.
+Am 16.10.2026 von „Pulshift“ in **Dienstwerk** umbenannt, weil es eine gleichnamige App gibt. Store-Suche und Markenregister (DPMA, EUIPO) auf „Dienstwerk“ prüfen. Die Domain `dienstwerk.app` sichern. Die App-ID `app.dienstwerk` lässt sich nach dem ersten Upload nicht mehr ändern.
 
 ## Einreichen – Schritt für Schritt
 
 ### Apple (App Store Connect)
-1. App-ID `app.pulshift` mit Push Notifications registrieren, App in App Store Connect anlegen. Primärsprache: Deutsch. Details in `docs/RELEASE-OHNE-MAC.md` §2.
+1. App-ID `app.dienstwerk` mit Push Notifications registrieren, App in App Store Connect anlegen. Primärsprache: Deutsch. Details in `docs/RELEASE-OHNE-MAC.md` §2.
 2. API-Schlüssel als 4 GitHub-Secrets hinterlegen (§3), dann **Actions → Store release → ios** starten. Der Build landet in TestFlight.
 3. Auf dem iPad über TestFlight testen. Die Checkliste dafür steht in `docs/APP-STORES.md` §8.
 4. Für jede Sprache aus `store/ios/metadata/<sprache>/` übernehmen: Name, Untertitel, Werbetext, Beschreibung, Stichwörter, Support-URL, Datenschutz-URL. Screenshots aus `store/ios/screenshots` und `store/ios/screenshots-ipad` hochladen.

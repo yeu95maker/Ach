@@ -60,10 +60,10 @@ Auf Mobilgeräten wird `setAuthStorage()` vor dem ersten Supabase-Aufruf mit ein
 5. **iOS/Android:** `@capacitor/push-notifications` registriert APNs- bzw. FCM-Tokens mit `platform = 'ios' | 'android'` über dasselbe RPC (`src/native/push.ts`). `push-dispatch` versendet über APNs (Token-Auth, ES256) und FCM HTTP v1 (`supabase/functions/_shared/nativePush.ts`). Einrichtung: [APP-STORES.md](APP-STORES.md#6-push-benachrichtigungen-einrichten).
 
 ## Mobile (iOS & Android)
-Die App ist eine responsive SPA ohne Server-Rendering und wird unverändert mit **Capacitor** verpackt (`ios/`, `android/`, `capacitor.config.ts`, Build: `npm run build:native`). Native Ergänzungen liegen in `src/native/` und sind im Browser wirkungslos: Sitzung im Keychain/Keystore, Deep Links `pulshift://auth-callback`, Android-Zurück-Taste, Statusleiste, Push. Außerdem:
+Die App ist eine responsive SPA ohne Server-Rendering und wird unverändert mit **Capacitor** verpackt (`ios/`, `android/`, `capacitor.config.ts`, Build: `npm run build:native`). Native Ergänzungen liegen in `src/native/` und sind im Browser wirkungslos: Sitzung im Keychain/Keystore, Deep Links `dienstwerk://auth-callback`, Android-Zurück-Taste, Statusleiste, Push. Außerdem:
 - Safe-Area-Insets (Notch, Home-Indicator) in Shell und Sheets
 - große Touch-Ziele (≥ 44 pt), Bottom-Tab-Bar, Bottom-Sheets
-- OAuth-Redirect-URLs für `capacitor://localhost` und `pulshift://auth-callback` in `supabase/config.toml`
+- OAuth-Redirect-URLs für `capacitor://localhost` und `dienstwerk://auth-callback` in `supabase/config.toml`
 - austauschbarer Session-Speicher (Biometrie) und plattformneutrale Device-Tokens
 
 ## Edge Functions

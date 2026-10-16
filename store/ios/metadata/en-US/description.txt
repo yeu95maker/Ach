@@ -1,6 +1,6 @@
-Pulshift is the rostering app for hospitals, rehab clinics and care homes. Nurses see their roster, swap shifts, enter wishes and request leave. Ward leads plan, approve and see at a glance how the ward is staffed.
+Dienstwerk is the rostering app for hospitals, rehab clinics and care homes. Nurses see their roster, swap shifts, enter wishes and request leave. Ward leads plan, approve and see at a glance how the ward is staffed.
 
-Please note: Pulshift requires an account from your employer. Your organisation invites you; there is no public sign-up.
+Please note: Dienstwerk requires an account from your employer. Your organisation invites you; there is no public sign-up.
 
 FOR NURSES
 • Roster by month, week and day, with shift times and the time of the last change
@@ -36,4 +36,4 @@ PRIVACY
 • Training certificates are visible only to you and your ward lead
 • Your sign-in is kept in your device's secure storage
 
-Pulshift is available in German, English, Turkish, Romanian and Polish, with light and dark design.
+Dienstwerk is available in German, English, Turkish, Romanian and Polish, with light and dark design.

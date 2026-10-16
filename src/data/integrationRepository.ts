@@ -159,7 +159,7 @@ const mapRun = (r: RunRow): ImportRun => ({
 export type ApiKey = { id: string; label: string | null; prefix: string; createdAt: Date; lastUsedAt: Date | null; revokedAt: Date | null }
 
 export const integrationRepository = {
-  /** Keys of a "Pulshift-Schnittstelle" profile; the hash is never readable. */
+  /** Keys of a "Dienstwerk-Schnittstelle" profile; the hash is never readable. */
   async listApiKeys(sourceId: string): Promise<ApiKey[]> {
     const rows = unwrapList<{ id: string; label: string | null; key_prefix: string; created_at: string; last_used_at: string | null; revoked_at: string | null }>(
       await db().from('integration_api_keys').select('id, label, key_prefix, created_at, last_used_at, revoked_at').eq('source_id', sourceId).order('created_at', { ascending: false }),

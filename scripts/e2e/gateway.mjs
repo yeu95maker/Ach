@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pulshift local test gateway – NOT for production.
+ * Dienstwerk local test gateway – NOT for production.
  *
  * A tiny stand-in for the Supabase API (Auth + PostgREST subset) on top of a
  * plain PostgreSQL that was prepared with scripts/db-test.sh. Every data
@@ -8,7 +8,7 @@
  * like PostgREST does – so Row Level Security is exercised for real.
  *
  * Used for browser end-to-end checks where Docker / the Supabase CLI are not
- * available. Supports only what the Pulshift client uses.
+ * available. Supports only what the Dienstwerk client uses.
  *
  *   PGHOST=/tmp PGPORT=5432 PGDATABASE=shiftcare_test node scripts/e2e/gateway.mjs
  */
@@ -368,7 +368,7 @@ async function handleInvite(req, res, claims) {
  */
 async function handleRosterSync(req, res) {
   if (req.method !== 'POST') return send(res, 405, { error: 'method_not_allowed' })
-  const key = (req.headers.authorization ?? '').replace(/^Bearer /i, '').trim() || String(req.headers['x-pulshift-key'] ?? '').trim()
+  const key = (req.headers.authorization ?? '').replace(/^Bearer /i, '').trim() || String(req.headers['x-dienstwerk-key'] ?? '').trim()
   if (!key) return send(res, 401, { error: 'missing_api_key' })
   const body = await readBody(req)
   const client = await pool.connect()
@@ -408,7 +408,7 @@ async function handleUpload(req, res, url, claims) {
 async function handleSign(req, res, url, claims) {
   if (req.method === 'GET') {
     res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'access-control-allow-origin': '*' })
-    return res.end('Pulshift test file')
+    return res.end('Dienstwerk test file')
   }
   const body = await readBody(req)
   if (body?.paths) return send(res, 200, body.paths.map((p) => ({ path: p, signedURL: null, error: 'not available in test gateway' })))

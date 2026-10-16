@@ -20,7 +20,7 @@ export function ConfigErrorScreen({ missing }: { missing: string }) {
     <div className="flex min-h-dvh items-center justify-center p-6">
       <div className="max-w-md text-center">
         <Settings2 className="mx-auto mb-4 size-10 text-warning" />
-        <h1 className="text-2xl font-bold">Pulshift is not configured</h1>
+        <h1 className="text-2xl font-bold">Dienstwerk is not configured</h1>
         <p className="mt-2 text-text-2">
           Missing or invalid environment variables: <code className="rounded bg-surface-2 px-1.5 py-0.5">{missing}</code>. Copy{' '}
           <code className="rounded bg-surface-2 px-1.5 py-0.5">.env.example</code> to <code className="rounded bg-surface-2 px-1.5 py-0.5">.env.local</code>.

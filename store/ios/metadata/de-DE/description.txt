@@ -1,6 +1,6 @@
-Pulshift ist die Dienstplan-App für Krankenhäuser, Reha-Kliniken und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tauschen Dienste, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und sehen auf einen Blick, wie die Station besetzt ist.
+Dienstwerk ist die Dienstplan-App für Krankenhäuser, Reha-Kliniken und Pflegeeinrichtungen. Pflegekräfte sehen ihren Plan, tauschen Dienste, tragen Wünsche ein und beantragen Urlaub. Stationsleitungen planen, genehmigen und sehen auf einen Blick, wie die Station besetzt ist.
 
-Wichtig: Für Pulshift brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
+Wichtig: Für Dienstwerk brauchst du ein Konto deiner Einrichtung. Die Einrichtung lädt dich ein; eine öffentliche Registrierung gibt es nicht.
 
 FÜR PFLEGEKRÄFTE
 • Dienstplan im Monats-, Wochen- und Tagesblick, mit Dienstzeiten und Stand der letzten Änderung
@@ -36,4 +36,4 @@ DATENSCHUTZ
 • Fortbildungsnachweise sehen nur du und deine Leitung
 • Deine Anmeldung liegt im geschützten Speicher deines Geräts
 
-Pulshift gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.
+Dienstwerk gibt es auf Deutsch, Englisch, Türkisch, Rumänisch und Polnisch, mit hellem und dunklem Design.

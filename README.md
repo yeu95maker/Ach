@@ -1,4 +1,4 @@
-# Pulshift
+# Dienstwerk
 
 Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, Kollegen im Dienst, Krankmeldung, Urlaub, Benachrichtigungen und Profil – mandantenfähig, sicher und als Web-App sowie später für iOS und Android.
 
@@ -25,7 +25,7 @@ Moderne SaaS-Plattform für Krankenhäuser und Pflegeeinrichtungen: Dienstplan, 
 - [docs/DESIGN.md](docs/DESIGN.md): Designsystem, Navigation, UX-Regeln
 - [docs/DIENSTPLAN-EDITOR.md](docs/DIENSTPLAN-EDITOR.md): Dienstplan-Editor (Bedienung, Hinweise, Technik)
 - [docs/WUNSCHPLAN.md](docs/WUNSCHPLAN.md): Wunschplan (Ablauf, Datenmodell, Rechte, KI-Vorbereitung)
-- [docs/SCHNITTSTELLE.md](docs/SCHNITTSTELLE.md): Pulshift-Schnittstelle – Dienstplan automatisch aus dem Krankenhaus-System übernehmen (Format, Schlüssel, Antworten)
+- [docs/SCHNITTSTELLE.md](docs/SCHNITTSTELLE.md): Dienstwerk-Schnittstelle – Dienstplan automatisch aus dem Krankenhaus-System übernehmen (Format, Schlüssel, Antworten)
 - [docs/INTEGRATION-HUB.md](docs/INTEGRATION-HUB.md): Dienstplan-Import (CSV/XLSX), Adapter-Architektur, Dienstplanmodell, was funktioniert und was nicht
 - [docs/LEITUNG-UND-VERWALTUNG.md](docs/LEITUNG-UND-VERWALTUNG.md): Aktuelles, Vertretung bei Krankheit, offene Dienste, Verlauf, Verwaltung
 - [docs/STATIONSCHAT.md](docs/STATIONSCHAT.md): Chat pro Station – wer liest mit, Moderation, Benachrichtigungen, Datenschutz

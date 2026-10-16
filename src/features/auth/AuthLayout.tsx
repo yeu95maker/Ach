@@ -41,7 +41,7 @@ export function AuthLayout({ title, subtitle, children }: { title: string; subti
             ))}
           </ul>
         </div>
-        <p className="relative text-sm text-white/50">© {new Date().getFullYear()} Pulshift</p>
+        <p className="relative text-sm text-white/50">© {new Date().getFullYear()} Dienstwerk</p>
       </section>
 
       {/* Form */}

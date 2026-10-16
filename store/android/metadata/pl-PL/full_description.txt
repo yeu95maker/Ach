@@ -1,6 +1,6 @@
-Pulshift to aplikacja do grafików dyżurów dla szpitali, klinik rehabilitacyjnych i placówek opieki. Pielęgniarki widzą swój grafik, zamieniają dyżury, zgłaszają życzenia i składają wnioski urlopowe. Oddziałowe planują, zatwierdzają i od razu widzą obsadę oddziału.
+Dienstwerk to aplikacja do grafików dyżurów dla szpitali, klinik rehabilitacyjnych i placówek opieki. Pielęgniarki widzą swój grafik, zamieniają dyżury, zgłaszają życzenia i składają wnioski urlopowe. Oddziałowe planują, zatwierdzają i od razu widzą obsadę oddziału.
 
-Ważne: do korzystania z Pulshift potrzebujesz konta od swojej placówki. Placówka wysyła zaproszenie; nie ma publicznej rejestracji.
+Ważne: do korzystania z Dienstwerk potrzebujesz konta od swojej placówki. Placówka wysyła zaproszenie; nie ma publicznej rejestracji.
 
 DLA PIELĘGNIAREK
 • Grafik w widoku miesiąca, tygodnia i dnia, z godzinami dyżurów i datą ostatniej zmiany
@@ -36,4 +36,4 @@ PRYWATNOŚĆ
 • Zaświadczenia ze szkoleń widzisz tylko Ty i oddziałowa
 • Twoje logowanie jest przechowywane w chronionej pamięci urządzenia
 
-Pulshift jest dostępny po niemiecku, angielsku, turecku, rumuńsku i polsku, w jasnym i ciemnym motywie.
+Dienstwerk jest dostępny po niemiecku, angielsku, turecku, rumuńsku i polsku, w jasnym i ciemnym motywie.

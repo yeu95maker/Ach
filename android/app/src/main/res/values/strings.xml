@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Pulshift</string>
-    <string name="title_activity_main">Pulshift</string>
-    <string name="package_name">app.pulshift</string>
+    <string name="app_name">Dienstwerk</string>
+    <string name="title_activity_main">Dienstwerk</string>
+    <string name="package_name">app.dienstwerk</string>
     <string name="custom_url_scheme">shiftcare</string>
 </resources>

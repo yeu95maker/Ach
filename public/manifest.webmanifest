@@ -1,6 +1,6 @@
 {
-  "name": "Pulshift",
-  "short_name": "Pulshift",
+  "name": "Dienstwerk",
+  "short_name": "Dienstwerk",
   "description": "Dienstplan, Team und Anträge für Pflegekräfte",
   "start_url": "./",
   "scope": "./",

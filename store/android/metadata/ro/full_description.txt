@@ -1,6 +1,6 @@
-Pulshift este aplicația de planificare a turelor pentru spitale, clinici de recuperare și centre de îngrijire. Asistenții își văd programul, schimbă ture, își trec dorințele și cer concediu. Șefii de secție planifică, aprobă și văd dintr-o privire cum este acoperită secția.
+Dienstwerk este aplicația de planificare a turelor pentru spitale, clinici de recuperare și centre de îngrijire. Asistenții își văd programul, schimbă ture, își trec dorințele și cer concediu. Șefii de secție planifică, aprobă și văd dintr-o privire cum este acoperită secția.
 
-Important: pentru Pulshift ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
+Important: pentru Dienstwerk ai nevoie de un cont de la instituția ta. Instituția te invită; nu există înregistrare publică.
 
 PENTRU ASISTENȚI
 • Programul pe lună, săptămână și zi, cu orele turelor și data ultimei modificări
@@ -36,4 +36,4 @@ CONFIDENȚIALITATE
 • Dovezile de instruire le vezi doar tu și șefa de secție
 • Autentificarea ta este păstrată în spațiul protejat al dispozitivului
 
-Pulshift este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.
+Dienstwerk este disponibil în germană, engleză, turcă, română și poloneză, cu temă luminoasă și întunecată.

@@ -10,7 +10,7 @@ const valid = {
   ],
 }
 
-describe('Pulshift Roster Exchange v1', () => {
+describe('Dienstwerk Roster Exchange v1', () => {
   it('accepts a valid delivery and an empty one (clears the period)', () => {
     expect(validateRosterPayload(valid).ok).toBe(true)
     expect(validateRosterPayload({ ...valid, shifts: [] }).ok).toBe(true)
@@ -39,9 +39,9 @@ describe('Pulshift Roster Exchange v1', () => {
     expect(validateRosterPayload(big)).toEqual({ ok: false, errors: ['shifts: at most 10000 entries'] })
   })
 
-  it('reads the key from Authorization or X-Pulshift-Key', () => {
+  it('reads the key from Authorization or X-Dienstwerk-Key', () => {
     expect(readApiKey(new Headers({ authorization: 'Bearer pls_abc' }))).toBe('pls_abc')
-    expect(readApiKey(new Headers({ 'x-pulshift-key': 'pls_def' }))).toBe('pls_def')
+    expect(readApiKey(new Headers({ 'x-dienstwerk-key': 'pls_def' }))).toBe('pls_def')
     expect(readApiKey(new Headers())).toBeNull()
   })
 })

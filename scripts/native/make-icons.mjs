@@ -1,6 +1,6 @@
 /**
  * Renders app icons and launch screens for iOS, Android and Google Play from
- * the Pulshift mark (resources/icon.svg). Pixel-exact via headless Chromium;
+ * the Dienstwerk mark (resources/icon.svg). Pixel-exact via headless Chromium;
  * ImageMagick strips the alpha channel where Apple requires opaque images.
  *
  *   CHROMIUM_PATH=/opt/pw-browsers/chromium node scripts/native/make-icons.mjs
@@ -12,8 +12,10 @@ import { chromium } from 'playwright'
 
 const BLUE = '#0F3D91'
 const TEAL = '#18B7B0'
-// The pulse line from the mark, in the 64×64 design grid.
-const PULSE = `<path d="M20 34.5h7l3.5-9 6 17 3.5-8H46" fill="none" stroke="${TEAL}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`
+// The mark (a "D" with a check), in the 64×64 design grid.
+const MARK =
+  `<path d="M19.5 17h10a15 15 0 0 1 0 30h-10z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>` +
+  `<path d="M25.5 32.5l4 4 8-9" fill="none" stroke="${TEAL}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`
 
 /** shape: square (full bleed) | rounded | circle | none (transparent background, adaptive foreground). scale: size of the mark. */
 function svg({ shape, scale = 1 }) {
@@ -22,8 +24,8 @@ function svg({ shape, scale = 1 }) {
     : shape === 'rounded' ? `<rect x="2" y="2" width="60" height="60" rx="14" fill="${BLUE}"/>`
     : shape === 'circle' ? `<circle cx="32" cy="32" r="30" fill="${BLUE}"/>`
     : ''
-  const t = (1 - scale) * 33 // keep the pulse centred (its bbox centre is ≈ 33,34)
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">${bg}<g transform="translate(${t} ${t}) scale(${scale})">${PULSE}</g></svg>`
+  const t = (1 - scale) * 32 // keep the mark centred (its bbox centre is 32,32)
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">${bg}<g transform="translate(${t} ${t}) scale(${scale})">${MARK}</g></svg>`
 }
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH })

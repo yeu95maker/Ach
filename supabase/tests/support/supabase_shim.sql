@@ -1,7 +1,7 @@
 -- =============================================================================
 -- Minimal Supabase platform shim for plain PostgreSQL (CI / local tests only).
 --
--- Recreates the parts of a Supabase database that the Pulshift migrations
+-- Recreates the parts of a Supabase database that the Dienstwerk migrations
 -- depend on: API roles, auth.uid()/auth.jwt(), auth.users/identities,
 -- storage.buckets/objects + storage.foldername(), vault, the realtime
 -- publication and Supabase's default privileges.

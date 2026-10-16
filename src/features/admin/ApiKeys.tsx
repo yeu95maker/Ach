@@ -34,7 +34,7 @@ function CopyField({ id, label, value }: { id: string; label: string; value: str
   )
 }
 
-/** Keys for the Pulshift-Schnittstelle of one import profile. */
+/** Keys for the Dienstwerk-Schnittstelle of one import profile. */
 export function ApiKeys({ source }: { source: IntegrationSource }) {
   const { t } = useTranslation()
   const fmt = useHospitalFormatter()

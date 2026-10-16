@@ -1,6 +1,6 @@
-Pulshift; hastaneler, rehabilitasyon klinikleri ve bakım kurumları için vardiya planı uygulamasıdır. Hemşireler planlarını görür, vardiya değiştirir, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve servisin doluluk durumunu tek bakışta görür.
+Dienstwerk; hastaneler, rehabilitasyon klinikleri ve bakım kurumları için vardiya planı uygulamasıdır. Hemşireler planlarını görür, vardiya değiştirir, isteklerini girer ve izin talep eder. Servis sorumluları plan yapar, onaylar ve servisin doluluk durumunu tek bakışta görür.
 
-Önemli: Pulshift'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
+Önemli: Dienstwerk'i kullanmak için kurumundan bir hesaba ihtiyacın var. Kurumun seni davet eder; herkese açık kayıt yoktur.
 
 HEMŞİRELER İÇİN
 • Aylık, haftalık ve günlük görünümde vardiya planı, saatler ve son değişiklik zamanı
@@ -36,4 +36,4 @@ GİZLİLİK
 • Eğitim belgelerini yalnızca sen ve sorumlun görür
 • Oturum bilgin cihazının korumalı alanında saklanır
 
-Pulshift Almanca, İngilizce, Türkçe, Rumence ve Lehçe dillerinde, açık ve koyu tasarımla kullanılabilir.
+Dienstwerk Almanca, İngilizce, Türkçe, Rumence ve Lehçe dillerinde, açık ve koyu tasarımla kullanılabilir.

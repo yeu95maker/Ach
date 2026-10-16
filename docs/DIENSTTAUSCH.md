@@ -31,7 +31,7 @@ Ein Dienst kann immer nur in **einer** offenen Anfrage stecken. Pro Person sind 
 
 ## Zusammenspiel mit der automatischen Synchronisierung
 
-Kommt der Dienstplan über die [Pulshift-Schnittstelle](SCHNITTSTELLE.md) aus einem anderen Dienstplanprogramm, muss der genehmigte Tausch **auch dort eingetragen werden**. Sonst zeigt die nächste Lieferung den alten Stand. Die Leitung sieht das in der Vorschau als Änderung und übernimmt es nur, wenn sie bestätigt. Eine automatische Rückmeldung an das Quellsystem gibt es noch nicht.
+Kommt der Dienstplan über die [Dienstwerk-Schnittstelle](SCHNITTSTELLE.md) aus einem anderen Dienstplanprogramm, muss der genehmigte Tausch **auch dort eingetragen werden**. Sonst zeigt die nächste Lieferung den alten Stand. Die Leitung sieht das in der Vorschau als Änderung und übernimmt es nur, wenn sie bestätigt. Eine automatische Rückmeldung an das Quellsystem gibt es noch nicht.
 
 ## Technik
 

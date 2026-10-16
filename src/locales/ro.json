@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Tura ta. Echipa ta. Dintr-o privire.",
-    "brandSubtitle": "Pulshift face programul, concediul medical și concediul de odihnă atât de simple cât are nevoie secția.",
+    "brandSubtitle": "Dienstwerk face programul, concediul medical și concediul de odihnă atât de simple cât are nevoie secția.",
     "brandPoint1": "Program mereu actualizat – oriunde",
     "brandPoint2": "Vezi cine este azi în tură cu tine",
     "brandPoint3": "Găzduire sigură, conformă GDPR",
@@ -895,7 +895,7 @@
     "dropTitle": "Trage fișierul aici sau alege-l",
     "dropHint": "CSV sau Excel (XLSX) din programul tău de planificare – ca listă (un rând pe tură) sau ca grilă (un rând pe persoană, o coloană pe zi).",
     "chooseFile": "Alege fișierul",
-    "privacyHint": "Fișierul este citit doar pe dispozitivul tău. Pulshift primește doar turele recunoscute; numele și rândurile originale se șterg după publicare.",
+    "privacyHint": "Fișierul este citit doar pe dispozitivul tău. Dienstwerk primește doar turele recunoscute; numele și rândurile originale se șterg după publicare.",
     "errors": {
       "format": "Acest format nu este acceptat. Te rugăm să exporți ca CSV sau XLSX.",
       "size": "Fișierul are peste 15 MB.",
@@ -964,7 +964,7 @@
       "employees_one": "Asociază {{count}} persoană",
       "employees_few": "Asociază {{count}} persoane",
       "employees_other": "Asociază {{count}} de persoane",
-      "employeesHint": "Pulshift nu cunoaște încă aceste ID-uri din fișier. Asocierea se salvează și se folosește automat data viitoare.",
+      "employeesHint": "Dienstwerk nu cunoaște încă aceste ID-uri din fișier. Asocierea se salvează și se folosește automat data viitoare.",
       "idInFile": "ID în fișier: {{id}}",
       "rows_one": "{{count}} tură",
       "rows_few": "{{count}} ture",
@@ -1012,9 +1012,9 @@
         "changed": "Modificat",
         "removed": "Eliminat"
       },
-      "manual_one": "{{count}} înregistrare a fost creată sau modificată manual în Pulshift și este înlocuită de fișier.",
-      "manual_few": "{{count}} înregistrări au fost create sau modificate manual în Pulshift și sunt înlocuite de fișier.",
-      "manual_other": "{{count}} de înregistrări au fost create sau modificate manual în Pulshift și sunt înlocuite de fișier.",
+      "manual_one": "{{count}} înregistrare a fost creată sau modificată manual în Dienstwerk și este înlocuită de fișier.",
+      "manual_few": "{{count}} înregistrări au fost create sau modificate manual în Dienstwerk și sunt înlocuite de fișier.",
+      "manual_other": "{{count}} de înregistrări au fost create sau modificate manual în Dienstwerk și sunt înlocuite de fișier.",
       "manualBadge": "modificat manual",
       "notifyHint": "Angajații afectați primesc o singură notificare rezumativă.",
       "more": "… și încă {{count}} modificări",
@@ -1054,11 +1054,11 @@
     },
     "kind": {
       "file": "Import de fișier (CSV/XLSX)",
-      "api": "Interfața Pulshift (automat)",
+      "api": "Interfața Dienstwerk (automat)",
       "sftp": "Preluare automată de fișiere (în pregătire)"
     },
     "admin": {
-      "intro": "Aici stabilești cum preiau secțiile programul din aplicația de planificare existentă: ca fișier (CSV/XLSX) sau automat prin interfața Pulshift. Prin interfață, programul vostru de planificare, IT-ul sau un job de export trimite programul publicat către Pulshift; asistentul șef confirmă modificările cu o atingere. Conexiuni directe gata făcute către anumiți furnizori (de ex. ATOSS, SP-Expert) nu există încă.",
+      "intro": "Aici stabilești cum preiau secțiile programul din aplicația de planificare existentă: ca fișier (CSV/XLSX) sau automat prin interfața Dienstwerk. Prin interfață, programul vostru de planificare, IT-ul sau un job de export trimite programul publicat către Dienstwerk; asistentul șef confirmă modificările cu o atingere. Conexiuni directe gata făcute către anumiți furnizori (de ex. ATOSS, SP-Expert) nu există încă.",
       "add": "Adaugă profil de import",
       "edit": "Editează profilul de import",
       "empty": "Încă nu există profiluri de import",
@@ -1076,7 +1076,7 @@
       "noMappings": "Încă niciunul – numerele de personal sunt recunoscute direct.",
       "noCodeMappings": "Încă niciunul – codurile ca F, S, N sunt recunoscute direct.",
       "removeMapping": "Elimină asocierea",
-      "kindApiHint": "Programul vostru de planificare sau IT-ul trimite automat programul publicat către Pulshift. După salvare, creezi aici o cheie."
+      "kindApiHint": "Programul vostru de planificare sau IT-ul trimite automat programul publicat către Dienstwerk. După salvare, creezi aici o cheie."
     },
     "api": {
       "intro": "Sistemul instituției trimite programul publicat la această adresă. Fiecare versiune nouă apare la asistentul șef pentru confirmare; livrările nemodificate sunt ignorate.",
@@ -1091,7 +1091,7 @@
       "createdTitle": "Cheie creată",
       "onlyOnce": "Copiază cheia acum și transmite-o în siguranță echipei IT. Este afișată doar acum.",
       "key": "Cheie API",
-      "howTo": "Livrare: POST la adresă, antet „Authorization: Bearer <cheie>”, conținut în formatul „Pulshift Roster Exchange v1” (vezi docs/SCHNITTSTELLE.md).",
+      "howTo": "Livrare: POST la adresă, antet „Authorization: Bearer <cheie>”, conținut în formatul „Dienstwerk Roster Exchange v1” (vezi docs/SCHNITTSTELLE.md).",
       "copy": "Copiază",
       "copied": "Copiat",
       "lastUsed": "folosită ultima dată {{when}}",

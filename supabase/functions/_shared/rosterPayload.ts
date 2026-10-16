@@ -1,5 +1,5 @@
 /**
- * Pulshift Roster Exchange v1 – validation of a delivery to `roster-sync`.
+ * Dienstwerk Roster Exchange v1 – validation of a delivery to `roster-sync`.
  * Pure TypeScript (no Deno/Node APIs) so it runs in the Edge Function and in
  * the unit tests. The database validates again; this gives senders precise,
  * early error messages.
@@ -71,9 +71,9 @@ export function validateRosterPayload(input: unknown): ValidationResult {
   return errors.length ? { ok: false, errors } : { ok: true, payload: p as unknown as RosterPayload }
 }
 
-/** Bearer token or X-Pulshift-Key header. */
+/** Bearer token or X-Dienstwerk-Key header. */
 export function readApiKey(headers: { get(name: string): string | null }): string | null {
   const auth = headers.get('authorization')
   if (auth?.toLowerCase().startsWith('bearer ')) return auth.slice(7).trim() || null
-  return headers.get('x-pulshift-key')?.trim() || null
+  return headers.get('x-dienstwerk-key')?.trim() || null
 }

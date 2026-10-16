@@ -2,7 +2,7 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Pulshift design tokens
+   Dienstwerk design tokens
    Semantic tokens only – components never use raw hex values.
    Dark mode uses its own palette (not an inversion of light).
    --------------------------------------------------------------------------- */

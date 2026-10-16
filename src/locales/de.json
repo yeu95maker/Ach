@@ -33,7 +33,7 @@
   },
   "auth": {
     "brandTitle": "Dein Dienst. Dein Team. Auf einen Blick.",
-    "brandSubtitle": "Pulshift macht Dienstplan, Krankmeldung und Urlaub so einfach, wie es im Stationsalltag sein muss.",
+    "brandSubtitle": "Dienstwerk macht Dienstplan, Krankmeldung und Urlaub so einfach, wie es im Stationsalltag sein muss.",
     "brandPoint1": "Dienstplan immer aktuell – auch unterwegs",
     "brandPoint2": "Sehen, wer heute mit dir im Dienst ist",
     "brandPoint3": "Sicher und DSGVO-konform gehostet",
@@ -874,7 +874,7 @@
     "dropTitle": "Datei hierher ziehen oder auswählen",
     "dropHint": "CSV oder Excel (XLSX) aus deinem Dienstplanprogramm – als Liste (eine Zeile pro Dienst) oder als Raster (eine Zeile pro Person, eine Spalte pro Tag).",
     "chooseFile": "Datei auswählen",
-    "privacyHint": "Die Datei wird nur auf deinem Gerät gelesen. An Pulshift gehen nur die erkannten Dienste; Namen und Originalzeilen werden nach der Veröffentlichung gelöscht.",
+    "privacyHint": "Die Datei wird nur auf deinem Gerät gelesen. An Dienstwerk gehen nur die erkannten Dienste; Namen und Originalzeilen werden nach der Veröffentlichung gelöscht.",
     "errors": {
       "format": "Dieses Format wird nicht unterstützt. Bitte exportiere als CSV oder XLSX.",
       "size": "Die Datei ist größer als 15 MB.",
@@ -941,7 +941,7 @@
       "duplicate": "Diese Datei wurde für Station und Monat bereits importiert. Die Vorschau zeigt, ob sich etwas geändert hat.",
       "employees_one": "{{count}} Person zuordnen",
       "employees_other": "{{count}} Personen zuordnen",
-      "employeesHint": "Diese IDs aus der Datei kennt Pulshift noch nicht. Die Zuordnung wird gespeichert und beim nächsten Import automatisch verwendet.",
+      "employeesHint": "Diese IDs aus der Datei kennt Dienstwerk noch nicht. Die Zuordnung wird gespeichert und beim nächsten Import automatisch verwendet.",
       "idInFile": "ID in der Datei: {{id}}",
       "rows_one": "{{count}} Dienst",
       "rows_other": "{{count}} Dienste",
@@ -983,8 +983,8 @@
         "changed": "Geändert",
         "removed": "Entfällt"
       },
-      "manual_one": "{{count}} Eintrag wurde in Pulshift von Hand angelegt oder geändert und wird durch die Datei ersetzt.",
-      "manual_other": "{{count}} Einträge wurden in Pulshift von Hand angelegt oder geändert und werden durch die Datei ersetzt.",
+      "manual_one": "{{count}} Eintrag wurde in Dienstwerk von Hand angelegt oder geändert und wird durch die Datei ersetzt.",
+      "manual_other": "{{count}} Einträge wurden in Dienstwerk von Hand angelegt oder geändert und werden durch die Datei ersetzt.",
       "manualBadge": "von Hand geändert",
       "notifyHint": "Betroffene Mitarbeitende erhalten eine zusammengefasste Benachrichtigung.",
       "more": "… und {{count}} weitere Änderungen",
@@ -1023,11 +1023,11 @@
     },
     "kind": {
       "file": "Dateiimport (CSV/XLSX)",
-      "api": "Pulshift-Schnittstelle (automatisch)",
+      "api": "Dienstwerk-Schnittstelle (automatisch)",
       "sftp": "Automatischer Dateiabruf (in Vorbereitung)"
     },
     "admin": {
-      "intro": "Hier legst du fest, wie Stationen ihren Dienstplan aus dem vorhandenen Dienstplanprogramm übernehmen: per Datei (CSV/XLSX) oder automatisch über die Pulshift-Schnittstelle. Bei der Schnittstelle sendet euer Dienstplanprogramm, eure IT oder ein Export-Job den veröffentlichten Plan an Pulshift; die Leitung bestätigt Änderungen mit einem Tipp. Fertige Direktanbindungen an einzelne Anbieter (z. B. ATOSS, SP-Expert) gibt es noch nicht.",
+      "intro": "Hier legst du fest, wie Stationen ihren Dienstplan aus dem vorhandenen Dienstplanprogramm übernehmen: per Datei (CSV/XLSX) oder automatisch über die Dienstwerk-Schnittstelle. Bei der Schnittstelle sendet euer Dienstplanprogramm, eure IT oder ein Export-Job den veröffentlichten Plan an Dienstwerk; die Leitung bestätigt Änderungen mit einem Tipp. Fertige Direktanbindungen an einzelne Anbieter (z. B. ATOSS, SP-Expert) gibt es noch nicht.",
       "add": "Importprofil anlegen",
       "edit": "Importprofil bearbeiten",
       "empty": "Noch keine Importprofile",
@@ -1045,7 +1045,7 @@
       "noMappings": "Noch keine – Personalnummern werden direkt erkannt.",
       "noCodeMappings": "Noch keine – Kürzel wie F, S, N werden direkt erkannt.",
       "removeMapping": "Zuordnung entfernen",
-      "kindApiHint": "Euer Dienstplanprogramm oder eure IT sendet den veröffentlichten Plan automatisch an Pulshift. Nach dem Speichern erzeugst du hier einen Schlüssel."
+      "kindApiHint": "Euer Dienstplanprogramm oder eure IT sendet den veröffentlichten Plan automatisch an Dienstwerk. Nach dem Speichern erzeugst du hier einen Schlüssel."
     },
     "api": {
       "intro": "Das System eures Hauses sendet den veröffentlichten Plan an diese Adresse. Jede neue Version erscheint bei der Stationsleitung zum Bestätigen; unveränderte Lieferungen werden ignoriert.",
@@ -1059,7 +1059,7 @@
       "createdTitle": "Schlüssel erzeugt",
       "onlyOnce": "Kopiere den Schlüssel jetzt und gib ihn sicher an eure IT weiter. Er wird nur dieses eine Mal angezeigt.",
       "key": "API-Schlüssel",
-      "howTo": "Lieferung: POST an die Adresse, Kopfzeile „Authorization: Bearer <Schlüssel>“, Inhalt im Format „Pulshift Roster Exchange v1“ (Beschreibung: docs/SCHNITTSTELLE.md).",
+      "howTo": "Lieferung: POST an die Adresse, Kopfzeile „Authorization: Bearer <Schlüssel>“, Inhalt im Format „Dienstwerk Roster Exchange v1“ (Beschreibung: docs/SCHNITTSTELLE.md).",
       "copy": "Kopieren",
       "copied": "Kopiert",
       "lastUsed": "zuletzt genutzt {{when}}",

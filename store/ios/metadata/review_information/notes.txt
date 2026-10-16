@@ -1,4 +1,4 @@
-Pulshift is a business app for hospitals and care facilities (rostering, shift swaps, leave, sick notes, ward chat, documents/SOPs, mandatory trainings, team news). Accounts are created by the employer; there is no public sign-up, so please use the demo accounts below. All names and data in the demo are fictional.
+Dienstwerk is a business app for hospitals and care facilities (rostering, shift swaps, leave, sick notes, ward chat, documents/SOPs, mandatory trainings, team news). Accounts are created by the employer; there is no public sign-up, so please use the demo accounts below. All names and data in the demo are fictional.
 
 Demo accounts (password for all: ShiftCare!2026)
 - Ward lead (all features): mira.schulz@shiftcare.dev

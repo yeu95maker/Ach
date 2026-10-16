@@ -1,4 +1,4 @@
-/* Pulshift service worker – Web Push only (no offline caching yet). */
+/* Dienstwerk service worker – Web Push only (no offline caching yet). */
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()))
 
@@ -10,9 +10,9 @@ self.addEventListener('push', (event) => {
   try {
     data = event.data ? event.data.json() : {}
   } catch {
-    data = { title: 'Pulshift', body: event.data ? event.data.text() : '' }
+    data = { title: 'Dienstwerk', body: event.data ? event.data.text() : '' }
   }
-  const title = data.title || 'Pulshift'
+  const title = data.title || 'Dienstwerk'
   event.waitUntil(
     self.registration.showNotification(title, {
       body: data.body || '',

@@ -36,13 +36,13 @@ describe('APNs', () => {
     expect(ok).toBe(true)
   })
 
-  const cfg: ApnsConfig = { keyP8: '', keyId: 'K', teamId: 'T', topic: 'app.pulshift', production: false }
+  const cfg: ApnsConfig = { keyP8: '', keyId: 'K', teamId: 'T', topic: 'app.dienstwerk', production: false }
 
   it('builds the request without health data', () => {
     const { url, init } = apnsRequest(cfg, 'a1b2', msg, 'jwt')
     expect(url).toBe('https://api.sandbox.push.apple.com/3/device/a1b2')
     expect(apnsRequest({ ...cfg, production: true }, 'a1b2', msg, 'jwt').url).toBe('https://api.push.apple.com/3/device/a1b2')
-    expect(init.headers['apns-topic']).toBe('app.pulshift')
+    expect(init.headers['apns-topic']).toBe('app.dienstwerk')
     expect(init.headers['apns-push-type']).toBe('alert')
     expect(init.headers.authorization).toBe('bearer jwt')
     expect(JSON.parse(init.body)).toEqual({ aps: { alert: { title: msg.title, body: msg.body }, sound: 'default', 'thread-id': msg.tag }, url: '/schedule' })

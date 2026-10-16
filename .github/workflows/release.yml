@@ -140,19 +140,19 @@ jobs:
           rm -f "$ANDROID_KEYSTORE_PATH"
           "$JAVA_HOME/bin/jarsigner" -verify android/app/build/outputs/bundle/release/app-release.aab | grep -q "jar verified" \
             || { echo "::error::Das Bundle ist nicht signiert"; exit 1; }
-          mv android/app/build/outputs/bundle/release/app-release.aab "Pulshift-$VERSION_NAME-$VERSION_CODE.aab"
+          mv android/app/build/outputs/bundle/release/app-release.aab "Dienstwerk-$VERSION_NAME-$VERSION_CODE.aab"
       - uses: actions/upload-artifact@v4
         with:
-          name: pulshift-android-${{ inputs.version }}-${{ github.run_number }}
-          path: Pulshift-*.aab
+          name: dienstwerk-android-${{ inputs.version }}-${{ github.run_number }}
+          path: Dienstwerk-*.aab
           if-no-files-found: error
       - name: Upload to Google Play (internal testing)
         if: env.PLAY_JSON != ''
         uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: app.pulshift # = appId in capacitor.config.ts
-          releaseFiles: Pulshift-*.aab
+          packageName: app.dienstwerk # = appId in capacitor.config.ts
+          releaseFiles: Dienstwerk-*.aab
           track: internal
           status: draft
       - name: Summary

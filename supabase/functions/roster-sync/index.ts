@@ -1,5 +1,5 @@
 /**
- * roster-sync – Pulshift-Import-Schnittstelle (Roster Exchange v1).
+ * roster-sync – Dienstwerk-Import-Schnittstelle (Roster Exchange v1).
  *
  *   POST /functions/v1/roster-sync
  *   Authorization: Bearer pls_…   (API key of an import profile, Verwaltung → Integrationen)

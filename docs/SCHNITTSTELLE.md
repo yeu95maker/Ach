@@ -1,11 +1,11 @@
-# Pulshift-Schnittstelle (Roster Exchange v1)
+# Dienstwerk-Schnittstelle (Roster Exchange v1)
 
-Stand: 11.10.2026. Diese Schnittstelle ist für **Dienstplanprogramme, Krankenhaus-IT und Export-Jobs**. Darüber schicken sie den **veröffentlichten Dienstplan** einer Station automatisch an Pulshift. Damit muss die Stationsleitung den Plan nicht doppelt eingeben.
+Stand: 11.10.2026. Diese Schnittstelle ist für **Dienstplanprogramme, Krankenhaus-IT und Export-Jobs**. Darüber schicken sie den **veröffentlichten Dienstplan** einer Station automatisch an Dienstwerk. Damit muss die Stationsleitung den Plan nicht doppelt eingeben.
 
 ## Was passiert mit einer Lieferung
 
 1. Das System schickt den aktuellen Plan einer Station für einen Zeitraum, meist einen Monat.
-2. Pulshift prüft die Lieferung genauso wie einen Dateiimport. Es ordnet die Mitarbeitenden zu, über bestätigte IDs oder die genaue Personalnummer und **nie über den Namen**. Es ordnet die Dienstkürzel zu und prüft Zeiten und Zeitraum.
+2. Dienstwerk prüft die Lieferung genauso wie einen Dateiimport. Es ordnet die Mitarbeitenden zu, über bestätigte IDs oder die genaue Personalnummer und **nie über den Namen**. Es ordnet die Dienstkürzel zu und prüft Zeiten und Zeitraum.
 3. **Unverändert** gegenüber der letzten Lieferung oder gegenüber dem aktuellen Plan bedeutet: Es passiert nichts, und niemand wird gestört.
 4. **Bei Änderungen** bekommt die Stationsleitung die Benachrichtigung „Neuer Dienstplanstand aus …“. Ein Tipp öffnet die Vorschau mit neuen, geänderten und entfallenen Diensten. Ein weiterer Tipp übernimmt die Änderungen. Bei veröffentlichtem Plan erhalten **nur die betroffenen Mitarbeitenden** eine Push-Nachricht.
 5. Kommt eine neuere Lieferung, bevor die Leitung bestätigt hat, ersetzt sie die ältere. Es wartet immer nur die neueste Version.
@@ -14,7 +14,7 @@ Entscheidung vom 11.10.2026: Änderungen werden **nicht ohne Bestätigung der Le
 
 ## Einrichtung (Verwaltung → Integrationen)
 
-1. **Importprofil anlegen**, Art **„Pulshift-Schnittstelle (automatisch)“**. Optional auf eine Station beschränken.
+1. **Importprofil anlegen**, Art **„Dienstwerk-Schnittstelle (automatisch)“**. Optional auf eine Station beschränken.
 2. **Neuer Schlüssel**: Der API-Schlüssel (`pls_…`) wird **nur einmal angezeigt**. Gespeichert wird nur sein SHA-256-Hash, niemand kann ihn später auslesen. Pro Profil sind bis zu 5 aktive Schlüssel möglich, jeder lässt sich einzeln sperren.
 3. Adresse und Schlüssel sicher an die IT bzw. den Hersteller weitergeben.
 
@@ -22,7 +22,7 @@ Entscheidung vom 11.10.2026: Änderungen werden **nicht ohne Bestätigung der Le
 
 ```http
 POST https://<projekt>.supabase.co/functions/v1/roster-sync
-Authorization: Bearer pls_…          (alternativ: X-Pulshift-Key: pls_…)
+Authorization: Bearer pls_…          (alternativ: X-Dienstwerk-Key: pls_…)
 Content-Type: application/json
 ```
 
@@ -41,16 +41,16 @@ Content-Type: application/json
 
 | Feld | Pflicht | Bedeutung |
 | --- | --- | --- |
-| `unit` | ja | Stationskürzel wie in Pulshift (Verwaltung → Organisation), Groß-/Kleinschreibung egal |
+| `unit` | ja | Stationskürzel wie in Dienstwerk (Verwaltung → Organisation), Groß-/Kleinschreibung egal |
 | `period.start`, `period.end` | ja | Zeitraum, für den die Lieferung **vollständig** ist (1–63 Tage, `YYYY-MM-DD`). Was im Zeitraum nicht geliefert wird, gilt als entfallen. |
 | `source_version` | nein | Versionsangabe des Quellsystems, erscheint im Verlauf |
 | `shifts[]` | ja | alle Dienste und freien Tage im Zeitraum; leeres Array = Zeitraum leeren (mit Warnung in der Vorschau) |
 | `shifts[].employee` | ja | Personalnummer bzw. ID im Quellsystem |
 | `shifts[].date` | ja | Tag des Dienstbeginns |
-| `shifts[].code` | ja, außer bei Start/Ende | Dienstkürzel des Quellsystems; Zuordnung zu Pulshift-Diensttypen einmalig in der App |
+| `shifts[].code` | ja, außer bei Start/Ende | Dienstkürzel des Quellsystems; Zuordnung zu Dienstwerk-Diensttypen einmalig in der App |
 | `shifts[].start`, `.end` | nein | `HH:MM`, nur zusammen. Ende ≤ Beginn bedeutet Nachtdienst bis zum Folgetag. |
 | `shifts[].break_minutes` | nein | Pause 0–600 |
-| `shifts[].id` | nein | stabile Dienst-ID des Quellsystems; damit erkennt Pulshift Änderungen am selben Dienst |
+| `shifts[].id` | nein | stabile Dienst-ID des Quellsystems; damit erkennt Dienstwerk Änderungen am selben Dienst |
 | `shifts[].name` | nein | nur zur Anzeige bei unbekannten IDs; wird nach der Veröffentlichung gelöscht |
 
 Größenlimit: 5 MB und 10 000 Dienste pro Lieferung, höchstens 120 Lieferungen pro Stunde und Profil.
@@ -72,7 +72,7 @@ Größenlimit: 5 MB und 10 000 Dienste pro Lieferung, höchstens 120 Lieferungen
 
 ```sh
 curl -X POST "https://<projekt>.supabase.co/functions/v1/roster-sync" \
-  -H "Authorization: Bearer $PULSHIFT_KEY" -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $DIENSTWERK_KEY" -H "Content-Type: application/json" \
   --data @dienstplan-3A-2026-11.json
 ```
 

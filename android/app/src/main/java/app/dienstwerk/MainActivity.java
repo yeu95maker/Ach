@@ -1,4 +1,4 @@
-package app.pulshift;
+package app.dienstwerk;
 
 import com.getcapacitor.BridgeActivity;
 
