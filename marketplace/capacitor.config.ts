@@ -13,7 +13,7 @@ import type { CapacitorConfig } from '@capacitor/cli'
  * appId is permanent once uploaded – change it before the first upload if needed,
  * together with NATIVE_APP_ID in src/lib/native/index.ts.
  */
-const appUrl = (process.env.APP_URL || 'https://property-finder.vercel.app').replace(/\/$/, '')
+const appUrl = (process.env.APP_URL || 'https://property-finder-drab-omega.vercel.app').replace(/\/$/, '')
 
 const config: CapacitorConfig = {
   appId: 'app.propertyfinder.zw',
