@@ -42,8 +42,8 @@ Die Store-Builds zeigen im Moment auf das **Demo-Projekt**. Für die Einreichung
 
 ⚠️ **Nach der Umbenennung neu eintragen** (Demo-Projekt): In Supabase unter **Authentication → URL Configuration → Redirect URLs** werden `dienstwerk://auth-callback` und `dienstwerk://auth-callback/**` gebraucht. `capacitor://localhost` und `https://localhost` bleiben. Die alten `pulshift://…`-Einträge können weg. Bei einem eigenen Produktions-Projekt (Weg b) müssen dieselben vier Einträge dort ebenfalls gesetzt werden.
 
-### 4. Push-Benachrichtigungen (optional für die erste Version)
-Ohne Einrichtung zeigt die App unter Profil „Noch nicht eingerichtet“. Alles andere funktioniert trotzdem. Zum Einschalten: APNs-Schlüssel und Firebase-Projekt anlegen (`docs/APP-STORES.md` §6), dann die GitHub-Variable `APP_NATIVE_PUSH=true` setzen.
+### 4. Push-Benachrichtigungen (iOS)
+In der App und auf dem Demo-Server ist alles eingeschaltet. Es fehlen nur noch der APNs-Schlüssel und die 5 Supabase-Secrets, siehe `docs/APP-STORES.md` §6. Ohne Schlüssel funktioniert die App weiter normal, es kommen dann nur keine Mitteilungen an.
 
 ### 5. Name und Domain
 Am 16.10.2026 von „Pulshift“ in **Dienstwerk** umbenannt, weil es eine gleichnamige App gibt. Store-Suche und Markenregister (DPMA, EUIPO) auf „Dienstwerk“ prüfen. Die Domain `dienstwerk.app` sichern. Die App-ID `app.dienstwerk` lässt sich nach dem ersten Upload nicht mehr ändern.

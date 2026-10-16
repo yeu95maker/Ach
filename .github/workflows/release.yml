@@ -35,7 +35,7 @@ env:
   VITE_SUPABASE_URL: ${{ vars.APP_SUPABASE_URL || 'https://rcavkoetogzjrovoczuu.supabase.co' }}
   VITE_SUPABASE_ANON_KEY: ${{ vars.APP_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjYXZrb2V0b2d6anJvdm9jenV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2Mzk0ODgsImV4cCI6MjEwNzIxNTQ4OH0.Jz-AaEdz1vCwvbZSEilafJX3ZehUYBz_q_IylqjU578' }}
   VITE_OAUTH_PROVIDERS: ${{ vars.APP_OAUTH_PROVIDERS || '' }}
-  VITE_NATIVE_PUSH: ${{ vars.APP_NATIVE_PUSH || 'false' }}
+  VITE_NATIVE_PUSH: ${{ vars.APP_NATIVE_PUSH || 'ios' }}
   VITE_LEGAL_BASE_URL: ${{ vars.APP_LEGAL_BASE_URL || 'https://yeu95maker.github.io/Ach/' }}
 
 jobs:

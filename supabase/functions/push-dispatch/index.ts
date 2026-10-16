@@ -1,9 +1,10 @@
 /**
  * push-dispatch – drains public.notification_deliveries and sends Web Push.
  *
- * Trigger: Supabase Cron (e.g. every minute) or a Database Webhook on INSERT
- * into notification_deliveries. Authenticated with the service-role key
- * (Authorization: Bearer <SERVICE_ROLE_KEY>), never callable by end users.
+ * Trigger: pg_cron every minute while pushes are queued (private.trigger_push_dispatch,
+ * migration 20261018000100). Authenticated with the database-held dispatch
+ * secret (checked via public.verify_push_dispatch_secret) or the service-role
+ * key (Authorization: Bearer …), never callable by end users.
  *
  * Env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  *  Web:     VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT (mailto:…)
@@ -60,7 +61,13 @@ async function sendWeb(device: any, msg: PushMessage): Promise<SendResult> {
 
 Deno.serve(async (req) => {
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-  if (req.headers.get('Authorization') !== `Bearer ${serviceKey}`) return json({ error: 'unauthorized' }, 401)
+  const db = createClient(Deno.env.get('SUPABASE_URL')!, serviceKey, { auth: { persistSession: false } })
+  const bearer = (req.headers.get('Authorization') ?? '').replace(/^Bearer /i, '').trim()
+  if (!bearer) return json({ error: 'unauthorized' }, 401)
+  if (bearer !== serviceKey) {
+    const { data: ok } = await db.rpc('verify_push_dispatch_secret', { p_secret: bearer })
+    if (ok !== true) return json({ error: 'unauthorized' }, 401)
+  }
 
   const env = (k: string) => Deno.env.get(k) || ''
   const webEnabled = !!(env('VAPID_SUBJECT') && env('VAPID_PUBLIC_KEY') && env('VAPID_PRIVATE_KEY'))
@@ -73,8 +80,6 @@ Deno.serve(async (req) => {
   // One provider token per run (APNs accepts it for 60 min, FCM access tokens for 60 min).
   let apnsToken: string | null = null
   let fcmToken: string | null = null
-
-  const db = createClient(Deno.env.get('SUPABASE_URL')!, serviceKey, { auth: { persistSession: false } })
 
   const { data: jobs, error } = await db
     .from('notification_deliveries')

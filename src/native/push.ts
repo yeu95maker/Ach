@@ -1,13 +1,21 @@
 import { PushNotifications, type Token } from '@capacitor/push-notifications'
-import { nativePlatform } from './platform'
+import { nativePlatform, type NativePlatform } from './platform'
 
 /**
  * Native push needs provider setup that cannot live in the repository
- * (GoogleService-Info / google-services.json, APNs key). Builds opt in with
- * VITE_NATIVE_PUSH=true once that is done – without google-services.json,
- * PushNotifications.register() crashes the Android app.
+ * (APNs key for iOS, google-services.json for Android). Builds opt in per
+ * platform once that is done: VITE_NATIVE_PUSH = 'ios' | 'android' |
+ * 'ios,android' | 'true' (both). Without google-services.json,
+ * PushNotifications.register() crashes the Android app – so Android stays off
+ * until it is listed explicitly.
  */
-export const nativePushConfigured = import.meta.env.VITE_NATIVE_PUSH === 'true'
+export function pushEnabledFor(flag: string | undefined, platform: NativePlatform | null): boolean {
+  if (!platform || !flag) return false
+  const parts = flag.toLowerCase().split(/[\s,]+/).filter(Boolean)
+  return parts.includes('true') || parts.includes(platform)
+}
+
+export const nativePushConfigured = pushEnabledFor(import.meta.env.VITE_NATIVE_PUSH, nativePlatform())
 
 const PREF_KEY = 'shiftcare.push.native'
 const TOKEN_KEY = 'shiftcare.push.token'

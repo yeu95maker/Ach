@@ -115,13 +115,31 @@ Nicht erhoben: Standort, Kontakte, Browserverlauf, Suchverlauf, Käufe, Finanzda
 
 ## 6. Push-Benachrichtigungen einrichten
 
-Ohne diesen Schritt zeigt die App unter Profil „Noch nicht eingerichtet“ und fragt nicht nach der Erlaubnis.
+Stand 16.10.2026: **iOS ist eingeschaltet** (Builds mit `VITE_NATIVE_PUSH=ios`, Standard in `mobile.yml` und `release.yml`). Android bleibt aus, bis Firebase eingerichtet ist. Ohne `google-services.json` würde die Android-App beim Registrieren abstürzen.
 
-1. **iOS (APNs):** Apple Developer → *Keys* → neuen Schlüssel mit *Apple Push Notifications service* anlegen, `.p8` herunterladen. Supabase-Secrets für Edge Functions setzen: `APNS_KEY_P8` (Inhalt der Datei), `APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_TOPIC` (= Bundle-ID), `APNS_PRODUCTION=true` für TestFlight und App Store.
-2. **Android (FCM):** Firebase-Projekt anlegen, Android-App mit der Package-ID hinzufügen, `google-services.json` nach `android/app/` legen (nicht ins öffentliche Repository einchecken, im CI als Secret ablegen). Unter *Projekteinstellungen → Dienstkonten* einen privaten Schlüssel erzeugen und den JSON-Inhalt als Supabase-Secret `FCM_SERVICE_ACCOUNT` setzen.
-3. `push-dispatch` deployen und per Supabase Cron jede Minute aufrufen (mit dem Service-Role-Key).
-4. App mit `VITE_NATIVE_PUSH=true` bauen.
-5. Auf einem Gerät testen: Profil → Push einschalten → als Leitung einen Plan veröffentlichen → Benachrichtigung erscheint, Tippen öffnet den Dienstplan.
+**Server (Demo-Projekt): erledigt.** `push-dispatch` ist deployt. pg_cron ruft die Function jede Minute auf, solange Zustellungen warten (Migration `20261018000100_push_dispatch_cron.sql`). Der Aufruf ist mit einem zufälligen Geheimnis abgesichert, das nur in der Datenbank liegt; der service-role-Schlüssel wird dafür nicht gebraucht. Bei einem neuen Projekt einmal die URL setzen:
+```sql
+insert into private.app_settings (name, value) values ('functions_url', 'https://<ref>.supabase.co/functions/v1')
+on conflict (name) do update set value = excluded.value;
+```
+
+**Was du einmal machst (iOS, 10 Min.):**
+1. https://developer.apple.com/account/resources/authkeys/list → **„+“** → Name `Dienstwerk Push` → **Apple Push Notifications service (APNs)** anhaken → *Configure*: Umgebung **Sandbox & Production** → *Continue* → *Register* → **Download**. Die `.p8`-Datei gibt es nur einmal; die **Key ID** steht daneben.
+2. Supabase-Dashboard → Projekt → **Edge Functions → Secrets** → *Add new secret*, fünf Mal:
+
+| Name | Wert |
+| --- | --- |
+| `APNS_KEY_P8` | kompletter Inhalt der `.p8`-Datei inkl. `-----BEGIN PRIVATE KEY-----`/`-----END PRIVATE KEY-----` |
+| `APNS_KEY_ID` | Key ID aus Schritt 1 |
+| `APNS_TEAM_ID` | deine Team-ID (Membership details) |
+| `APNS_TOPIC` | `app.dienstwerk` |
+| `APNS_PRODUCTION` | `true` (TestFlight und App Store nutzen die Produktions-Umgebung) |
+
+Die Schlüssel bitte **nicht in den Chat** kopieren, nur direkt in Supabase eintragen.
+
+3. Test: TestFlight-App öffnen → **Profil → Push-Benachrichtigungen einschalten** → erlauben. Danach als Leitung (z. B. in der Web-Demo als `mira.schulz@shiftcare.dev`) etwas auslösen, das dich betrifft, etwa eine Chat-Nachricht auf deiner Station oder eine Tauschanfrage an dich. Innerhalb von etwa einer Minute erscheint die Mitteilung; Tippen öffnet die App.
+
+**Android (später):** Firebase-Projekt anlegen, Android-App `app.dienstwerk` hinzufügen. `google-services.json` als CI-Secret ablegen, nicht ins öffentliche Repository einchecken. Den Dienstkonto-Schlüssel als Supabase-Secret `FCM_SERVICE_ACCOUNT` setzen, dann GitHub-Variable `APP_NATIVE_PUSH=ios,android`.
 
 Benachrichtigungen enthalten nur einen allgemeinen Titel (z. B. „Dienst geändert“) und den Stationsnamen, **nie Gesundheitsdaten**. Ungültige Tokens (App gelöscht) werden automatisch entfernt.
 
