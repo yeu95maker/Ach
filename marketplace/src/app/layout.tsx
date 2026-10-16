@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: `${BRAND} – ${t('meta.tagline')}`, template: `%s · ${BRAND}` },
     description: t('meta.description'),
     applicationName: BRAND,
-    openGraph: { siteName: BRAND, type: 'website' },
+    openGraph: { siteName: BRAND, type: 'website', images: [{ url: '/brand/house.jpg', width: 1200, height: 1200 }] },
   }
 }
 
@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <header className="sticky top-0 z-30 border-b border-gray-200/80 bg-white/90 backdrop-blur">
             <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
               <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-brand-800">
-                <span aria-hidden className="flex size-8 items-center justify-center rounded-lg bg-brand-600 text-white">⌂</span>
+                <img src="/brand/logo.jpg" alt="" aria-hidden width={32} height={32} className="size-8 rounded-lg object-cover ring-1 ring-black/5" />
                 {BRAND}
               </Link>
               <TopNav {...nav} />
