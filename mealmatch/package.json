@@ -31,8 +31,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "export:web": "expo export --platform web",
-    "check": "npm run typecheck && npm run test",
-    "lint": "expo lint"
+    "check": "npm run typecheck && npm run test"
   },
   "private": true
 }
