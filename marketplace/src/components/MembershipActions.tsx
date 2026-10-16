@@ -13,7 +13,8 @@ import { Alert, Button, Field, Input } from './ui'
 type Method = 'ecocash' | 'onemoney' | 'web'
 
 interface Props {
-  mode: 'paynow' | 'demo' | 'none'
+  /** app = inside the iOS/Android app: the store rules don't allow selling Premium there. */
+  mode: 'paynow' | 'demo' | 'none' | 'app'
   signedIn: boolean
   isPremium: boolean
   autoRenew: boolean
@@ -60,6 +61,10 @@ export function MembershipActions({ mode, signedIn, isPremium, autoRenew, cancel
       return
     }
     setWaiting({ reference: data.reference, instructions: data.instructions })
+  }
+
+  if (mode === 'app') {
+    return <p className="text-center text-sm text-gray-600">{t(isPremium ? 'membership.appActive' : 'membership.appUnavailable')}</p>
   }
 
   if (!signedIn) {

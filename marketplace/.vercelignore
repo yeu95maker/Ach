@@ -1,0 +1,4 @@
+# Native app projects are built by GitHub Actions, not on Vercel.
+android
+ios
+mobile

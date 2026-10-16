@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Mobile-first property marketplace – houses, apartments, land and commercial property from verified providers",
+  "description": "Mobile-first property marketplace \u2013 houses, apartments, land and commercial property from verified providers",
   "engines": {
     "node": ">=20"
   },
@@ -17,9 +17,20 @@
     "test:db": "./scripts/db-test.sh",
     "check": "npm run typecheck && npm run lint && npm run test",
     "e2e:gateway": "node scripts/e2e/gateway.mjs",
-    "e2e": "node scripts/e2e/journeys.mjs"
+    "e2e": "node scripts/e2e/journeys.mjs",
+    "mobile:sync": "node scripts/mobile/configure.mjs && cap sync",
+    "mobile:assets": "npx --yes @capacitor/assets@3.0.5 generate --assetPath mobile/assets --iconBackgroundColor \"#12805e\" --splashBackgroundColor \"#12805e\" --ios --android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/browser": "^8.0.5",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/geolocation": "^8.2.3",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/share": "^8.0.3",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.4",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "clsx": "^2.1.1",
@@ -33,6 +44,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^26.6.5",

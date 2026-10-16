@@ -725,4 +725,13 @@ export const de: Record<keyof typeof en, string> = {
   'error.invalidLogin': 'E-Mail oder Passwort ist falsch.',
   'error.userExists': 'Für diese E-Mail gibt es bereits ein Konto.',
   'error.upload': 'Hochladen fehlgeschlagen. Bitte erneut versuchen.',
+  'membership.appActive': 'Ihre Premium-Mitgliedschaft ist in der App aktiv.',
+  'membership.appUnavailable': 'Premium kann in der App nicht gekauft werden.',
+  'share.action': 'Teilen',
+  'share.copied': 'Link kopiert',
+  'legal.privacy': 'Datenschutz',
+  'legal.terms': 'Nutzungsbedingungen',
+  'legal.imprint': 'Impressum',
+  'legal.support': 'Hilfe & Support',
+  'legal.updated': 'Stand: {date}',
 }

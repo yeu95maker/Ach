@@ -102,6 +102,17 @@ Paynow has no stored-card subscriptions, so Premium is **prepaid**: it is valid 
 3. On Vercel the cron in `vercel.json` calls the worker every 5 minutes. Elsewhere, call `GET /api/cron/emails` with `Authorization: Bearer $CRON_SECRET`.
 Without `EMAIL_PROVIDER` emails simply stay queued; `EMAIL_PROVIDER=log` prints them (development).
 
+## iOS and Android apps
+
+Native shells (Capacitor) around the live website with share sheet, “Near me” location,
+universal/app links, in-app browser and offline screen. Premium is not sold inside the apps
+(store rules). Built and uploaded by GitHub Actions without a Mac – full guide, store texts,
+privacy labels and checklist: [docs/APP-STORES.md](docs/APP-STORES.md).
+
+```bash
+APP_URL=https://your-domain npm run mobile:sync   # point the apps at the website, sync native projects
+```
+
 ## Getting started
 
 ```bash

@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import { BottomNav, TopNav } from '@/components/Nav'
+import { NativeBridge } from '@/components/NativeBridge'
 import { Toaster } from '@/components/Toaster'
 import { getAccount } from '@/lib/account'
 import { BRAND } from '@/lib/brand'
+import { LEGAL_LINKS } from '@/lib/legal'
 import { SITE_URL } from '@/lib/seo'
 import { I18nProvider } from '@/lib/i18n/client'
 import { getT } from '@/lib/i18n/server'
@@ -58,9 +60,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </header>
           <main id="main" className="mx-auto max-w-6xl px-4 pt-4 pb-28 md:pb-12">
             {children}
+            <footer className="mt-12 border-t border-gray-200 pt-4 text-sm text-gray-500">
+              <nav aria-label={t('legal.support')} className="flex flex-wrap gap-x-4 gap-y-2">
+                {LEGAL_LINKS.map((l) => <Link key={l.href} href={l.href} className="hover:text-brand-700">{t(l.key)}</Link>)}
+              </nav>
+              <p className="mt-2">© {new Date().getFullYear()} {BRAND}</p>
+            </footer>
           </main>
           <BottomNav {...nav} />
           <Toaster />
+          <NativeBridge />
         </I18nProvider>
       </body>
     </html>

@@ -7,6 +7,7 @@ import { billingMode } from '@/lib/billing'
 import { formatDate, formatPrice } from '@/lib/format'
 import type { MessageKey } from '@/lib/i18n'
 import { getT } from '@/lib/i18n/server'
+import { isNativeApp } from '@/lib/native/server'
 import { safeNext } from '@/lib/next'
 import { createClient } from '@/lib/supabase/server'
 import type { AppSettings } from '@/lib/types'
@@ -38,6 +39,7 @@ export default async function MembershipPage({ searchParams }: PageProps<'/membe
   const { data } = await supabase.from('app_settings').select('currency, premium_price_month, premium_price_year, free_favorites_limit, early_access_hours').single()
   const s = (data as AppSettings | null) ?? { currency: 'USD', premium_price_month: 9, premium_price_year: 90, free_favorites_limit: 10, early_access_hours: 48, demo_billing: false }
   const m = account?.membership
+  const mode = (await isNativeApp()) ? 'app' : billingMode()
   const cell = (c: Cell) =>
     c === true ? <Check className="mx-auto size-5 text-brand-600" aria-label="✓" /> : c === false ? <Minus className="mx-auto size-5 text-gray-300" aria-label="—" /> : <span className="text-sm font-medium">{t(c, { n: s.free_favorites_limit })}</span>
 
@@ -63,7 +65,7 @@ export default async function MembershipPage({ searchParams }: PageProps<'/membe
           <p className="mt-1 text-3xl font-extrabold">{formatPrice(s.premium_price_month, s.currency, locale)} <span className="text-base font-medium text-gray-400">/ {t('membership.month')}</span></p>
           <p className="mt-2 mb-4 text-sm text-gray-300">{t('membership.premiumText', { n: s.early_access_hours })}</p>
           <div className="rounded-2xl bg-white p-3 text-gray-900">
-            <MembershipActions mode={billingMode()} signedIn={!!account} isPremium={!!account?.is_premium} autoRenew={!!m?.auto_renew} cancelAtPeriodEnd={!!m?.cancel_at_period_end}
+            <MembershipActions mode={mode} signedIn={!!account} isPremium={!!account?.is_premium} autoRenew={!!m?.auto_renew} cancelAtPeriodEnd={!!m?.cancel_at_period_end}
               prices={{ month: s.premium_price_month, year: s.premium_price_year, currency: s.currency }} next={next} />
           </div>
         </Card>

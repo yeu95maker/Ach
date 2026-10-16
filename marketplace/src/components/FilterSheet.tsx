@@ -7,6 +7,7 @@ import { featuresFor, hasRooms, type Filters } from '@/lib/filters'
 import { useI18n } from '@/lib/i18n/client'
 import { CATEGORIES, TRANSACTIONS, type Feature } from '@/lib/types'
 import { locate } from '@/lib/locations'
+import { currentPosition } from '@/lib/native/client'
 import { toast } from './Toaster'
 import { Sheet } from './Sheet'
 import { Button, Field, Input } from './ui'
@@ -59,19 +60,11 @@ export function FilterSheet({ open, onClose, filters, isPremium, onApply }: { op
   }
 
   function nearMe() {
-    if (!navigator.geolocation) return toast({ text: t('filters.locationDenied'), tone: 'error' })
     setLocating(true)
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setLocating(false)
-        setF((prev) => ({ ...prev, near: [pos.coords.latitude, pos.coords.longitude], place: t('filters.myLocation'), radius_km: prev.radius_km ?? 5 }))
-      },
-      () => {
-        setLocating(false)
-        toast({ text: t('filters.locationDenied'), tone: 'error' })
-      },
-      { timeout: 10000 },
-    )
+    currentPosition()
+      .then(({ lat, lng }) => setF((prev) => ({ ...prev, near: [lat, lng], place: t('filters.myLocation'), radius_km: prev.radius_km ?? 5 })))
+      .catch(() => toast({ text: t('filters.locationDenied'), tone: 'error' }))
+      .finally(() => setLocating(false))
   }
   const set = <K extends keyof Filters>(k: K, v: Filters[K]) => setF((prev) => ({ ...prev, [k]: v }))
   const toggleFeature = (feature: Feature) =>

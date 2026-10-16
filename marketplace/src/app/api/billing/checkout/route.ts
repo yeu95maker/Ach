@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { billingMode } from '@/lib/billing'
 import { initiate } from '@/lib/billing/paynow'
+import { isNativeUserAgent } from '@/lib/native'
 import { newReference, normalizeZimPhone } from '@/lib/billing/paynow-protocol'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
@@ -12,6 +13,8 @@ import { createClient } from '@/lib/supabase/server'
  */
 export async function POST(request: NextRequest) {
   if (billingMode() !== 'paynow') return NextResponse.json({ error: 'billing_not_configured' }, { status: 501 })
+  // App Store / Play rules: no external payments inside the native apps.
+  if (isNativeUserAgent(request.headers.get('user-agent'))) return NextResponse.json({ error: 'not_available_in_app' }, { status: 403 })
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user?.email) return NextResponse.json({ error: 'AUTH_REQUIRED' }, { status: 401 })

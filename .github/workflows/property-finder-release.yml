@@ -1,0 +1,181 @@
+# Property Finder store release (marketplace/): builds, signs and uploads the
+# native apps – no Mac needed. Start it from the Actions tab.
+#   iOS:     archive on a macOS runner with Xcode cloud signing (App Store Connect
+#            API key) and upload to App Store Connect → TestFlight.
+#   Android: signed AAB (upload key from secrets); uploaded to the Play internal
+#            track as a draft when PLAY_SERVICE_ACCOUNT_JSON is set.
+# Setup and the list of secrets: marketplace/docs/APP-STORES.md
+name: Property Finder – store release
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Which app?
+        type: choice
+        options: [both, ios, android]
+        default: both
+      version:
+        description: Version shown in the stores, e.g. 1.0.0
+        required: true
+        default: 1.0.0
+
+permissions:
+  contents: read
+
+concurrency:
+  group: property-finder-release
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: marketplace
+
+env:
+  # Live website the apps load – repository variable PF_APP_URL (Settings → Secrets and variables → Actions → Variables).
+  APP_URL: ${{ vars.PF_APP_URL }}
+  VERSION_NAME: ${{ inputs.version }}
+  # Every run gets a higher build number than the one before.
+  VERSION_CODE: ${{ github.run_number }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check APP_URL
+        run: |
+          case "$APP_URL" in https://*) ;; *) echo "::error::Set the repository variable PF_APP_URL to the live https URL of the website (marketplace/docs/APP-STORES.md, step 1)"; exit 1;; esac
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$APP_URL/support")
+          [ "$code" = "200" ] || { echo "::error::$APP_URL/support answered $code – the website must be live before the apps are built"; exit 1; }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: marketplace/package-lock.json
+      - run: npm ci
+      - run: npm run check
+
+  ios:
+    needs: check
+    if: inputs.platform != 'android'
+    runs-on: macos-15
+    env:
+      ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      ASC_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - name: Check secrets
+        run: |
+          missing=""
+          for v in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY TEAM_ID; do [ -n "${!v}" ] || missing="$missing $v"; done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub secrets:$missing – see marketplace/docs/APP-STORES.md, step 3"
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: marketplace/package-lock.json
+      - run: npm ci
+      - run: npm run mobile:sync -- ios
+      - name: API key
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s\n' "$ASC_KEY" > "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8"
+      - name: Archive (cloud signing)
+        run: |
+          xcodebuild -version
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            MARKETING_VERSION="$VERSION_NAME" CURRENT_PROJECT_VERSION="$VERSION_CODE" \
+            archive | tail -n 60
+      - name: Upload to App Store Connect (TestFlight)
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>$TEAM_ID</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" | tail -n 40
+          echo "### Property Finder iOS $VERSION_NAME ($VERSION_CODE) uploaded to App Store Connect" >> "$GITHUB_STEP_SUMMARY"
+          echo "The build appears in TestFlight after 10–30 minutes of processing." >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove key
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/keys"
+
+  android:
+    needs: check
+    if: inputs.platform != 'ios'
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_B64: ${{ secrets.PF_ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.PF_ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.PF_ANDROID_KEY_ALIAS || 'upload' }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.PF_ANDROID_KEYSTORE_PASSWORD }}
+      PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+    steps:
+      - name: Check secrets
+        run: |
+          if [ -z "$KEYSTORE_B64" ] || [ -z "$ANDROID_KEYSTORE_PASSWORD" ]; then
+            echo "::error::The Android upload key is missing. Run the workflow “Property Finder – create Android upload key” once – see marketplace/docs/APP-STORES.md, step 4"
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: marketplace/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      - run: npm run mobile:sync -- android
+      - name: Signed bundle
+        run: |
+          export ANDROID_KEYSTORE_PATH="$RUNNER_TEMP/upload.jks"
+          printf '%s' "$KEYSTORE_B64" | base64 -d > "$ANDROID_KEYSTORE_PATH"
+          (cd android && ./gradlew --no-daemon bundleRelease)
+          rm -f "$ANDROID_KEYSTORE_PATH"
+          "$JAVA_HOME/bin/jarsigner" -verify android/app/build/outputs/bundle/release/app-release.aab | grep -q "jar verified" \
+            || { echo "::error::The bundle is not signed"; exit 1; }
+          mv android/app/build/outputs/bundle/release/app-release.aab "PropertyFinder-$VERSION_NAME-$VERSION_CODE.aab"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: property-finder-android-${{ inputs.version }}-${{ github.run_number }}
+          path: marketplace/PropertyFinder-*.aab
+          if-no-files-found: error
+      - name: Upload to Google Play (internal testing)
+        if: env.PLAY_JSON != ''
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: app.propertyfinder.zw # = appId in marketplace/capacitor.config.ts
+          releaseFiles: marketplace/PropertyFinder-*.aab
+          track: internal
+          status: draft
+      - name: Summary
+        run: |
+          echo "### Property Finder Android $VERSION_NAME ($VERSION_CODE) signed" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PLAY_JSON" ]; then echo "Uploaded to Google Play as a draft in internal testing." >> "$GITHUB_STEP_SUMMARY";
+          else echo "Download the AAB under *Artifacts* and upload it in the Play Console under *Test and release → Internal testing*." >> "$GITHUB_STEP_SUMMARY"; fi

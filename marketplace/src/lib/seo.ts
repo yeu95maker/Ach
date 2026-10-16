@@ -2,8 +2,14 @@ import type { Filters } from './filters'
 import { AREAS, CITIES } from './locations'
 import type { Category, Transaction } from './types'
 
-/** Public site URL for canonical links, sitemaps and share previews. */
-export const SITE_URL = (process.env.APP_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+/**
+ * Public site URL for canonical links, sitemaps and share previews: APP_URL,
+ * else the production domain Vercel provides, else localhost.
+ */
+export const SITE_URL = (
+  process.env.APP_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000')
+).replace(/\/$/, '')
 
 export const slugify = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 

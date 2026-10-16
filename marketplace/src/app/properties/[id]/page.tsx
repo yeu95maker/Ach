@@ -9,6 +9,7 @@ import { PriceText } from '@/components/PriceText'
 import { LocationMap } from '@/components/map/LocationMap'
 import { MessageProviderButton, ReportButton, ViewTracker } from '@/components/PropertyActions'
 import { SaveButton } from '@/components/SaveButton'
+import { ShareButton } from '@/components/ShareButton'
 import { Alert, Badge, Card, LinkButton } from '@/components/ui'
 import { featuresFor, hasRooms } from '@/lib/filters'
 import { daysAgo, formatArea, formatDate, formatDistance, formatPrice, hoursUntil } from '@/lib/format'
@@ -231,7 +232,10 @@ export default async function PropertyPage({ params }: PageProps<'/properties/[i
           )}
           <div className="flex items-center justify-between">
             <SaveButton propertyId={p.id} initial={p.is_favorite} variant="button" />
-            {!p.is_owner && <ReportButton propertyId={p.id} />}
+            <div className="flex items-center gap-4">
+              <ShareButton title={title ?? ""} path={`/properties/${p.id}`} />
+              {!p.is_owner && <ReportButton propertyId={p.id} />}
+            </div>
           </div>
           {p.is_owner && <LinkButton href={`/provider/properties/${p.id}/edit`} variant="secondary" block>{t('dashboard.edit')}</LinkButton>}
         </aside>

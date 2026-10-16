@@ -723,4 +723,13 @@ export const en = {
   'error.invalidLogin': 'Email or password is incorrect.',
   'error.userExists': 'An account with this email already exists.',
   'error.upload': 'Upload failed. Please try again.',
+  'membership.appActive': 'Your Premium membership is active in the app.',
+  'membership.appUnavailable': 'Premium is not available for purchase in the app.',
+  'share.action': 'Share',
+  'share.copied': 'Link copied',
+  'legal.privacy': 'Privacy policy',
+  'legal.terms': 'Terms of use',
+  'legal.imprint': 'Imprint',
+  'legal.support': 'Help & support',
+  'legal.updated': 'Last updated {date}',
 } as const
