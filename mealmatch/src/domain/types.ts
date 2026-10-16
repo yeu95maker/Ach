@@ -77,7 +77,13 @@ export interface Recipe {
   /** Where the recipe came from – 'sample' for the bundled MVP data. */
   source: 'sample' | 'api' | 'user';
   /** Credit shown on the recipe page for recipes from external providers. */
-  attribution?: { provider: string; providerUrl?: string; originalUrl?: string };
+  attribution?: {
+    provider: string;
+    providerUrl?: string;
+    originalUrl?: string;
+    /** Content licence the recipe text is shared under (e.g. CC BY-SA 4.0). */
+    license?: { name: string; url: string };
+  };
   /** Recipe-level flags a provider asserts (e.g. "not gluten-free") on top of what the ingredients reveal. */
   flags?: IngredientFlag[];
 }

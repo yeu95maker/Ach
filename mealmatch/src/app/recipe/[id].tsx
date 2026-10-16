@@ -150,6 +150,14 @@ export default function RecipeScreen() {
                     </Text>
                   </>
                 ) : null}
+                {recipe.attribution.license ? (
+                  <>
+                    {' · '}
+                    <Text style={s.creditLink} onPress={() => Linking.openURL(recipe.attribution!.license!.url)}>
+                      {recipe.attribution.license.name}
+                    </Text>
+                  </>
+                ) : null}
               </Text>
             </View>
           )}
