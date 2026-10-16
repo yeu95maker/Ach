@@ -30,7 +30,7 @@ Tipp: Manche Einstellungsseiten von GitHub und Apple sind in der mobilen Ansicht
 3. Unter *Capabilities* **Push Notifications** anhaken → *Continue* → *Register*.
 4. https://appstoreconnect.apple.com → **Apps** → **„+“** → *Neue App*:
    - Plattform **iOS**, Name z. B. „Dienstwerk – Dienstplan Pflege“, Primärsprache **Deutsch**
-   - Bundle-ID: die eben registrierte auswählen, SKU: `shiftcare`
+   - Bundle-ID: die eben registrierte auswählen, SKU: `dienstwerk`
 5. Deine **Team-ID** findest du unter https://developer.apple.com/account → *Membership details* (10 Zeichen, z. B. `A1B2C3D4E5`).
 
 ## 3. API-Schlüssel für GitHub
