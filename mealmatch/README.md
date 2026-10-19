@@ -142,5 +142,9 @@ The UI only talks to three interfaces, so each upgrade is a single new class:
 
 ## Photos
 
-Recipes show an emoji on a tinted background. Add an `imageUrl` to any recipe (or have your API adapter provide one)
-and the cards, list rows and recipe page will show the photo instead.
+Recipes without a photo show an emoji on a tinted background. To add a bundled photo, save it as
+`assets/recipes/<recipe-id>.jpg` (portrait, about 720×900) and run `npm run photos` to rebuild
+`src/data/recipePhotos.ts`. A recipe can also point at a hosted image with `imageUrl` (TheMealDB recipes do).
+
+The bundled photos of MealMatch originals (including all German recipes and weight-loss bowls) are AI-generated
+illustrations of each dish, not photos of the exact recipe as cooked.
