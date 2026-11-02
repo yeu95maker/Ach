@@ -57,7 +57,7 @@ jobs:
           if-no-files-found: error
 
   ios:
-    runs-on: macos-latest
+    runs-on: macos-15-intel   # arm64 runners had capacity problems (Nov 2026)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
