@@ -47,3 +47,15 @@ Einmalig nötig:
 1. **Settings → Pages → Source: GitHub Actions** wählen.
 2. Unter **Actions → „Demo (GitHub Pages)“ → Run workflow** den Workflow starten. Die Demo läuft dann unter `https://yeu95maker.github.io/Ach/`.
 3. In Supabase unter **Auth → URL Configuration** die Pages-URL als Site-URL eintragen. Das ist für den Passwort-Reset nötig.
+
+## Demo-Daten verlängern
+
+Die Dienstpläne der Demo sind relativ zum Tag der Einrichtung erzeugt und laufen irgendwann aus. `scripts/demo/extend-demo-data.sql` ergänzt sie:
+- veröffentlichte Pläne vom aktuellen Monat bis `v_until`, die Rotation läuft durchgehend weiter;
+- den Folgemonat als Entwurf für den Dienstplan-Editor;
+- je einen offenen Dienst pro Monat;
+- einen offenen Wunschplan.
+
+Das Skript ist wiederholbar, bestehende Einträge bleiben erhalten. Ausführen im Supabase SQL Editor des Demo-Projekts.
+
+Zuletzt ausgeführt am 02.11.2026: veröffentlicht bis 28.02.2027, Entwurf und Wunschplan für März 2027.
