@@ -41,7 +41,7 @@ env:
 jobs:
   ios:
     if: inputs.platform != 'android'
-    runs-on: macos-15
+    runs-on: macos-latest
     env:
       ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
       ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
