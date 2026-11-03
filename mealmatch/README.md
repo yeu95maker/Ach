@@ -39,14 +39,14 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 - **Search & filters**: text search across names, ingredients and cuisines; meal type, diet, condition, goal and
   "under 30 min" filters with a live result count.
 - **Profile**: preferences, goals, allergies, conditions, stats, About page, reset.
-- **~2,000 recipes**:
+- **~1,200 built-in recipes** (about 2,000 with TheMealDB switched on):
   - 695 hand-written MealMatch originals with nutrition (German, weight-loss bowls, quick dinners, breakfasts,
     vegetarian/vegan, Asian, Mediterranean, African/Caribbean/Latin American, soups, snacks and desserts) –
     `src/data/*Recipes.ts` and `src/data/extra/`.
   - 516 recipes from the [Wikibooks Cookbook](https://en.wikibooks.org/wiki/Cookbook:Table_of_Contents)
     (CC BY-SA 4.0, credited and linked on each recipe page), bundled in `src/data/wikibooks.json`. No nutrition data,
     so they don't appear under nutrition-goal or health-condition filters.
-  - TheMealDB's ~790 recipes with photos, downloaded in the background and cached for offline use.
+  - Optional: TheMealDB's ~790 recipes with photos (off by default, needs a supporter key for a public release).
   - Add a Spoonacular key for hundreds more with full nutrition.
 
 ## Recipe sources
@@ -54,7 +54,7 @@ npx expo start        # then scan the QR code with Expo Go, or press i / a / w
 | Source | Enabled | Nutrition | Notes |
 | --- | --- | --- | --- |
 | MealMatch originals (`src/data/sampleRecipes.ts`) | always | approx. per serving | Bundled, work offline |
-| [TheMealDB](https://www.themealdb.com) | by default (free test key `1`) | – | ~790 recipes with photos. Use a supporter key for a public release. |
+| [TheMealDB](https://www.themealdb.com) | with a supporter key in `EXPO_PUBLIC_MEALDB_API_KEY` (or `EXPO_PUBLIC_MEALDB_ENABLED=true` for development) | – | ~790 recipes with photos. The free test key `1` may not be used in published apps. |
 | [Spoonacular](https://spoonacular.com/food-api) | when `EXPO_PUBLIC_SPOONACULAR_API_KEY` is set | yes | Paid plans for real traffic; free tier ≈ 50 points/day |
 
 Configure them in `mealmatch/.env.local` (see `.env.example`). Downloads happen in the background on launch and from

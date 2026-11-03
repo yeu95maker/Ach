@@ -5,9 +5,16 @@
  * paid API keys behind your own backend / proxy.
  */
 export const config = {
-  /** TheMealDB: "1" is the free test key for development. Use your supporter key for a public release. */
+  /**
+   * TheMealDB is off by default: its free test key ("1") may not be used in published apps.
+   * Set a supporter key to switch it on, or EXPO_PUBLIC_MEALDB_ENABLED=true to try it with the test key in development.
+   */
   mealDbApiKey: process.env.EXPO_PUBLIC_MEALDB_API_KEY || '1',
-  mealDbEnabled: process.env.EXPO_PUBLIC_MEALDB_ENABLED !== 'false',
+  mealDbEnabled:
+    process.env.EXPO_PUBLIC_MEALDB_ENABLED === 'true' ||
+    (!!process.env.EXPO_PUBLIC_MEALDB_API_KEY &&
+      process.env.EXPO_PUBLIC_MEALDB_API_KEY !== '1' &&
+      process.env.EXPO_PUBLIC_MEALDB_ENABLED !== 'false'),
   /** Spoonacular is switched on automatically when a key is present. */
   spoonacularApiKey: process.env.EXPO_PUBLIC_SPOONACULAR_API_KEY || '',
   /** How many Spoonacular recipes to download per refresh (100 per request, roughly 7 API points each). */
