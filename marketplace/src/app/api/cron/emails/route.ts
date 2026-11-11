@@ -3,15 +3,19 @@ import { renderEmail, type OutboxRow } from '@/lib/email/render'
 import { emailProvider, sendEmail } from '@/lib/email/send'
 import { SITE_URL } from '@/lib/seo'
 import { supabaseAdmin } from '@/lib/supabase/admin'
+import { supabasePublic } from '@/lib/supabase/public'
 
 /**
  * Email worker: sends queued emails from public.email_outbox. Called every few
  * minutes by a scheduler (vercel.json cron, or any cron hitting this URL) with
- * "Authorization: Bearer <CRON_SECRET>".
+ * "Authorization: Bearer <CRON_SECRET>". Each run also touches the database, so
+ * the daily Vercel cron keeps a free Supabase project from being paused.
  */
 async function run(request: NextRequest) {
   const secret = process.env.CRON_SECRET
   if (!secret || request.headers.get('authorization') !== `Bearer ${secret}`) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  // Keep-alive: a daily query stops Supabase's free plan from pausing the database for inactivity.
+  await supabasePublic().from('app_settings').select('currency').limit(1)
   if (!emailProvider()) return NextResponse.json({ skipped: 'EMAIL_PROVIDER not configured' })
   const admin = supabaseAdmin()
   let sent = 0
