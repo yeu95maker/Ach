@@ -60,3 +60,21 @@ A provider with 30 stands is live in about an hour.
 
 Launch only after ~100 live listings in Harare, then market to buyers
 (including the diaspora, who can pay Premium by card via Paynow).
+
+## Listing for owners who have no account (Admin → Owners)
+
+Many owners just send photos and details by WhatsApp. For them:
+
+1. **Admin → Owners → Add an owner without an account.** Enter name, phone (and email if
+   they have one), and upload the ID and proof of ownership they sent you. The profile is
+   verified at once – you checked the papers.
+2. **Create and add a listing** (or *Manage listings* later). A yellow bar shows that you are
+   working for that owner; the normal listing form, photo upload and CSV import all work.
+   Approve the listing under Admin → Properties. *Back to admin* ends the session.
+3. **Buyer messages** for these owners arrive in your own inbox (Messages); you answer for
+   the owner. If the owner gave an email address, they also get an email for each new inquiry.
+4. **Hand over:** *Copy claim link* / *WhatsApp* / *Email claim link*. The owner opens the link,
+   creates a free account and takes over the profile with all listings and conversations.
+   Sending a new link makes older links invalid.
+
+Only list properties with the owner's written permission (keep the WhatsApp message).

@@ -28,6 +28,12 @@ export function renderEmail(row: OutboxRow, siteUrl: string): RenderedEmail {
   if (row.kind === 'new_message') {
     subject = t('email.newMessage', p)
     lines = [subject, `“${p.body}”`]
+  } else if (row.kind === 'owner_message') {
+    subject = t('email.ownerMessage', { ...p, brand: BRAND })
+    lines = [subject, `“${p.body}”`, t('email.ownerMessageText', { brand: BRAND })]
+  } else if (row.kind === 'provider_claim') {
+    subject = t('email.providerClaim', { ...p, brand: BRAND })
+    lines = [subject, t('email.providerClaimText', { brand: BRAND, count: String(row.params.count ?? 0) })]
   } else if (row.kind === 'team_invite') {
     subject = t('email.teamInvite', { ...p, brand: BRAND })
     lines = [subject, t('email.teamInviteText')]
@@ -36,9 +42,9 @@ export function renderEmail(row: OutboxRow, siteUrl: string): RenderedEmail {
     lines = [subject, ...(p.body && !['favorite_price_drop', 'favorite_unavailable'].includes(row.kind) ? [p.body] : [])]
   }
   const url = row.link ? `${siteUrl}${row.link}` : siteUrl
-  const action = t(row.kind === 'team_invite' ? 'email.join' : 'email.open', { brand: BRAND })
+  const action = t(row.kind === 'team_invite' ? 'email.join' : row.kind === 'owner_message' || row.kind === 'provider_claim' ? 'email.claim' : 'email.open', { brand: BRAND })
   const greeting = row.name ? t('email.hello', { name: row.name }) : t('email.helloAnon')
-  const footer = row.kind === 'team_invite' ? '' : t('email.footer', { brand: BRAND })
+  const footer = ['team_invite', 'owner_message', 'provider_claim'].includes(row.kind) ? '' : t('email.footer', { brand: BRAND })
   const text = [greeting, '', ...lines, '', `${action}: ${url}`, '', footer].join('\n').trim()
   const html = `<!doctype html><html><body style="margin:0;background:#f6f7f8;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#111827">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px">

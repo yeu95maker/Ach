@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { FoundingToggle, PartnerForm, PropertyModeration, ProviderReview, ReportResolution, UserActions } from '@/components/AdminActions'
 import { CopyLink } from '@/components/CopyLink'
+import { ManagedOwnerActions, ManagedOwnerForm } from '@/components/ManagedOwners'
 import { Badge, Card, EmptyState, PageHeader } from '@/components/ui'
 import { requireAccount } from '@/lib/account'
 import { formatDate, formatPrice } from '@/lib/format'
@@ -16,7 +17,7 @@ import type { PropertyCard, PropertyStatus, ProviderStatus, ProviderType } from 
 
 export const metadata: Metadata = { title: 'Admin', robots: { index: false } }
 
-const TABS = ['overview', 'providers', 'properties', 'reports', 'partners', 'users', 'audit'] as const
+const TABS = ['overview', 'owners', 'providers', 'properties', 'reports', 'partners', 'users', 'audit'] as const
 type Tab = (typeof TABS)[number]
 
 interface AdminProvider {
@@ -46,6 +47,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
 
   const tabLabel: Record<Tab, string> = {
     overview: t('admin.tab.overview'),
+    owners: t('admin.tab.owners'),
     providers: `${t('admin.tab.providers')}${Number(s.providers_pending) ? ` (${s.providers_pending})` : ''}`,
     properties: `${t('admin.tab.properties')}${Number(s.properties_pending) ? ` (${s.properties_pending})` : ''}`,
     reports: `${t('admin.tab.reports')}${Number(s.reports_open) ? ` (${s.reports_open})` : ''}`,
@@ -67,6 +69,7 @@ export default async function AdminPage({ searchParams }: PageProps<'/admin'>) {
       </nav>
 
       {tab === 'overview' && <Overview s={s} t={t} locale={locale} />}
+      {tab === 'owners' && <Owners userId={account.id} t={t} locale={locale} />}
       {tab === 'providers' && <Providers status={params.status as ProviderStatus | undefined} t={t} locale={locale} />}
       {tab === 'properties' && <Properties status={(params.status as PropertyStatus | undefined) ?? 'pending'} t={t} locale={locale} />}
       {tab === 'reports' && <Reports t={t} locale={locale} />}
@@ -125,6 +128,66 @@ async function Providers({ status, t, locale }: { status?: ProviderStatus } & Ct
             </dl>
           )}
           <div className="mt-3 space-y-2"><ProviderReview id={p.id} status={p.status} /><FoundingToggle id={p.id} founding={p.is_founding} /></div>
+        </Card>
+      ))}
+    </div>
+  )
+}
+
+interface ManagedOwner {
+  id: string; display_name: string; provider_type: ProviderType; status: ProviderStatus; city: string
+  contact_name: string | null; contact_email: string | null; contact_phone: string | null
+  claimed: boolean; claimed_at: string | null; claim_token: string | null; owner_email: string | null; acting: boolean
+  created_at: string; counts: { active: number; pending: number; draft: number }; documents: string[]
+}
+
+/** Owners without an account whose listings admins manage (see ManagedOwners.tsx). */
+async function Owners({ userId, t, locale }: { userId: string } & Ctx) {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_list_managed_owners')
+  const items = (data as ManagedOwner[] | null) ?? []
+  const paths = items.flatMap((o) => o.documents)
+  const signed = paths.length ? (await supabase.storage.from('verification-docs').createSignedUrls(paths, 600)).data ?? [] : []
+  const urlFor = (path: string) => signed.find((x) => x.path === path)?.signedUrl
+  return (
+    <div className="space-y-4">
+      <Card className="p-4">
+        <h2 className="mb-1 font-bold">{t('owners.new')}</h2>
+        <p className="mb-3 text-sm text-gray-600">{t('owners.explain')}</p>
+        <ManagedOwnerForm userId={userId} />
+      </Card>
+      {items.length === 0 && <EmptyState title={t('owners.empty')} />}
+      {items.map((o) => (
+        <Card key={o.id} className="p-4">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <Link href={`/providers/${o.id}`} className="text-lg font-bold hover:underline">{o.display_name}</Link>
+              <p className="text-sm text-gray-600">
+                {t(`providerType.${o.provider_type}`)} · {o.city}
+                {o.contact_name && <> · {o.contact_name}</>}
+              </p>
+              <p className="text-sm text-gray-600">{[o.contact_phone, o.contact_email].filter(Boolean).join(' · ')}</p>
+              <p className="text-xs text-gray-500">
+                {formatDate(o.created_at, locale)} · {t('owners.counts', { active: o.counts.active, pending: o.counts.pending, draft: o.counts.draft })}
+                {o.documents.length > 0 && <> · {t('onboarding.documents')}: {o.documents.map((d, i) => {
+                  const url = urlFor(d)
+                  return url ? <a key={d} href={url} target="_blank" rel="noreferrer" className="ml-1 font-semibold text-brand-700 underline">#{i + 1}</a> : <span key={d} className="ml-1">#{i + 1}</span>
+                })}</>}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {o.acting && <Badge tone="gold">{t('owners.actingBadge')}</Badge>}
+              {o.claimed ? <Badge tone="green">{t('owners.claimed')}</Badge> : <Badge tone="gray">{t('owners.notClaimed')}</Badge>}
+            </div>
+          </div>
+          {o.claimed ? (
+            <p className="mt-2 text-sm text-gray-600">{t('owners.claimedBy', { email: o.owner_email ?? '', date: o.claimed_at ? formatDate(o.claimed_at, locale) : '' })}</p>
+          ) : (
+            <div className="mt-3">
+              <ManagedOwnerActions id={o.id} name={o.contact_name || o.display_name} phone={o.contact_phone} email={o.contact_email}
+                claimUrl={o.claim_token ? `/claim?token=${o.claim_token}` : null} />
+            </div>
+          )}
         </Card>
       ))}
     </div>

@@ -15,6 +15,10 @@ const KNOWN: Record<string, MessageKey> = {
   INVITE_INVALID: 'error.inviteInvalid',
   INVITE_OTHER_EMAIL: 'error.inviteOtherEmail',
   ALREADY_MEMBER: 'error.alreadyMember',
+  CLAIM_INVALID: 'error.claimInvalid',
+  ALREADY_PROVIDER: 'error.alreadyProvider',
+  VERIFICATION_REQUIRED: 'error.verificationRequired',
+  CONTACT_REQUIRED: 'error.contactRequired',
   'Invalid login credentials': 'error.invalidLogin',
   'User already registered': 'error.userExists',
 }

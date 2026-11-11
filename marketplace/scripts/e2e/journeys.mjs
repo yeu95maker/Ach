@@ -8,7 +8,8 @@
  *
  * Covers: discovery (list, map, property page), locked premium listing, sign-up,
  * saving, messaging, demo premium checkout, provider listing wizard with photo
- * upload, admin approval → listing goes live, provider reply.
+ * upload, admin approval → listing goes live, provider reply, admin listing for an
+ * owner without an account → owner claims the profile.
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { chromium } from 'playwright'
@@ -310,7 +311,13 @@ try {
   const listing = page.locator('li', { hasText: 'Garden Cottage with Pool' }).first()
   await listing.getByRole('button', { name: 'Pause' }).click()
   await expect(listing.getByText('Paused'), 'paused badge')
-  if ((await fetch(`${BASE}/properties/e0000000-0000-4000-8000-000000000003`)).status !== 404) throw new Error('paused listing should not be public')
+  // The badge updates as soon as the request returns; give the server a moment before checking from outside.
+  let pausedStatus = 0
+  for (let i = 0; i < 10 && pausedStatus !== 404; i++) {
+    if (i) await page.waitForTimeout(300)
+    pausedStatus = (await fetch(`${BASE}/properties/e0000000-0000-4000-8000-000000000003`)).status
+  }
+  if (pausedStatus !== 404) throw new Error('paused listing should not be public')
   await listing.getByRole('button', { name: 'Resume' }).click()
   await expect(listing.getByText('Active'), 'active again')
   await listing.getByRole('button', { name: 'Duplicate' }).click()
@@ -381,6 +388,94 @@ try {
     if ((await fetch(`${BASE}/api/cron/emails`)).status !== 401) throw new Error('email worker must require the secret')
     log(`email worker sent ${body.sent} queued emails (inquiries, messages, approvals, invite)`)
   }
+
+  // 12. Admin lists for an owner without an account → buyer asks → owner claims ---------
+  await adminCtx.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: BASE })
+  page = await adminCtx.newPage()
+  await page.goto(`${BASE}/admin?tab=owners`)
+  await page.getByLabel('Public name').fill('T. Moyo – Ruwa stands')
+  await page.getByLabel('Owner’s name').fill('Tendai Moyo')
+  await page.getByLabel('City / town').fill('Ruwa')
+  await page.getByLabel('Phone / WhatsApp').fill('0771234567')
+  await page.getByLabel('Document number').fill('63-123456A-12')
+  await page.locator('input[type=file]').setInputFiles({ name: 'id-copy.png', mimeType: 'image/png', buffer: png })
+  await expect(page.getByText('✓ id-copy.png'), 'owner papers uploaded')
+  await shot(page, 'admin-owner-form')
+  await page.getByRole('button', { name: 'Create and add a listing' }).click()
+  await page.waitForURL(`${BASE}/provider/properties/new`)
+  await expect(page.getByText('You are managing listings for T. Moyo – Ruwa stands.'), 'acting banner')
+  await page.getByRole('button', { name: 'Land', exact: true }).click()
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByLabel('Area / suburb').fill('Ruwa')
+  const ownerMap = page.locator('.maplibregl-canvas')
+  await ownerMap.waitFor()
+  const ownerBox = await ownerMap.boundingBox()
+  await page.mouse.click(ownerBox.x + ownerBox.width / 2, ownerBox.y + ownerBox.height / 2)
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByLabel('Asking price (USD)').fill('25000')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByLabel(/Property size/).fill('500')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.locator('input[type=file]').setInputFiles({ name: 'ruwa.png', mimeType: 'image/png', buffer: png })
+  await expect(page.getByText('Cover'), 'owner listing photo')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByLabel('Title').fill('500 m² Stand in Ruwa with Title Deeds')
+  await page.getByLabel('Description').fill('Serviced stand, title deeds available, tarred road.')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByRole('button', { name: 'Next' }).click()
+  await page.getByRole('button', { name: 'Submit listing' }).click()
+  await page.waitForURL(`${BASE}/provider`)
+  await expect(page.getByText('500 m² Stand in Ruwa with Title Deeds'), 'owner listing on dashboard')
+  await page.getByRole('button', { name: 'Back to admin' }).click()
+  await page.waitForURL(`${BASE}/admin?tab=owners`)
+  await page.goto(`${BASE}/admin?tab=properties&status=pending`)
+  await page.locator('div.rounded-2xl', { hasText: '500 m² Stand in Ruwa with Title Deeds' }).last().getByRole('button', { name: 'Approve' }).click()
+  await expect(page.getByText('Saved'), 'owner listing approved')
+  log('admin creates owner without account, lists and approves for them')
+
+  const ruwaBuyer = await browser.newContext(phone)
+  page = await ruwaBuyer.newPage()
+  await login(page, 'tariro@demo.property')
+  await page.goto(`${BASE}/search?area=Ruwa&category=land`)
+  await page.getByText('500 m² Stand in Ruwa with Title Deeds').first().click()
+  await page.getByRole('button', { name: 'Message provider' }).first().click()
+  await page.getByRole('button', { name: 'Send' }).click()
+  await page.waitForURL(/\/messages\//)
+  log('buyer messages the managed owner')
+
+  page = await adminCtx.newPage()
+  await page.goto(`${BASE}/messages`)
+  await page.getByText('500 m² Stand in Ruwa with Title Deeds').first().click()
+  await page.getByPlaceholder('Type a message…').fill('Yes, the stand is available – viewing on Saturday?')
+  await page.keyboard.press('Enter')
+  await expect(page.getByText('Yes, the stand is available – viewing on Saturday?'), 'admin reply for owner')
+  await page.goto(`${BASE}/admin?tab=owners`)
+  const ownerCard = page.locator('div.rounded-2xl', { hasText: 'T. Moyo – Ruwa stands' }).last()
+  await expect(ownerCard.getByText('1 live'), 'owner counts')
+  await shot(page, 'admin-owners')
+  await ownerCard.getByRole('button', { name: 'Copy claim link' }).click()
+  const claimUrl = await page.evaluate(() => navigator.clipboard.readText())
+  if (!claimUrl.includes('/claim?token=')) throw new Error(`claim link: ${claimUrl}`)
+  log('admin answers in the inbox and copies the claim link')
+
+  const ownerCtx = await browser.newContext(phone)
+  page = await ownerCtx.newPage()
+  await page.goto(claimUrl)
+  await expect(page.getByText('Hello Tendai Moyo!'), 'claim page')
+  await shot(page, 'claim')
+  await page.getByRole('link', { name: 'Create free account' }).click()
+  await page.getByLabel('Full name').fill('Tendai Moyo')
+  await page.getByLabel('Email').fill(`tendai-${Date.now()}@example.com`)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await page.getByRole('button', { name: 'Create free account' }).click()
+  await page.waitForURL(/\/claim\?token=/)
+  await page.getByRole('button', { name: 'Take over my listings' }).click()
+  await page.waitForURL(`${BASE}/provider`)
+  await expect(page.getByText('500 m² Stand in Ruwa with Title Deeds'), 'owner has the listing')
+  await page.goto(`${BASE}/messages`)
+  await expect(page.getByText('500 m² Stand in Ruwa with Title Deeds'), 'owner sees the inquiry')
+  log('owner claims profile with listing and inquiry')
 
   // German UI
   await visitor.addCookies([{ name: 'locale', value: 'de', url: BASE }])

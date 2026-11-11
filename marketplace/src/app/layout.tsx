@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import { BottomNav, TopNav } from '@/components/Nav'
+import { ActingBanner } from '@/components/ManagedOwners'
 import { NativeBridge } from '@/components/NativeBridge'
 import { Toaster } from '@/components/Toaster'
 import { getAccount } from '@/lib/account'
@@ -44,6 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">
             {t('nav.skip')}
           </a>
+          {account?.provider?.acting && <ActingBanner name={account.provider.display_name} />}
           <header className="sticky top-0 z-30 border-b border-gray-200/80 bg-white/90 backdrop-blur">
             <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
               <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-brand-800">
